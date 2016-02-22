@@ -1,0 +1,48 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: Feb. 26, 2004
+
+/********************************
+*       EOS_VT                  *
+********************************/
+
+:SharedLibs=EOS_VT
+{
+    EOS_VT         = $SharedLibDirEOS/EOS.so
+    IdealGas       = $SharedLibDirEOS/MaterialLib.so
+    StiffenedGas   = $SharedLibDirEOS/MaterialLib.so
+    Hayes          = $SharedLibDirEOS/MaterialLib.so
+    HayesBM        = $SharedLibDirEOS/MaterialLib.so
+    BirchMurnaghan = $SharedLibDirEOS/MaterialLib.so
+    Keane          = $SharedLibDirEOS/MaterialLib.so
+    UsUp           = $SharedLibDirEOS/MaterialLib.so
+    UsUpSpline     = $SharedLibDirEOS/MaterialLib.so
+    PeSpline       = $SharedLibDirEOS/MaterialLib.so
+    JWL            = $SharedLibDirEOS/MaterialLib.so
+}
+.base  = EOS_VT
+.units = hydro::std
+
+
+EOS_VT:Hayes=HMX; units=hydro::std
+{
+    T_ref = 300
+    rho0 = 1.9      # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    K0 = 12.9       # GPa
+    K0 = 13.5       # Olingers hydrostatic data
+    N  =  9.3
+    Cv = 1.5e-3     # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    #c0=2.6778 s = 2.68946
+}
+
+EOS_VT:IdealGas=5/3; units=hydro::std
+{
+    gamma = 5/3
+    Cv    = 1.5e-3
+    V_ref = 3000 
+    T_ref = 300
+}

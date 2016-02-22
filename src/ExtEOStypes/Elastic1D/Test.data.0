@@ -1,0 +1,167 @@
+.include ../../DataBase/Units.data
+
+:SharedLibs=Shear1D
+{
+   Shear1D    = ./Elastic1D.so
+   ConstGV    = ./Elastic1D.so
+   PolyG      = ./Elastic1D.so
+}
+:SharedLibs=EOS_VT
+{
+    EOS_VT         = NULL
+    Hayes          = NULL
+    Elastic1D      = ./Elastic1D.so
+    ElasticConstGV = ./Elastic1D.so
+}
+:SharedLibs=EOS
+{
+    EOS             = NULL
+    Hayes           = NULL
+    PeSpline        = NULL
+    Elastic1D       = ./Elastic1D.so
+    ElasticConstGV  = ./Elastic1D.so
+    VonMises1D      = ./Plastic1D.so
+    VonMisesConstGV = ./Plastic1D.so
+    Polymer         = ./Plastic1D.so
+}
+#
+.units=hydro::std
+#
+# EOS
+#
+EOS:Hayes=HMX; units=hydro::std
+{
+    rho0 = 1.9      # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    K0 = 12.9       # GPa
+    N  =  9.3
+    Cv = 1.5e-3     # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+}
+EOS:PeSpline=PMMA-hydro; units=hydro::std
+{
+    rho0 = 1.185    # g/cm^3
+    P0 = 1.0e-4     # GPa
+    e0 = 0
+    #T0 = 300        # degrees K
+    G0 = 1.4; G1 = 0.
+   Vmin     = 0.573840      # eta = 0.32
+	  dPdV0 = -7.074991e+00
+	  dedV0 = 0.000000e+00
+	  dPdV1 = -1.293029e+02
+	  dedV1 = -2.561068e+01
+	Pref(1) = 0.000000e+00, 6.276407e-02, 1.316471e-01, 2.048756e-01, 2.811503e-01
+	eref(1) = 0.000000e+00, 2.710122e-04, 1.171640e-03, 2.825684e-03, 5.339944e-03
+	Pref(6) = 3.596115e-01, 4.398015e-01, 5.216317e-01, 6.053548e-01, 6.915441e-01
+	eref(6) = 8.800992e-03, 1.327707e-02, 1.882321e-02, 2.548829e-02, 3.332306e-02
+	Pref(11) = 7.810774e-01, 8.751251e-01, 9.751430e-01, 1.082867e+00, 1.200314e+00
+	eref(11) = 4.238898e-02, 5.276754e-02, 6.457007e-02, 7.794792e-02, 9.310312e-02
+	Pref(16) = 1.329778e+00, 1.473842e+00, 1.635379e+00, 1.817565e+00, 2.023895e+00
+	eref(16) = 1.102992e-01, 1.298722e-01, 1.522418e-01, 1.779224e-01, 2.075332e-01
+	Pref(21) = 2.258198e+00, 2.524662e+00, 2.827860e+00, 3.172780e+00, 3.564864e+00
+	eref(21) = 2.418095e-01, 2.816116e-01, 3.279352e-01, 3.819200e-01, 4.448598e-01
+	Pref(26) = 4.010047e+00, 4.514801e+00, 5.086185e+00, 5.731897e+00, 6.460330e+00
+	eref(26) = 5.182113e-01, 6.036043e-01, 7.028525e-01, 8.179652e-01, 9.511601e-01
+	Pref(31) = 7.280632e+00, 8.202769e+00, 9.237591e+00
+	eref(31) = 1.104878e+00, 1.281797e+00, 1.484853e+00
+    Cp     = 1.46e-3                # (MJ/kg)/K, specific heat at const P
+    beta   = 3*0.000135229          # 1/K, coef. of thermal expansion
+    T0     = 300                    # K
+    Gamma0 = G0
+    Cv     = Cp/(1+beta*T0*Gamma0)  # 1.247e-3 (MJ/kg)/K    
+}
+#
+# EOS_VT
+#
+EOS_VT:Hayes=HMX; units=hydro::std
+{
+    T_ref = 300
+    rho0 = 1.9      # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    K0 = 12.9       # GPa
+    N  =  9.3
+    Cv = 1.5e-3     # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+}
+#
+# Shear1D
+#
+Shear1D:ConstGV=HMX; units=hydro::std
+{
+    GV      = 12./1.9
+}
+Shear1D:PolyG=PMMA; units=hydro::std
+{
+     V0  = 1./1.185
+    G(1) = 2.31, 15, 83
+}
+#
+# Elastic1D
+#
+EOS:Elastic1D=HMX; units=hydro::std
+{
+   EOS     =   "Hayes::HMX"
+   Shear1D = "ConstGV::HMX"
+#   eps_el_ref = -0.05
+}
+EOS:ElasticConstGV=HMX
+{
+   EOS  = "Hayes::HMX"
+   Gref = 12
+#   eps_el_ref = 0.010873   # on compressive yield surface
+}
+EOS:Elastic1D=PMMA; units=hydro::std
+{
+   EOS     = "PeSpline::PMMA-hydro"
+   Shear1D = "PolyG::PMMA"
+}
+#
+# ElasticPlastic1D
+#
+EOS:VonMises1D=HMX; units=hydro::std
+{
+    Elastic = "ElasticConstGV::HMX"
+    Y0 = 0.26
+    nu = 0.11
+    #
+    A1 = 8; n1 = 2  # rate increases with eps_pl
+    A2 = 1.6        # rate increases with Yf-Y
+    tau = 0.1
+
+    A2 = 0
+    A1 = 0
+}
+EOS:VonMisesConstGV=HMX; units=hydro::std
+{
+    Elastic = "ElasticConstGV::HMX"
+    Y0 = 0.26
+    nu = 0.11
+    #
+    A1 = 8; n1 = 2  # rate increases with eps_pl
+    A2 = 1.6        # rate increases with Yf-Y
+    tau = 0.1
+
+    A2 = 0
+    #A1 = 0
+}
+EOS:Polymer=PMMA; units=hydro::std
+{
+    Elastic = "Elastic1D::PMMA"
+	Vmin = 0.573840     # eta = 0.32
+	depsdeta1 = 9.124572e-01
+	epsy(1) = 0.000000e+00, 1.302037e-04, 8.562419e-04, 2.508800e-03, 5.252026e-03
+	epsy(6) = 9.144920e-03, 1.418219e-02, 2.031978e-02, 2.749027e-02, 3.561213e-02
+	epsy(11) = 4.459520e-02, 5.434401e-02, 6.475995e-02, 7.574274e-02, 8.719161e-02
+	epsy(16) = 9.900650e-02, 1.110892e-01, 1.233445e-01, 1.356819e-01, 1.480166e-01
+	epsy(21) = 1.602711e-01, 1.723767e-01, 1.842744e-01, 1.959162e-01, 2.072657e-01
+	epsy(26) = 2.182990e-01, 2.290044e-01, 2.393831e-01, 2.494486e-01, 2.592269e-01
+	epsy(31) = 2.687562e-01, 2.780865e-01, 2.872796e-01
+    #
+    tau0 = 0.1
+    eps0 = 0.05
+    n    = 2.
+}

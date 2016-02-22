@@ -1,0 +1,30 @@
+proc Support
+    fold::perl {
+        sub Build::CopyHeader {
+            # copy odir/*.h to ndir
+            my ($odir,$ndir) = @_;
+            system("cp $odir/*.h $ndir");
+        }
+        sub Build::CopySource {
+            # copy odir/*.C to ndir/*.cxx
+            my ($odir,$ndir) = @_;
+            system("rm -rf $ndir") if -e $ndir;
+            mkdir $ndir,0777;
+            chdir $odir;
+            @files = glob("*.C");
+            chdir "..";
+            foreach $ofile ( @files )
+            {
+                (my $nfile=$ofile) =~ s/C$/cxx/;
+                system("cp $odir/$ofile $ndir/$nfile");
+            }
+        }
+        sub Build::missing::amrso {
+           # $AMRITA/Amrita/mathops.pl: sub amrso
+           # without check for token amrita:sys::redo
+           local ($object) = @_;
+           local (*objectfile);
+           return !&file'exists($object,'~AMRSO',*objectfile);
+        }
+    }
+end proc

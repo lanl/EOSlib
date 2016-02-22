@@ -1,0 +1,2 @@
+SharedLibDirEOS=`pwd`/lib/Linux
+export SharedLibDirEOS

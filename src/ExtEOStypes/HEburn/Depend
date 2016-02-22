@@ -1,0 +1,69 @@
+HEburn.a:   Subs
+
+TestHErate:     $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+TestHEburn:     $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+TestHEburnCC:   $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+TestHEburn2CC:  $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+CJtest:         $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+HE_Cv:          $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+HE_Gamma:       $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+TestHEeos:      $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+TestAllocation: $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+TestTimeStep:   $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+TestIntegrate:  $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+ReactionTime:   $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+ZNDprofile:     $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl
+ZNDprofileAlt:  $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl
+
+ViscousProfile: $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+FFprofile: $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+PopPlotTrajectory: $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl ./HEburn.so
+
+.INSTALL
+HEburn.a
+HEburn.h        HErate.h
+HE1.h           Arrhenius.h    IgnitionGrowth.h     PnRate.h
+HotSpotHE.h     ArrheniusRT.h  IgnitionGrowthRT.h   HotSpotRate.h
+HotSpotHE2.h    HotSpotRate2.h HotSpotRateExp.h
+HEQ.h           FFQrate.h      FFrate.h
+ReactiveHugoniot.h
+ViscousProfile.h
+HotSpotCC_HE.h  HotSpotCC_Rate.h
+HEburn2.h       HErate2.h
+HotSpotHE_CC.h  HotSpotRateCC.h
+
+
+.INCLUDE
+HEburn.so:  HEburn.a
+	SharedLib HEburn.so HEburn.a $(CC_LIB)/libPTequilibrium.a
+
+$(CC_LIB)/ExtEOS.so:    $(CC_LIB)/libExtEOS.a
+	cd ../../ExtEOS; ../Compile InstallExtEOS

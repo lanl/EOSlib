@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#USAGE: SharedLib lib.so libs.a objs.o
+
+cdir=`pwd`
+FullPath() {
+	case "$1" in
+	/*)
+		echo $1;;
+	*)
+		echo $cdir/$1;;
+	esac
+}
+
+lib=`FullPath $1`
+shift
+
+temp=/tmp/merge$$
+rm -rf $temp
+mkdir $temp
+cd $temp
+
+for file
+do
+    f=`FullPath $file`
+    case $f in
+    *.o)
+    	cp $f .  ;;
+    *.a)
+    	ar xv $f ;;
+    esac
+done
+
+CC -G -o $lib *.o
+cd ..
+rm -rf $temp

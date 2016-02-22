@@ -1,0 +1,19 @@
+proc AmritaUtilize
+   pushcwd $amrita::thisdir/Build
+     AmritaUtilize
+   popcwd
+   fold::amrita { EOSlib tokens
+      set EOSlib::root = $Build::EOSlib
+      set EOSlib::bin  = $Build::bin/$amrita::AMRBIN
+      set EOSlib::inc  = $Build::inc
+      set EOSlib::lib  = $Build::lib
+      set EOSlib::USE  = $Build::USE
+      set EOSlib::env  = SharedLibDirEOS=$EOSlib::lib/$amrita::AMRSO
+   }
+   fold::amrita { build EOSlib ?
+      if( Build::missing::amrso("$EOSlib::lib/libEOSapi") ) then
+          parse <file> $amrita::thisdir/Build/amrita.build
+          set amrita:sys::redo = 1
+      endif
+   }
+end proc

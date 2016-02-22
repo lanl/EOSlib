@@ -1,0 +1,10 @@
+:SharedLibs=EOS
+{
+    EOS = ./EOS.so
+}
+
+EOS:EOS=NULL
+{
+    # Generates error
+    # But loads dll for base class
+}

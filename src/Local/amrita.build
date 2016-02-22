@@ -1,0 +1,6 @@
+utilize Amrita::Build
+
+CopyHeader
+NewLib lib=LocalIo,   dirs=Io
+NewLib lib=LocalMath, dirs=Math
+NewLib lib=String,    dirs=String

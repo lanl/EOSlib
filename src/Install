@@ -1,0 +1,18 @@
+#!/bin/sh
+
+CWD=`dirname $0`
+cd -P $CWD
+src=`pwd`
+os=`uname`
+
+MAKEDIR=
+export MAKEDIR
+
+if ! make CWD=$src "$@" ; then
+	echo; echo "*** src/install failed ***";
+	echo 1; exit 1;
+fi
+
+echo; echo src/install done
+echo 0; exit 0;
+

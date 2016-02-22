@@ -1,0 +1,8 @@
+EOS.h   application interface for equation of state routines
+EOS.a   library needed for applications
+EOS.so  Combined shared object of all libraries needed to use EOS routines
+
+Subs:   subdirectory of source for EOS.a
+
+Routines for specific equations of state are in subdirectory ../EOStypes
+

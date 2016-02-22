@@ -1,0 +1,39 @@
+OS=_OS
+CC_INCLUDE=$(CWD)/include
+CC_LIB=$(CWD)/lib/$(OS)
+
+
+IFLAGS=-I. -I$(CC_INCLUDE) 
+IFLAGS_SUB=-I.. -I$(CC_INCLUDE)
+
+INCLUDE_DIR=$(CC_INCLUDE)
+EXEC_DIR=$(CWD)/bin/$(OS)
+LIB_DIR=$(CWD)/lib/$(OS)
+
+#
+
+Test1:	Hayes.a -leos  -lDataBase -lODE -lOneDFunction -lList \
+                       -lCalc -lLocalIo  -lLocalMath -lString -ldl
+
+Test2:	    $(CC_LIB)/EOS.so -ldl ./Hayes.so
+Test2VT:	$(CC_LIB)/EOS.so -ldl ./Hayes.so
+
+#
+
+HayesVe.a:	SubsVe
+HayesVT.a:	SubsVT
+Hayes.a:	HayesVe.a HayesVT.a
+
+#
+
+.INSTALL
+Hayes.h     Hayes_VT.h  HayesParams.h            
+Hayes.a
+
+.INCLUDE
+Hayes.so: Hayes.a
+	SharedLib Hayes.so Hayes.a
+
+InstallHayes: Hayes.so
+	@cp Hayes.so $(LIB_DIR)/Hayes.so; \
+	$(ECHO) "*** shared object $(LIB_DIR)/Hayes.so installed"

@@ -1,0 +1,292 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: June 23, 2004
+
+.include Units.data
+
+:DataBase.=Environment
+{ # circumvent kdbg messing up environment variables (mx:t14rm only)
+  # SharedLibDirEOS = /home/rsm/AMRITA/EP/EOSlib/src/lib/Linux
+}
+:SharedLibs=EOS
+{
+    # $SharedLibDirEOS is environment variable
+    # other options
+    #       set LD_LIBRARY_PATH
+    #       ld with option
+    #               -rpath SharedLibDirEOS with g++
+    #               -R SharedLibDirEOS     with SUN
+    EOS            = $SharedLibDirEOS/EOS.so
+    #                   void *EOS_Duplicate(void*)
+    #                   void  EOS_Destructor()
+    #                    int  EOS_Initialize(void*)
+    IdealGas       = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_IdealGas_Constructor()
+    StiffenedGas   = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_StiffenedGas_Constructor()
+    Hayes          = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_Hayes_Constructor()
+    HayesBM        = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_HayesBM_Constructor()
+    BirchMurnaghan = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_BirchMurnaghan_Constructor()
+    Keane          = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_Keane_Constructor()
+    UsUp           = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_UsUp_Constructor()
+    UsUpSpline     = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_UsUpSpline_Constructor()
+    PeSpline       = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_PeSpline_Constructor()
+    PTequilibrium  = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_PTequilibrium_Constructor()
+    StiffIdeal     = $SharedLibDirEOS/MaterialLib.so
+    #                   void *EOS_StiffIdeal_Constructor()
+}
+.base  = EOS
+.units = hydro::std
+
+
+/********************************
+*       Ideal Gas               *
+********************************/
+
+IdealGas=5/3; units=hydro::std
+{
+    gamma = 5/3
+    Cv    = 1.5e-3
+    e_ref = 300*Cv                  # T = 300 K
+    V_ref = (gamma-1)*e_ref/0.0001  # P = 1 bar
+}
+
+IdealGas=7/5; units=hydro::MKS
+{
+    gamma = 7/5
+    V_ref = 1/1.275                 # rho = 0.01 g/cm^3
+    e_ref = 1.013e5*V_ref/(gamma-1) # P = 1.013e5
+    Cv    = e_ref/300
+}
+
+/********************************
+*       Stiffened Gas           *
+********************************/
+
+StiffenedGas=HMX; units=hydro::std
+{
+    c0=2.6778; s = 2.68946
+    P0    = 0.0001
+    Cv    = 1e-3
+    e_ref = 0.0
+    V_ref = 0.52
+}
+
+StiffenedGas=PMMA; units=hydro::std
+{
+    V_ref = 0.84317         # cm^3/g
+    e_ref = 0.315
+    P0 = 1.0e-4             # GPa
+    Cv = 1.05e-3            # (MJ/kg)/K
+    c0 = 2.57               # sound speed, km/s
+    s  = 1.54               # d(u_s)/d(u_p)
+}
+
+/********************************
+*       Solids                  *
+********************************/
+
+BirchMurnaghan=HMX; units=hydro::std
+{
+    P_ref = 1.e-4
+    T_ref = 300.
+    V0  = 0.515573          # cm^3/g (V0 at T=0)
+    e0  = 0
+    K0  = 16.5              # GPa
+    Kp0 =  8.7              # dimensionless
+    # Gamma = a + b*(V/V0)
+    a   =  1.1              # dimensionless
+    b   =  -0.20            # dimensionless
+    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
+    #cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
+    #cv(3) = 1.8318931090834e5,  4.1941409666532e2    
+    cv(1) = 5.265e-1, 3.073e2    
+    cv(3) = 1.831e5,  4.194e2    
+# sensitivity
+  #  Kp0 = 8
+    b = 0.9
+    a = 0
+}
+# Additional HMX EOS
+.include HMX.data
+
+# Lithium Floride, single-crystal [100]
+# Marsh p 296-297
+Hayes=LiF; units=hydro::std
+{
+    rho0 = 2.638            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.05e-3            # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 5.15               # sound speed, km/s
+    s  = 1.35               # d(u_s)/d(u_p)
+}
+
+# PMMA = polymethylmethacrylate = plexiglas = lucite
+Hayes=PMMA; units=hydro::std
+{
+    rho0 = 1.186            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.05e-3            # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 2.57               # sound speed, km/s
+    s  = 1.54               # d(u_s)/d(u_p)
+}
+UsUpSpline=PMMA; units=hydro::std
+{
+# The dynamic mechanical behavior of polymethyl methacrylate
+# K. W. Schuler and J. W. Nunziato
+# Rheol. Acta. 13 (1974) pp. 265-273.
+    rho0 = 1.185    # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    Cv = 1.e-3      # (MJ/kg)/K
+    G0 = G1 = 0.5
+    s1      = 1.54
+    dusdup0 = 3.89798
+    up_data(1) = 0.00000, 0.0715768, 0.148965, 0.228419, 0.308670
+    us_data(1) = 2.75267, 2.95643,   3.07646,  3.14489,  3.18735
+    up_data(6) = 0.390610, 0.477189, 0.573047, 0.684783, 0.815535
+    us_data(6) = 3.22678,  3.28500,  3.38133,  3.53556,  3.74279   
+}
+
+# polymethylpentene
+Hayes=TPX; units=hydro::std
+{
+    V0 = 1.20482            # cm^3/g
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.05e-3            # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    K0 = 3.6                # GPa
+    N  = 5.5
+    #c0 = 2.17 s  = 1.52    # from Ric Gustavsen
+}
+
+# polyethylene, CH2
+Hayes=polyethylene; units=hydro::std
+{
+# Marsh, p 439
+    rho0 = 0.916            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.5e-3            # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 2.8
+    s  = 1.53
+}
+
+# Kel-F = polychlorotrifluroethylene
+Hayes=Kel-F; units=hydro::std
+{
+/************************
+Refs:
+    LANL Shock Hugoniot Date, pp. 434-435
+    
+    In-Situ Magnetic Gauge Measurements in Kel-F
+    S A. Sheffield and R. R. Alcon
+    Shock Compression of condensed matter - 1991
+    pp 909 - 912
+    u_s = 1.989 + 1.763 u_p for P < 15 GPa
+    plus slightly visco-elastic
+***********************/
+    rho0 = 2.122            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.05e-3            # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 2.03               # sound speed, km/s
+    s  = 1.64               # d(u_s)/d(u_p)
+}
+
+Hayes=estane; units=hydro::std
+{
+    rho0 = 1.2              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    K0 = 7.37               # GPa
+    N  = 5.8
+    Cv = 1.e-3              # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+}
+
+
+Hayes=Al2024; units=hydro::std
+{
+# Ref: G. R. Fowles
+#      Shock Wave Compression of Hardened and Annealed 2024 Aluminium
+#      J. Appl. Phys. 32 (1961) pp. 1475-1487
+# LASL shock Hugoniot Data p 166
+    rho0 = 2.794            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 9.25e-4            # (MJ/kg)/K
+    Gamma0 = 2.13
+    e0 = T0*Cv
+    c0 = 5.37
+     s = 1.17
+}
+             
+
+Hayes=Quartz.x-cut; units=hydro::std
+{
+# Ref: Quartz gauge techniques for impact experiments
+#      G. E. Ingram and R. A. Graham
+#      Fifth Det Symposium
+    rho0 = 2.650            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.e-3              # (MJ/kg)/K
+    Gamma0 = 1
+    e0 = T0*Cv
+# below 25 kbar
+    c0 = 5.72
+    s = 0.01
+}
+
+/********************************
+*       EOS_VT                  *
+********************************/
+.include EOS_VT.data
+
+/********************************
+*        SESAME                 *
+********************************/
+.include Sesame.data
+
+/********************************
+*       Explosives              *
+********************************/
+.include Explosives.data
+
+/********************************
+*       ElasticPlastic1D        *
+********************************/
+.include ElasticPlastic1D.data
+
+
+/********************************
+*       Uniaxial                * (depricated)
+********************************/
+.include Uniaxial.data
+
+/********************************
+*       ElasticPlastic          * (depricated)
+********************************/
+.include ElasticPlastic.data

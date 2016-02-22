@@ -1,0 +1,4 @@
+utilize Amrita::Build
+
+CopyHeader
+NewLib lib=ArrheniusHE, dirs=Subs, so=yes

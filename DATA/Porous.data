@@ -1,0 +1,243 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: Feb. 26, 2004
+
+/********************************
+*       Porous                  *
+********************************/
+
+:SharedLibs.=EOS
+{
+    EqPorous          = $SharedLibDirEOS/Porous.so
+    DissipativePorous = $SharedLibDirEOS/Porous.so
+    FrozenPorous      = $SharedLibDirEOS/Porous.so
+}
+.base=EOS
+.units=hydro::std
+
+
+EqPorous=estane; units=hydro::std
+{
+    #V_ref = 0.84
+    EOS   = "Hayes::estane"
+    PhiEq =  "Phi0::estane"
+}
+
+EqPorous=HMX.Pc; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =  "Phi0::HMX"
+}
+
+#
+
+EqPorous=HMX.EC11; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =    "EC::EC11"
+}
+
+EqPorous=HMX.EC17; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =    "EC::EC17"
+}
+
+EqPorous=HMX.EC8; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =    "EC::EC8"
+}
+
+EqPorous=HMX.EC9; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =    "EC::EC9"
+}
+
+#
+
+EqPorous=HMX.EC11fit; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =  "Phi1::EC11.fit"
+}
+
+EqPorous=HMX.65; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =  "Phi1::EC.65"
+}
+
+EqPorous=HMX.74; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =  "Phi1::EC.74"
+}
+
+DissipativePorous=HMX.EC65d; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =  "Phi1::EC.65"
+}
+
+FrozenPorous=HMX.65f90; units=hydro::std
+{
+    EOS   = "Hayes::HMX"
+    PhiEq =  "Phi1::EC.65"
+    phi = 0.9034
+}
+
+DissipativePorous=foam; units=hydro::std
+{
+    EOS   = "Hayes::foam"
+    PhiEq =  "Phi0::foam"
+}
+Hayes=foam; units=hydro::std
+{
+    V0 = 1/1.9      # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    K0 = 12.9       # GPa
+    N  =  9.3
+    Cv = 1.5e-3     # (MJ/kg)/K
+    Gamma0 = 3*V0   # Gamma/V = 3
+    e0 = T0*Cv
+    #c0=2.6778 s = 2.68946
+}
+
+
+/********************************
+*       Compaction Laws         *
+********************************/
+
+:SharedLibs=PhiEq
+{
+    PhiEq = $SharedLibDirEOS/Porous.so
+    #
+    Phi0  = $SharedLibDirEOS/Porous.so
+    Phi1  = $SharedLibDirEOS/Porous.so
+    EC    = $SharedLibDirEOS/Porous.so
+}
+.base=PhiEq
+.units=hydro::std
+
+Phi0=foam; units=hydro::std
+{   # simple crush-up model
+    phi0    = 0.2           # initial porosity
+    Pc      = 0.01          # crushup pressure (GPa)
+    V0      = 1/1.9         # HMX V0 (cm^3/g)
+    P0      = 1.0e-4        # HMX P0 (GPa)
+    scale = 1              # P0 *= phi0, V0 /= phi0
+    abs_tol=1e-4
+    rel_tol=1e-4
+}
+
+Phi0=estane; units=hydro::std
+{
+    phi0    = 0.985         # initial porosity
+    Pc      = 0.1           # crushup pressure (GPa)
+    V0      = 0.833333      # estane V0 (cm^3/g)
+    P0      = 1.0e-4        # HMX P0 (GPa)
+    abs_tol=1e-4
+    rel_tol=1e-4
+}
+
+
+Phi0=HMX; units=hydro::std
+{   # simple crush-up model
+    phi0    = 0.65          # initial porosity
+    Pc      = 0.2           # crushup pressure (GPa)
+    V0      = 0.526316      # HMX V0 (cm^3/g)
+    P0      = 1.0e-4        # HMX P0 (GPa)
+    scale = 1              # P0 *= phi0, V0 /= phi0
+    abs_tol=1e-4
+    rel_tol=1e-4
+}
+
+
+EC=EC11; units=hydro::std
+{   # Elban-Chiarito data for HMX11
+    expt = "HMX11"
+    hmx  = "Hayes::HMX"
+}
+
+EC=EC17; units=hydro::std
+{   # Elban-Chiarito data for HMX17
+    expt = "HMX17"
+    hmx  = "Hayes::HMX"
+}
+
+EC=EC8; units=hydro::std
+{   # Elban-Chiarito data for HMX8
+    expt = "HMX8"
+    hmx  = "Hayes::HMX"
+}
+
+EC=EC9; units=hydro::std
+{   # Elban-Chiarito data for HMX9
+    expt = "HMX9"
+    hmx  = "Hayes::HMX"
+}
+
+#
+
+Phi1=EC11.fit; units=hydro::std
+{   # fit to Elban-Chiarito data for HMX11
+    V0      = 0.526316      # HMX V0 (cm^3/g)
+    P0      = 1.0e-4        # HMX P0 (GPa)
+    PV0     = P0*V0
+    PV1     = 0.7*V0
+    phi0    = 0.64
+    phi1    = 1
+    #
+    n = 10
+    a = 1.6
+    dphidP0 = 0.04
+    dphidP1 = 0.2
+    abs_tol = 1e-5
+    rel_tol = 1e-5
+    sphi0 = phi0
+}
+
+Phi1=EC.65; units=hydro::std
+{
+    :use=EC11.fit           # scale fit Elban-Chiarito data for HMX11
+    sphi0   = 0.65          # scaled from 0.64
+    sPV1    = 1             # scale factor of PV1
+}
+
+Phi1=EC.74; units=hydro::std
+{
+    :use=EC11.fit           # scale fit Elban-Chiarito data for HMX11
+    sphi0   = 0.74          # scaled from 0.64
+    sPV1    = 1             # scale factor of PV1
+}
+
+/******************/
+
+EOS:EqPorous=sylgard; units=hydro::std
+{
+    EOS   = "Hayes::sylgard"
+    PhiEq = "Phi0::sylgard"
+}
+Phi0=sylgard; units=hydro::std
+{
+    phi0    = 0.90         # initial porosity
+    Pc      = 0.15          # crushup pressure (GPa)
+    V0      = 1/1.014   # sylgard V0 (cm^3/g)
+    P0      = 1.0e-4       # HMX P0 (GPa)
+    abs_tol=1e-6
+    rel_tol=1e-6
+}
+EOS:Hayes=sylgard; units=hydro::std
+{
+    rho0 = 1.014            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.e-3              # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 1.9 +0.4
+    s  = 1.35
+}

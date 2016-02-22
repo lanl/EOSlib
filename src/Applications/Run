@@ -1,0 +1,145 @@
+#!/bin/sh
+
+# usage: Run [-test] Prog args
+#        Sets environment variables for EOSlib,
+#        and default data file.
+#        Then searches for Prog in $exec_path
+#        and execs to Prog
+#  Note:
+#        ln -s $EOSlib/Run bin_dir/Run
+#        PATH=$PATH:bin_dir
+#        allows this script to be run from any directory
+
+find_exec ()
+{
+    prog=$1
+    for dir in  $exec_path ; do
+        if [ -x $dir/$prog -a ! -d $dir/$prog ] ; then
+           echo $dir/$prog;
+           break
+        fi
+    done
+}
+
+std_db="Convert Data EOSdata ImpedanceMatch Isotherm Plastic Wave Detonation"
+std_db="$std_db Deflagration CJstate CJ_plot HotSpot Dissipation"
+std_db="$std_db ZNDprofile ZNDprofileTW"
+std_db="$std_db ReactiveShockLoci ViscousProfile FFprofile PopPlotTrajectory"
+std_db="$std_db Polar DetPolar"
+#
+#
+prog=$0
+#
+#
+if [ "$1" = "help" ] ; then
+   prog=`basename $prog`
+cat << EOF
+usage: $prog UTILITY [+file FILE_LIST] [ARGS]
+  UTILITY is EOSlib program
+  +file option adds colon separted list of EOS data files to default list
+  ARGS are arguments specific to UTILITY program
+purpose:
+  Sets EOSlib environment variables and default EOS data file list
+  then runs UTILITY program
+  Common EOS UTILITY programs are:
+    Wave            - calculate Hugoniot locus or isentrope
+    Detonation      - calculate detonation locus or CJ release isentrope
+    Isotherm        - calculate points on isotherm
+    EOSdata         - prints EOS material parameters for specified material
+    ImpedanceMatch  - solve Riemann problem for specified left and right states
+Examples:
+  $prog Wave help
+  $prog Wave       material HEburn::PBX9501.sam Ps 10
+  $prog Detonation material HEburn::PBX9501.sam P2 10
+  $prog Isotherm   material HEburn::PBX9501.sam Ps 10 P2 1
+  $prog EOSdata    material HEburn::PBX9501.sam all
+  $prog Data base EOS type HEburn name PBX9501.sam parameters
+  $prog ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9501.sam
+See also:
+  listEOS to find material in EOS data file list
+EOF
+   exit 1
+fi
+#
+#
+while [ -L $prog ] ; do
+    link=`ls -l $prog | sed -e 's/.*->[ 	]*//'`
+    case $link in
+    /*)
+        prog=$link;;
+     *)
+        prog="`dirname $prog`/$link";;
+    esac
+done
+case $prog in
+/*)
+    ;;
+ *)
+    cwd=`pwd`
+    while [ -L $cwd ] ; do
+        link=`ls -l $cwd | sed -e 's/.*->[ 	]*//'`
+        case $link in
+        /*)
+            cwd=$link;;
+         *)
+            cwd="`dirname $cwd`/$link";;
+        esac
+    done
+    prog=$cwd/$prog;;
+esac
+src=`(cd \`dirname $prog\` ; pwd)`
+EOSlib=`(cd $src/..; pwd)`
+#
+db=$EOSlib/DATA/EOS.data:$EOSlib/DATA/Porous.data
+if [ "$1" = "-test" ] ; then
+   EOSlib=$EOSlib/src
+   shift
+fi
+os=`uname -s`
+
+SharedLibDirEOS=$EOSlib/lib/$os
+export SharedLibDirEOS
+exec_path=". ./bin ./bin/$os $EOSlib/bin $EOSlib/bin/$os"
+
+if [ $# -lt 1 ] ; then
+   echo "ERROR, Run: must specify program to be run" 1>&2
+   echo "    usage: Run [-test] Prog args" 1>&2
+   exit 1
+fi
+prog=$1
+shift
+Exec=`find_exec $prog`
+if [ -z "$Exec" ] ; then
+   echo "ERROR, Run: Can not find executable $prog" 1>&2
+   exit 1
+fi
+
+case $prog in
+  *.pl)
+       Exec="perl $Exec";;
+  *.dg)
+       Exec="perl $EOSlib/bin/ColorDgraph.pl -f $Exec";;
+  *.sh)
+       Exec="sh $EOSlib/bin/$prog";;
+  *)
+       if [ -r EOS.data ] ; then
+          db=EOS.data
+       fi
+       for p in $std_db ; do
+         if [ $prog = $p ] ; then
+            if [ "$1" = "+file" ] ; then
+               db=$db:$2
+               shift 2
+            fi
+            Exec="$Exec files $db"
+            break
+         fi
+       done ;;
+esac
+
+
+if [ $# -gt 0 ] ; then
+   exec $Exec "$@"
+else
+   exec $Exec
+fi

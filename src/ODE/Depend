@@ -1,0 +1,14 @@
+ODE.a : Subs
+
+Harmonic: ODE.a -lLocalIo -lOneDFunction -lList -lLocalMath
+HarmonicF: ODE.a -lLocalIo -lOneDFunction -lList -lLocalMath	
+HarmonicB: ODE.a -lLocalIo -lOneDFunction -lList -lLocalMath		
+RandomHarmonic: ODE.a -lLocalIo -lOneDFunction -lList -lLocalMath
+	
+		
+
+.INSTALL
+ODE.h
+ODE.a
+
+

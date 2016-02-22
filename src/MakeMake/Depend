@@ -1,0 +1,16 @@
+CC_INCLUDE=
+CC_LIB=
+
+IFLAGS=-I.
+IFLAGS_SUB=-I..
+INCLUDE_DIR=
+EXEC_DIR=
+LIB_DIR=
+LFLAGS=
+
+
+
+Echo:
+MakeMake: MakeLib.a
+
+MakeLib.a: subs

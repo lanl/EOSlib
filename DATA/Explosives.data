@@ -1,0 +1,405 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: June 23, 2004
+
+/********************************
+*       Explosives              *
+********************************/
+
+:SharedLibs.=HErate
+{
+    HErate    = $SharedLibDirEOS/ExtHE.so
+    Arrhenius = $SharedLibDirEOS/ExtHE.so
+    PnRate    = $SharedLibDirEOS/ExtHE.so
+    IgnitionGrowth = $SharedLibDirEOS/ExtHE.so
+    FFrate    = $SharedLibDirEOS/ExtHE.so
+    FFQrate   = $SharedLibDirEOS/ExtHE.so
+}
+
+HErate:Arrhenius=HMX; units=hydro::std
+{
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499
+    tol   = 1.e-6
+    n   =  1                        # reaction order
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+}
+
+HErate:PnRate=PBX9501; units=hydro::std
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics in HMX-based
+#       Condensed Explosive PBX-9501"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       draft 1/4/04
+    tol = 1.e-5
+    nu = 0.93
+    k  = 110                        # 1/microsec
+    Pcj = 36.3                      # GPa
+    N   = 3.5
+}
+#
+#
+#
+:SharedLibs.=EOS
+{
+    JWL            = $SharedLibDirEOS/MaterialLib.so
+    HEfit          = $SharedLibDirEOS/MaterialLib.so
+    BKW            = $SharedLibDirEOS/MaterialLib.so
+    DavisReactants = $SharedLibDirEOS/MaterialLib.so
+    DavisProducts  = $SharedLibDirEOS/MaterialLib.so
+    #
+    ArrheniusHE    = $SharedLibDirEOS/ExtHE.so
+    IdealHE        = $SharedLibDirEOS/ExtHE.so
+    StiffIdealHE   = $SharedLibDirEOS/ExtHE.so
+    StiffIdealHEav = $SharedLibDirEOS/ExtHE.so
+    HEburn         = $SharedLibDirEOS/ExtHE.so
+}
+.base =EOS
+.units=hydro::std
+#
+#
+#
+EOS:HEburn=PBX9501.sam; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "Hayes::PBX9501.sam"
+    products  = "Sesame::PBX9501"
+    HErate    = "Arrhenius::HMX";
+}
+
+EOS:HEburn=PBX9501.davis; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "DavisReactants::PBX9501"
+    products  = "DavisProducts::PBX9501"
+    HErate    = "PnRate::PBX9501";
+}
+#
+#
+#
+EOS:DavisProducts=PBX9501;
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics in HMX-based
+#       Condensed Explosive PBX-9501"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       draft 1/4/04
+    rho0 = 1.844    # g/cm^3
+    e0   = 5.85     # MJ/kg
+    a    = 0.7965
+    n    = 1.758
+    Vc   = 0.8314   # cm^3/g
+    pc   = 3.738    # GPa
+    b    = 0.7
+    k    = 1.3
+    Cv   = 0.945e-3 # (MJ/kg)/K
+    Tc   = 2407.34
+    #
+    Cv   = 2e-3
+    Tc  -= 227
+}
+
+EOS:DavisReactants=PBX9501;
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics in HMX-based
+#       Condensed Explosive PBX-9501"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       draft 1/4/04
+    rho0 = 1.844    # g/cm^3
+    e0   = 0.       # MJ/kg
+    P0   = 1.e-4    # GPa
+    T0   = 293.     # K
+    S0   = 0.       # (MJ/kg)/K
+    A    = 2.339    # km/s
+    B    = 2.737
+    C    = 1.45
+    G0   = 0.7989
+    Z    = -0.03076
+    Cv   = 1.088e-3 # (MJ/kg)/K
+    alpha = 0.9644
+}
+#
+#
+#
+JWL=HMX; units=hydro::std
+{
+# Detonation EOS at LLNL, 1993
+# P. C. Souers and L. C. Haselman Jr.
+# page 5-19
+    V0    = 1/1.894         # cm^3/g
+    A     = 858.0805        # GPa
+    B     =   7.546531      # GPa
+    C     =   0.781274      # GPa
+    R1    =   4.306         # -
+    R2    =   0.80          # -
+    omega =   0.3           # -
+    Edet    = 11.0*V0       # MJ/kg
+#
+    Cv    = 1.e-3        # (MJ/kg)/K
+    Tcj   = 3000         # K
+}
+
+JWL=PBX9404; units=hydro::std
+{
+# Detonation EOS at LLNL, 1993
+# P. C. Souers and L. C. Haselman Jr.
+# page 5-19
+    V0    = 1/1.843         # cm^3/g
+    A     = 740.349         # GPa
+    B     =  11.7009        # GPa
+    C     =   0.725292      # GPa
+    R1    =   4.317         # -
+    R2    =   1.05          # -
+    omega =   0.25          # -
+    Edet    = 10.5*V0       # MJ/kg
+#
+    Cv    = 1.e-3        # (MJ/kg)/K
+    Tcj   = 3000         # K
+}
+#
+#
+#
+HEfit=PBX9501; units=hydro::std
+{
+# Release isentrope of overdrive plastic-bonded explosive PBX-9501
+# R. S. Hixon, M. S. Shaw, J. N. Fritz, J. E. Vorthman, W. W. Anderson
+# J. Appl. Phys. 88 (2000) pp 6287--6293
+    V0      = 1/1.835
+    rho_CJ  = 2.4403; P_CJ    = 35.3
+    rho_min = 1.9;    rho_max = 3.2
+    Pmin    = 18;     Pmax    = 80
+    # fit to PCJ
+    Gamma0  = 3
+       nfCJ = 6
+     fCJ(1) = 2.4287, 0.0378, 0.1005, -0.7166, 0.4537, 0.8062, -0.8473
+    # fit to rho*Gamma
+       ngCJ = 3
+     gCJ(1) = 1.1520, -1.1490, 4.2382, -2.2234
+}
+#
+#
+#
+EOS:PTequilibrium=HMX0.8; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::HMX"
+    eos2 = "JWL::HMX"
+    lambda1 = 0.8
+}
+EOS:PTequilibrium=HMX0.99; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::HMX"
+    eos2 = "JWL::HMX"
+    lambda1 = 0.99
+}
+EOS:PTequilibrium=HMX0.01; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::HMX"
+    eos2 = "JWL::HMX"
+    lambda1 = 0.01
+}
+#
+#
+#
+EOS:ArrheniusHE=HMX.hotspot; units=hydro::std
+{
+    :use=HMX
+    lambda = 1  # all products    
+}
+
+EOS:ArrheniusHE=HMX; units=hydro::std
+{
+    lambda = 0  # all reactants
+    reactants = "BirchMurnaghan::HMX"
+    products  = "JWL::HMX4000"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
+}
+EOS:JWL=HMX4000; units=hydro::std
+{
+# Detonation EOS at LLNL, 1993
+# P. C. Souers and L. C. Haselman Jr.
+# page 5-19
+    V0    =   0.525976      # cm^3/g
+    e0    =   0.174655      # MJ/kg
+    A     = 858.0805        # GPa
+    B     =   7.546531      # GPa
+    C     =   0.781274      # GPa
+    R1    =   4.306         # -
+    R2    =   0.80          # -
+    omega =   0.3           # -
+    Edet  =  11.0*V0        # MJ/kg
+#
+    Cv    = 1.5e-3          # (MJ/kg)/K
+    Tcj   = 4000            # K
+    Scj   = 0.00126474 + 0.00164566 # (MJ/kg)/K
+}
+#
+#
+EOS:ArrheniusHE=PBX9501.sam; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    tol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "Hayes::PBX9501.sam"
+    #reactants = "BirchMurnaghan::HMXfit.sam"
+    products  = "Sesame::PBX9501"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
+    #
+    k  *= 10
+}
+BirchMurnaghan=HMXfit.sam; units=hydro::std
+{
+    :use=HMX
+    V0  = V0*1.9/1.833      # cm^3/g
+    e0 = 6.1021
+}
+EOS:Hayes=PBX9501.sam; units=hydro::std
+{
+    # Gibbs & Popolato, p 116
+    rho0 = 1.843            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # 0.1 < Up < 0.9
+    c0= 2.953
+    s = 1.507 + 0.179
+    #
+    rho0 = 1.833
+    e0 = 6.1021
+    Cv = 2.0e-3             # (MJ/kg)/K    
+    Gamma0 = 0.5
+}
+#
+EOS:ArrheniusHE=PBX9501; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    tol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "Hayes::PBX9501.sam"
+    #reactants = "BirchMurnaghan::HMXfit"
+    products  = "JWL::PBX9404"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
+    #
+    #k  *= 10
+}
+EOS:Hayes=PBX9501; units=hydro::std
+{
+    # Gibbs & Popolato, p 116
+    rho0 = 1.843            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # 0.1 < Up < 0.9
+    c0= 2.953
+    s = 1.507
+    #
+    rho0 = 1.833
+    /**
+    c0   = 2.501
+    s    = 2.261
+    **/
+}
+#
+#
+#
+EOS:HEburn=PBX9404.HOM; units=hydro::HiP
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-8
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-5
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "UsUp::PBX9404"
+    products  = "BKW::PBX9404"
+    HErate    = "FFrate::PBX9404";
+}
+#
+UsUp=PBX9404; units=hydro::HiP
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-8
+    rho0 = 1.844            # g/cm^3
+    P0 = 1.0e-6             # Mb
+    T0 = 300                # degrees K
+    Cv = 0.4/23.89e3        # 0.4 cal/g -> (Mb*cc/g)/K
+    G0 = G1 = 0.675         # Gamma   
+    c0= 0.2423
+    s = 1.883
+}
+#
+BKW=PBX9404; units=hydro::HiP
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-8
+    V0 = 1/1.844
+    e0 = 0
+    de = 0.1
+    Pn(1)=-3.53906259964,-2.57737590393,    2.60075423332e-1, 1.39083578508e-2,-1.13963024075e-2
+    en(1)=-1.61913041133, 5.21518534192e-1, 6.77506594107e-2, 4.26524264691e-3, 1.04679999902e-4 
+    Tn(1)= 7.36422919790,-4.93658222389e-1, 2.92353060961e-2, 3.30277402219e-2,-1.14532498206e-2
+    Cv = 0.5/23.89e3        # 0.5 cal/g -> (Mb*cc/g)/K
+}
+#
+HErate:FFrate!=PBX9404; units=hydro::std
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+#  ln(x/cm) = c1 + c2*ln(P/Mb)
+    c1 = -5.040996
+    c2 = -1.365368
+# Pop plot parameters: log_10(P/GPa) = a - b*log_10(x/mm)
+#    a = 2-1/c2-c1/c2/ln(10) = 1.12897
+#    b = -1/c2 = 0.732403
+# Gibbs & Popolato p 93, PBX 9404 @ rho0 = 1.84
+#    a = 1.11
+#    b = 0.65
+    a = 2-1/c2-c1/c2/log(10)    # = 1.12897, calc log is ln
+    b = -1/c2                   # = 0.732403
+    lambda_max = 0.95
+    dlambda    = 0.1
+    dlambda_dt = 0.1
+}

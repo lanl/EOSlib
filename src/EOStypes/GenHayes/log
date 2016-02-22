@@ -1,0 +1,135 @@
+make: `MakeFile' is up to date.
+cd SubsVT; MakeMake *.[hcCf] > MakeFile             \
+		"CWD=/home/ralph/AMRITA/CFD/EOSlib/src"           "OS=Linux"           \
+                "DFLAGS=-DLINUX"     "DEBUG=-ggdb"     \
+		"C_COMPL=gcc -DSTL"   "CFLAGS=-fpic"   \
+		"CC_COMPL=g++ -DSTL" "CCFLAGS=-fpic" \
+		"F_COMPL=g77 -DSTL"   "FFLAGS=-fpic"   \
+		"IFLAGS=-I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include";			    \
+		make -f MakeFile Touch
+make[1]: Entering directory `/home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/SubsVT'
+touch MakeFile
+make[1]: Leaving directory `/home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/SubsVT'
+
+cd SubsVe; make -f MakeFile                         \
+		"CWD=/home/ralph/AMRITA/CFD/EOSlib/src"           "OS=Linux"           \
+                "DFLAGS=-DLINUX"     "DEBUG=-ggdb"     \
+		"C_COMPL=gcc -DSTL"   "CFLAGS=-fpic"   \
+		"CC_COMPL=g++ -DSTL" "CCFLAGS=-fpic" \
+		"F_COMPL=g77 -DSTL"   "FFLAGS=-fpic"   \
+		"IFLAGS=-I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include";
+make[1]: Entering directory `/home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/SubsVe'
+touch MakeFile
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BirchMurnaghan2VT.C;
+ar ru lib.a BirchMurnaghan2VT.o;
+ar: creating lib.a
+rm BirchMurnaghan2VT.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BirchMurnaghan.C;
+ar ru lib.a BirchMurnaghan.o;
+rm BirchMurnaghan.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BirchMurnaghan_database.C;
+ar ru lib.a BirchMurnaghan_database.o;
+rm BirchMurnaghan_database.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BMinitialize.C;
+ar ru lib.a BMinitialize.o;
+rm BMinitialize.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BMparams.C;
+ar ru lib.a BMparams.o;
+rm BMparams.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BMparamsFunc.C;
+ar ru lib.a BMparamsFunc.o;
+rm BMparamsFunc.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c GenHayes.C;
+ar ru lib.a GenHayes.o;
+rm GenHayes.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c IntSCv.C;
+ar ru lib.a IntSCv.o;
+rm IntSCv.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c Keane2VT.C;
+ar ru lib.a Keane2VT.o;
+rm Keane2VT.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c Keane.C;
+ar ru lib.a Keane.o;
+rm Keane.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c Keane_database.C;
+ar ru lib.a Keane_database.o;
+rm Keane_database.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c KeaneInitialize.C;
+ar ru lib.a KeaneInitialize.o;
+rm KeaneInitialize.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c KeaneParams.C;
+ar ru lib.a KeaneParams.o;
+rm KeaneParams.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c KeaneParamsFunc.C;
+ar ru lib.a KeaneParamsFunc.o;
+rm KeaneParamsFunc.o
+make[1]: Leaving directory `/home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/SubsVe'
+ln SubsVe/lib.a GenHayesVe.a
+
+
+cd SubsVT; make -f MakeFile                         \
+		"CWD=/home/ralph/AMRITA/CFD/EOSlib/src"           "OS=Linux"           \
+                "DFLAGS=-DLINUX"     "DEBUG=-ggdb"     \
+		"C_COMPL=gcc -DSTL"   "CFLAGS=-fpic"   \
+		"CC_COMPL=g++ -DSTL" "CCFLAGS=-fpic" \
+		"F_COMPL=g77 -DSTL"   "FFLAGS=-fpic"   \
+		"IFLAGS=-I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include";
+make[1]: Entering directory `/home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/SubsVT'
+touch MakeFile
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BirchMurnaghan2Ve.C;
+ar ru lib.a BirchMurnaghan2Ve.o;
+ar: creating lib.a
+rm BirchMurnaghan2Ve.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BirchMurnaghanVT.C;
+ar ru lib.a BirchMurnaghanVT.o;
+rm BirchMurnaghanVT.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BirchMurnaghanVT_database.C;
+ar ru lib.a BirchMurnaghanVT_database.o;
+rm BirchMurnaghanVT_database.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c BM_VTinitialize.C;
+ar ru lib.a BM_VTinitialize.o;
+rm BM_VTinitialize.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c GenHayesVT.C;
+ar ru lib.a GenHayesVT.o;
+rm GenHayesVT.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c Keane2Ve.C;
+ar ru lib.a Keane2Ve.o;
+rm Keane2Ve.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c KeaneVT.C;
+ar ru lib.a KeaneVT.o;
+rm KeaneVT.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c KeaneVT_database.C;
+ar ru lib.a KeaneVT_database.o;
+rm KeaneVT_database.o
+g++ -DSTL -ggdb -DLINUX -fpic -I.. -I/home/ralph/AMRITA/CFD/EOSlib/src/include -c Keane_VTinitialize.C;
+ar ru lib.a Keane_VTinitialize.o;
+rm Keane_VTinitialize.o
+make[1]: Leaving directory `/home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/SubsVT'
+ln SubsVT/lib.a GenHayesVT.a
+
+MergeLibs GenHayes.a GenHayesVe.a GenHayesVT.a
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c Test1.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o Test1 Test1.o 	GenHayes.a -leos  -lDataBase -lODE -lOneDFunction -lList                         -lCalc -lLocalIo  -lLocalMath -lString -ldl
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c Test2.C;
+SharedLib GenHayes.so GenHayes.a
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o Test2 Test2.o 	    /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so -ldl ./GenHayes.so
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c Test2K.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o Test2K Test2K.o 	    /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so -ldl ./GenHayes.so
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c Test2VT.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o Test2VT Test2VT.o 	/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so -ldl ./GenHayes.so
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c Test3.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o Test3 Test3.o 	    /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so -ldl ./GenHayes.so
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c Isobar.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o Isobar Isobar.o 	    /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so /home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/GenHayes.so -ldl
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c HotSpot.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o HotSpot HotSpot.o 	/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so /home/ralph/AMRITA/CFD/EOSlib/src/EOStypes/GenHayes/GenHayes.so -ldl
+g++ -DSTL -ggdb -DLINUX -fpic -I. -I/home/ralph/AMRITA/CFD/EOSlib/src/include  -c MinP.C;
+g++ -DSTL -ggdb -fpic -L/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux \
+		-o MinP MinP.o        -lLocalIo  -lLocalMath -lm

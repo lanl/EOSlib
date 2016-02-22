@@ -1,0 +1,11 @@
+Calc.a: Subs
+
+TestCalc: Calc.a -lList -lLocalIo -lLocalMath -lString
+
+
+.INSTALL
+Calc.h      CalcVars.h  CalcVarTypes.h   CalcArrays.h  CalcArrayTypes.h
+Scanner.h   Token.h
+Calc.a
+
+

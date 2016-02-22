@@ -1,0 +1,35 @@
+#OS=_OS
+#CC_INCLUDE=$(CWD)/include
+#CC_LIB=$(CWD)/lib/$(OS)
+#
+#IFLAGS=-I. -I$(CC_INCLUDE) 
+#IFLAGS_SUB=-I.. -I$(CC_INCLUDE)
+#
+#INCLUDE_DIR=$(CC_INCLUDE)
+#EXEC_DIR=$(CWD)/bin/$(OS)
+#LIB_DIR=$(CWD)/lib/$(OS)
+
+#
+
+TestDnKappa :  ./DnKappa.so $(CC_LIB)/EOS.so $(CC_LIB)/EOSmanager.so -ldl
+DnKappa :      $(CWD)/$(PWD)/DnKappa.so $(CC_LIB)/EOS.so $(CC_LIB)/EOSmanager.so -ldl
+
+#
+
+DnKappa.a:    Subs
+
+#
+
+.INSTALL
+DnKappa.h ScaledDn.h
+DnKappa.a
+
+.INCLUDE
+$(CWD)/$(PWD)/DnKappa.so: DnKappa.so
+
+DnKappa.so: DnKappa.a
+	SharedLib DnKappa.so DnKappa.a
+
+InstallDnKappa: DnKappa.so
+	@cp DnKappa.so $(LIB_DIR)/DnKappa.so; \
+	$(ECHO) "*** shared object $(LIB_DIR)/DnKappa.so installed"

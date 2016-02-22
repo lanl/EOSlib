@@ -1,0 +1,24 @@
+#! /usr/bin/env amrita
+
+if( token(amrita:sys::debug) ) then
+  fold::amrita { print amrita::* tokens 
+    tokens amrita::* -> amrita
+    foreach var  ( $amrita ) split on /\s+/
+      if( token($var) ) then
+          echo $var = $$var
+      else
+          echo $var
+      end if
+    end foreach
+  }
+  error debug
+end if
+utilize Amrita::Build {
+  purge = no
+}
+fold::amrita { print Build::* tokens
+  tokens Build::* -> Build
+  foreach var  ( $Build ) split on /\s+/
+    echo $var = $$var
+  end foreach
+}

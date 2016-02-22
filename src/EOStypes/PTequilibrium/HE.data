@@ -1,0 +1,24 @@
+.include ../../../DATA/EOS.data
+.include ../../../../Simulations/HE.new/HE.data
+
+:DataBase.=Environment
+{
+#  SharedLibDirEOS = $PWD/../../lib/Linux
+# circumvent kdbg messing up environment variables (mx:t14rm only)
+  SharedLibDirEOS = /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
+}
+
+
+EOS:PTequilibrium=LX-17; units=hydro::std
+{
+    eos1 = "JWL::LX-17.reactants"
+    eos2 = "JWL::LX-17.products"
+    lambda1 = 0.5
+}
+
+EOS:PTequilibrium=PBX9501; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::PBX9501.reactant"
+    eos2 = "Sesame::PBX9501"
+    lambda1 = 1
+}

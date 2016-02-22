@@ -1,0 +1,30 @@
+# EOS used by L. D. Libersky
+# Simulation of Void Collapse in Ammonium Nitrate using
+# a Meshfree Lagrangian particle method
+# 2003 Topical APS conf. Shock Compression in Condensed Matter
+
+EOS:UsUp=AN-LL; units=hydro::std
+{
+# Ammonium Nitrate
+    rho0 = 1.25             # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.5e-3             # (MJ/kg)/K
+    #G0 = 2.6
+    G0 = 1.6
+    G1 = 0
+    c0= 1.6
+    s = 1.8
+}
+
+EOS:UsUp=PMMA-LL; units=hydro::std
+{
+    rho0 = 1.18             # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.5e-3             # (MJ/kg)/K
+    G0 = 1.0
+    G1 = 0
+    c0= 2.6
+    s = 1.5
+}

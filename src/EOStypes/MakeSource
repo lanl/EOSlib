@@ -1,0 +1,117 @@
+EOStypes=$(CWD)/lib/$(OS)/libIdealGas.a         \
+	     $(CWD)/lib/$(OS)/libStiffenedGas.a     \
+	     $(CWD)/lib/$(OS)/libHayes.a            \
+	     $(CWD)/lib/$(OS)/libHayesBM.a          \
+	     $(CWD)/lib/$(OS)/libGenHayes.a         \
+	     $(CWD)/lib/$(OS)/libMieGruneisen.a     \
+	     $(CWD)/lib/$(OS)/libDavis.a            \
+	     $(CWD)/lib/$(OS)/libJWL.a              \
+	     $(CWD)/lib/$(OS)/libPTequilibrium.a 
+
+MergeLibs=$(CWD)/lib/$(OS)/libMaterials.a       \
+	      $(CWD)/lib/$(OS)/libUniaxial.a        \
+	      $(CWD)/lib/$(OS)/libPorous.a          \
+	      $(CWD)/lib/$(OS)/libSesame.a
+
+SharedLibs=$(CWD)/lib/$(OS)/MaterialLib.so      \
+	       $(CWD)/lib/$(OS)/Uniaxial.so         \
+	       $(CWD)/lib/$(OS)/Porous.so           \
+	       $(CWD)/lib/$(OS)/Sesame.so
+
+###
+
+all: $(SharedLibs)
+
+###
+
+$(CWD)/lib/$(OS)/MaterialLib.so: $(EOStypes)
+	MergeLibs $(CWD)/lib/$(OS)/libMaterials.a $(EOStypes)
+	cd $(CWD)/lib/$(OS); SharedLib MaterialLib.so libMaterials.a
+	rm -f MaterialLib.so
+	ln $(CWD)/lib/$(OS)/MaterialLib.so .
+
+$(CWD)/lib/$(OS)/Uniaxial.so: $(CWD)/lib/$(OS)/libUniaxial.a
+	cd $(CWD)/lib/$(OS); SharedLib Uniaxial.so libUniaxial.a
+	rm -f Uniaxial.so
+	ln $(CWD)/lib/$(OS)/Uniaxial.so .
+	
+$(CWD)/lib/$(OS)/Porous.so: $(CWD)/lib/$(OS)/libPorous.a
+	cd $(CWD)/lib/$(OS); SharedLib Porous.so libPorous.a
+	rm -f Porous.so
+	ln $(CWD)/lib/$(OS)/Porous.so .
+
+$(CWD)/lib/$(OS)/Sesame.so: $(CWD)/lib/$(OS)/libSesame.a
+	cd $(CWD)/lib/$(OS); SharedLib Sesame.so libSesame.a
+	rm -f Sesame.so
+	ln $(CWD)/lib/$(OS)/Sesame.so .
+
+
+###
+	
+$(CWD)/lib/$(OS)/libIdealGas.a:
+	@echo; echo "##### Compile IdealGas EOS       #####"; echo
+	cd IdealGas;     ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libStiffenedGas.a:
+	@echo; echo "##### Compile StiffenedGas EOS   #####"; echo
+	cd StiffenedGas;    ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libHayes.a:
+	@echo; echo "##### Compile Hayes EOS          #####"; echo
+	cd Hayes;           ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libHayesBM.a:
+	@echo; echo "##### Compile HayesBM EOS        #####"; echo
+	cd HayesBM;         ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libGenHayes.a:
+	@echo; echo "##### Compile GenHayes EOS       #####"; echo
+	cd GenHayes;        ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libMieGruneisen.a:
+	@echo; echo "##### Compile MieGruneisen EOS   #####"; echo
+	cd MieGruneisen;    ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libDavis.a:
+	@echo; echo "##### Compile Davis EOS          #####"; echo
+	cd Davis;           ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libJWL.a:
+	@echo; echo "##### Compile JWL EOS            #####"; echo
+	cd JWL;             ../../Compile NewMake CWD=$(CWD) install
+    
+$(CWD)/lib/$(OS)/libPTequilibrium.a:
+	@echo; echo "##### Compile PTequilibrium EOS  #####"; echo
+	cd PTequilibrium;   ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libUniaxial.a:
+	@echo; echo "##### Compile Uniaxial EOS       #####"; echo
+	cd Uniaxial;        ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libPorous.a:
+	@echo; echo "##### Compile Porous EOS         #####"; echo
+	cd Porous;          ../../Compile NewMake CWD=$(CWD) install
+
+$(CWD)/lib/$(OS)/libSesame.a:
+	@echo; echo "##### Compile Sesame EOS         #####"; echo
+	cd Sesame;          ../../Compile NewMake CWD=$(CWD) install
+
+###
+
+Cleanup:
+	rm -f *% *~ *.a *.so
+	rm -f $(EOStypes)
+	rm -f $(MergeLibs)
+	rm -f $(SharedLibs)    
+	cd IdealGas;        ../../Compile CLEANUP
+	cd StiffenedGas;    ../../Compile CLEANUP
+	cd Hayes;           ../../Compile CLEANUP
+	cd HayesBM;         ../../Compile CLEANUP
+	cd GenHayes;        ../../Compile CLEANUP
+	cd MieGruneisen;    ../../Compile CLEANUP
+	cd Davis;           ../../Compile CLEANUP
+	cd JWL;             ../../Compile CLEANUP
+	cd PTequilibrium;   ../../Compile CLEANUP
+	cd Uniaxial;        ../../Compile CLEANUP
+	cd Porous;          ../../Compile CLEANUP
+	cd Sesame;          ../../Compile CLEANUP

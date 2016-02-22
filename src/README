@@ -1,0 +1,140 @@
+Equation of State library and data base
+---------------------------------------
+    send comments to Ralph Menikoff, rtm@lanl.gov
+    January, 2013
+---------------------------------------
+EOS models currently implemented
+    IdealGas
+    StiffenedGas
+    Hayes
+    GenHayes
+    MieGruneisen
+    Sesame
+    EqPorous, equilibirum porous EOS
+    Uniaxial (depricated)
+ExtEOS models
+    Elastic1D
+      uniaxial strain, stress^xx = hydro_component + shear_components
+    ElasticPlastic1D
+      Elastic1D + Yield function + plastic strain rate
+    ElasticPlastic (depricated)
+EOS parameters have units
+    low level routines provided to convert units
+--------------------
+Version 2.0.1 runs on
+    Linux
+      gcc v4.1
+      or version that has standard C++98 header files
+-----------------------------------------------------------
+                    INSTALLATION
+-----------------------------------------------------------
+1.  ./Install [dir]
+    where dir is name of installation directory with subdirs include, lib, bin
+        include is machine independent (except for a few #ifdef)
+        lib/$os and bin/$os for machine dependent executables
+    For test purposes dir maybe . or empty
+    Makefiles are automatically generated
+------------------
+In case of trouble
+------------------
+0. Check automated makefile routines compiled
+   make _MakeMake
+
+1. Localize problem by installing in pieces
+   make libs    	    # for general purpose libraries
+   make eos    	        # for equation of state libraries
+   make Applications    # Compiles Wave = code for calculating wave curve, etc
+
+2. Further localize problem by compiling individual library
+   cd [lib_name]
+   ../Compile
+   ../Compile install
+   Most subdirectories have test programs
+   which can be run with
+   ../Compile Test    # see Depend file for specifics
+   or by hand,  for example, TestCalc
+
+3. To change operating system for eos lib
+   make cleanup    	# removes operating system dependent makefiles
+   make Cleanup    	# removes everything but source
+
+4. Fresh start
+   make RealClean
+-------------------
+Directory structure
+-------------------
+------------ General purpose source code
+MakeMake    	routines to automate generation of makefiles
+backward        io header files for backward compatibility, pre STL
+Local    		extensions of IO and math (some machine dependence)
+LinkList        data structures for lists
+OneDFunction    zero finder
+ODE             integrate system of ordinary differential equations
+Spline    		Cubic spline function interpolation
+------------ EOS library source code
+Calc    		calculator used by database
+DataBase    	database routines for material parameters
+Eos    		    interface and general purpose routines for eos library
+EOStypes    	Derived classes for specific EOS models 
+                Subdirectory for each type of EOS:
+    			    IdealGas
+    			    StiffenedGas
+    			    Hayes
+    			    Uniaxial (depricated)
+    			    Porous
+                    GenHayes
+                    JWL
+ExtEOS          interface for ExtEOS = EOS + internal variables
+ExtEOStypes     Derived classes for specific ExtEOS models
+                Subdirectory for each type of ExtEOS
+                    Elastic1D
+                    ElasticPlastic (depricated)
+Manager        High level interface for fetching EOS from database
+Applications   Application programs that use EOS library:
+               (see Executables listed below)
+                    Prints selected EOS parameters in data base
+    		        Evaluate points on Hugoniot locus
+    		        Evaluate points on isentrope
+    		        Evaluate points on isotherm
+    		        Riemann solver
+                    Evaluate CJ detonation state
+------------ Generated directories
+bin            EOS executables from Applications 
+               subdirectory for each os
+lib            EOS library and shared objects for EOS types
+               subdirectory for each os
+include        EOS include files
+---------------
+Top level files
+---------------
+Install    		script to install libraries
+makefile    	makefile for installation
+Compile    		Compile generates makefile and then runs it
+README    		(this file)
+Run             script to set default database file and set environment
+                variable SharedLibDirEOS
+                Example:
+                Run Wave [options]
+                is equivalent to (with <EOSlib> filled in appropriately)
+                    SharedLibDirEOS=<EOSlib>/lib/Linux
+                    export SharedLibDirEOS
+                    bin/Linux/Wave file <EOSlib>/DATA/EOS.data [options]
+SetEnv          For debugging
+                source SetEnv
+                sets SharedLibDirs environment variable
+-----------
+Executables
+-----------
+Note: Use shell script Run to
+      1. sets environment variable for shared library used by database,
+      2. sets default database DATA/EOS.data
+      3. runs appropriate machine dependent executable in bin/$os
+-----------
+bin/Linux
+    Wave    	    calculates wave curve (shock locus or isentrope locus)
+    Isotherm        calculates isotherm
+    ImpedanceMatch  shock in material1 impacts material2
+    Data    	    prints parameters from database file
+    Plastic    	    Hugoniot Elastic Limit for Uniaxial Strain EOS
+    Convert         units conversion
+    CJstate         Chapman-Jouget detonation state & von Neumann point

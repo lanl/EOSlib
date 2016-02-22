@@ -1,0 +1,24 @@
+For use as reactant EOS for HE, expansion region needed for
+    PTequilibrium (reactants with products) to be robust.
+The idea of 0. and 1. is for expansion region to become stiffened gas EOS.
+Otherwise domain is limited by c^2 going negative.
+
+
+0.  Cut-off cold curve, P= Pmin for V > Vmax
+    Needed for qualitatively correct behavior in expansion
+
+1. Modify Gamma such that
+    Gamma(V) = g0 + g1*(V/V0) + g2*(V/V0)^2
+    Adjust coefficients for V > V0 in order that
+        Gamma and its derivative are continuous at V=V0
+        Asymptotically, Gamma -> constant as V->infty
+
+2.  Add function
+        Emin(V) = ec(V), i.e., make energy on cold curve accessible
+    Modify
+        NotInDomain(V,e) = ( V <= 0 || e < Emin(V) )
+        Note P < 0 allowed ?, c_T^2 < 0 allowed ?
+        
+3. Specify specific heat by spline
+   More general and eliminates need for ODE
+   Similarly, can replace specify Gamma by spline.

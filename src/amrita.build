@@ -1,0 +1,94 @@
+utilize Amrita::Build
+
+echo $amrita::thisfile
+fold::amrita { CClib
+   fold::print { get dirs
+      fold> token=dirs
+      Local
+      LinkList
+      OneDFunction
+      ODE
+      Spline
+      Calc
+   }
+   set Build::liblist #= ""
+   foreach dir @dirs
+      fold::amrita { build dir
+         echo building $dir
+         pushcwd $dir
+           parse <file> ./amrita.build
+         popcwd
+      }
+   end foreach
+   fold::print { EOScc.use
+     fold>file=$Build::lib/EOScc.use
+     fold>newline=''
+     $Build::liblist
+   }
+   amrso {
+      -amrso   $Build::lib/libEOScc
+      -amrldir $Build::lib
+      $Build::liblist 
+   } 
+}
+fold::amrita { API
+   fold::print { get dirs
+      fold> token=dirs
+      DataBase
+      Eos
+      Manager
+      ExtEOS
+   }
+   wipe tokens Build::liblist
+   foreach dir @dirs
+      fold::amrita { build dir
+         echo building $dir
+         pushcwd $dir
+           parse <file> ./amrita.build
+         popcwd
+      }
+   end foreach
+   fold::print { EOSapi.use
+     fold>file=$Build::lib/EOSapi.use
+     fold>newline=''
+     $Build::liblist
+   }
+   amrso {
+      -amrso   $Build::lib/libEOSapi
+      -amrldir $Build::lib
+      $Build::liblist
+   } 
+}
+fold::amrita { Material libraries
+   fold::print { get dirs
+      fold> token=dirs
+      EOStypes
+      ExtEOStypes
+   }
+   foreach type @dirs
+      wipe tokens Build::liblist
+      fold::amrita { build type
+         echo building $type
+         pushcwd $type
+           parse <file> ./amrita.build
+         popcwd
+      }
+      fold::print { type.use
+        fold>file=$Build::lib/$type.use
+        fold>newline=''
+        $Build::liblist
+      }
+      amrso {
+         -amrso   $Build::lib/$lib'type
+         -amrldir $Build::lib
+         $Build::liblist
+      } 
+   end foreach
+}
+fold::amrita { utilities (executables)
+   echo building Applications
+   pushcwd Applications
+     parse <file> ./amrita.build
+   popcwd
+}
+wipe tokens Build::liblist

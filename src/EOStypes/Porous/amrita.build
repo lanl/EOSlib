@@ -1,0 +1,8 @@
+utilize Amrita::Build
+
+CopyHeader
+NewLib {
+  lib=Porous
+  dirs=SubsPhi,SubsEOS
+  so=yes
+}

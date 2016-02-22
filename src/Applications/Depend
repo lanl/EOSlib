@@ -1,0 +1,91 @@
+EOSdata:	    $(CC_LIB)/EOS.so -ldl
+Wave:	        $(CC_LIB)/EOS.so $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/Porous.so -ldl
+Detonation:	    $(CC_LIB)/EOS.so $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so -ldl
+Deflagration:   $(CC_LIB)/EOS.so $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so -ldl
+ImpedanceMatch: $(CC_LIB)/EOS.so $(CC_LIB)/Porous.so -ldl
+Isotherm:       $(CC_LIB)/EOS.so $(CC_LIB)/Porous.so -ldl     
+Isobar:	        $(CC_LIB)/EOS.so $(CC_LIB)/EOSmanager.so -ldl
+SesameVT:       $(CC_LIB)/EOS.so -lm -ldl     
+IsothermVT:     $(CC_LIB)/EOS.so -lm -ldl     
+PVstate:        $(CC_LIB)/EOS.so -lm -ldl     
+Polar:	        $(CC_LIB)/EOS.so $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so -ldl
+DetPolar:	        $(CC_LIB)/EOS.so $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so -ldl
+
+Plastic:        -lUniaxial $(CC_LIB)/EOS.so -ldl
+CJstate:	    $(CC_LIB)/EOS.so -ldl
+CJ_plot:	    $(CC_LIB)/EOS.so -ldl
+HotSpot:	    $(CC_LIB)/EOS.so -ldl
+Dissipation:	$(CC_LIB)/EOS.so -ldl
+
+ZNDprofile:     $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so -ldl 
+ZNDprofileTW:   $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so $(CC_LIB)/ExtHE.so -ldl 
+ZND-SURFplus:   $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so $(CC_LIB)/ExtHE.so -ldl 
+HotSpotDeflagration: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so $(CC_LIB)/ExtHE.so -ldl 
+DeflagrationProfile: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so $(CC_LIB)/ExtHE.so -ldl 
+IntegrateDeflagrationODEs: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so $(CC_LIB)/ExtHE.so -ldl 
+HEburnRate:     $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                $(CC_LIB)/MaterialLib.so $(CC_LIB)/ExtHE.so -ldl 
+HEburnReactionTime: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so \
+                    $(CC_LIB)/EOS.so $(CC_LIB)/MaterialLib.so \
+                    $(CC_LIB)/ExtHE.so -ldl 
+HEburnEvolution: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so \
+                    $(CC_LIB)/EOS.so $(CC_LIB)/MaterialLib.so \
+                    $(CC_LIB)/ExtHE.so -ldl 
+ThreeStepReactionTime: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so \
+                    $(CC_LIB)/EOS.so $(CC_LIB)/MaterialLib.so \
+                    $(CC_LIB)/ExtHE.so -ldl 
+ThreeStepEvolution: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so \
+                    $(CC_LIB)/EOS.so $(CC_LIB)/MaterialLib.so \
+                    $(CC_LIB)/ExtHE.so -ldl 
+ArrheniusMixReactionTime: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so \
+                    $(CC_LIB)/EOS.so $(CC_LIB)/MaterialLib.so \
+                    $(CC_LIB)/ExtHE.so -ldl 
+ReactiveShockLoci: $(CC_LIB)/ExtHE.so $(CC_LIB)/ExtEOS.so  \
+                   $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                   $(CC_LIB)/MaterialLib.so -ldl 
+ViscousProfile:    $(CC_LIB)/ExtHE.so $(CC_LIB)/ExtEOS.so  \
+                   $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                   $(CC_LIB)/MaterialLib.so -ldl $(CC_LIB)/ExtHE.so
+FFprofile:         $(CC_LIB)/ExtHE.so $(CC_LIB)/ExtEOS.so  \
+                   $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                   $(CC_LIB)/MaterialLib.so -ldl $(CC_LIB)/ExtHE.so
+PopPlotTrajectory: $(CC_LIB)/ExtHE.so $(CC_LIB)/ExtEOS.so  \
+                   $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so \
+                   $(CC_LIB)/MaterialLib.so -ldl $(CC_LIB)/ExtHE.so
+
+ShockLocus:        $(CC_LIB)/EOS.so $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so\
+                   -ldl -lm
+
+TestXmanager: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so -ldl
+TestXRiemann: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so -ldl
+TestXisentrope: $(CC_LIB)/ExtEOS.so $(CC_LIB)/EOSmanager.so $(CC_LIB)/EOS.so -ldl
+#
+#
+CV-rotation:   -lLocalIo -lLocalMath -lm
+CriticalPoint: -lLocalIo -lODE -lOneDFunction -lList -lLocalMath -lm
+#
+#
+.INSTALL
+EOSdata
+Wave Detonation Deflagration Isotherm
+ImpedanceMatch
+Plastic
+CJstate
+CJ_plot
+HotSpot
+Dissipation
+ZNDprofile ZNDprofileTW ZND-SURFplus
+DeflagrationProfile
+ReactiveShockLoci
+ViscousProfile FFprofile PopPlotTrajectory
+Polar
+DetPolar
+HEburnRate HEburnReactionTime HEburnEvolution
+ArrheniusMixReactionTime
+ThreeStepReactionTime ThreeStepEvolution

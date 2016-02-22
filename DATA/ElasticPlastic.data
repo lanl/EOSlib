@@ -1,0 +1,54 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: Feb. 26, 2004
+
+/********************************
+*       Elastic                 * (depricated)
+********************************/
+
+:SharedLibs.=EOS_VT
+{
+    Shear1  = $SharedLibDirEOS/ExtElasticPlastic.so
+}
+.base  = Shear1
+.units = hydro::std
+
+
+EOS_VT:Shear1=HMX; units=hydro::std
+{
+    EOS_VT = "Hayes::HMX"
+    G = 12.
+}
+
+
+/********************************
+*       ElasticPlastic          * (depricated)
+********************************/
+
+:SharedLibs.=EOS
+{
+    EqExtEOS = $SharedLibDirEOS/ExtElasticPlastic.so
+    VonMises = $SharedLibDirEOS/ExtElasticPlastic.so
+}
+.base  = EOS
+.units = hydro::std
+
+
+EOS:VonMises=HMX; units=hydro::std
+{
+    Elastic = "Shear1::HMX"
+     Y = 0.26
+    nu = 0.11
+}
+
+EOS:EqExtEOS=HMX; units=hydro::std
+{
+    ExtEOS = "VonMises::HMX"
+}
+
+EOS:VonMises=viscoelastic; units=hydro::std
+{
+    Elastic = "Shear1::HMX"
+     Y = 0.0
+    nu = 0.11
+}

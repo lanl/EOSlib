@@ -1,0 +1,18 @@
+#!/usr/bin/env amrita
+
+utilize Amrita::Build {
+   purge = yes
+}
+fold::amrita { start banner
+   DisplayMsg {
+      msg = $amrita::thisfile
+   }
+}
+pushcwd $Build::src
+  parse <file> amrita.build
+popcwd
+fold::amrita { end banner
+   DisplayMsg {
+      msg = Built: $EOSlib::lib
+   }
+}

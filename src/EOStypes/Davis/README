@@ -1,0 +1,17 @@
+Davis Reactant and Product equations of state
+are of Mie Gruneisen form based on reference isentrope.
+
+References:
+
+1. W. C. Davis
+   Complete EOS for Unreacted Solid Explosive
+   Combustion and Flame 120 (2000) pp. 399-403
+   
+2. D. S. Stewart, S Yoo and W. C. Davis
+   Equation of state or modeling the detonation reaction zone
+   12th Det Symp 2002
+
+3. D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+   Experimental Validation of Detonation Shock Dynamics in HMX based
+   Condensed Explosive PBX-9501
+   Draft 1/4/04

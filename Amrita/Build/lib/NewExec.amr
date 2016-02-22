@@ -1,0 +1,27 @@
+proc NewExec {
+  src
+  libs
+  uselibs
+}
+  if( token(libs) ) then
+     set LIBS = -lib {$libs}
+  else
+     set LIBS #= " "
+  end if
+  if( token(uselibs) ) then
+      set use = -use $Build::lib/{$uselibs}.use
+  else 
+      set use #= " "
+  end if
+  amrcxx {
+     -cxxsrc  $Build::AMRSRC/cxxsrc
+     -inc     $Build::inc     
+     -inc     $Build::inc/backward     
+     -src     $src.C
+     -amrbin  $Build::bin/$src
+     -amrldir $Build::lib
+     -use     $Build::USE/amrcxx.{defs,flags,ld}
+     $use
+     $LIBS
+  }  
+end proc

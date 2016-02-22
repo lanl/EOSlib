@@ -1,0 +1,29 @@
+DataBase.a: Subs
+
+Data:       DataBase.a -lCalc -lList -lLocalIo -lLocalMath -lString -ldl
+Convert:    DataBase.a -lCalc -lList -lLocalIo -lLocalMath -lString -ldl
+TestDB:     ./DataBase.so -lCalc -lList -lLocalIo -lLocalMath -lString -ldl
+Testdl:     -lLocalIo -ldl
+
+ALL=SubMake LIBS $(EXECS) shared_obj.so
+
+
+.INSTALL
+DataBase.h        DataBaseIterators.h   DataBaseParameters.h
+Units.h           DataFile.h
+DataBaseError.h   Handle.h
+DataBase.a
+Data Convert
+
+.INCLUDE
+DataBase.so: DataBase.a
+	SharedLib DataBase.so DataBase.a
+
+shared_obj.o: shared_obj.C
+
+shared_obj.so: shared_obj.o
+	g++ -shared -Wl,--whole-archive,--export-dynamic -o shared_obj.so shared_obj.o \
+           -Wl,--no-whole-archive $(LFLAGS) -lLocalMath
+#	ld -g -shared  --export-dynamic -o shared_obj.so \
+#       --whole-archive $(LFLAGS) shared_obj.o -lLocalMath
+

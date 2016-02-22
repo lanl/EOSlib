@@ -1,0 +1,34 @@
+eosbase.a:  SubsBase
+eosVe.a:    SubsVe
+eosVT.a:    SubsVT
+eos.a:      eosVe.a eosVT.a eosbase.a
+
+#
+
+Test1 : eos.a -lDataBase -lCalc     -lODE     -lOneDFunction \
+              -lList     -lString   -lLocalIo -lLocalMath    -ldl
+Test2 : ./EOS.so -ldl
+Test3 : ./EOS.so -ldl
+
+#
+
+.INSTALL
+EOS.h             EOS_VT.h           EOSbase.h
+States.h          IO.h               Wave.h
+Hugoniot_gen.h    Isentrope_ODE.h    Isotherm_ODE.h 
+Detonation_gen.h  Deflagration_gen.h
+Riemann.h         Riemann_gen.h
+ShockPolar.h      ShockPolar_gen.h   PrandtlMeyer_ODE.h
+eos.a 
+
+.INCLUDE
+
+EOS.so: eos.a
+	SharedLib EOS.so eos.a \
+	   $(CC_LIB)/libODE.a    $(CC_LIB)/libOneDFunction.a $(CC_LIB)/libList.a  \
+	   $(CC_LIB)/libCalc.a   $(CC_LIB)/libDataBase.a     $(CC_LIB)/libSpline.a  \
+	   $(CC_LIB)/libString.a $(CC_LIB)/libLocalIo.a      $(CC_LIB)/libLocalMath.a
+
+InstallEOS: EOS.so
+	@cp EOS.so $(LIB_DIR)/EOS.so; \
+	$(ECHO) "*** shared object $(LIB_DIR)/EOS.so installed"

@@ -1,0 +1,8 @@
+utilize Amrita::Build
+
+CopyHeader
+NewLib {
+  lib=StiffenedGas
+  dirs=SubsVe,SubsVT
+  so=yes
+}

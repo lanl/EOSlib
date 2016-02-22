@@ -1,0 +1,54 @@
+OS=_OS
+CC_INCLUDE=$(CWD)/include
+CC_LIB=$(CWD)/lib/$(OS)
+
+
+IFLAGS=-I. -I$(CC_INCLUDE) 
+IFLAGS_SUB=-I.. -I$(CC_INCLUDE)
+
+INCLUDE_DIR=$(CC_INCLUDE)
+EXEC_DIR=$(CWD)/bin/$(OS)
+LIB_DIR=$(CWD)/lib/$(OS)
+
+
+UsUp.a: Subs
+MieGruneisen.a: UsUp.a
+
+
+Test1:	UsUp.a -leos -lDataBase -lODE -lOneDFunction -lList \
+               -lCalc -lLocalIo  -lLocalMath -lString -ldl
+TestSpline1:   UsUp.a -leos   -lDataBase -lODE -lOneDFunction -lList \
+               -lSpline -lCalc -lLocalIo  -lLocalMath -lString -ldl
+
+TestSplineParams:	UsUp.a -leos  -lDataBase -lODE -lOneDFunction -lList \
+                       -lCalc -lSpline -lLocalIo  -lLocalMath -lString -ldl
+TestSplinePMMA:	UsUp.a -leos  -lDataBase -lODE -lOneDFunction -lList \
+                       -lCalc -lSpline -lLocalIo  -lLocalMath -lString -ldl
+
+Test2:	       $(CC_LIB)/EOS.so -ldl ./UsUp.so 
+Test2VT:       $(CC_LIB)/EOS.so -ldl ./UsUp.so 
+TestSpline2:   $(CC_LIB)/EOS.so -ldl ./UsUp.so 
+TestSpline2VT: $(CC_LIB)/EOS.so -ldl ./UsUp.so 
+
+TestSplinePe1:  $(CC_LIB)/EOS.so -ldl ./UsUp.so 
+TestSplinePe2:  $(CC_LIB)/EOS.so -ldl ./UsUp.so 
+
+TestApproxT:	$(CC_LIB)/EOS.so -ldl ./UsUp.so 
+
+
+.INSTALL
+UsUp.h        UsUp_VT.h         UsUpParams.h          
+UsUpSpline.h  UsUpSpline_VT.h   UsUpSplineParams.h          
+PeSpline.h    PeSpline_VT.h     PeSplineParams.h
+MieGruneisen.a
+
+.INCLUDE
+UsUp.so: UsUp.a
+	SharedLib UsUp.so UsUp.a
+
+MieGruneisen.so: MieGruneisen.a
+	SharedLib MieGruneisen.so MieGruneisen.a
+
+InstallMieGruneisen: MieGruneisen.so
+	@cp MieGruneisen.so $(LIB_DIR)/MieGruneisen.so; \
+	$(ECHO) "*** shared object $(LIB_DIR)/MieGruneisen.so installed"

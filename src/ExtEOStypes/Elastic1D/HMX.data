@@ -1,0 +1,140 @@
+.include ../../../DATA/EOS.data
+/*****************************************************
+*   EOS for fit to single crystal HMX wave profiles  *
+*          author:  Ralph Menikoff, T-14             *
+*   last modified:  March, 2004                      *
+*****************************************************/
+#
+#   HMX.011
+#
+EOS:VonMisesConstGV=HMX.011BM; units=hydro::std
+{
+    Elastic = "ElasticConstGV::HMX.011BM"
+    nu = 1.5
+    Y0 = 0.23
+    A1 = 8
+    n1 = 1.5
+}
+EOS:ElasticConstGV=HMX.011BM; units=hydro::std
+{
+    EOS = "HayesBM::HMX.011"
+    Gref=11
+    # cl = sqrt((K0+4/3*G0)/rho0) = 3.82
+    # ct = sqrt(G/rho0) = 2.4
+}
+#
+# HayesBM fit to cl
+#  then G determines c0 (hydro sound speed)
+#  then Kp0 from AMRITA/EP/HMX/Isothermal/FitKp.pl (Yoo-Cynn data)
+#
+EOS:HayesBM=HMX.011; units=hydro::std
+{
+    rho0 = 1.9      # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    Cv = 1.5e-3     # (MJ/kg)/K
+    e0 = T0*Cv
+    G0 = G1 = 1.1   # Gamma/V = const
+    K0  = 13        # GPa, (G=11 & cl = 3.82)
+    Kp0 = 10.05     # fit to P <= 27
+    Kp0 = 10.54     # fit to P <= 10
+    # c0 = sqrt(K0/rho0) = 2.62
+}
+#
+#   HMX.010
+#
+EOS:VonMisesConstGV=HMX.010BM; units=hydro::std
+{
+    Elastic = "ElasticConstGV::HMX.010BM"
+    Y0 =  0.46 
+    nu = 1.2
+    A1 = 25 
+    n1 = 1.5
+}
+EOS:ElasticConstGV=HMX.010BM; units=hydro::std
+{
+    EOS = "HayesBM::HMX.010"
+    Gref=8
+    # cl = sqrt((K0+4/3*G0)/rho0) = 3.17  
+    # ct = sqrt(G/rho0) = 2.05
+}
+EOS:HayesBM=HMX.010; units=hydro::std
+{
+    rho0 = 1.9      # g/cm^3
+    P0 = 1.0e-4     # GPa
+    T0 = 300        # degrees K
+    Cv = 1.5e-3     # (MJ/kg)/K
+    e0 = T0*Cv
+    G0 = G1 = 1.1   # Gamma/V = const
+    K0  =  8.43     # GPa, (G=8 & cl=3.17)
+    Kp0 = 16.79     # fit to P <= 27
+    #
+    Kp0 = 18.8      # fit to P <=11
+    Kp0 = 19.8      # fit to P <=10
+    # c0 = sqrt(K0/rho0) = 2.11
+    #
+    K0  =  9.09     # GPa, (G=7.5 & cl=3.17)
+    Kp0 = 16
+    K0  =  9.76     # GPa, (G=7.0 & cl=3.17)
+    Kp0 = 14
+    Kp0 = 15
+}
+/***************************
+*  PlasticIDOF2            *
+***************************/
+#
+#   HMX.010
+#
+Shear1D:PolyG=HMX.010; units=hydro::std
+{
+    V0   = 1./1.9
+    G(1) = 7.0, 1
+}
+EOS:ElasticPolyG=HMX.010BM; units=hydro::std
+{
+   EOS   = "HayesBM::HMX.010"
+   PolyG = "HMX.010"
+}
+EOS:VMrate=HMX.010BM; units=hydro::std
+{
+   Elastic = "ElasticPolyG::HMX.010BM"
+   epsy_el = 0.022
+   n1 = 1.5
+   tau1 = 0.006
+   tauinv =0.02
+
+}
+#
+#   HMX.011
+#
+Shear1D:PolyG=HMX.011; units=hydro::std
+{
+    V0   = 1./1.9
+    G(1) = 11, 1
+}
+EOS:ElasticPolyG=HMX.011BM; units=hydro::std
+{
+   EOS   = "HayesBM::HMX.011"
+   PolyG = "HMX.011"
+}
+EOS:VMrate=HMX.011BM; units=hydro::std
+{
+   Elastic = "ElasticPolyG::HMX.011BM"
+   epsy_el = 0.009
+     n1    = 2
+   tau1    = 0.015
+   tauinv  = 1
+   #
+   n1 = 1.5
+   tau1 =0.03
+   tauinv = 1/0.25
+   #
+   tau1 = 0.025
+   tauinv = 1/0.35
+   ##
+   epsy_el = 0.007
+   tau1 = 0.035
+   tauinv = 1/0.90
+   tauinv = 1/0.50
+   epsy_el = 0.008
+}

@@ -1,0 +1,477 @@
+EOSlib version: 1.0.1
+author: Ralph Menikoff (rtm@lanl.gov)
+ChangeLog started July, 2003
+
+src/EOStype/HayesBM:                            added            July, 2003
+    Hayes EOS with iostherm based on Birch-Murnahan fitting form
+        and Gamma = G0 + G1*(V/V0 - 1)
+        and Cv = constant
+
+src/EOStype/Sesame:                             modified     August 7, 2003
+    implemented Sesame::ConvertParams() in Subs/Sesame.C
+
+GUI/lib/Riemann/RPplot.pl:                      modified     August 7, 2003
+    truncation error caused Wave to fail on Sesame EOS with MKS units
+    temperary fix, needs to be corrected properly
+
+src/EOStype/MieGruneisen:                       added    September 12, 2003
+    EOS:UsUp: added September 18, 2003
+        reference curve is principal Hugoniot with linear Us-Up relation
+            and Gamma = G0 + G1*(V/V0 - 1) and Cv = constant           
+        UsUp is commonly used EOS 
+        Domain limited by max shock compression on reference curve
+            compressibility is negative for higher compressions
+        Note: for some choice of parameters
+              1. EOS not convex
+              2. c^2 < 0
+              i.e., domain is more limited than just by max compression
+                    and generic Hugoniot routine may fail
+        Hayes EOS is preferred
+    EOS:UsUpSpline: added Sept 25, 2003
+        Extension of MieGruneisen EOS based on Hugoniot with non-linear Us(up)
+        Hugoniot locus specified by cubic spline
+            Us^{-1}(eta), eta=1-V/V0
+            sound speed and fundamental derivative are continuous
+
+src/Eos/SubsVe/Hugoniot.C:                      modified September 22, 2003
+    check on domain for bounding interval
+    needed for EOS:UsUp when parameter choice limits domain
+        otherwise Hugoniot routine fails on principal Hugoniot
+        where by construction solution exists.
+
+src/EOStypes/JWL:                               modified September 28, 2003
+    Add temperature based on constant Cv and Tcj as ref state
+
+DATA/EOS.data:                                  Updated     September, 2003
+    EOS:UpUs::HMX-YC     added, UsUp version of EOS:Hayes::HMX-YC
+    EOS:UsUpSpline::PMMA added
+
+src/Eos/SubsVe/PT.C:                            fixed       October 4, 2003
+    round off error and potential domain error in finding bounding interval
+    Affects JWL EOS in calculating ambient state
+
+src/ODE/Subs/Step.C:                            fixed      December 9, 2003
+    Circumvent failure of Initialize() in pathological case
+
+src/ExtEOStypes/Elastic1D:                      added      December 9, 2003
+    Revised Elastic EOS and Plastic ExtEOS
+    Cleaner, more understandable and more flexible
+
+src/ExtEOStypes/ElasticPlastic:                 Depricated  December 9, 2003
+    Replaced with Elastic1D, see above
+src/EOStypes/Uniaxial:                          Depricated  December 9, 2003
+    Replaced with Elastic1D, see above
+
+src/Calc:                                       modified  December 20, 2003
+    old class CVstring is now CVpstring
+    new class CVstring
+    some minor modifications to EOStypes initialize for compatibility
+
+src/Eos                                         modified  December 20, 2003
+    Added verbose flag to class EOSbase
+    Provides switch for debugging output
+    Modified EOS::print to output #P_ref and #T_ref
+    EOS_vers "EOSv1.1.1", applications require recompilation
+
+src/Calc                                        modified  February 17, 2004
+    Added dynamic array to CalcArrayTypes
+
+src/EOStypes/MieGruneisen                       modified  February 23, 2004
+    Added EOS:PeSpline
+    MieGruneisen form with Pref(eta), eref(eta) fit to spline in eta = 1-V/V0
+    Needed for PMMA
+
+src/ODE/Subs/ODE.C                              modified  February 23, 2004
+    fixed ODE::MaxNorm such that abs_err = rel_err = epsilon
+    previously abs_err = epsilon^2, rel_err = epsilon
+
+src/ExtEOStypes/Elastic1D                       added     February 26, 2004
+    Added ElasticPlastic1D:Polymer
+    Tested with data for PMMA
+
+DATA                                            modified  February 26, 2004
+    restructed EOS.data with include files
+
+src/ExtEOStypes/Elastic1D                       added        March 30, 2004
+    Added ElasticPlastic1D:VMrate
+    IDOF for plastic strain with 2 variables:
+      plastic_strain and time_constant
+    Initial application is to better fit HMX wave profiles
+
+src/EOStypes/Sesame/Subs/SesameFunc.C           fixed          June 6, 2004
+    corrected error in Sesame::NotInDomain(V,e)
+
+src/EOStypes/JWL                                added         June 18, 2004
+    Added JWL_VT
+
+src/EOStypes/PTequilibrium                      added         June 18, 2004
+    EOS for mixture in thermodynamic equilibrium
+
+src/ODE/Subs/Integrate.C:                       fix           June 18, 2004
+    ODE::Integrate, check |t| < HUGE, otherwise segmentation fault
+
+src/Calc:                                       fix           July 28, 2004
+    calc.Functions not initialized with Calc.so
+    Added call to initialization routine in constructor
+
+src/EOStypes/JWL                                modified      July 28, 2004
+    added energy offset in order to use reactants + products for HE
+
+src/ExtEOStypes/ArrheniusHE                     added       August 27, 2004
+    HE = reactants + products and reaction rate
+
+src/ExtEOS                                      added    September 16, 2004
+    added to class IDOF
+        const char *name;
+        const char **var_name;
+        int var_index(const char *vname) const;
+    modified ostream &operator<<(ostream &out, ExtEOSstate &state)
+        to print out var_name
+    added to class ExtEOS
+        virtual int var(const char *name, double V, double e, const double *z,
+                        double &value);
+    modified src/ExtEOStypes/* accordingly
+    
+src/ExtEOStypes/ArrheniusHE                     modified    October 9, 2004
+    Subs/ArrheniusHErate.C
+    Dt(), Integrate() use exponential integral from GNU Scientific Library
+    Integration of (d/dt)lambda for fixed V and e
+    is exact if d(T)/d(lambda) is constant.
+
+src/ODE/Subs/CacheState.C                       fixed       October 9, 2004
+    ODE::LastState(), if( dir != 0 )
+
+src/Eos                                         modified    October 9, 2004
+    SubsVe/RiemannSolver.C
+      1. Added error checking if Wave_l or Wave_r are NULL
+      2. For Quadrant II & III, isentrope fails if EOS has limited domain
+         Added recovery attempt by setting Pmin to last state on isentrope
+    Isentrope_ODE.h, added function LastState() for error recovery
+
+src/EOStypes/PTequilibrium                      added      October 12, 2004
+    PTequilibrium::PTequilibrium(const &PTequilibrium)
+
+src/ExtEOStypes/ArrheniusHE                     fixed      October 12, 2004
+    ArrheniusHE::Copy() requires ArrheniusHE(const ArrheniusHE&)
+        to use PTequilibrium(const &PTequilibrium)
+
+src/ExtEOStypes/ArrheniusHE                     added      October 20, 2004
+    class IdealHE (analytic EOS for use in test problems)
+        P(V,e,lambda) = (gamma-1)(e+lambda*Q)/V
+        T(V,e,lambda) = (e+lambda*Q)/Cv
+        + Arrhenius reaction rate
+        Analytic expressions for Hugoniot, Detonation & Deflagration loci.
+
+src/EOStypes/PTequilibrium                      modified   October 29, 2004
+    Added option to start PT iteration with last (V1,e1), (V2,e2)
+    Functions P_2(V,e), T_2(V,e) etc. use this option.
+    It is meant for efficiency when thermodynamic function evaluated
+    with nearby states, e.g., hydro code.
+    Rewrote PTequilibrium::shock() and PTequilibrium::isentrope()
+    to use this option.
+
+src/Eos                                         modified   October 30, 2004
+    added EOS_tol::InitParams()
+    called by EOS::IntiBase()
+    RiemannSolver_generic uses EOS_tol:OneDFunc{abs,rel}_tol
+    avoid non-convergence due to inaccuracies in EOS
+    by appropriately setting parameters in EOS database
+
+src/Eos                                         modified  November 20, 2004
+    Added Detonation_gen.h and Deflagration_gen.h
+    EOS::detonation() returns Detonation_gen
+    EOS::deflagration() returns Deflagration_gen
+
+src/EOStypes/IdealGas                           modified  November 20, 2004
+    Added Detonation_IdealGas.h and Deflagration_IdealGas.h
+    Tested against Detonation_gen.h and Deflagration_gen.h
+
+src/Applications                                added      December 8, 2004
+    Added utility Detonation
+    Similar to Wave but calculates Detonation locus, CJ state, VN state
+
+src/EOStypes/PTequilibrium                      added     December 20, 2004
+    Added StiffIdeal.h
+    Model for explosive: equilibrium of stiffened gas + ideal gas
+
+src/ExtEOStypes/ArrheniusHE                     added     December 21, 2004
+    Added StiffIdealHE.h
+    Model for explosive: equilibrium of stiffened gas + ideal gas
+
+src/ExtEOStypes/ArrheniusHE                     added     December 23, 2004
+    Added AvArrheniusIDOF.h and StiffIdealHEav.h
+    Arrhenius rate with average temperature
+
+src/EOStypes/SesameFunc                         fixed     December 28, 2004
+    Bug fix SesameFunc.C
+    Cache(), set Vcache and echache
+    NotInDomain()
+
+src/ExtEOS                                      fixed       January 7, 2005
+    Bug fix ExtEOSstate.C
+
+src/EOStypes/Davis                              added        March 23, 2005
+    Added DavisReactants and DavisProducts EOS
+    Mie-Gruneisen form of EOS for solid explosives
+
+src/Eos                                         modified      April 4, 2005
+    EOSbase:
+    added EOSbase::max_ref_count
+    int deleteEOSbase(EOSbase *, const char *base)
+    and improved detection of allocation/deallocation errors
+
+src/ExtEOStypes/HEburn                          added         April 4, 2005
+    class HEburn and HErate are
+    generalization and replacement for ArrheniusHE
+    HErate derived classes: Arrhenius and PnRate
+
+src/Eos/SubsVe/RiemannSolver.C                  modified        May 6, 2005
+    Modified initial bounds for robustness related to limited EOS domain   
+
+src/EOStypes/PTequilibrium                      modified   January 30, 2006
+src/ExtEOStypes/HEburn                          modified   January 30, 2006
+    robustness for lambda1 < 0.05 or 0.95 < lambda1    
+
+src/EOStypes/GenHayes                           modified  February 12, 2006
+    Extend domain to expansion regime
+    Cutoff cold curve, Pc(V) = Pmin for V > Vmax
+    Equivalent to second order phase transition
+    Discontinuity in sound speed, but convex isentrope
+
+src/EOStypes/PTequilibrium                      modified      March 4, 2006
+    More robust PTiter
+
+src/EOS                                         modified       July 5, 2006
+    Modified SubsVe/Detonation_gen.C to allow weak detonation
+    for P, V, u.  Added Wave::w_u_s() for weak branch parameterized by
+    shock velocity.  ToDo, add functions for special cases, IdealGas, etc.
+
+src/ExtEOStypes/HEburn                          added          July 7, 2006
+    Forest Fire Rate class FFrate
+    Also auxilliary class ReactiveHugoniot
+    Added ViscousProfile.C
+
+src/ExtEOS                                      modified    August 16, 2006
+    Added ExtEOS::CopyEOS(), for efficiency
+    modified Hydro.C, ExtEOSwave.C and Riemann_gen.C
+
+src/ExtEOStypes/HEburn                          modified    August 16, 2006
+    modified HEburn.h and HErate.h: HEburn *HE -> PTequilibrium *HE
+    HE can now be referenced counted without allocation loop
+    Added HEburn::CopyEOS(), for efficiency
+        avoids initialization of FFrate for shock, Riemann_gen, etc.
+    Added to HErate::P,T,c(V,e,lambda)
+        then replaced calls P(V,e,z) in Rate() etc.
+    Added to Arrhenius, IgnitionGrowth, PnRate
+        flags source_type and integrate, for efficiency in simulations
+
+src/Eos/SubsVe/Hugoniot.C                       modified  February 16, 2007
+    modified Vbound routines to check P > P0
+    /* check in comments for f(V) monotonic, requires Gamma > 0 */
+    For robustness, not needed if EOS routines NotInDomain is correct
+
+src/EOStypes/Sesame/Subs/SesameFunc.C           modified  February 16, 2007
+    modified NotInDomain to skip check on cache
+    Cache (V,e) may be outside table, affects Hugoniot routine
+
+src/EOStypes/PTequilibrium/PTiter.C             modified     March 17, 2007
+    Attempt to increase robustness of PT iteration
+    
+src/Eos/SubsVe/RiemannSolver.C                  modified      July 13, 2007
+    Improved initial bounds for robustness
+    
+src/EOStypes/JWL                                added       August 11, 2007
+    Added BKW EOS
+
+src/ExtEOStypes/HEburn                          fix         August 14, 2007
+    Consistent initialization of units for EOS::HEburn
+
+src/EOStypes/MieGruneisen/Subs                  fix           April 8, 2008
+    Correct error in EOS_VT for PeSpline, UpUsSpline, UsUp
+    P_T(V,T) = GoV(V)*Cv; '*' not '/'
+
+src/EOStypes/PTequilibrium/Subs                 fix           April 9, 2008
+    Correct error in PTequilibriumVTfunc.C
+    for functions CV, Gamma, c2
+
+src/ExtEOStypes/ArrheniusHE                     fix        October 12, 2008
+    Correct errors in TestIdealHE_Det.C
+    and Subs/IdealHE{wave,Detonation}.C
+
+src/Eos                                         modified  December 11, 2008
+    Added to IO.h class Format variable fixed
+    and corresponding change to Subs/Ve/IO.C for
+        ostream &operator <<(ostream &out, const Format &f)
+    Also, modified
+        ostream &operator<<(ostream &out, const Center &c)
+
+src/ExtEOStypes/HEburn/Subs                     fix       December 12, 2008
+    Correct error in HEburn.C
+    HEburn::ConvertParams needed to call EOS::ConvertParams
+
+src/EOStypes/Sesame                             added         July 15, 2009
+    Added parameter to Sesame de
+    and function Shift_e to Sesame_VT
+    This allow one to set energy origin for HE products
+
+src/EOStypes/GenHayes                           added         July 19, 2009
+    Added Keane TOS
+    Modified BirchMurnaghan to adjust V0 for ambient V_ref at (P_ref,T_ref)
+
+src/OneDFunction/subs/zero.C                    modified      July 28, 2009
+    Changed convergence criterion to
+        abs(dx) < max(abs_tolerance,rel_tolerance*abs(x))
+
+src/EOStypes/GenHayes                           modified     August 1, 2009
+    P_vac = min(P_vac,Pmin)
+    BurchMurnaghan and Keane EOS based on cold curve
+    Pmin < 0, for extension V > V0
+    database parameter P_vac = -1, can be set to allow tension
+    Setting PT state more robust for T<T_ref and P=P_ref
+
+src/Applications/Wave.C                         added        August 2, 2009
+    Added EOS error log file option EOSlog
+    Added option printS to print entropy
+
+src/EOStypes/GenHayes                           modified September 19, 2009
+    Generalize Keane EOS to have second set of parameters
+    Aimed at "second order" phased transition in graphitic-like
+    molecular crystals, such as TATB
+
+src/ExtEOStypes/HEburn/HEburn.h                 modified  December 13, 2009
+    added index ilambda, no longer required to be 0
+
+src/ExtEOStypes/HEburn/HEburn.h                 added     December 13, 2009
+    HotSpotHE.h,   IDOF={Ps,ts,lambda}
+    HotSpotRate.h, rate based on HotSpot IDOF variables
+
+src/Eos/SubsVe/PT.c                             modified  February 13, 2010
+    Added Newton-Raphson iteration to clean up
+    and get accurate PT state
+
+src/ExtEOStypes/HEburn/                         added        March 12, 2010
+    ArrheniusRT.h, Arrhenius rate based on HotSpot IDOF variables
+    Also added to both Arrhenius.h and ArrheniusRT.h
+    parameter T_max to limit rate, ie. rate(T) = rate(min(T,Tmax))
+
+src/EOStypes/JWL/Subs/JWLfunc.C                 modified  September 1, 2010
+    NotInDomain changed to P < P_vac
+    Enables PT at 1 bar and low T to work
+    for IG model when JWL is used for reactant EOS (a la Tarver)
+    by setting P_vac negative
+
+src/Table                                       added      October 31, 2010
+    New base class Table and type MatToSesame
+    for converting EOS to Sesame ASCII table format
+
+src/ExtEOStypes/HEburn/CJtest                   added     December 18, 2010
+    Utility to test algorithm for calculating CJ state
+
+src/Eos/SubsVe/PT.C:                            modified  December 24, 2010
+    Newton-Raphson iteration to clean up inaccuracy from Isotherm
+    Detects ambient state of sesame table near solid/gas phase boundary
+
+src/Application/IsothermVT.C                    added     December 24, 2010
+    Utility to calculate isotherm based on EOS_VT
+
+src/ODE/Subs/Integrate_f.C                      fix       December 29, 2010
+    Bug fix for Integrate(ODEfunc, ...) with stop condition and dir=-1
+
+src/DnKappa                                     added        April 25, 2011
+    New base class DnKappa and type ScaledDn
+    for DSD
+
+src/ExtEOStypes/HEburn/HotSpotRate.h            modified     April 26, 2011
+    added: double s1;          // transition point for g(s)
+
+#
+#EOSlib version: 2.0.0
+#
+
+src/ODE/Subs/Integrate_f.C                      fix             May 1, 2011
+    Bug fix for Integrate(ODEfunc, ...) typo
+    if( stop_val <= val )
+src/ODE/Subs/Integrate.C                        fix             May 1, 2011
+    Integrate(double &t, double *y, double *yp)
+    if( !IgnoreStop && Stops.Dimension() > 2 )
+
+src/EOStypes/MieGruneisen/Subs/UsUpParamsFunc.C fix        December 8, 2011
+    UsUpParams::F
+    yp[0] = (dPref(V)*(V0-V) + Pref(V)-P0)*exp(intGoV(V));
+src/EOStypes/MieGruneisen/Subs/UsUpSplineParamsFunc.C fix  December 8, 2011
+    UsUpSplineParams::F
+    yp[0] = (dPref(V)*(V0-V) + Pref(V)-P0)*exp(intGoV(V));
+
+src/ExtEOStypes/HEburn/HotSpotCC_{HE,Rate}.h    added     December 23, 2011
+src/ExtEOStypes/HEburn/Subs/HotSpotCC*.C        added
+    New HEburn model for Hot Spots with carbon clusters
+
+src/EOStypes/PTequilibrium                      modified      June 17, 2012
+    added variable de to PTequilibrium class
+
+src/ExtEOStypes/HEburn                          added          July 4, 2012
+    New classes for Hot Spots with carbon clusters
+    HEburn2, HErate2, HotSpotHE_CC, HotSpotRateCC
+    previous HotSpotHE_CC, HotSpotCC_Rate are depricated
+
+src/ExtEOS                                      modified       July 7, 2012
+src/ExtEOStypes/HEburn                          modified
+    Added new member function set_z() and get_z()
+
+src/Applications/Detonation.C                   added          July 7, 2012
+    New option for partially burned detonation locus
+    can set lambda and lambda2 compatible with HEburn & HEburn2
+    New option for isentrope from detonation state Pdet
+
+src/Eos/SubsVe/Hugoniot.C						fixed	    October 8, 2014
+	Domain issue with bound for EqPorous
+
+src/EOStypes/Porous/SubsEOS/EqPorous.C			fixed	    October 8, 2014
+	EqPorous::P(V,e) assumes f(phi) monotonic
+	Not true for some cases of UsUp, depending on Gamma(V)
+	Modified to take solution closest to phi_1.
+	Porous model for some EOS not unique
+	The is workaround is possibly what is most useful.
+
+src/ExtEOStypes/HEburn/HotSpotRateCC.h			added	  December 25, 2014
+	Added new fitting form for f(Ps)
+	which has smooth cutoff
+
+#
+#EOSlib version: 2.1.0
+#
+Modify to use headers for standard template library
+
+src/ExtEOStypes/HEburn/HErate2					bug fix	    January 4, 2015
+	HEburn2, HErate2 ande HotSpotRateCC set_eos function
+	was not consistent with HE->set_lambda2(lambda,de)
+	extra factor of lambda for de.
+	Bug is now corrected.
+
+src/ODE                               			added	       July 4, 2015
+	Added diagnostic functions to ODE.h
+
+
+src/ExtEOStypes/HEburn/HotSpotRateCC		    added	  September 7, 2015
+	Added alternative rate form f(Ps) = c*(Ps-P)^fn
+
+src/Eos/SubsVe/Detonation_gen.C				    modified   October 20, 2015
+	Detonation_gen::Detonation_gen sets rel_tol and ODE::epsilon
+	to values from eos.
+
+src/ExtEOStypes/HEburn/{Test.data,				update	   October 20, 2015
+	HEburn2,HErate2,HotSpotRateCC}
+
+src/Applications/ZND-SURFplus.C				    added      October 20, 2015
+	Calculates ZND profile and Taylor wave
+	for HE of type HEburn2
+
+src/ODE											update     October 31, 2015
+	Add abs_tol and rel_tol to ODEfunc
+
+src/EOStype/Davis								bug fix    October 31, 2015
+	Correct entropy for DavisProduct EOS
+
+src/Applications/ZND-SURFplus.C				    update     October 31, 2015
+	Cleanup
+

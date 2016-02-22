@@ -1,0 +1,130 @@
+#!/bin/sh
+
+os=`uname`
+case $os in
+Linux)
+    #version=`gcc -v 2>&1 | awk '/version/ {print $3; exit}'`
+    version=`gcc -dumpversion`
+    case $version in
+    4.*)   # RedHat Enterprise Linux 5+
+        SYSFLAGS="DFLAGS=-DLINUX version=-DSTL";;
+    *)
+        Echo "\ngcc version $version not known\n"
+        exit 1;;    
+    esac
+    ;;
+*)
+	Echo "\nsystem $os not known\n"
+	exit 1;;	
+esac
+
+
+cd -P .
+prog=$0
+while [ -L $prog ] ; do
+    link=`ls -l $prog | sed -e 's/.*->[ 	]*//'`
+    case $link in
+    /*)
+    	prog=$link;;
+     *)
+        prog="`dirname $prog`/$link";;
+    esac
+done
+
+CWD=`(cd \`dirname $prog\` ; pwd)`
+MAKEDIR=$CWD/MakeMake/MAKEDIR/$os
+PATH="$CWD/bin:$CWD/bin/$os:$PATH"
+export CWD MAKEDIR PATH
+
+
+StartUp=$CWD/MakeMake/MAKEDIR/make.std
+
+
+
+# DEFAULTS:
+
+MakeOpt=YES
+CleanupOpt=
+	   
+
+# ARGUMENT PROCESSING
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+	CLEANUP)
+		CleanupOpt="Cleanup"
+		shift
+		break;;
+	MAKEDIR)
+		MAKEDIR=$2
+		shift 2;;
+	MakeMake)
+		rm -f MakeFile */MakeFile
+		MakeOpt=NO;
+		shift;;
+	NewMake)
+		rm -f MakeFile */MakeFile
+		shift;;
+	RmMake)
+		rm -f MakeFile */MakeFile
+		exit;;
+	StartUp)
+		StartUp="$2"
+		shift 2;;
+    CWD=*)
+        eval $1
+        shift;;
+	*)
+		break;;
+    esac
+done
+
+if [ ! -r $StartUp ]
+then
+	echo "$StartUp does not exist"
+	echo "Run MakeMake/install"
+	exit 1;
+fi
+
+
+# RUN MAKES
+
+MAKE_ARGS="$SYSFLAGS CWD=$CWD OS=$os"
+
+
+# Premake: Makes sure the MakeFile is current
+
+	if [ -r MakeSource ]
+	then
+		eval make -f MakeSource $MAKE_ARGS $CleanupOpt
+		if [ $? != 0 ]
+		then
+			Echo "\nError in MakeSource\n"
+			exit 1;
+		fi
+	fi
+	
+	FILES=`echo *.[hcCf]`
+	if [ "*.[hcCf]" = "$FILES" ]
+	then
+	    make -f $StartUp "SYSFLAGS=$SYSFLAGS" "CWD=$CWD" "OS=$os" FILES=
+	else
+	    make -f $StartUp "SYSFLAGS=$SYSFLAGS" "CWD=$CWD" "OS=$os"
+	fi
+
+# Cleanup option only
+
+	if [ "$CleanupOpt" = "Cleanup" ]
+	then		
+		eval make -f MakeFile $MAKE_ARGS Cleanup "$@"
+		rm -f MakeFile */MakeFile
+		exit;
+	fi
+	
+# Run the MakeFile
+
+	if [ "$MakeOpt" = "YES" ]
+	then
+	       eval make -f MakeFile $MAKE_ARGS "$@"
+	fi

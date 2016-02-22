@@ -1,0 +1,204 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: Feb. 26, 2004
+
+/********************************
+*    UNITS                      *
+********************************/
+
+:SharedLibs=Units
+{
+    Units = NULL
+    hydro = NULL
+}
+.base = Units
+
+hydro=std
+{
+    Values = std
+    Names  = std
+}
+
+hydro=MKS
+{
+    Values = MKS
+    Names  = MKS
+}
+hydro=CGS
+{
+    Values = CGS
+    Names  = CGS
+}
+
+hydro=HiP
+{
+    Values = HiP
+    Names  = HiP
+}
+
+
+.base
+
+UnitsValues=hydro
+{
+# Derived (hydro quantities)
+      u = L/t       # velocity
+    rho = m/L^3     # density
+      V = L^3/m     # specific volume
+      e = u^2       # specific energy
+      E = m*u^2     # energy
+      P = rho*e     # pressure
+      S = e/T       # entropy
+     Cv = e/T       # specific heat
+   beta = 1/T       # thermal expansion
+     
+    length          = L
+    time            = t
+    mass            = m
+    temperature     = T
+    velocity        = u
+    density         = rho
+    specific_volume = V
+    specific_energy = e
+    energy          = E
+    pressure        = P
+    entropy         = S
+    specific_heat   = Cv
+    thermal_expansion = beta
+}
+
+UnitsNames=hydro
+{
+# Derived (hydro quantities)
+      u = $velocity
+    rho = $density
+      V = $specific_volume
+      e = $specific_energy
+      E = $energy
+      P = $pressure
+     Cv = $specific_heat
+      S = $specific_heat
+   beta = $thermal_expansion
+      L = $length
+      t = $time
+      m = $mass
+      T = $temperature
+}
+
+UnitsValues=std
+{
+# Fundamental
+    L = 1           # length
+    t = 1           # time
+    m = 1           # mass
+    T = 1           # temperature
+    :use = hydro
+}
+
+UnitsNames=std
+{
+    length          = mm
+    time            = micro`s
+    mass            = mg
+    temperature     = K
+    #
+    force           = kN
+    energy          = J
+    #
+    velocity        = km/s      # km/s = mm/micro`s
+    density         = g/cm^3    # g/cm^3 = 10^3 kg/m^3
+    specific_volume = cm^3/g
+    specific_energy = MJ/kg    
+    pressure        = GPa       # GPa = 10 kb
+    specific_heat   = MJ/kg/K
+  thermal_expansion = 1/K
+    :use = hydro
+}
+
+UnitsValues=MKS
+{
+    L = 1e3         # length
+    t = 1e6         # time
+    m = 1e6         # mass
+    T = 1           # temperature
+    :use = hydro
+}
+
+UnitsNames=MKS
+{
+    length          = m
+    time            = s
+    mass            = kg
+    temperature     = K
+    #
+    force           = N
+    energy          = J
+    #
+    velocity        = m/s
+    density         = kg/m^3
+    specific_volume = m^3/kg
+    specific_energy = J/kg
+    pressure        = Pa        # Pascal = N/m^2 = 10^-5 bar
+    specific_heat   = J/kg/K
+  thermal_expansion = 1/K
+    :use = hydro
+}
+
+UnitsValues=HiP
+{
+    L =   10        # length
+    t =    1        # time
+    m = 1000        # mass
+    T =    1        # temperature
+    :use = hydro
+}
+
+UnitsNames=HiP
+{
+    length          = cm
+    time            = micro`s
+    mass            = g
+    temperature     = K
+    #
+    force           = T`dyne       # 10^12 dyne = 10^7 N
+    energy          = T`erg        # 10^12 erg  = 10^5 J
+    #
+    velocity        = cm/micro`s   # 10 km/s
+    density         = g/cm^3
+    specific_volume = cm^3/g
+    specific_energy = Mb*cm^3/g    # 100 MJ/kg
+    pressure        = Mb           # 100 GPa
+    specific_heat   = Mb*cm^3/g/K
+  thermal_expansion = 1/K
+    :use = hydro
+}
+
+UnitsValues=CGS
+{
+    L = 10          # length
+    t = 1e6         # time
+    m = 1e3         # mass
+    T = 1           # temperature
+    :use = hydro
+}
+
+UnitsNames=CGS
+{
+    length          = cm
+    time            = s
+    mass            = g
+    temperature     = K
+    #
+    force           = dyne
+    energy          = erg
+    #
+    velocity        = cm/s
+    density         = g/cm^3
+    specific_volume = cm^3/g
+    specific_energy = erg/g
+    pressure        = micro'bar        # dyn/cm^2 = 10^-6 bar
+    specific_heat   = erg/g/K
+  thermal_expansion = 1/K
+    :use = hydro
+}
+

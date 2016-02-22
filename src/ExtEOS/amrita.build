@@ -1,0 +1,4 @@
+utilize Amrita::Build
+
+CopyHeader
+NewLib lib=ExtEOS, dirs=Subs, so=yes

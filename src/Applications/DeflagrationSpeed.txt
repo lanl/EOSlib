@@ -1,0 +1,16 @@
+kappa/P  10      20      30     40
+2.6e-4    0.859   1.05    1.29   1.17
+2.6e-6    0.345   0.356
+2.6e-8    0.042   0.044  
+
+dB to minimize roundoff errirs
+kappa/P  10      20      30     40
+2.6e-4    1.594   1.517   
+2.6e-6    0.178   0.152
+2.6e-8    0.017   0.015  
+
+
+./DeflagrationProfile lib ../lib/Linux file HE.data name PBX9501.BM.mod \
+    kappa 2.6e-6 Ps 20 dVfact 1e-3 debug 1
+kappa/P  10      20      30     40      50
+2.6e-6   0.179    0.149   0.212  0.562   1.22

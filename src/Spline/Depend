@@ -1,0 +1,13 @@
+TestSpline: Spline.a -lLocalIo -lLocalMath
+
+Spline.a : Subs
+
+
+.INSTALL
+Spline.h
+Spline.a
+
+.INCLUDE
+
+Test: ../../bin/ColorDgraph.pl
+	TestSpline | ../../bin/ColorDgraph.pl

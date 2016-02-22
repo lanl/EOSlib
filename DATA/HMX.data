@@ -1,0 +1,219 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: March 23, 2005
+
+/********************************
+*       HMX                     *
+********************************/
+.base =EOS
+.units=hydro::std
+
+BirchMurnaghan=HMXjwl; units=hydro::std
+{
+    :use=HMX
+    V0  = V0*1.9/1.894      # cm^3/g
+}
+
+BirchMurnaghan=HMXfit; units=hydro::std
+{
+    :use=HMX
+    V0  = V0*1.9/1.835      # cm^3/g
+}
+
+BirchMurnaghan=PBX9404; units=hydro::std
+{
+    :use=HMX
+    V0  = V0*1.9/1.843      # cm^3/g
+}
+BirchMurnaghan=PBX9501; units=hydro::std
+{
+    :use=HMX
+    V0  = V0*1.9/1.843      # cm^3/g
+    Kp0 = 9.8               # dimensionless
+    K0  = 14.0              # GPa
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.9              # dimensionless
+}
+
+
+HayesBM=HMX;  units=hydro::std
+{
+# Ref: "Fitting Forms for Isothermal Data"
+#      Ralph Menikoff and Thomas D. Sewell
+#      High Pressure Research 21 (2001) pp. 121-138
+    rho0 = 1.9      # g/cm^3
+    P0   = 1.0e-4   # GPa
+    T0   = 300      # degrees K
+    K0   =  14.7    # GPa
+    Kp0  =   8.6
+    Cv   = 1.5e-3   # (MJ/kg)/K
+    G0 = G1 = 1.1   # Gamma/V = const
+    e0 = T0*Cv
+}
+HayesBM=HMX.beta.MD;  units=hydro::std
+{
+#   MD simulations -- Thomas D. Sewell
+    rho0 = 1.903    # g/cm^3
+    P0   = 1.0e-4   # GPa
+    T0   = 300      # degrees K
+    K0   =  15.5    # GPa
+    Kp0  =  12.1
+    Cv   = 1.4e-3   # (MJ/kg)/K
+    G0 = G1 = 1.1   # Gamma/V = const
+    e0 = T0*Cv
+}
+HayesBM=HMX.delta.MD;  units=hydro::std
+{
+#   MD simulations -- Thomas D. Sewell
+    rho0 = 1.751    # g/cm^3
+    P0   = 1.0e-4   # GPa
+    T0   = 300      # degrees K
+    K0   =  12.0    # GPa
+    Kp0  =   8.1
+    Cv   = 1.4e-3   # (MJ/kg)/K
+    G0 = G1 = 1.1   # Gamma/V = const
+    e0 = T0*Cv
+}
+
+Hayes=HMX; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    K0 = 12.9               # GPa
+    K0 = 13.5               # Olingers hydrostatic data
+    N  =  9.3
+    #K0 = 12.4              # Yoo-Cynn hydrostatic data
+    #Cv = 1.05e-3           # (MJ/kg)/K
+    Cv = 1.5e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    #c0=2.6778 s = 2.68946
+}
+
+/**************
+HMX specific heat
+    Specific Heat of HMX
+    L.G. Koshigoe, R. L. Shoemaker and R. E. Taylor
+    AIAA Journal 22 (1948) pp 1600-1601
+    Cp(T) = a + b*T + c*T^2 + d*T^3
+    a =  0.9802919
+    b =  0.1720238e-2
+    c =  0.8463956e-5
+    d = -0.2505766e-07
+    and T in centigrade = K- 273.16
+    fit upto K = 445 (slightly above delta-transition)
+******************/
+
+Hayes=HMX-Olinger; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.31e-3            # meassured value at highest temp
+                            # T = 445 (delta-transtion = 438)
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 2.6512407738137
+    s  = 2.59386635826163
+}
+
+Hayes=HMX-Olinger-lowCv; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.1e-3             # meassured value at highest temp
+                            # T = 445 (delta-transtion = 438)
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 2.6512407738137
+    s  = 2.59386635826163
+}
+
+Hayes=HMX-Olinger-hiCv; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.5e-3             # meassured value at highest temp
+                            # T = 445 (delta-transtion = 438)
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    c0 = 2.6512407738137
+    s  = 2.59386635826163
+}
+Hayes=HMX1; units=hydro::std
+{
+    :use=HMX
+    c0=2.6778; s = 2.68946
+    P0 = 0.0001
+    e_ref = 0
+    V_ref = 0.52
+}
+
+Hayes=HMX2; units=hydro::std
+{
+    :use=HMX1
+    c0=3
+}
+
+Hayes=HMX-YC; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.4e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # linear veloctiy fit to Yoo-Cynn data
+    c0= 3.04
+    s = 1.65
+    #K0=16.52; N=5.94
+}
+Hayes=HMX-YC-lowCv; units=hydro::std
+{
+    :use=HMX-YC
+    Cv = 1.2e-3             # (MJ/kg)/K
+    e0 = T0*Cv
+}
+Hayes=HMX-YC-hiCv; units=hydro::std
+{
+    :use=HMX-YC
+    Cv = 1.6e-3             # (MJ/kg)/K
+    e0 = T0*Cv
+}
+UsUp=HMX-YC; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.4e-3             # (MJ/kg)/K
+    G0 = G1 = 1.1
+    # linear veloctiy fit to Yoo-Cynn data
+    c0= 3.04
+    s = 1.65
+}
+UsUp=HMX-YC-hiCv; units=hydro::std
+{
+    :use=HMX-YC
+    Cv = 1.5e-3             # (MJ/kg)/K
+}
+UsUp=HMX-YC-lowCv; units=hydro::std
+{
+    :use=HMX-YC
+    Cv = 1.3e-3             # (MJ/kg)/K
+}
+UsUp=HMX-Mader; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 0.4*4.186*1.e-3    # 0.4 cal/g -> (MJ/kg)/K
+    G0 = G1 = 0.6549        # 3*(lin expansion)*V0/(Cv*compressibility)
+                            # lin expansion = 5e-5
+                            # compressibilty = 7.2/Mb   
+    c0= 2.423
+    s = 1.883
+}

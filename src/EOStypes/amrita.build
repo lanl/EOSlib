@@ -1,0 +1,44 @@
+utilize Amrita::Build
+fold::amrita { MaterialLib.so
+   fold::print { get dirs
+      fold> token=dirs
+      IdealGas
+      StiffenedGas
+      Hayes
+      HayesBM
+      GenHayes
+      MieGruneisen
+      JWL
+      Davis
+      Sesame
+      PTequilibrium
+   }
+   foreach dir @dirs
+      fold::amrita { build dir
+         echo building EOStypes/$dir
+         pushcwd $dir
+           parse <file> ./amrita.build
+         popcwd
+      }
+   end foreach
+   amrso {
+      -amrso   $Build::lib/MaterialLib
+      -amrldir $Build::lib
+      -amrlib  IdealGas StiffenedGas
+      -amrlib  Hayes HayesBM GenHayes
+      -amrlib  MieGruneisen JWL Davis
+      -amrlib  Sesame PTequilibrium
+   } 
+}
+fold::amrita { Porous.so
+    echo building EOStypes/Porous
+    pushcwd Porous
+       parse <file> ./amrita.build
+    popcwd
+}
+fold::amrita { Uniaxial.so (depricated)
+    echo building EOStypes/Uniaxial
+    pushcwd Uniaxial
+       parse <file> ./amrita.build
+    popcwd
+}

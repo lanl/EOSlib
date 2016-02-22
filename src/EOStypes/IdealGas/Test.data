@@ -1,0 +1,58 @@
+.include ../../DataBase/Units.data
+
+:SharedLibs=EOS
+{
+    EOS      = NULL
+    IdealGas = ./IdealGas.so
+}
+
+:SharedLibs=EOS_VT
+{
+    EOS_VT      = NULL
+    IdealGas = ./IdealGas.so
+}
+
+.base =EOS
+.units=hydro::std
+
+IdealGas=5/3;
+{
+    gamma = 5/3
+    Cv    = 5e-5
+    V_ref = 100     # rho = 0.01 g/cm^3
+    e_ref = 1.5e-2  # P(V_ref,e_ref) = 1 bar
+}
+
+IdealGas=IG1;
+{
+    gamma = 5/3
+    Cv    = 5e-5
+    rho_ref = 10    # V_ref = 1/rho_ref
+    e_ref = 1.5e-2  # P(V_ref,e_ref) = 1 bar
+}
+
+IdealGas=ambient;
+{
+    gamma = 5/3
+    Cv    = 5e-5
+    P_ref = 1
+}
+
+.base =EOS_VT
+.units=hydro::std
+
+IdealGas=5/3;
+{
+    gamma = 5/3
+    Cv    = 5e-5
+    V_ref = 100     # rho = 0.01 g/cm^3
+    T_ref = 300
+}
+
+IdealGas=IG1;
+{
+    gamma = 5/3
+    Cv    = 5e-5
+    rho_ref = 10    # V_ref = 1/rho_ref
+    T_ref = 300
+}

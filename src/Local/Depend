@@ -1,0 +1,20 @@
+LocalIo.a:	    Io
+LocalMath.a:	Math
+String.a:	    String
+
+#
+
+Test: 		LocalIo.a
+TestFunc: 	LocalMath.a
+TestCat:	String.a LocalIo.a
+TestSplit: 	String.a LocalIo.a
+TestError:	LocalIo.a
+TestManip:	LocalIo.a
+
+
+#
+
+.INSTALL
+Arg.h        LocalIo.h       ErrorHandler.h
+LocalMath.h  String.h 
+LocalIo.a LocalMath.a String.a
