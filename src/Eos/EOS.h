@@ -168,7 +168,7 @@ inline ostream & operator<<(ostream &out, EOS &eos)
 inline double EOS::c(double V, double e)
 {
     double csq = c2(V,e);
-    return (isnan(csq) || csq < 0) ? EOS::NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? EOS::NaN : sqrt(csq);
 }
 inline double EOS::KS(double V, double e)
 {

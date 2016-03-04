@@ -105,12 +105,12 @@ inline ostream & operator<<(ostream &out, EOS_VT &eos)
 inline double EOS_VT::c(double V, double T)
 {
     double csq = c2(V,T);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 inline double EOS_VT::cT(double V, double T)
 {
     double csq = cT2(V,T);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 
 #endif // EOSLIB_EOS_VT_H

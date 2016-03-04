@@ -6,12 +6,19 @@ set(Calc_src)
 
 add_subdirectory(Subs)
 
-include_directories(.)
+add_library( Calc ${${projectName}_policy} ${Calc_src} )
+set_property(TARGET Calc PROPERTY CXX_STANDARD 11)
+set_property(TARGET Calc PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET Calc PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-# add_library( Calc ${${projectName}_policy} ${Calc_src} )
-# set_property(TARGET Calc PROPERTY CXX_STANDARD 11)
-# set_property(TARGET Calc PROPERTY CXX_STANDARD_REQUIRED ON)
-# set_property(TARGET Calc PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+target_link_libraries( Calc LinkList Io Math String)
+
+list( APPEND tests TestCalc)
+
+foreach(test ${tests})
+  add_executable(${test} ${test}.C)
+  target_link_libraries(${test} Calc)
+endforeach(test)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Calc subdirectory")
