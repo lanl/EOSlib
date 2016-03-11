@@ -23,7 +23,7 @@ void Token::Set(const char* ptr0, const char *ptr1, double v)
 	delete [] string;
 	
 	if( ptr0 == NULL )
-		string == NULL;
+		string = NULL;
 	else
 	{
 		int n=ptr1-ptr0 + 1;

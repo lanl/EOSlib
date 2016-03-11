@@ -293,24 +293,24 @@ public:
     void* operator++()                  { return ((void*)_List::Next());}
     void* operator--()                  { return ((void*)_List::Prev());}
     //operator void* ()                 { return ((void*)_List::Get());}
-    _List::Start;
-    _List::End;
-    _List::SetFirst;
-    _List::Save;
-    _List::SaveAtEnd;
-    _List::PopSave;
-    _List::EmptySave;
-    _List::Restore;
-    _List::SaveDepth;
-    _List::Dimension;
-    _List::Permanent;
-    _List::NotPermanent;
-    _List::InList;
-    _List::IsCurrent;
-    _List::IsCurrentSaved;
-    _List::IsFirst;
-    _List::IsLast;
-    _List::EmptyList;
+    using _List::Start;
+    using _List::End;
+    using _List::SetFirst;
+    using _List::Save;
+    using _List::SaveAtEnd;
+    using _List::PopSave;
+    using _List::EmptySave;
+    using _List::Restore;
+    using _List::SaveDepth;
+    using _List::Dimension;
+    using _List::Permanent;
+    using _List::NotPermanent;
+    using _List::InList;
+    using _List::IsCurrent;
+    using _List::IsCurrentSaved;
+    using _List::IsFirst;
+    using _List::IsLast;
+    using _List::EmptyList;
 };
 
 

@@ -4,11 +4,13 @@
 #include <cstdlib>
 #include <Arg.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
     typedef double (*FUNC)();           // function returning double
     ProgName(*argv);
-    const char *shared = "./shared_obj.so";   // shared object
+    const char *shared = "./libshared_obj.dylib";   // shared object
     const char *func   = "TestFunc";          // function name
         
     while(*++argv)

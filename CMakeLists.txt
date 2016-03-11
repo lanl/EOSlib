@@ -4,7 +4,7 @@ set(projectName "EOSlib")
 set(projectVersion "2.0.0")
 
 # verbose traversal is disabled by default. in general, a trace of the
-# source tree traversal just adds noice to the configuration output and
+# source tree traversal just adds noise to the configuration output and
 # may obscure other more important messages indiciating errors or warnings
 # however, a trace of the traversal can be very helpful when the
 # configuration itself is broken.
@@ -228,6 +228,7 @@ endfunction(setupTest)
 
 # setup include directory
 include_directories( "${HEADER_DIR}" )
+include_directories( "${CMAKE_CURRENT_BINARY_DIR}" )
 
 message(STATUS "")
 message(STATUS "-----------------------------------------------------------")
@@ -242,5 +243,11 @@ message(STATUS "${projectName} flags: ${${projectName}_flags}")
 message(STATUS "")
 message(STATUS "-----------------------------------------------------------")
 message(STATUS "")
+
+set(data_path "${CMAKE_CURRENT_BINARY_DIR}")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/data_path.h" "${CMAKE_CURRENT_BINARY_DIR}")
+file(GLOB data_files ${CMAKE_CURRENT_SOURCE_DIR}/DATA *.data)
+file(MAKE_DIRECTORY ${data_path})
+file(COPY ${data_files} DESTINATION ${data_path})
 
 add_subdirectory(src)

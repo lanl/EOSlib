@@ -1,5 +1,6 @@
 #include <LocalIo.h>
 #include "String.h"
+using namespace std;
 
 #define MAX 64
 

@@ -49,7 +49,7 @@ int Scanner::NextToken()
 	const char **ops;
 // check for logical operator
 	ops = Token::logic_ops;
-	for( i=0; ops[i] != '\0'; i++ )
+	for( i=0; (*ops)[i] != '\0'; i++ )
 	{
 		int j = StrCmp(ops[i],ptr);
 		if( j>0 )
@@ -61,7 +61,7 @@ int Scanner::NextToken()
 	}
 // check for Boolean operator
 	ops = Token::bool_ops;
-	for( i=0; ops[i] != '\0'; i++ )
+	for( i=0; (*ops)[i] != '\0'; i++ )
 	{
 		int j = StrCmp(ops[i],ptr);
 		if( j>0 )
@@ -73,7 +73,7 @@ int Scanner::NextToken()
 	}
 // check for arithmetic operator
 	ops = Token::ops;
-	for( i=0; ops[i] != '\0'; i++ )
+	for( i=0; (*ops)[i] != '\0'; i++ )
 	{
 		int j = StrCmp(ops[i],ptr);
 		if( j>0 )

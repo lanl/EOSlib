@@ -1,11 +1,11 @@
 #ifndef CCLIB_LOCAL_IO_
 #define CCLIB_LOCAL_IO_
 
-#include <cstdlib>
-#include <cstddef>
+//#include <cstdlib>
+//#include <cstddef>
 #include <iostream>
 #include <iomanip>
-using namespace std;
+//using namespace std;
 
 
 // class declarations:
@@ -16,11 +16,11 @@ class str_ostream_iomanip;
 
 // function declarations:
 
-void ErrorExit(ostream& out, int status);
-char* ProgName(const char *name);
-void ErrorMess(ostream& out, const char *name);
-void skipto(istream& inp, const char* string);
-void skipto_and_copy(istream& inp, const char* string, ostream& s);
+void ErrorExit(std::ostream& out, int status);
+char* ProgName(const char *name = nullptr);
+void ErrorMess(std::ostream& out, const char *name);
+void skipto(std::istream& inp, const char* string);
+void skipto_and_copy(std::istream& inp, const char* string, std::ostream& s);
 
 
 
@@ -45,45 +45,45 @@ enum FormatFlag { BINARY, ASCII };
 
 class int_iomanip
 {
-	void (*ofunc)(ostream&, int);
-	void (*ifunc)(istream&, int);
+	void (*ofunc)(std::ostream&, int);
+	void (*ifunc)(std::istream&, int);
 	int value;
 public:
-	int_iomanip ( void (*F)(ostream&, int), int i = 0)
+	int_iomanip ( void (*F)(std::ostream&, int), int i = 0)
 					{ofunc = F; ifunc = 0; value = i;}
 						
-	int_iomanip ( void (*F)(istream&, int), int i = 0)
+	int_iomanip ( void (*F)(std::istream&, int), int i = 0)
 					{ifunc = F; ofunc = 0; value = i;}
 						
-	int_iomanip ( void (*Fin)(istream&, int), void (*Fout)(ostream&, int),
+	int_iomanip ( void (*Fin)(std::istream&, int), void (*Fout)(std::ostream&, int),
 								 int i = 0)
 					{ifunc = Fin; ofunc = Fout; value = i;}
 						
 	int_iomanip& operator()(int arg) {value = arg; return *this;}
 
-	friend ostream& operator<<(ostream& out,  int_iomanip man)
+	friend std::ostream& operator<<(std::ostream& out,  int_iomanip man)
 			{if(man.ofunc) man.ofunc(out, man.value); return out;}
 
-	friend istream& operator>>(istream& inp,  int_iomanip man)
+	friend std::istream& operator>>(std::istream& inp,  int_iomanip man)
 			{if(man.ifunc) man.ifunc(inp, man.value); return inp;}
 };
 
 
 class str_iomanip
 {
-	void (*ifunc)(istream&, const char*);
-	void (*ofunc)(ostream&, const char*);
+	void (*ifunc)(std::istream&, const char*);
+	void (*ofunc)(std::ostream&, const char*);
 	char* value;
 public:
-	str_iomanip(void (*F)(ostream&, const char *), const char *str = 0);
-	str_iomanip(void (*F)(istream&, const char *), const char *str = 0);
-	str_iomanip(void (*F)(istream&, const char *),
-			void (*G)(ostream&, const char *), const char *str = 0);
+	str_iomanip(void (*F)(std::ostream&, const char *), const char *str = 0);
+	str_iomanip(void (*F)(std::istream&, const char *), const char *str = 0);
+	str_iomanip(void (*F)(std::istream&, const char *),
+			void (*G)(std::ostream&, const char *), const char *str = 0);
 	~str_iomanip() { /* if(value) delete [] value; */ }
 	str_iomanip& operator()(const char *);
-	friend istream& operator>>(istream& inp,  str_iomanip man)
+	friend std::istream& operator>>(std::istream& inp,  str_iomanip man)
 			{if(man.ifunc) man.ifunc(inp, man.value); return inp;}
-	friend ostream& operator<<(ostream& out,  str_iomanip man)
+	friend std::ostream& operator<<(std::ostream& out,  str_iomanip man)
 			{if(man.ofunc) man.ofunc(out, man.value); return out;}
 };
 
@@ -91,21 +91,21 @@ public:
 
 class str_ostream_iomanip
 {
-	void (*ifunc)(istream&, const char*, ostream&);
-	void (*ofunc)(ostream&, const char*, ostream&);
+	void (*ifunc)(std::istream&, const char*, std::ostream&);
+	void (*ofunc)(std::ostream&, const char*, std::ostream&);
 	char* value;
-	ostream* stream;
+	std::ostream* stream;
 public:
-	str_ostream_iomanip(void (*F)(ostream&, const char*, ostream&),
-						const char*, ostream&);
-	str_ostream_iomanip(void (*F)(istream&, const char*, ostream&),
-						const char*, ostream&);
-	str_ostream_iomanip(void (*F)(istream&, const char*, ostream&),
-		void (*G)(ostream&,const char*,ostream&),const char*,ostream&);
-	str_ostream_iomanip& operator()(const char *, ostream&);
-	friend istream& operator>>(istream& inp,  str_ostream_iomanip man)
+	str_ostream_iomanip(void (*F)(std::ostream&, const char*, std::ostream&),
+						const char*, std::ostream&);
+	str_ostream_iomanip(void (*F)(std::istream&, const char*, std::ostream&),
+						const char*, std::ostream&);
+	str_ostream_iomanip(void (*F)(std::istream&, const char*, std::ostream&),
+		void (*G)(std::ostream&,const char*,std::ostream&),const char*,std::ostream&);
+	str_ostream_iomanip& operator()(const char *, std::ostream&);
+	friend std::istream& operator>>(std::istream& inp,  str_ostream_iomanip man)
 	     {if(man.ifunc) man.ifunc(inp, man.value, *man.stream); return inp;}
-	friend ostream& operator<<(ostream& out,  str_ostream_iomanip man)
+	friend std::ostream& operator<<(std::ostream& out,  str_ostream_iomanip man)
 	     {if(man.ofunc) man.ofunc(out, man.value, *man.stream); return out;}
 };
 

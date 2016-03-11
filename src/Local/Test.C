@@ -14,7 +14,7 @@ int main(int, char** argv)
 		ArgError;
 	}
 	
-	cout << "X = " << x <<"\t" << "Y = " << y << "\n";
+	std::cout << "X = " << x <<"\t" << "Y = " << y << "\n";
 
 	return 0;
 }

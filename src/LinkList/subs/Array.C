@@ -13,7 +13,7 @@ _Array::_Array()
 	off_ptr = 0;
 	status = 0;
 	
-	for(int i = 0; i < (sizeof(int)*BitsPerChar); i++)
+	for(std::size_t i = 0; i < (sizeof(int)*BitsPerChar); i++)
 		block[i] = 0;
 }
 
@@ -59,7 +59,7 @@ void _Array::ArrayInit(int n)
 
 _Array::~_Array()
 {
-	for(int k=0; k < (sizeof(int)*BitsPerChar); k++)
+  for(std::size_t k=0; k < (sizeof(int)*BitsPerChar); k++)
 	{
 		if(block[k])
 		{
@@ -72,9 +72,9 @@ _Array::~_Array()
 
 void _Array::Cleanup()
 {
-	for(int k=0; k < (sizeof(int)*BitsPerChar) && block[k]; k++)
+  for(std::size_t k=0; k < (sizeof(int)*BitsPerChar) && block[k]; k++)
 	{
-		if(k==0 || k >= n_dynamic)
+	  if(k==0 || (int)k >= n_dynamic)
 			deallocate(block[k]);
 		
 		block[k] = 0;

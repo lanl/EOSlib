@@ -13,7 +13,7 @@ void _RefList::EnterRef(void* obj)
 	void* tg;
 	VoidList *tags = get_tags(obj);
 	
-	for(tags->Start(); tg = tags->Get(); tags->Next())
+	for(tags->Start(); (tg = tags->Get()); tags->Next())
 		Enter(tg, obj);
 
 	n_entries++;
@@ -26,7 +26,7 @@ void _RefList::Enter(void* tg, void* obj)
 	VoidList& SL = SubList(hash(tg) % hash_table_size);
 	
 	void* e;
-	for(SL.Start(); e = SL.Get(); SL.Next())
+	for(SL.Start(); (e = SL.Get()); SL.Next())
 	{
 		if(obj <  e)
 		{
@@ -50,7 +50,7 @@ int _RefList::Get(const void* tg, VoidList* Matches)
 	
 	VoidList& SL = SubList(hash(tg) % hash_table_size);
 	
-	for(SL.Start(); ob = SL.Get(); SL.Next())
+	for(SL.Start(); (ob = SL.Get()); SL.Next())
 	{
 		if(is_tag(tg, ob))
 		{
@@ -79,7 +79,7 @@ int _RefList::GetAnd( VoidList* tags, VoidList* Matches)
 	for( ; n && (tg = tags->Get()); tags->Next() )
 	{
 		void* ob;
-		for(Matches->Start(); ob = Matches->Get();  )
+		for(Matches->Start(); (ob = Matches->Get());  )
 		{
 			if(!is_tag(tg, ob))
 			{
@@ -102,7 +102,7 @@ int _RefList::GetOr( VoidList* tags, VoidList* Matches)
 {
 	void* tg;
 	
-	for(tags->Start(); tg = tags->Get(); tags->Next())
+	for(tags->Start(); (tg = tags->Get()); tags->Next())
 		Get(tg, Matches);
 		
 	Matches->Start();	
@@ -118,7 +118,7 @@ int _RefList::Delete(void* obj)
 	
 	int n_tags = tags->Dimension();
 
-	for(tags->Start(); tg = tags->Get(); tags->Next())
+	for(tags->Start(); (tg = tags->Get()); tags->Next())
 	{
 		VoidList& SL = SubList(hash(tg) % hash_table_size);
 		

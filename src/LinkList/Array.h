@@ -108,11 +108,11 @@ public:
 		type *temp = (type *)Xget(i);
 		return temp ? *temp : (status = -1, error_val);
 	}
-	_Array::ArrayInit;
-	_Array::Nalloc;
-	_Array::Offset;
-	_Array::Dimension;
-	_Array::Status;
+	using _Array::ArrayInit;
+	using _Array::Nalloc;
+	using _Array::Offset;
+	using _Array::Dimension;
+	using _Array::Status;
 };
 
 #endif /* _ARRAY_ */

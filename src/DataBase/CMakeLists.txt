@@ -11,15 +11,20 @@ set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
 set_property(TARGET DataBase PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET DataBase PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
+add_library( shared_obj ${${projectName}_policy} shared_obj.C)
+target_link_libraries( shared_obj Math )
+
 target_link_libraries( DataBase Calc)
 target_link_libraries( DataBase ${CMAKE_DL_LIBS})
 
-list( APPEND tests Data Convert TestDB Testdl)
+list( APPEND tests Data Convert TestDB Testdl )
 
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} DataBase)
 endforeach(test)
+
+target_link_libraries(Testdl shared_obj)
 
 if(${verbose_traversal})
   message(STATUS "Exiting DataBase subdirectory")

@@ -1,10 +1,13 @@
 #include <Arg.h>
+#include "data_path.h"
 #include "DataBase.h"
+using namespace std;
 
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *files = "Units.data";
+    auto Files = data_path + "/DATA/Units.data";
+    const char *files = Files.c_str();
     const char *type = "hydro";
     const char *name = "std";
         

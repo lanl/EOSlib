@@ -29,10 +29,10 @@ foreach(test ${tests})
   target_link_libraries(${test} LinkList)
 endforeach(test)
 
-# ctest( ArrayTest COMMAND ${CMAKE_COMMAND} -E compare_files ArrayTest.out
-#     WORKING_DIRECTORY ${WORK_DIR}
-#     RESULT_VARIABLE CompareResult
-# )
+#ctest( ArrayTest COMMAND ${CMAKE_COMMAND} -E compare_files ArrayTest.out
+#    WORKING_DIRECTORY ${WORK_DIR}
+#    RESULT_VARIABLE CompareResult
+#)
 
 if(${verbose_traversal})
   message(STATUS "Exiting LinkList subdirectory")

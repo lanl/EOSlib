@@ -1,5 +1,6 @@
 #include <cstring>
 #include <LocalIo.h>
+using namespace std;
 //
 // kludge to initialize externs for main program linked to shared object
 //

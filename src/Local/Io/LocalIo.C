@@ -1,6 +1,7 @@
 #include <LocalIo.h>
 #include <iostream>
 #include <cstring>
+using namespace std;
 
 void ErrorMess(ostream& out, const char *name)
 {
@@ -124,16 +125,9 @@ void skipto_and_copy(istream& inp, const char *string, ostream& out)
 
 
 
-char* ProgName(const char *name = 0)
+char* ProgName(const char *name)
 {
-	static char *progname = 0;
-	
-	if(name)
-	{
-		if(progname) delete [] progname;
-		progname = new char[strlen(name)+1];
-		strcpy(progname, name);
-	}
-	
-	return progname;
+  static std::string progname("");
+  if(name){ progname = name;}	
+  return &(progname[0]);
 }

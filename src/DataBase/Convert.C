@@ -3,6 +3,7 @@
 #include <LocalMath.h>
 
 #include "DataBase.h"
+using namespace std;
 
 int main(int, char **argv)
 {
@@ -27,25 +28,25 @@ int main(int, char **argv)
     if( files == NULL )
     {
         status = 1;
-        cerr << Error("must specify database file\n");
+        std::cerr << Error("must specify database file\n");
     }
     if( from == NULL )
     {
         status = 1;
-        cerr << Error("must specify from\n");
+        std::cerr << Error("must specify from\n");
     }
     DataBase db;
     if( db.Read(files) )
     {
         status = 1;
-        cerr << Error("db.Read failed\n");    
+        std::cerr << Error("db.Read failed\n");    
     }
     if( status )
-        cerr << Error("initialization failed") << Exit;
+        std::cerr << Error("initialization failed") << Exit;
     
     Units *From = db.FetchUnits(type,from);
     if( From == NULL )
-        cerr << Error("Failed to fetch from = ") << from << Exit;
+        std::cerr << Error("Failed to fetch from = ") << from << Exit;
 
     if( to == NULL )
     {
@@ -58,11 +59,11 @@ int main(int, char **argv)
     
     Units *To   = db.FetchNewUnits(type,to);
     if( To == NULL )
-        cerr << Error("Failed to fetch to = ") << to << Exit;
+        std::cerr << Error("Failed to fetch to = ") << to << Exit;
     
     Convert convert(*From, *To);
     if( convert )
-        cerr << Error("Bad convert status") << Exit;
+        std::cerr << Error("Bad convert status") << Exit;
     
     for( ; *argv; ++argv)
     {    

@@ -41,7 +41,7 @@ private:
 public:
     Type type;
     
-    Token() : type(Empty), string(0), value(NaN) {}
+    Token() : string(0), value(NaN), type(Empty) {}
     ~Token();
     
     int IsError()    { return type == Error; }
