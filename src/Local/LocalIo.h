@@ -92,21 +92,14 @@ public:
 class str_ostream_iomanip
 {
 	void (*ifunc)(std::istream&, const char*, std::ostream&);
-	void (*ofunc)(std::ostream&, const char*, std::ostream&);
 	char* value;
 	std::ostream* stream;
 public:
-	str_ostream_iomanip(void (*F)(std::ostream&, const char*, std::ostream&),
-						const char*, std::ostream&);
 	str_ostream_iomanip(void (*F)(std::istream&, const char*, std::ostream&),
 						const char*, std::ostream&);
-	str_ostream_iomanip(void (*F)(std::istream&, const char*, std::ostream&),
-		void (*G)(std::ostream&,const char*,std::ostream&),const char*,std::ostream&);
 	str_ostream_iomanip& operator()(const char *, std::ostream&);
 	friend std::istream& operator>>(std::istream& inp,  str_ostream_iomanip man)
 	     {if(man.ifunc) man.ifunc(inp, man.value, *man.stream); return inp;}
-	friend std::ostream& operator<<(std::ostream& out,  str_ostream_iomanip man)
-	     {if(man.ofunc) man.ofunc(out, man.value, *man.stream); return out;}
 };
 
 #endif  /* CCLIB_LOCAL_IO_ */

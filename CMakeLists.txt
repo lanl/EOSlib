@@ -3,6 +3,10 @@ cmake_minimum_required( VERSION 3.2 )
 set(projectName "EOSlib")
 set(projectVersion "2.0.0")
 
+# Enable unit testing with the Boost framework.
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+Include_directories(${Boost_INCLUDE_DIRS})
+
 # verbose traversal is disabled by default. in general, a trace of the
 # source tree traversal just adds noise to the configuration output and
 # may obscure other more important messages indiciating errors or warnings
@@ -177,7 +181,7 @@ else(DEFINED ${projectName}_compiler_flags)
 
   # base flags used by every project
   set( ${projectName}_flags
-    "-Wall -Wextra -Wpedantic ${CMAKE_CXX_FLAGS}" )
+    "-Wall -Wextra -Wpedantic ${CMAKE_CXX_FLAGS} -Wno-c++11-compat-deprecated-writable-strings" )
 
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)
@@ -213,12 +217,10 @@ function(setupTest TEST_NAME)
     message(STATUS "Entered test subdirectory")
   endif(${verbose_traversal})
   set(EXE_NAME ${TEST_NAME}.test)
-  file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+  file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.C")
   add_executable(${EXE_NAME} ${SRC} )
-  set_property(TARGET ${EXE_NAME} PROPERTY CXX_STANDARD 14)
-  set_property(TARGET ${EXE_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
-  target_link_libraries( ${EXE_NAME} LINK_PUBLIC ${projectName} )
-  add_test( ${TEST_NAME} ${EXE_NAME} )
+  target_link_libraries( ${EXE_NAME} LINK_PUBLIC ${Boost_LIBRARIES} ${TEST_NAME})
+  add_test( ${TEST_NAME} ${EXE_NAME} "--log_level=message")
   set_property( TEST ${TEST_NAME} PROPERTY PROCESSORS 1 )
   set_property( TEST ${TEST_NAME} APPEND PROPERTY LABELS ${testLabels} )
   if(${verbose_traversal})
@@ -244,10 +246,18 @@ message(STATUS "")
 message(STATUS "-----------------------------------------------------------")
 message(STATUS "")
 
-set(data_path "${CMAKE_CURRENT_BINARY_DIR}")
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/data_path.h" "${CMAKE_CURRENT_BINARY_DIR}")
-file(GLOB data_files ${CMAKE_CURRENT_SOURCE_DIR}/DATA *.data)
-file(MAKE_DIRECTORY ${data_path})
-file(COPY ${data_files} DESTINATION ${data_path})
+if(NOT DEFINED EOSLIB_DATA_TEST_PATH)
+  set(EOSLIB_DATA_TEST_PATH "${CMAKE_CURRENT_SOURCE_DIR}/DATA")
+endif(NOT DEFINED EOSLIB_DATA_TEST_PATH)
+
+if(NOT DEFINED EOSLIB_DATA_PATH)
+  set(EOSLIB_DATA_PATH "${EOSLIB_DATA_TEST_PATH}")
+endif(NOT DEFINED EOSLIB_DATA_PATH)
+
+SET (CTEST_ENVIRONMENT
+  "EOSLIB_DATA_PATH=${EOSLIB_DATA_TEST_PATH}"
+  "CTEST_OUTPUT_ON_FAILURE=1"
+  "BOOST_TEST_LOG_LEVEL='message'"
+  )
 
 add_subdirectory(src)

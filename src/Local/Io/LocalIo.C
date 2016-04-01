@@ -20,11 +20,9 @@ void ErrorExit(ostream& out, int status)
 {
 	if(status)
 	{
-		out << "\n\t(Exiting with error status "
-						<< status <<")\n\n" << flush;
-		exit(status);
+	        throw std::runtime_error("\n\t(Exiting with error status "
+				   + to_string(status) + ")\n\n");
 	}
-	out << "\n";
 }
 
 void skipto(istream& inp, const char *string)
