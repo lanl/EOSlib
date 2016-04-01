@@ -7,10 +7,10 @@
 class ZNDprofile : public ODE
 {
 // xi = x - D*t <= 0, right facing wave
-// (d/dxi) M =  1/V             // mass coordinate
-// (d/dxi) t = -1/(D-u)         // Lagrangian time
-// [c^2-(D-u)^2] (d/dxi) u = V*[(\partialP/\partial\lambda1)*Rate_1
-//                              +(\partialP/\partial\lambda2)*Rate_2]
+// m = (D-u)*rho                    // mass flux = D*rho0, for u0=0
+// D-u = m*V
+// (d/dxi) M =  1/V                 // mass coordinate
+// (d/dxi) t = -1/(D-u)             // Lagrangian time
 // (D-u) * (d/dxi) s1 = -Rate_s1
 // (D-u) * (d/dxi) s2 = -Rate_s2
 // Rate_1 = g'(s1)*Rate_s1
@@ -31,13 +31,12 @@ public:
 
     double *y, *yp;  // ODE variables, yp = (d/dxi)y
                      // y[0] = M, mass behind VN spike
-                     // y[1] = u
-                     // y[2] = t, reaction time behind VN spike
-                     // y[2+i] = HE.z[i], i=0,...,N
-    double *z;       // y+3;
-    double *zp;      // yp+3;
+                     // y[1] = t, reaction time behind VN spike
+                     // y[1+i] = HE.z[i], i=0,...,N
+    double *z;       // y+2;
+    double *zp;      // yp+2;
                      // z[0] = Ps
-                     // z[1] = t-(ts=0)
+                     // z[1] = ts=0
                      // z[2] = s1
                      // z[3] = s2
     ZNDprofile(HEburn2 &he, const WaveState &w0, const WaveState &wvn);
@@ -61,7 +60,7 @@ public:
     int sumcount;       // DEBUG
 };
 ZNDprofile::ZNDprofile(HEburn2 &he, const WaveState &w0, const WaveState &wvn)
-        : ODE(he.N()+3,1024), HE(he), ws(wvn)
+        : ODE(2+he.N(),1024), HE(he), ws(wvn)
 {
     epsilon = 1.e-10;
     abs_tol = 1.e-14;
@@ -81,15 +80,14 @@ ZNDprofile::ZNDprofile(HEburn2 &he, const WaveState &w0, const WaveState &wvn)
     Vlast = ws.V;
 
     int i = HE.Zref()->var_index("lambda");
-    y  = new double[N+3];
-    z  = y+3;
-    yp = new double[N+3];
-    zp = yp+3;
+    y  = new double[2+N];
+    z  = y+2;
+    yp = new double[2+N];
+    zp = yp+2;
     y[0] = 0.0;     // M
-    y[1] = ws.u;    // u
-    y[2] = 0.0;     // t
+    y[1] = 0.0;     // t
     z[0] = ws.P;    // Ps
-    z[1] = 0.0;     // t - (ts=0)
+    z[1] = 0.0;     // ts
     z[2] = 0.0;     // s1
     z[3] = 0.0;     // s2
     double dt;
@@ -111,7 +109,7 @@ void ZNDprofile::LocusState(double &V, double &e, double &P, double &u)
 {
     // state on partly burned detonation locus with mass flux m
     // after calling, HE.set_eos(lambda1, lambda2);
-    //V = Vlast;
+    V = Vlast;
     int count = 20;
     while( count-- )
     {
@@ -138,13 +136,8 @@ void ZNDprofile::LocusState(double &V, double &e, double &P, double &u)
 
 int ZNDprofile::F(double *y_prime, const double *y_xi, double xi)
 {
-    double u  = y_xi[1];
-    double du = D - u;
-    if( du < 0. )
-        return 1;
-
-    const double *z_xi  = y_xi+3;
-          double *zp = y_prime+3;
+    const double *z_xi  = y_xi+2;
+          double *zp = y_prime+2;
 
     double s1 = z_xi[2];
     double s2 = z_xi[3];
@@ -153,68 +146,25 @@ int ZNDprofile::F(double *y_prime, const double *y_xi, double xi)
     if( lambda2 >= 1. )
     {
         int i;
-        for( i=0; i<N+3; i++ )
+        for( i=0; i<N+2; i++ )
             y_prime[i] = 0.0;
         return 0;
     }
+
     HE.set_eos(lambda1, lambda2);
-
-    double V,e,P;
-    V = du/m;
+    double V,e,P,u;
     LocusState(V,e,P,u);
-    du = m*V;
-
-    double c2 = HE.c2(V,e,z_xi);
-    if( isnan(c2) || c2 <= du*du )
-        return 1;
-    double sonic = max(0.0, c2-du*du);
+    double du = m*V;
 
     if( Rate->Rate(V,e,z_xi, zp) )
         return 1;
-    double rate_l1 = Rate->dgds(s1)*zp[2];  // dlambda1/dt
-    double rate_l2 = 2.*s2*zp[3];           // dlambda2/dt
-
-    double dP1, dP2;    // dP/dlambda1, dP/dlambda2
-    if( lambda1< 0.98 )
-    {
-        if( Rate->dPdlambda(V,e,lambda1,lambda2,dP1,dP2) )
-            return 1;
-    }
-    else if( lambda1< 1.0 )
-    {
-    // calculate derivative with finite difference
-        double dlam = 1e-8;
-        HE.set_eos(lambda1-dlam,lambda2);
-        double P1 = HE.HE->P(V,e);
-        HE.set_eos(lambda1,lambda2+dlam);
-        double P2 = HE.HE->P(V,e);
-        dP1 = (P  - P1)/dlam;
-        dP2 = (P2 - P)/dlam;
-    }
-    else
-    {
-    // lambda1=1 does not need dPdlambda
-        dP1 = 0.0;  // not used, rate_l1 = 0
-        double de1, de2;
-        (void) Rate->q(lambda1,lambda2, de1,de2);
-        double GammaV = HE.HE->Gamma(V,e)/V;
-        dP2 = -GammaV*de2;
-    }
-    //
-    double sigma1 = dP1*V/c2;
-    double sigma2 = dP2*V/c2;
-    double sigmaRate = sigma1*rate_l1 + sigma2*rate_l2;
 
     y_prime[0] = -1./V;                     // M
-    y_prime[1] =  c2*sigmaRate/sonic;       // u
-    y_prime[2] = -1./du;                    // t
-    y_prime[3] = 0.0;                       // Ps
-    y_prime[4] = y_prime[2];                // ts
-    y_prime[5] = -zp[2]/du;                 // s1
-    y_prime[6] = -zp[3]/du;                 // s2
-
-    //y_prime[1] *= min(1.1, max(0.9,1.+(uh-u)/u));
-    //y[1] = u;
+    y_prime[1] = -1./du;                    // t
+    y_prime[2] = 0.0;                       // Ps
+    y_prime[3] = 0.0;                       // ts
+    y_prime[4] = -zp[2]/du;                 // s1
+    y_prime[5] = -zp[3]/du;                 // s2
 
     return 0;
 }
@@ -230,7 +180,7 @@ public:
 };
 double lambda1_ODE::f(double, const double *y, const double *yp)
 {
-    double s1 = y[5];
+    double s1 = y[4];
     return -Rate->g(s1);   // -lambda1
 }
 int ZNDprofile::Lambda1(double &lambda, double &xi,
@@ -271,7 +221,7 @@ public:
 };
 double lambda2_ODE::f(double, const double *y, const double *yp)
 {
-    double s2 = y[6];
+    double s2 = y[5];
     return -s2*s2;   // -lambda2
 }
 int ZNDprofile::Lambda2(double &lambda, double &xi,
@@ -325,7 +275,7 @@ int main(int, char **argv)
     ProgName(*argv);
     const char *file     = "HE.data";;
     const char *type     = "HEburn2";
-    const char *name     = "PBX9502.HotSpotCC";
+    const char *name     = "PBX9502.HotSpotCC.davis_SURFplus";
 	const char *material = NULL;
     const char *units    = NULL;
     const char *lib      = NULL;
@@ -335,8 +285,8 @@ int main(int, char **argv)
     double len     = 10.;       // length of run for  Taylor Wave
     int nsteps     = 20;
 
-    double epsilon = 1.e-10;    // ODE tolerance
-    double abs_tol = 1.e-14;    // ODEfunc tolerance
+    double epsilon = 1.e-8;    // ODE tolerance
+    double abs_tol = 1.e-14;   // ODEfunc tolerance
     double rel_tol = 1.e-8;    // ODEfunc tolerance
 
 
@@ -490,7 +440,7 @@ int main(int, char **argv)
     double *zp = profile.zp;
     int N     = profile.N;
     double xi,t,M, lambda1,lambda2;
-    double V, e, u, c, P, T, S;
+    double V, e,de, u, c, P, T, S;
     int i,j;
 	cout.setf(ios::left, ios::adjustfield);
     cout        << setw(13) << "# t"
@@ -503,9 +453,13 @@ int main(int, char **argv)
          << " " << setw(13) << "   P"
          << " " << setw(13) << "   T"
          << " " << setw(13) << "   S"
-         << " " << setw(13) << "   lambda1"
-         << " " << setw(13) << "   lambda2"
-         << "\n";
+         << " " << setw(13) << "   lambda1";
+    if( profile.Rate->Q > 0.0 )
+    {
+        cout << " " << setw(13) << "   lambda2"
+             << " " << setw(13) << "   de";
+    }
+    cout << "\n";
 	cout.setf(ios::showpoint);
 	cout.setf(ios::right, ios::adjustfield);
 	cout.setf(ios::scientific, ios::floatfield);
@@ -524,6 +478,7 @@ int main(int, char **argv)
     S  = Sref;
     lambda1 = 0.0;
     lambda2 = 0.0;
+    de      = 0.0;
     for( i=2; i; i-- )
     {
         cout        << setw(13) << setprecision(6) << t
@@ -536,9 +491,13 @@ int main(int, char **argv)
              << " " << setw(13) << setprecision(6) << P
              << " " << setw(13) << setprecision(6) << T
              << " " << setw(13) << setprecision(6) << S
-             << " " << setw(13) << setprecision(6) << lambda1
-             << " " << setw(13) << setprecision(6) << lambda2
-             << "\n";
+             << " " << setw(13) << setprecision(6) << lambda1;
+        if( profile.Rate->Q > 0.0 )
+        {
+             cout << " " << setw(13) << setprecision(6) << lambda2
+                  << " " << setw(13) << setprecision(6) << de;
+        }
+        cout << "\n";
         t  = 0.0;
         xi = 0.0;
         M  = 0.0;
@@ -566,13 +525,12 @@ int main(int, char **argv)
             }
         }
         M = -y[0];
-        t =  y[2];
+        t =  y[1];
 
         P = HE->P(V,e,z);
         T = HE->T(V,e,z);
         c = HE->c(V,e,z);
         S = HE->S(V,e,z);
-        lambda2 = z[3]*z[3];
         cout        << setw(13) << setprecision(6) << t
              << " " << setw(13) << setprecision(6) << xi
              << " " << setw(13) << setprecision(6) << M
@@ -583,9 +541,15 @@ int main(int, char **argv)
              << " " << setw(13) << setprecision(6) << P
              << " " << setw(13) << setprecision(6) << T
              << " " << setw(13) << setprecision(6) << S
-             << " " << setw(13) << setprecision(6) << lambda1
-             << " " << setw(13) << setprecision(6) << lambda2
-             << "\n";
+             << " " << setw(13) << setprecision(6) << lambda1;
+        if( profile.Rate->Q > 0.0 )
+        {
+            lambda2 = z[3]*z[3];
+            de = profile.Rate->q(lambda1,lambda2);
+            cout << " " << setw(13) << setprecision(6) << lambda2
+                 << " " << setw(13) << setprecision(6) << -de;
+        }
+        cout << "\n";
         if( status )
             cerr << Error("profile.Lambda1 failed with status ")
                  << profile.ErrorStatus(status) << Exit;
@@ -596,6 +560,11 @@ int main(int, char **argv)
     //
     if( profile.Rate->Q > 0.0 )
     {
+        int status;
+        if( (status=profile.Initialize(xi, y, -0.001*xi)) )
+                cerr << Error("lambda2 profile.Initialize failed with status ")
+                     << profile.ErrorStatus(status);
+             
         double lambda = lambda2;
         for( i=0; i<=nsteps; i++ )
         {
@@ -617,11 +586,12 @@ int main(int, char **argv)
                 }
             }
             M = -y[0];
-            t =  y[2];
+            t =  y[1];
             T = HE->T(V,e,z);
             c = HE->c(V,e,z);
             S = HE->S(V,e,z);
             lambda2 = z[3]*z[3];
+            de = profile.Rate->q(lambda1,lambda2);
             cout        << setw(13) << setprecision(6) << t
                  << " " << setw(13) << setprecision(6) << xi
                  << " " << setw(13) << setprecision(6) << M
@@ -634,10 +604,11 @@ int main(int, char **argv)
                  << " " << setw(13) << setprecision(6) << S
                  << " " << setw(13) << setprecision(6) << lambda1
                  << " " << setw(13) << setprecision(6) << lambda2
+                 << " " << setw(13) << setprecision(6) << -de
                  << "\n";
              if( status )
              {
-                cerr << Error("profile.Lambda2 failed with status ")
+                cerr << Error("profile.lambda2 failed with status ")
                      << profile.ErrorStatus(status)
                      << "\nD "  <<  setprecision(6) << D
                      << " u+c " << setprecision(6) << u+c
@@ -651,13 +622,13 @@ int main(int, char **argv)
     //
     if( len > 0. )
     {
-      HydroState ZNDstate(OD.V,OD.e,OD.u);
+      HydroState ZNDstate(V,e,u);
       Isentrope *I = products->isentrope(ZNDstate);
       if( I == NULL )
           cerr << Error("products->isentrope failed") << Exit;
       WaveState wave;
-      if( I->u(OD.u,RIGHT,wave) )
-          cerr << Error("I->u(OD.u) failed") << Exit;
+      if( I->u(u,RIGHT,wave) )
+          cerr << Error("I->u(u) failed") << Exit;
       c = products->c(wave.V,wave.e);
 
       double ZND_xi  = xi;
