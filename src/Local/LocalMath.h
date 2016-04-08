@@ -1,17 +1,17 @@
 #ifndef CCLIB_LOCAL_MATH_
 #define CCLIB_LOCAL_MATH_
 
-#ifdef AMRITA
-#include <AMRdefines.h>
-#endif
+/* #ifdef AMRITA */
+/* #include <AMRdefines.h> */
+/* #endif */
 
 #include <cstdlib>
 #include <cmath>
-using std::abs;
+/* using std::abs; */
 
 #include <limits>
-using std::numeric_limits;
-extern numeric_limits<double> Dlimits;
+/* using std::numeric_limits; */
+extern std::numeric_limits<double> Dlimits;
 extern const double NaN;
 
 

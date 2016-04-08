@@ -1,7 +1,7 @@
 #include "LocalMath.h"
 
 
-numeric_limits<double> Dlimits;
+std::numeric_limits<double> Dlimits;
 const double NaN = Dlimits.quiet_NaN();
 //const double NaN = numeric_limits<double>::quiet_NaN();
 
