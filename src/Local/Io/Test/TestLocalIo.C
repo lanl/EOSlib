@@ -2,6 +2,7 @@
 #define BOOST_TEST_MODULE TestLocalIo
 #include <LocalIo.h>
 #include <boost/test/unit_test.hpp>
+#include <boost/test/output_test_stream.hpp>
 #include <iostream>
 
 char *test_string = "Hello World!";
@@ -30,13 +31,14 @@ BOOST_AUTO_TEST_CASE(TestErrorMess){
 BOOST_AUTO_TEST_CASE(TestErrorExit){
   std::ostringstream out;
   int test_n = 1;
-  try{
-    ErrorExit(out, test_n);
-  }
-  catch(std::runtime_error& e){
-    if (not (std::string(e.what()) == "\n\t(Exiting with error status 1)\n\n"))
-      throw;
-  }
+  BOOST_CHECK_THROW(ErrorExit(out, test_n), std::runtime_error);
+  // try{
+  //   ErrorExit(out, test_n);
+  // }
+  // catch(std::runtime_error& e){
+  //   if (not (std::string(e.what()) == "\n\t(Exiting with error status 1)\n\n"))
+  //     throw;
+  // }
 }
 	
 BOOST_AUTO_TEST_CASE(TestSkipTo){

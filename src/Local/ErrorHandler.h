@@ -4,7 +4,7 @@
 
 #include <iosfwd>
 #include <cstdlib>
-using namespace std;
+//using namespace std;
 
 
 // ToDo: Use exceptions
@@ -13,14 +13,16 @@ using namespace std;
 class LocalErrorHandler		// base class for DataBase error handler
 {
 public:
-    ostream *out;
+    std::ostream *out;
     LocalErrorHandler()             : out(NULL) { }
-    LocalErrorHandler(ostream &Out) : out(&Out) { }
+    LocalErrorHandler(std::ostream &Out) : out(&Out) { }
     virtual ~LocalErrorHandler();
     virtual void Log(const char *func, const char *format, ...);
-    virtual void Abort(const char *func, const char *file, int line,
-		       const char *format, ...);
+    virtual void Error(const char *func, const char *file, int line,
+		       const char *format, va_list args);
     virtual void Throw(const char *func, const char *file, int line,
+		       const char *format, ...);
+    virtual void Abort(const char *func, const char *file, int line,
 		       const char *format, ...);
 };
 
