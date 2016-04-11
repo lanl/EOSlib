@@ -5,8 +5,8 @@ endif(${verbose_traversal})
 include_directories(Local)
 add_subdirectory(Local)
 
-#include_directories(LinkList)
-#add_subdirectory(LinkList)
+include_directories(LinkList)
+add_subdirectory(LinkList)
 
 #include_directories(Calc)
 #add_subdirectory(Calc)

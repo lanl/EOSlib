@@ -181,7 +181,7 @@ else(DEFINED ${projectName}_compiler_flags)
 
   # base flags used by every project
   set( ${projectName}_flags
-    "-Wall -Wextra -Wpedantic ${CMAKE_CXX_FLAGS} -Wno-c++11-compat-deprecated-writable-strings" )
+    "-Wall -Wextra -Wpedantic ${CMAKE_CXX_FLAGS} -Wno-c++11-compat-deprecated-writable-strings -Wno-unused-local-typedef" )
 
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)

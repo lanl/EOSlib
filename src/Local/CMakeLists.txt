@@ -11,6 +11,8 @@ add_subdirectory(Math)
 set(String_src)
 add_subdirectory(String)
 
+#add_subdirectory(Test)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
  
 add_library( Io ${${projectName}_policy} ${Io_src} )
