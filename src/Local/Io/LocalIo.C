@@ -1,6 +1,8 @@
+
 #include <LocalIo.h>
 #include <iostream>
 #include <cstring>
+#include <exception>
 using namespace std;
 
 void ErrorMess(ostream& out, const char *name)
