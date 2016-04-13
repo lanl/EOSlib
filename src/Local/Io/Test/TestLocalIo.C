@@ -53,14 +53,10 @@ BOOST_AUTO_TEST_CASE(TestSkipTo){
 
 BOOST_AUTO_TEST_CASE(TestSkipToAndCopy){
   std::istringstream test_istream("ABC ABCDAB ABCDABDABDE");
-  char* Test_string = "ABCDABD";
   std::ostringstream test_ostream;
   std::string test_out;
   skipto_and_copy(test_istream, test_string, test_ostream);
   BOOST_CHECK(test_ostream.str() == std::string("ABC ABCDAB ABCDABDABDE"));
   std::getline(test_istream, test_out);
-  //  if(test_ostream.str() != std::string("ABC ABCDAB ")){
-  //    throw std::runtime_error(test_ostream.str());
-  //  }
 }
 
