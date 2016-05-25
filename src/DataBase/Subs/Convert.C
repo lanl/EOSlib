@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iostream>
 inline char* Strdup(const char* str)
 {
     return (str==NULL) ?  NULL : strdup(str);
@@ -28,6 +29,8 @@ Convert::Convert(Units &From, Units &To) : from(NULL), to(NULL), status(0)
 	
 	LoadFundamentalUnits(calc_f, values_f);
 	LoadFundamentalUnits(calc_t, values_t);
+
+	std::cout << values_f;
 	
 	
 	ParamIterator iter(values_f);

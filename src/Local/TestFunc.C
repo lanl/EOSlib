@@ -27,4 +27,5 @@ int main()
     cerr << "-HUGE_VAL " << -HUGE_VAL << "\n";     // cmath
     cerr << "HUGE "      << HUGE      << "\n";     // cmath
     cerr << "float HUGE_VAL " << numeric_limits<float>::max() << "\n";
+    return 0;
 }

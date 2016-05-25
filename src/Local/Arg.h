@@ -101,7 +101,7 @@ int inline SetVar(char **&argv, const char *s, const char*& name)
     {
       if(!(*++argv))
 	std::cerr << Error << "Command line error after `" <<
-	  s << "'" << Exit;
+	  s << "'\n" << Exit;
       name = strdup(*argv);
 		
       if(!name)

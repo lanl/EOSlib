@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 using namespace std;
 #include "ListAccess.h"
 
@@ -22,7 +23,10 @@ inline ostream& operator<<(ostream& s, Double& d)
 
 int main(int, char**)
 {
-	Double a(1.0);
+        ostringstream teststream;
+	string teststring = "3\n2\n1\n";
+	  
+        Double a(1.0);
 	Double b(2.0);
 	Double c(3.0);
 	Double *p;
@@ -36,10 +40,11 @@ int main(int, char**)
 	LISTMANIP<Double> ManipA(A);
 	
 	
-	for(A.Start(); p = A; A++)
+	for(A.Start(); (p = A); A++)
 	{
-		cout << *ManipA.Get() << "\n";
+		teststream << *ManipA.Get() << "\n";
 	}
-	
-	return 0;
+
+	if (teststream.str() == teststring) return 0;
+	return -1;
 }

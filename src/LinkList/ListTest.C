@@ -5,6 +5,7 @@
 //
 
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 
@@ -17,12 +18,24 @@ public:
 
 int main(int, char**)
 {
+    string teststring =      
+      string("\nBegin Test\n") +
+      string("error status = 0\n") +
+      string("error status = 1\n") +
+      string("error status = 0\n") +
+      string("if is true \n") +
+      string("error status = 0\n") +
+      string("if is true \n") +
+      string("error status = 2\n");
+
+    ostringstream teststream;
+    
     Dbl x1, x2, x3;
 	LIST<Dbl> T;
 	FILO<Dbl> Tstack;
 	FIFO<Dbl> Tpipe;
 	
-	cout << "\nBegin Test\n";
+	teststream << "\nBegin Test\n";
 	
 	
 	_List *list = (_List*)(&T);
@@ -30,30 +43,31 @@ int main(int, char**)
 								// error status
 	Tstack << x1;						// 0
 
-	cout << "error status = " << Tstack.Status() << "\n";
+	teststream << "error status = " << Tstack.Status() << "\n";
 	
 	Tstack >> x1 >> x2;					// 1
 	
-	cout << "error status = " << Tstack.Status() << "\n";
+	teststream << "error status = " << Tstack.Status() << "\n";
 	
 	Tstack.Reset();						// 0
 	
-	cout << "error status = " << Tstack.Status() << "\n";
+	teststream << "error status = " << Tstack.Status() << "\n";
 	
 	
 	if( Tstack >> x1 )					// 1 / 0
-		cout << "if is true \n";
+		teststream << "if is true \n";
 	else
-		cout << "if is false\n";
+		teststream << "if is false\n";
 		
-	cout << "error status = " << Tstack.Status() << "\n";	// 0
+	teststream << "error status = " << Tstack.Status() << "\n";	// 0
 			
 	if( Tstack >> x1 >> x2, Tstack.Status() )		// 1
-		cout << "if is true \n";
+		teststream << "if is true \n";
 	else
-		cout << "if is false\n";
+		teststream << "if is false\n";
 		
-	cout << "error status = " << Tstack.Status() << "\n";	// 1
+	teststream << "error status = " << Tstack.Status() << "\n";	// 1
 	
-	return 0;		
+	if (teststream.str() == teststring) return 0;
+	return 1;
 }

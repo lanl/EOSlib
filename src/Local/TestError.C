@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ErrorHandler.h"
+using namespace std;
 
 int main(int, char **)
 {

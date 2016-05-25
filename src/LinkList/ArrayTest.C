@@ -1,5 +1,6 @@
 #include <Array.h>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 class Double
@@ -28,45 +29,55 @@ int main(int, char**)
 	Double one(1);
 	Double two(2);
 	Double three(3);
+	ostringstream teststream;
+	string teststring =
+	  string("pda(0) = 1  pda(1) = 2  pda(2) = 3\n") +
+	  string("pda(0) = 1  pda(1) = 2  pda(2) = 3\n") +
+	  string("dimension = 3\n") +
+	  string("get(3) -> 0\n") +
+	  string("get(3) -> ! 0\n") +
+	  string("Offset = 2\n") +
+	  string("pda(0) = 3  pda(-1) = 2  pda(-2) = 1\n");
 	
 	
 	pda->Xget_next() = one;
 	pda->Xget_next() = two;
 	pda->Xget_next() = three;
 	
-	cerr << "pda(0) = " << *pda->get(0)
+	teststream << "pda(0) = " << *pda->get(0)
 		 << "  pda(1) = " << *pda->get(1)
 		 << "  pda(2) = " << *pda->get(2)
 		 << "\n";
 	
-	cerr << "pda(0) = " << *pda->Xget(0)
+	teststream << "pda(0) = " << *pda->Xget(0)
 		 << "  pda(1) = " << *pda->Xget(1)
 		 << "  pda(2) = " << *pda->Xget(2)
 		 << "\n";
 		
-	cerr << "dimension = " << pda->Dimension() << "\n";
+	teststream << "dimension = " << pda->Dimension() << "\n";
 	
 	if( ! pda->get(3) )
 	{
-		cerr << "get(3) -> 0\n";
+		teststream << "get(3) -> 0\n";
 	}
 	else
-		cerr << "Error get(3)\n";
+		teststream << "Error get(3)\n";
 
 	if( pda->Xget(3) )
 	{
-		cerr << "get(3) -> ! 0\n";
+		teststream << "get(3) -> ! 0\n";
 	}
 	else
-		cerr << "Error Xget(3)\n";
+		teststream << "Error Xget(3)\n";
 		
 	*pda += 2;
 	
-	cerr << "Offset = " << pda->Offset() << "\n";
-	cerr << "pda(0) = " << *pda->get(0)
+	teststream << "Offset = " << pda->Offset() << "\n";
+	teststream << "pda(0) = " << *pda->get(0)
 		 << "  pda(-1) = " << *pda->get(-1)
 		 << "  pda(-2) = " << *pda->get(-2)
 		 << "\n";
+	if( teststream.str() == teststring) return 0;
 	
-	return 0;
+	return -1;
 }

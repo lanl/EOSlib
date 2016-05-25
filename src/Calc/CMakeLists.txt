@@ -18,6 +18,7 @@ list( APPEND tests TestCalc)
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} Calc)
+  add_test(${test} ${test})
 endforeach(test)
 
 if(${verbose_traversal})

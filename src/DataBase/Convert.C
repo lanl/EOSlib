@@ -3,6 +3,7 @@
 #include <LocalMath.h>
 
 #include "DataBase.h"
+#include <iostream>
 using namespace std;
 
 int main(int, char **argv)
@@ -55,15 +56,15 @@ int main(int, char **argv)
         deleteUnits(From);
         return 0;
     }
-        
-    
+
     Units *To   = db.FetchNewUnits(type,to);
     if( To == NULL )
         std::cerr << Error("Failed to fetch to = ") << to << Exit;
     
     Convert convert(*From, *To);
+    cout << convert; cout.flush();
     if( convert )
-        std::cerr << Error("Bad convert status") << Exit;
+        std::cerr << Error("Bad convert status\n") << Exit;
     
     for( ; *argv; ++argv)
     {    

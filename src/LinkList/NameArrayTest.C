@@ -1,5 +1,6 @@
 #include "NameArray.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 class Double
@@ -19,6 +20,26 @@ inline ostream& operator<<(ostream& s, Double& d)
 
 int main(int, char**)
 {
+        ostringstream teststream;
+	string teststring =
+	  string("TableDimensions = 3\n") +
+	  string("Number of entries = 0\n") +
+	  string("Number of entries = 6\n") +
+	  string("12\n") +
+	  string("1\n") +
+	  string("14\n") +
+	  string("15\n") +
+	  string("16\n") +
+	  string("17\n") +
+	  string("fifth is defined\n") +
+	  string("fifth is now undefined\n") +
+	  string("Number of entries = 5\n") +
+	  string("first\n") +
+	  string("fourth\n") +
+	  string("second\n") +
+	  string("sixth\n") +
+	  string("third\n");
+
 	//  Test of new DoubleNameArray
 	NAMEARRAY<Double> *pda = new NAMEARRAY<Double>(11);
 	NAMEARRAY<Double> &da = *pda;
@@ -30,8 +51,8 @@ int main(int, char**)
 	da.SetHashFunction(&_DefaultNameArrayHash); // optional
 	//
 	
-	cout << "TableDimensions = " << da.TableDimension() << "\n";
-	cout << "Number of entries = " << da.Dimension() << "\n";
+	teststream << "TableDimensions = " << da.TableDimension() << "\n";
+	teststream << "Number of entries = " << da.Dimension() << "\n";
 	
 	da["first"] = 12.0;
 	da["second"] = 13.0;
@@ -40,31 +61,32 @@ int main(int, char**)
 	da["fifth"] = 16.0;
 	da["sixth"] = 17.0;
 	
-	cout << "Number of entries = " << da.Dimension() << "\n";
-	cout << da["first"] << "\n";
-	cout << da["second"] - da["first"] << "\n";
-	cout << da["third"] << "\n";
-	cout << da["fourth"] << "\n";
-	cout << da["fifth"] << "\n";
-	cout << da["sixth"] << "\n";
+	teststream << "Number of entries = " << da.Dimension() << "\n";
+	teststream << da["first"] << "\n";
+	teststream << da["second"] - da["first"] << "\n";
+	teststream << da["third"] << "\n";
+	teststream << da["fourth"] << "\n";
+	teststream << da["fifth"] << "\n";
+	teststream << da["sixth"] << "\n";
 	
 	if(da.Defined("fifth"))
-		cout << "fifth is defined\n";
+		teststream << "fifth is defined\n";
 	da.Delete("fifth");
 	if(da.Defined("fifth"))
-		cout << "fifth is still defined\n";
+		teststream << "fifth is still defined\n";
 	else
-		cout << "fifth is now undefined\n";
+		teststream << "fifth is now undefined\n";
 	
-	cout << "Number of entries = " << da.Dimension() << "\n";
+	teststream << "Number of entries = " << da.Dimension() << "\n";
 	
 	const char **Names = da.Names();
 	int n = da.Dimension();
 	int i;
 	for(i=0; i<n; i++)
-		cout << Names[i] << "\n";
+		teststream << Names[i] << "\n";
 	
 	delete [] Names;
 	
-	return 0;		
+	if (teststring == teststream.str()) return 0;
+	return -1;
 }

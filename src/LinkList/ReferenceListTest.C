@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <sstream>
 using namespace std;
 
 
@@ -72,6 +73,8 @@ int REFLIST<elem,elem_tag>::hash(const void* tp)
 
 int main(int, char**)
 {
+        ostringstream teststream;
+	string teststring = "H\n";
 	REFLIST<Element,ElementTag> PT(509);
 	Element el1("Hydrogen", "H", 1, 1);
 	Element el2("Helium", "He", 2, 4);
@@ -84,7 +87,8 @@ int main(int, char**)
 	PT.Get((ElementTag)"Hydrogen", RetList);
 	
 	for(RetList.Start(); el = RetList; RetList.Next())
-		cout << el->Symbol() << "\n";
+		teststream << el->Symbol() << "\n";
 	
-	return 0;
+	if (teststream.str() == teststring) return 0;
+	return 1;
 }

@@ -46,10 +46,12 @@ int main(int, char **argv)
 		cerr << Error("db.Read failed\n");	
 	}
     if( status )
-        cerr << Error("initialization failed") << Exit;
+        cerr << Error("initialization failed\n") << Exit;
 
     string str;
-    str = str + base + ":" + type + "::" + name;
+    str = str + base;
+    if(type) str = str + ":" + type;
+    if(name) str = str + "::" + name;
     char *property = strdup(str.c_str());
     db.List(cout,property,print);
     
