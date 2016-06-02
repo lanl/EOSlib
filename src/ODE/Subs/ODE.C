@@ -83,7 +83,7 @@ double ODE::MaxNorm(const double *y0, const double *y1,
 	
 	for(int i=n_dim; i--; y0++, y1++)
 		Norm = max(Norm,
-			abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + 1.)*epsilon));
+			   std::abs(*y0 - *y1)/((std::abs(*y0)+std::abs(*y1) + 1.)*epsilon));
 		//	abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + epsilon)*epsilon));
 			
 	return Norm;
@@ -114,7 +114,7 @@ void ODE::IgnoreStopOff()
 	
 	ODEstate *state;
 
-	for( Stops.Start(); state = Stops; Stops++)
+	for( Stops.Start(); (state = Stops); Stops++)
 	{
 		if( t_last < state->t0)
 			return;

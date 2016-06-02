@@ -3,6 +3,9 @@
 #include <EOS.h>
 #include <EOS_VT.h>
 
+#include <iostream>
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
@@ -27,7 +30,10 @@ int main(int, char **argv)
 		
 		ArgError;
 	}
-
+	cout << "\n";
+	cout << file;
+	cout << "\n";
+	cout.flush();
 	if( file == NULL )
 		cerr << Error("Must specify data file") << Exit;
 

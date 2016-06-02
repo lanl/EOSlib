@@ -146,8 +146,8 @@ SplineTree *SplineFunction::Refine(SplineTree *ptr)
 		double pl = ptr->fm + 0.5*(-a+0.25*b);
 		double pr = ptr->fm + 0.5*(a+0.25*b);
 		
-		if( abs(pl-fl) < max(abs_tol, rel_tol*abs(fl))
-		    && 	abs(pr-fr) < max(abs_tol, rel_tol*abs(fr)) )
+		if( std::abs(pl-fl) < max(abs_tol, rel_tol*std::abs(fl))
+		    && 	std::abs(pr-fr) < max(abs_tol, rel_tol*std::abs(fr)) )
 		{
 			return ptr;
 		}

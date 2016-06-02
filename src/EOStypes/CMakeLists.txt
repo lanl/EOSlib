@@ -13,7 +13,7 @@ add_subdirectory(IdealGas)
 # add_subdirectory(MieGruneisen)
 # add_subdirectory(PTequilibrium)
 # add_subdirectory(Porous)
-add_subdirectory(Sesame)
+#add_subdirectory(Sesame)
 # add_subdirectory(StiffenedGas)
 # add_subdirectory(Uniaxial)
 

@@ -1,8 +1,10 @@
 #include <LocalMath.h>
 #include <Arg.h>
+#include <iostream>
 
 #include "OneDFunction.h"
 
+using namespace std;
 class Array : public OneDFunctionI
 {
 	int n;

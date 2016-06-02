@@ -15,12 +15,19 @@ set_property(TARGET Eos PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( Eos Spline ODE Calc DataBase)
 
-list( APPEND tests Test1 Test2 Test3 )
+#configure_file(Test.data ${CMAKE_CURRENT_BINARY_DIR}/Test.data COPYONLY)
+
+list( APPEND tests Test1 Test2 )
 
 foreach(test ${tests})
-   add_executable(${test} ${test}.C)
-   target_link_libraries(${test} Eos)
+  add_executable(${test} ${test}.C)
+  target_link_libraries(${test} Eos)
+  add_test(${test} ${test})
 endforeach(test)
+
+add_executable(Test3 Test3.C)
+target_link_libraries(Test3 Eos)
+add_test(NAME Test3 COMMAND Test3 file ${EOSLIB_DATA_PATH}/test_data/EosTest.data )
 
 if(${verbose_traversal})
   message(STATUS "Exiting Eos subdirectory")

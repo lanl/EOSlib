@@ -32,7 +32,7 @@ double e_EOS::e(double T, double e0)
     if( isnan(T1) )
         return eos->ErrorHandler()->Log("e_EOS::e", __FILE__, __LINE__, eos,
                 "T not defined at init state\n");
-    if( abs(T-T1) < 1e-8*T )
+    if( std::abs(T-T1) < 1e-8*T )
         return e1;
 
     e1 += eos->CV(V,e1)*(T-T1);
@@ -40,7 +40,7 @@ double e_EOS::e(double T, double e0)
     if( isnan(T1) )
         return eos->ErrorHandler()->Log("e_EOS::e", __FILE__, __LINE__, eos,
                                         "trial outside domain\n");
-    if( abs(T-T1) < 1e-8*T )
+    if( std::abs(T-T1) < 1e-8*T )
         return e1;
         
     double e2, T2;
@@ -181,8 +181,8 @@ int EOS::PT(double p, double t, HydroState &state)
        double T1 = T(V1,e1);
        double dP = p - P1;
        double dT = t - T1;
-       if( abs(dP) < OneDFunc_abs_tol+OneDFunc_rel_tol*P1
-              && abs(dT) < OneDFunc_abs_tol+OneDFunc_rel_tol*T1 )
+       if( std::abs(dP) < OneDFunc_abs_tol+OneDFunc_rel_tol*P1
+	   && std::abs(dT) < OneDFunc_abs_tol+OneDFunc_rel_tol*T1 )
            break;
        double dPde = Gamma(V1,e1)/V1;
        double dTde =  1./CV(V1,e1);
@@ -193,7 +193,7 @@ int EOS::PT(double p, double t, HydroState &state)
        double de = (dPdV*dT - dTdV*dP)/det;
        // det = (T/V^2)(Gamma^2- gamma*g) ~ 0 in mixed region
        // for example, sesame table vapor dome near ambient state
-       if( det<0.0 && abs(dV) < 0.05*V1 && abs(de) < t/dTde )
+       if( det<0.0 && std::abs(dV) < 0.05*V1 && std::abs(de) < t/dTde )
        {
            state.V += dV;
            state.e += de;

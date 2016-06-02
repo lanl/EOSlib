@@ -148,7 +148,7 @@ int ODE::Integrate(ODEfunc &cl, double &val, double &t, double *y, double *yp)
 			{
 				if( Init.h == 0 )
                 {
-                    double dF = 0.5*abs(val - Init.EvalF(cl));
+		  double dF = 0.5*std::abs(val - Init.EvalF(cl));
 					Init.h = min( max(dF, dt_min), dt_max );
                 }
 				CopyState(Cache[0], Init);

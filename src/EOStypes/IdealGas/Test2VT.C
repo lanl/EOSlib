@@ -3,6 +3,10 @@
 #include <EOS_VT.h>
 #include <EOS.h>
 
+#include <iostream>
+
+using namespace std;
+
 #define NaN EOS_VT::NaN
 int main(int, char **argv)
 {

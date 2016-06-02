@@ -1,0 +1,6 @@
+- DataBase tests pass, but must be run manually. Fix this.
+- Lots of things are hard-coded for OS X now. - Specifically the library paths in
+*.data files.
+- Build and install paths need to be set.
+- Figure out some way to handle library loads in data files in a
+platform-independent way.

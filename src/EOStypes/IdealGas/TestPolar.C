@@ -9,7 +9,8 @@
 #include <ShockPolar_gen.h>
 #include <PrandtlMeyer_ODE.h>
 
-
+#include <iostream>
+using namespace std;
 
 
 int main(int, char **argv)

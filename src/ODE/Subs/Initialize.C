@@ -44,7 +44,7 @@ int ODE::Initialize(double t, double *y_init, double dt)
 	}
 	else
 	{
-		Init.h = min(dt_max, max(dt_min, abs(dt) ) );
+	  Init.h = min(dt_max, max(dt_min, std::abs(dt) ) );
 		dir = (dt > 0) ? 1 : -1;
 		
 		cach0 = cach1 = 0;
@@ -54,7 +54,7 @@ int ODE::Initialize(double t, double *y_init, double dt)
 		status = Step(t + Cache[0].h);
 		if( status == 0 || status == STOP_CONDITION )
 		{
-			Init.h = abs(Cache[0].h);
+		  Init.h = std::abs(Cache[0].h);
 			if( norm < (1./32.) )
 			{
                 double h = Init.h;

@@ -44,8 +44,8 @@ double Isentrope_ODE::MaxNorm(const double *y0, const double *y1,
 // Error criterion based only on de/dV = -P
 //     du/dV = -rho*c comes along for the ride
 // avoids small time steps at initial step if e(0) = 0 or u(0) = 0
-    double abs_err = abs(*y0 - *y1);
-    double rel_err = abs(*y0 - *y1)/(abs(*y0)+abs(*y1) + epsilon);
+  double abs_err = std::abs(*y0 - *y1);
+  double rel_err = std::abs(*y0 - *y1)/(std::abs(*y0)+std::abs(*y1) + epsilon);
     return min(rel_err,abs_err)/epsilon;
 }
 

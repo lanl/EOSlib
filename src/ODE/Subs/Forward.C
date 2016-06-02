@@ -29,7 +29,7 @@ int ODE::Forward(double &t, double *y, double *yp, int *bracket)
 			(Initial.Get(-1)->t0 >=t && t > Initial.Get(-2)->t0) )
 		{
 			CacheState &C1 = Cache[cach1]; 
-			if( abs(t-C1.t0) < (n_cache/4)*C1.h )
+			if( std::abs(t-C1.t0) < (n_cache/4)*C1.h )
 			{
 			// Maintain continuity of inner cache
 				n_steps = -1;
@@ -93,7 +93,7 @@ int ODE::Forward(double &t, double *y, double *yp, int *bracket)
 		if(restart == &Init)
 		{
 			if( Init.h == 0 )
-				Init.h = min(max(0.5 * abs(t - Init.t0),
+			  Init.h = min(max(0.5 * std::abs(t - Init.t0),
 						      dt_min),  dt_max);
 				
 			CopyState(Cache[0], Init);
@@ -150,13 +150,13 @@ int ODE::ForwardIntegrate(double t)
 	if(dir > 0)
 	{
 		while(Cache[cach1].t0 <= t && --steps)
-			if(status = Step(t))
+		  if((status = Step(t)))
 				break;
 	}
 	else
 	{
 		while(Cache[cach1].t0 > t && --steps)
-			if(status = Step(t))
+		  if((status = Step(t)))
 				break;
 	}
 	

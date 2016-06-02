@@ -249,7 +249,7 @@ message(STATUS "-----------------------------------------------------------")
 message(STATUS "")
 
 if(NOT DEFINED EOSLIB_DATA_TEST_PATH)
-  set(EOSLIB_DATA_TEST_PATH "${CMAKE_CURRENT_SOURCE_DIR}/DATA")
+  set(EOSLIB_DATA_TEST_PATH "${CMAKE_CURRENT_BINARY_DIR}/DATA")
 endif(NOT DEFINED EOSLIB_DATA_TEST_PATH)
 
 if(NOT DEFINED EOSLIB_DATA_PATH)
@@ -263,3 +263,4 @@ SET (CTEST_ENVIRONMENT
   )
 
 add_subdirectory(src)
+add_subdirectory(DATA)

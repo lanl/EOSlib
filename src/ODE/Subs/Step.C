@@ -14,7 +14,7 @@ int ODE::Step(double t_request)
 	double h = C1.h;
 	double t = C1.t0;
 	
-	if( abs(C1.h) < dt_min)
+	if( std::abs(C1.h) < dt_min)
 		return TIME_STEP_ERROR;
 
 	int status = 1;
@@ -76,7 +76,7 @@ int ODE::Step(double t_request)
 	RichardsonInterp(C1.dy, dy_2half, dy_full);
 	AddVec(Cnew.y0, y, C1.dy);
 	
-	if(status =  F(Cnew.y0_prime, Cnew.y0, Cnew.t0))
+	if((status =  F(Cnew.y0_prime, Cnew.y0, Cnew.t0)))
 		return FAILED;
 	
 	C1.InitInterp(n_dim, dy_half, Cnew.y0_prime);

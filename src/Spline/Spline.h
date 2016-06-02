@@ -68,13 +68,13 @@ public:
                           double fp_0, double fp_1);
 	int ReInit( int n, double x0,double x1, double *&f,double fp_0,double fp_1);
 	int Interval(double x) const; // equal intervals
-	Spline::Evaluate;
-	Spline::Evaluate1;
-	Spline::Evaluate2;
-	Spline::Nknot;
-	Spline::x;
-	Spline::f;
-	Spline::f2;
+	using Spline::Evaluate;
+	using Spline::Evaluate1;
+	using Spline::Evaluate2;
+	using Spline::Nknot;
+	using Spline::x;
+	using Spline::f;
+	using Spline::f2;
 };
 
 // When f(x) is monotonic, inverse function x(f) is defined

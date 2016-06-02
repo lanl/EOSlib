@@ -123,7 +123,7 @@ int main(int, char**)
 	while(n_try--)
 	{
 		if(!(n_try % 100) || n_try > 19990)
-			cerr << n_try << ": Size of Cache: " << H.SizeOfCache()
+		  std::cerr << n_try << ": Size of Cache: " << H.SizeOfCache()
 				<< "\n";
 			
 		t = t_min + drand48()*(t_max - t_min);
@@ -132,8 +132,8 @@ int main(int, char**)
 		
 		dy = y[0] - A.Integrate(t);
 		
-		if(abs(dy) > H.epsilon)
-			cerr << "Bad Case " << n_try << "  "<< t << " " << dy
+		if(std::abs(dy) > H.epsilon)
+		  std::cerr << "Bad Case " << n_try << "  "<< t << " " << dy
 				<< "\n";
 	}
 	return 0;

@@ -88,7 +88,7 @@ int Detonation_gen::P(double p,  int dir, WaveState &wave)
 {
     if( isnan(P0) )
         return 1;
-    if( abs(Pcj - p) < rel_tol*Pcj  )
+    if( std::abs(Pcj - p) < rel_tol*Pcj  )
         return CJwave( dir, wave );
     //if( p < Pcj )
     if( p <= Pw )
@@ -130,7 +130,7 @@ int Detonation_gen::u(double u1,  int dir, WaveState &wave)
         return 1;
     wave.u  = u1;
     u1 = dir*(u1-u0);
-    if( abs(ucj - u1) < rel_tol*ucj  )
+    if( std::abs(ucj - u1) < rel_tol*ucj  )
         return CJwave( dir, wave );
     //if( u1 < ucj )
     if( u1 <= 0.0 )
@@ -174,7 +174,7 @@ int Detonation_gen::u_s(double us, int dir, WaveState &wave)
         return 1;
     wave.us = us;  
     us = dir*(us-u0);
-    if( abs(Dcj - us) < rel_tol*Dcj  )
+    if( std::abs(Dcj - us) < rel_tol*Dcj  )
         return CJwave( dir, wave );
     if( us < Dcj )
         return 1;
@@ -223,7 +223,7 @@ int Detonation_gen::w_u_s(double us, int dir, WaveState &wave)
         return 1;
     wave.us = us;  
     us = dir*(us-u0);
-    if( abs(Dcj - us) < rel_tol*Dcj  )
+    if( std::abs(Dcj - us) < rel_tol*Dcj  )
         return CJwave( dir, wave );
     if( us < Dcj )
         return 1;
@@ -248,7 +248,7 @@ int Detonation_gen::V(double v1,  int dir, WaveState &wave)
 {
     if( isnan(P0) )
         return 1;
-    if( abs(Vcj - v1) < rel_tol*Vcj )
+    if( std::abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );
     //if( Vcj < v1 )
     if( V0 <= v1 )

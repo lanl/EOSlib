@@ -5,6 +5,9 @@
 #include "Hugoniot_gen.h"
 #include "IdealGas.h"
 
+#include <iostream>
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
@@ -33,7 +36,7 @@ int main(int, char **argv)
 		GetVarValue(left,dir,LEFT);
 		GetVarValue(right,dir,RIGHT);
 		
-		ArgError;
+		//		ArgError;
 	}
 
 // Test Isentrope

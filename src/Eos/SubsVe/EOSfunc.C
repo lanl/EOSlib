@@ -32,7 +32,7 @@ double EOS::c2(double V, double e)
         {
             double dP = 0.5*(p2-p0);
             double d2P = (p2-2*p1+p0);
-            if( abs(d2P) < c2_tol*dP )
+            if( std::abs(d2P) < c2_tol*dP )
                 return V*V*(dP + d2P)/dV;
         }
     }
@@ -67,7 +67,7 @@ double EOS::FD(double V, double e)
             double rc2_2 = c2(V2,e2)/sqr(V2);
             double drc2 = 0.5*(rc2_2-rc2_0);
             double d2rc2 = (rc2_2-2*rc2_1+rc2_0);
-            if( abs(d2rc2) < FD_tol*abs(drc2) )
+            if( std::abs(d2rc2) < FD_tol*std::abs(drc2) )
                 return 0.5*(drc2 + d2rc2)/dV *(V/rc2_0);
         }
     }
@@ -91,7 +91,7 @@ double EOS::Gamma(double V, double e)
 
         double dP = 0.5*(p2-p0);
         double d2P = (p2-2*p1+p0);
-        if( abs(d2P) < Gamma_tol*dP )
+        if( std::abs(d2P) < Gamma_tol*dP )
             return V*(dP - d2P)/de;
     }
     return EOSerror->Log("EOS::Gamma", __FILE__, __LINE__, this, "failed");
@@ -123,7 +123,7 @@ double EOS::CV(double V, double e)
 
         double dT = 0.5*(T2-T0);
         double d2T = (T2-2*T1+T0);
-        if( abs(d2T) < CV_tol*dT )
+        if( std::abs(d2T) < CV_tol*dT )
             return de/(dT - d2T);
     }
     return EOSerror->Log("EOS::CV", __FILE__, __LINE__, this, "failed");
@@ -198,7 +198,7 @@ double EOS::e_PV(double p, double V)
         double p1 = P(V,e);
         if( isnan(p1) )
             break;
-        if( abs(p-p1) < tol )
+        if( std::abs(p-p1) < tol )
             return e;
         e += V * (p - p1) / Gamma(V,e);
     }

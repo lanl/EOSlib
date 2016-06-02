@@ -99,7 +99,7 @@ int main(int, char**)
 		cerr << "\nStopped on StopCondition\n";
 
 		t *= 1+ 1e-6;	// avoid roundoff error
-		if( status = H.Integrate(t,y) )
+		if( (status = H.Integrate(t,y)) )
 			cerr << "Bad status: " << status << "\n";
 	}
 	else if(status)

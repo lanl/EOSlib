@@ -4,6 +4,9 @@
 #include <Riemann.h>
 #include "IdealGas.h"
 
+#include<iostream>
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);

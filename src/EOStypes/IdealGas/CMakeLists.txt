@@ -14,20 +14,34 @@ set_property(TARGET IdealGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( IdealGas Eos DataBase ODE)
 
-list( APPEND tests Test2VT TestDetonation TestDeflagration TestPolar)
+list( APPEND tests IdealGas Test1 Test2 Test2VT TestDetonation TestDeflagration TestPolar)
 
-add_executable(TestIdealGas IdealGas.C)
-target_link_libraries(TestIdealGas IdealGas)
+# Many of these tests output to the terminal. This output should be checked, but isn't.
 
-add_executable(TestIdealGas1 Test1.C)
-target_link_libraries(TestIdealGas1 IdealGas)
+# add_executable(TestIdealGas IdealGas.C)
+# target_link_libraries(TestIdealGas IdealGas)
 
-add_executable(TestIdealGas2 Test2.C)
-target_link_libraries(TestIdealGas2 IdealGas)
+# add_executable(TestIdealGas1 Test1.C)
+# target_link_libraries(TestIdealGas1 IdealGas)
 
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} IdealGas)
+# add_executable(TestIdealGas2 Test2.C)
+# target_link_libraries(TestIdealGas2 IdealGas)
+# add_test(NAME TestIdealGas2 COMMAND TestIdealGas2 file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data)
+
+# add_executable(TestIdealGas2VT Test2VT.C)
+# target_link_libraries(TestIdealGas2VT IdealGas)
+# add_test(NAME TestIdealGas2VT COMMAND TestIdealGas2VT file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data)
+
+foreach(test IdealGas Test1 TestDetonation TestDeflagration TestPolar)
+  add_executable(${test}IdealGas ${test}.C)
+  target_link_libraries(${test}IdealGas IdealGas)
+  add_test(${test}IdealGas ${test}IdealGas)
+endforeach(test)
+
+foreach(test Test2 Test2VT)
+  add_executable(${test}IdealGas ${test}.C)
+  target_link_libraries(${test}IdealGas IdealGas)
+  add_test(NAME ${test}IdealGas COMMAND ${test}IdealGas file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data)
 endforeach(test)
 
 if(${verbose_traversal})

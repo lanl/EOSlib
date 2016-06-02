@@ -18,6 +18,7 @@ list( APPEND tests Harmonic HarmonicF HarmonicB RandomHarmonic)
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} ODE)
+  add_test(${test} ${test})
 endforeach(test)
 
 if(${verbose_traversal})

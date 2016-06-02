@@ -308,7 +308,7 @@ double SplineWithInverse::Inverse(double f)
 	{ // fp monotonic in interval
 		if( fp0*fp1 < 0 )
 			return NaN;	// F not monotonic
-		if( abs(fp0) > abs(fp1) )
+		if( std::abs(fp0) > std::abs(fp1) )
 		{
 			x = X[i];
 			x_end = X[i+1];
@@ -333,7 +333,7 @@ double SplineWithInverse::Inverse(double f)
 			return x_e;
 		else if( min(F[i],fx_e ) < f && f < max(F[i],fx_e) )
 		{ // f in interval (X[i],x_e)
-			if( abs(fp0) > abs(fpe) )
+		  if( std::abs(fp0) > std::abs(fpe) )
 			{
 				x = X[i];
 				x_end = x_e;
@@ -346,7 +346,7 @@ double SplineWithInverse::Inverse(double f)
 		}
 		else
 		{ // f in interval (x_e,X[i+1])
-			if( abs(fp1) > abs(fpe) )
+		  if( std::abs(fp1) > std::abs(fpe) )
 			{
 				x = X[i+1];
 				x_end = x_e;
@@ -360,8 +360,8 @@ double SplineWithInverse::Inverse(double f)
 	}
 	
 	
-	double eps_f = max(abs_tol, rel_tol*abs(f));
-	double eps_x = rel_tol*max(abs(X[i]),abs(X[i+1]));
+	double eps_f = max(abs_tol, rel_tol*std::abs(f));
+	double eps_x = rel_tol*max(std::abs(X[i]),std::abs(X[i+1]));
 	
 	double fx, fpx, df;
 	for( count=0; count < 60 ; count++ )
@@ -378,7 +378,7 @@ double SplineWithInverse::Inverse(double f)
 		double dx1;
 		dx1 = df/fpx;
 		x += dx1;
-		if( abs(df) < eps_f && abs(dx1) < eps_x )
+		if( std::abs(df) < eps_f && std::abs(dx1) < eps_x )
 			return x;
 	}
 	

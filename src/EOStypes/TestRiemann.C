@@ -5,6 +5,9 @@
 
 #include "Riemann_gen.h"
 #include "IdealGas_Riemann.h"
+#include <iostream>
+
+using namespace std;
 
 int main(int, char **argv)
 {

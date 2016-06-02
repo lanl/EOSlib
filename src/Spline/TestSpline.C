@@ -1,6 +1,7 @@
 #include <Arg.h>
+#include <iostream>
 #include "Spline.h"
-
+using namespace std;
 class PhiEq : public SplineFunction
 {
 public:

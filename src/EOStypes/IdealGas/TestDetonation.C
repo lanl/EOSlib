@@ -2,6 +2,10 @@
 #include <LocalMath.h>
 #include "EOS.h"
 #include "IdealGas.h"
+
+#include <iostream>
+using namespace std;
+
 //
 #define NaN EOS::NaN
 
@@ -11,30 +15,30 @@ int HugFail(double P0, HydroState &state0, WaveState &shock1)
     double P1 = shock1.P;
     double m1  = (us-shock1.u)/shock1.V;
     double m0  = (us-state0.u)/state0.V;
-    if( abs(m1-m0) > 0.001*abs(m1) + 1.e-6 )
+    if( std::abs(m1-m0) > 0.001*std::abs(m1) + 1.e-6 )
         return 1;
     double p0  = P0 + m0*m0*state0.V;
     double p1  = P1 + m1*m1*shock1.V;
-    if( abs(p1-p0) > 0.001*abs(p1) + 1.e-6 )
+    if( std::abs(p1-p0) > 0.001*std::abs(p1) + 1.e-6 )
         return 1;
     double h0 = 0.5*sqr(m0*state0.V) + state0.e + P0*state0.V;
     double h1 = 0.5*sqr(m1*shock1.V) + shock1.e + P1*shock1.V;
-    if( abs(h1-h0) > 0.001*abs(h1) + 1.e-6 )
+    if( std::abs(h1-h0) > 0.001*std::abs(h1) + 1.e-6 )
         return 1;
     return 0;    
 }
 
 int diff(WaveState &shock1, WaveState &shock2)
 {
-    if( abs(shock1.V - shock2.V) > 0.001*shock1.V + 1e-6)
+    if( std::abs(shock1.V - shock2.V) > 0.001*shock1.V + 1e-6)
         return 1;
-    if( abs(shock1.e - shock2.e) > 0.001*abs(shock1.e) + 1e-6)
+    if( std::abs(shock1.e - shock2.e) > 0.001*std::abs(shock1.e) + 1e-6)
         return 1;
-    if( abs(shock1.u - shock2.u) > 0.001*abs(shock1.u) + 1e-6 )
+    if( std::abs(shock1.u - shock2.u) > 0.001*std::abs(shock1.u) + 1e-6 )
         return 1;
-    if( abs(shock1.P - shock2.P) > 0.001*shock1.P + 1e-6)
+    if( std::abs(shock1.P - shock2.P) > 0.001*shock1.P + 1e-6)
         return 1;
-    if( abs(shock1.us - shock2.us) > 0.001*abs(shock1.us) + 1e-6)
+    if( std::abs(shock1.us - shock2.us) > 0.001*std::abs(shock1.us) + 1e-6)
         return 1;
     return 0;    
 }
