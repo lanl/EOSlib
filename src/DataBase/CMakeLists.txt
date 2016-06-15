@@ -29,19 +29,22 @@ foreach(test ${tests})
 #  add_test(${test} ${test})
 endforeach(test)
 
+set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME TestDB
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestDB
-  -D test_args:string="file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std"
+  -D test_args:string=${args}
   -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/testdbout.blessed
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/testdberr.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
+set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use")
 add_test(NAME Data0
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
-  -D test_args:string="file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use"
+  -D test_args:string=${args}
   -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0out.blessed
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
@@ -51,8 +54,6 @@ add_test(NAME Data0
 # output in order to yield a pass/fail. The test commands are included for
 # future use.
 #add_test(NAME Data0 COMMAND Data file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use)
-
-
 
 target_link_libraries(Testdl shared_obj)
 

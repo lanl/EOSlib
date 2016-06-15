@@ -28,6 +28,7 @@ endforeach(test)
 add_executable(Test3 Test3.C)
 target_link_libraries(Test3 Eos)
 add_test(NAME Test3 COMMAND Test3 file ${EOSLIB_DATA_PATH}/test_data/EosTest.data )
+set_tests_properties(Test3 PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 if(${verbose_traversal})
   message(STATUS "Exiting Eos subdirectory")

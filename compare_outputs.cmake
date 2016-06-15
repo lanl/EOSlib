@@ -20,7 +20,7 @@ set(OUT_TEST out.test)
 set(ERR_TEST err.test)
 
 separate_arguments(test_args)
-message(${test_args})
+message(STATUS ${test_args})
 
 execute_process(
   COMMAND ${test_cmd} ${test_args}

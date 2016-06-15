@@ -5,6 +5,7 @@
 //#include <cstddef>
 #include <iostream>
 #include <iomanip>
+#include <stdexcept>
 //using namespace std;
 
 

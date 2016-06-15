@@ -28,6 +28,7 @@ foreach(test Test2 Test2VT)
   add_executable(${test}IdealGas ${test}.C)
   target_link_libraries(${test}IdealGas IdealGas)
   add_test(NAME ${test}IdealGas COMMAND ${test}IdealGas file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data)
+  set_tests_properties(${test}IdealGas PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
 if(${verbose_traversal})
