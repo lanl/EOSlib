@@ -1,6 +1,7 @@
 #include <LocalMath.h>
 #include <OneDFunction.h>
-
+#include <iostream>
+using namespace std;
 
 double OneDFunction::PRE_ZERO(double x_guess)
 {

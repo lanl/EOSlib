@@ -8,6 +8,9 @@ int main(int, char **argv)
 {
         char *file = new char[128];
 	file = strcpy(file, getenv("EOSLIB_DATA_PATH"));
+	cout << file;
+	cout << "\n";
+	cout.flush();
 	file = strcat(file, "/test_data/EosTest.data");
 	DataBase db;
 	if( db.Read(file) )

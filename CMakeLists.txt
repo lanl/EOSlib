@@ -1,6 +1,6 @@
 PROJECT(EOSlib)
 
-cmake_minimum_required( VERSION 3.2 )
+cmake_minimum_required( VERSION 3.0 )
 
 set(projectName "EOSlib")
 set(projectVersion "2.0.0")
@@ -183,7 +183,7 @@ else(DEFINED ${projectName}_compiler_flags)
 
   # base flags used by every project
   set( ${projectName}_flags
-    "-std=c++11 -Wall -Wextra -Wpedantic ${CMAKE_CXX_FLAGS} -Wno-c++11-compat-deprecated-writable-strings -Wno-unused-local-typedef -Wno-writable-strings -Wno-unused-parameter" )
+    "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} -Wno-c++11-compat-deprecated-writable-strings -Wno-unused-local-typedef -Wno-writable-strings -Wno-unused-parameter" )
 
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)
@@ -256,7 +256,7 @@ if(NOT DEFINED EOSLIB_DATA_PATH)
   set(EOSLIB_DATA_PATH "${EOSLIB_DATA_TEST_PATH}")
 endif(NOT DEFINED EOSLIB_DATA_PATH)
 
-SET (CTEST_ENVIRONMENT
+set(CTEST_ENVIRONMENT
   "EOSLIB_DATA_PATH=${EOSLIB_DATA_TEST_PATH}"
   "CTEST_OUTPUT_ON_FAILURE=1"
   "BOOST_TEST_LOG_LEVEL='message'"

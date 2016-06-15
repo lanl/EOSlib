@@ -5,6 +5,7 @@ endif(${verbose_traversal})
 set(DataBase_src)
 
 add_subdirectory(Subs)
+add_subdirectory(blessed_output)
 
 add_library( DataBase ${${projectName}_policy} ${DataBase_src} )
 set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
@@ -28,12 +29,28 @@ foreach(test ${tests})
 #  add_test(${test} ${test})
 endforeach(test)
 
-add_test(NAME TestDB COMMAND TestDB file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std)
+add_test(NAME TestDB
+  COMMAND ${CMAKE_COMMAND}
+  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestDB
+  -D test_args:string="file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std"
+  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/testdbout.blessed
+  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/testdberr.blessed 
+  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+  )
+
+add_test(NAME Data0
+  COMMAND ${CMAKE_COMMAND}
+  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
+  -D test_args:string="file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use"
+  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0out.blessed
+  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0err.blessed 
+  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+  )
 
 #These tests aren't actually doing anything; they need to compare terminal
 # output in order to yield a pass/fail. The test commands are included for
 # future use.
-add_test(NAME Data0 COMMAND Data file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use)
+#add_test(NAME Data0 COMMAND Data file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use)
 
 
 
