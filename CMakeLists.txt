@@ -7,6 +7,7 @@ set(projectVersion "2.0.0")
 
 # Enable unit testing with the Boost framework.
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+#find_package(Boost REQUIRED)
 Include_directories(${Boost_INCLUDE_DIRS})
 
 # verbose traversal is disabled by default. in general, a trace of the
@@ -183,7 +184,7 @@ else(DEFINED ${projectName}_compiler_flags)
 
   # base flags used by every project
   set( ${projectName}_flags
-    "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} -Wno-c++11-compat-deprecated-writable-strings -Wno-unused-local-typedef -Wno-writable-strings -Wno-unused-parameter" )
+    "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} " )
 
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)
@@ -221,7 +222,7 @@ function(setupTest TEST_NAME)
   set(EXE_NAME ${TEST_NAME}.test)
   file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.C")
   add_executable(${EXE_NAME} ${SRC} )
-  target_link_libraries( ${EXE_NAME} LINK_PUBLIC ${Boost_LIBRARIES} ${TEST_NAME})
+  target_link_libraries( ${EXE_NAME} ${Boost_LIBRARIES} ${TEST_NAME})
   add_test( ${TEST_NAME} ${EXE_NAME} "--log_level=message")
   set_property( TEST ${TEST_NAME} PROPERTY PROCESSORS 1 )
   set_property( TEST ${TEST_NAME} APPEND PROPERTY LABELS ${testLabels} )
@@ -229,6 +230,8 @@ function(setupTest TEST_NAME)
     message(STATUS "Exiting test subdirectory")
   endif(${verbose_traversal})
 endfunction(setupTest)
+
+message(STATUS "\n\n\n\nHEY YOU STUPID CMAKE PRINT THIS VARIABLE \n${Boost_LIBRARIES}\n\n")
 
 # setup include directory
 include_directories( "${HEADER_DIR}" )

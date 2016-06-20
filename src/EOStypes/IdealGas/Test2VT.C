@@ -4,7 +4,7 @@
 #include <EOS.h>
 
 #include <iostream>
-
+#include <limits>
 using namespace std;
 
 #define NaN EOS_VT::NaN
@@ -46,7 +46,8 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(T) )
+    if( !(numeric_limits<double>::quiet_NaN() == V)
+	&& !(numeric_limits<double>::quiet_NaN() == T) )
     {
         double P = eos->P(V,T);
         cout << "P = " << P << "\n";
