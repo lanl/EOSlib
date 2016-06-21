@@ -13,7 +13,7 @@ int Spline::ReInit( int n, double *&x, double *&f, double fp_0, double fp_1)
 	delete [] F;
 	X = x;
 	F = f;
-	x = f = NULL;
+	x = f = nullptr;
     if( N != n )
     {
   	   N = n;

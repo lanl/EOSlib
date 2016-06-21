@@ -34,7 +34,7 @@ int Espline::ReInit(int n, double x0, double x1, double *&f,
 		F2 = new double[N];
 	}
     F = f;
-    f = NULL;
+    f = nullptr;
 	int i;
 	for(i=0; i<N; i++)
 		X[i] = x0 + (double(i)/double(N-1))*(x1-x0);

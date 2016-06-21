@@ -124,10 +124,10 @@ public:
 	SplineTree *right;
 	
 	
-	SplineTree(double X0, double X1, SplineTree *Parent=NULL)
+	SplineTree(double X0, double X1, SplineTree *Parent=nullptr)
 		: x0(X0), x1(X1), parent(Parent)
 	{
-		left = right = NULL;
+		left = right = nullptr;
 		n = 1;	
 	}
 	~SplineTree()

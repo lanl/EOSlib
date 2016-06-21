@@ -1,6 +1,8 @@
 #include <LocalMath.h>
 #include <OneDFunction.h>
 
+using namespace std;
+
 inline int round_up(double x)
 {
 	return (int)(x > 0.0 ? ceil(x) : floor(x));
