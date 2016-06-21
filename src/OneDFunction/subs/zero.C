@@ -10,7 +10,7 @@ double OneDFunction::PRE_ZERO(double x_guess)
 	
 	y0 = f(x0);
 	
-	if( status || numeric_limits<double>::quiet_NaN() == y0 )
+	if( status || ::isnan(y0) )
 	{
 		status = ZERO_LOWER_LIMIT;
 		return x0;
@@ -18,7 +18,7 @@ double OneDFunction::PRE_ZERO(double x_guess)
 	
 	y1 = f(x1);
 	
-	if( status || numeric_limits<double>::quiet_NaN() == y1 )
+	if( status || ::isnan(y1) )
 	{
 		status = ZERO_UPPER_LIMIT;
 		return x1;
@@ -78,7 +78,7 @@ double OneDFunction::PRE_CONDITION(double x_guess)
 	
 	// evaluate at x_guess
 		double y_guess = f(x_guess);
-		if( status || numeric_limits<double>::quiet_NaN() == y_guess )
+		if( status || ::isnan(y_guess) )
 		{
 			status = ZERO_INSIDE;
 			return x_guess;
@@ -122,7 +122,7 @@ double OneDFunction::PRE_CONDITION(double x_guess)
 				x_guess += dx_prime * (x1-x0);
 					
 				y_guess = f(x_guess);
-				if( status || numeric_limits<double>::quiet_NaN() == y_guess )
+				if( status || ::isnan(y_guess) )
 				{
 					status = ZERO_INSIDE;
 					return x_guess;
@@ -186,7 +186,7 @@ void OneDFunction::ZERO()
 
 	// Compute function at center point of bracket
 		y = f(x);
-		if( status || numeric_limits<double>::quiet_NaN() == y )
+		if( status || ::isnan(y) )
 		{
 			status = ZERO_INSIDE;
 			return;
@@ -256,7 +256,7 @@ void OneDFunction::ZERO()
 			x -= 2 * dx_prime * dx; 
 
 			y = f(x);
-			if( status || numeric_limits<double>::quiet_NaN() == y )
+			if( status || ::isnan(y) )
 			{
 				status = ZERO_INSIDE;
 				return;

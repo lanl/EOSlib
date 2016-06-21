@@ -4,7 +4,6 @@
 #include <EOS_VT.h>
 
 #include <iostream>
-#include <limits>
 using namespace std;
 
 int main(int, char **argv)
@@ -49,8 +48,8 @@ int main(int, char **argv)
 		cerr << Error("ConvertUnits failed") << Exit;
     cout << "eos->ref_count = " << eos->RefCount() << "\n";
 
-    if( !(numeric_limits<double>::quiet_NaN() == V)
-	&& !(numeric_limits<double>::quiet_NaN() == e) )
+    if( !::isnan(V)
+	&& !::isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";
