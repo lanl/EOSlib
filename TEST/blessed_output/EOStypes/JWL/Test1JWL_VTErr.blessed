@@ -1,0 +1,11 @@
+EOSbase::Error::Log, EOS_VT::Initialize, file `EOS_VT.C' line 87
+ref state undefined: V_ref=0.527983, T_ref=-nan
+
+EOS_VT = JWL::HMX, status=bad
+EOSbase::Error::Log, EOSbase::Initialize, file `BaseInitialize.C' line 84
+Initialize for JWL failed
+
+EOS_VT = JWL::HMX, status=bad
+Error in ./Test1JWL_VT: JWL.Initialize failed
+	(Exiting with error status -1)
+

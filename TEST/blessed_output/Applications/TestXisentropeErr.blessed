@@ -1,0 +1,19 @@
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS_VT:Sesame::PBX9501'
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS_VT:Sesame::PBX9501
+
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS:Sesame::PBX9501'
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS:Sesame::PBX9501
+
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS:HEburn::PBX9501.BM'
+
+Error in ./TestXisentrope: Could not find or initialize material HEburn::PBX9501.BM
+
+	(Exiting with error status -1)
+

@@ -1,0 +1,34 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+BirchMurnaghanv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:BirchMurnaghan::HMX; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.174554
+#	P_ref = 0.0001; T_ref = 300
+	    V0  = 0.516368; 	    e0  = 0
+	    K0  = 17.66; 	    Kp0 = 8.5
+	     a  = 1.2; 	     b  = -0.25
+	   eps1 = 1; 	 theta0  = 1
+	    Cv  = 1
+	  cv(1) = 0.526537, 307.336, 183189, 419.414
+	eps_abs = 1; 	eps_rel = 1e-06
+	#Vmax    = 0.623699; 	e1      = 0.105351
+	#Pmin    = -1.37421
+}
+EOS_VT:BirchMurnaghan::HMX; units=hydro::std
+{
+	V_ref = 0.526316; T_ref = 300
+#	P_ref = 0.0001; e_ref = 0.174554
+	    V0  = 0.516368; 	    e0  = 0
+	    K0  = 17.66; 	    Kp0 = 8.5
+	     a  = 1.2; 	     b  = -0.25
+	   eps1 = 1; 	 theta0  = 1
+	    Cv  = 1
+	  cv(1) = 0.526537, 307.336, 183189, 419.414
+	eps_abs = 1; 	eps_rel = 1e-06
+	#Vmax    = 0.623699; 	e1      = 0.105351
+	#Pmin    = -1.37421
+}

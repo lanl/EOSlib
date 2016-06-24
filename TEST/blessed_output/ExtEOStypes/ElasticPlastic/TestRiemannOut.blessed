@@ -1,0 +1,44 @@
+State1
+xeos = VonMises::HMX
+units = hydro::std
+  V = 0.526316
+  e = 0.45
+  u = 0
+  P = 0.0001
+  T = 300
+  S = 0
+  c = 4.00884
+	eps_pl = 0
+	Nidof = 1
+	var_name = eps_pl
+
+State2
+xeos = Hayes::HMX
+units = hydro::std
+  V = 0.526316
+  e = 0.45
+  u = 0
+  P = 0.0001
+  T = 300
+  S = 0
+  c = 2.76582
+	Nidof = 0
+
+shock1
+xeos = VonMises::HMX
+units = hydro::std
+  V = 0.510597
+  e = 0.45786
+  u = 0.125368
+  P = 1
+  T = 310.182
+  S = 7.88764e-07
+  c = 4.26346
+ us = 4.19775
+	eps_pl = 0
+	Nidof = 1
+	var_name = eps_pl
+
+     V           e           u           P           us    
+ 5.1278e-01  4.5584e-01  1.4350e-01  8.4961e-01 -4.0812e+00
+ 5.0208e-01  4.6030e-01  1.4350e-01  8.4961e-01  3.1157e+00

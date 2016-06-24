@@ -1,0 +1,9 @@
+DataBase_error_handler::Log, DataBase::GetFunction, file `FetchObj.C' line 219
+dlsym failed to get `EOS_EOS_Init'
+	dlerror=./EOS.so: undefined symbol: EOS_EOS_Init
+DataBase_error_handler::Log, DataBase::GetFunction, file `FetchObj.C' line 219
+dlsym failed to get `EOS_EOS_Constructor'
+	dlerror=./EOS.so: undefined symbol: EOS_EOS_Constructor
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS:EOS::NULL
+

@@ -1,0 +1,59 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+StiffIdealHEv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:StiffIdealHE::PBX9501; units=hydro::std
+{
+	V_ref = 0.542594; e_ref = 3.76918
+#	P_ref = 0.0001; T_ref = 271.95
+	frozen = 1
+	lambda = 0
+	HE = "StiffIdeal::PBX9501"
+	n   = 1
+	k   = 557883
+	T_a = 17922.4
+	T_cutoff = 494.306
+	 dlambda = 0.01
+}
+EOS:StiffIdeal::PBX9501; units=hydro::std
+{
+	V_ref = 0.542594; e_ref = 3.76918
+#	P_ref = 0.0001; T_ref = 271.95
+	lambda1 = 1
+	G1      = 2.08
+	P_p     = 4.69117
+	Cv1     = 0.0045
+	G2      = 2
+	Q       = 1
+	Cv2     = 0.0024
+	dS      = 0.00666667
+}
+IDOF name = ArrheniusIDOF
+index of lambda = 0
+index of dummy = -1
+
+Reference state: V, e, lambda = 0.542594, 3.76918, 0
+ambient state for reactants
+P, T, S = 0.0001, 271.95, 0
+constant volume burn state
+P, T, S = 17.5792, 1987.16, 0.00666667
+
+CJ detonation state
+V e P T = 0.406945, 6.15376, 35.1583, 2980.74
+D, u, c = 8.73537, 2.18384, 6.55153
+VN spike state
+V e u = 0.303944, 11.15, 3.84209
+P T = 61.8551, 2160.93
+rate at VN = 139.499
+
+shock to Pcj: T, rate = 1367.55, 1.13473
+xeox->var(lambda) = 0
+xeox->var(ddt_lambda) = 1.13473
+xeox->var(timestep) = 3, 0.0328204
+xeox->var(dummy) = 1, 0.0328204
+
+CJ deflagration state
+V e P T = 63589.3, -0.205128, 2.50002e-05, 331.197
+D, u, c = 1.86344e-05, -2.18384, 2.18386

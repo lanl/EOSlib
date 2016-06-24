@@ -1,0 +1,21 @@
+EOSbase::Error::Log, Sesame_VT::InitParams, file `SesameVTinit.C' line 66
+open failed for file /home/ralph/SESAME/DATA/003715/301/item_directory
+
+EOS_VT = Sesame::Al, status=abort
+EOSbase::Error::Log, EOS_VT::Initialize, file `EOS_VT.C' line 79
+Initialize for Sesame failed
+
+EOS_VT = Sesame::Al, status=abort
+EOSbase::Error::Log, EOSbase::Initialize, file `BaseInitialize.C' line 84
+Initialize for Sesame failed
+
+EOS_VT = Sesame::Al, status=abort
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS_VT:Sesame::Al'
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS_VT:Sesame::Al
+
+Error in ./Test2VT: Fetch failed
+	(Exiting with error status -1)
+

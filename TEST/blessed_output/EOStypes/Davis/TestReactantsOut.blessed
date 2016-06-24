@@ -1,0 +1,23 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+DavisEOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:DavisReactants::PBX9501; units=hydro::std
+{
+	V_ref = 0.542299; e_ref = 0
+#	P_ref = 0.0001; T_ref = 293
+	   V0 = 0.542299
+	   e0 = 0
+	   P0 = 0.0001
+	   T0 = 293
+	   S0 = 0
+	    A = 2.339
+	    B = 2.737
+	    C = 1.45
+	   G0 = 0.7989
+	    Z = -0.03076
+	   Cv = 0.001088
+	alpha = 0.9644
+}

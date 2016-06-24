@@ -1,0 +1,19 @@
+pre-initialized
+1/V = rho = 3; abc = 1
+str = string
+array v(3) = (1,2,3)
+array m(2,3):
+           1           2           3
+           4           5           6
+darray(2+)
+ans = 5
+ans = 3
+ans = 1
+rho = 3, abc = 1
+k = 2, abc = 1
+str = string
+array v(3) = (1,2,3)
+array m(2,3):
+           1           2           3
+           4           5           6
+darray(0) = ()
