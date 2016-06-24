@@ -1,0 +1,37 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+PorousEOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:EqPorous::estane; units=hydro::std
+{
+	V_ref = 0.84; e_ref = 0.3
+#	P_ref = 0.0272594; T_ref = 301.075
+	EOS   = "Hayes::estane"
+	PhiEq = "Phi0::estane"
+#	  phi_max = 1
+#	    B_max = 0.00125283
+#	    dBdphi_max = 0.871439
+}
+EOS:Hayes::estane; units=hydro::std
+{
+	V_ref = 0.833333; e_ref = 0.3
+#	P_ref = 0.0001; T_ref = 300
+	     V0 = 0.833333; 	     e0 = 0.3
+	     P0 = 0.0001; 	     T0 = 300
+	     K0 = 7.37; 	      N = 5.8
+	 Gamma0 = 1.1; 	     Cv = 0.001
+#	     c0 = 2.55042; 	      s = 1.62048
+}
+PhiEq:Phi0::estane; units=hydro::std
+{
+	     V0 = 0.833333; 	     P0 = 0.0001
+	   phi0 = 0.985; 	     Pc = 0.1
+	   PV_0 = 8.33333e-05; 	   PV_1 = 0.833333
+	abs_tol = 0.0001; 	rel_tol = 0.0001
+	# knots: phi = 6 	energy = 173
+	# phi_min = 0.985, 	phi_max = 1
+	#  PV_min = 8.33333e-05, 	 PV_max = 0.871439
+	#    Pmin = 0.0001, 	  e_max = 0.00125283
+}

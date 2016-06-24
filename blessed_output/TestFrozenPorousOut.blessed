@@ -1,0 +1,53 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+PorousEOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:FrozenPorous::HMX.65f90; units=hydro::std
+{
+	V_ref = 0.582594; e_ref = 0.4519
+#	P_ref = 9.034e-05; T_ref = 300
+	EOS   = "Hayes::HMX"
+	phieq = "Phi1::EC.65"
+	  phi = 0.9034
+	    B = 0.00190002
+}
+EOS:Hayes::HMX; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.45
+#	P_ref = 0.0001; T_ref = 300
+	     V0 = 0.526316; 	     e0 = 0.45
+	     P0 = 0.0001; 	     T0 = 300
+	     K0 = 13.5; 	      N = 9.3
+	 Gamma0 = 1.1; 	     Cv = 0.0015
+#	     c0 = 2.76582; 	      s = 2.41129
+}
+PhiEq:Phi1::EC.65; units=hydro::std
+{
+	     V0 = 0.526316; 	     P0 = 0.0001
+	    PV0 = 5.26316e-05; 	    PV1 = 0.368421
+	   phi0 = 0.64; 	   phi1 = 1
+	      n = 10; 	      a = 1.6
+	dphidP0 = 0.04; 	dphidP1 = 0.2
+	  sphi0 = 0.65; 	   sPV1 = 1
+	abs_tol = 1e-05; 	rel_tol = 1e-05
+	# knots: phi = 48 	energy = 410
+	# phi_min = 0.65, 	phi_max = 1
+	#  PV_min = 5.26316e-05, 	 PV_max = 0.381529
+	#    Pmin = 0.0001, 	  e_max = 0.0132483
+}
+Test PT
+     V           e           u     
+ 5.9210e-01  6.1087e-01 2.3513e-310
+P = 1.0000e-01, T = 4.0000e+02
+P0 = 9.0340e-05
+
+Test Hugoniot
+3.1400e+00 = 3.1400e+00
+5.6129e-01 = 5.6129e-01
+4.6772e-01 = 4.6772e-01
+3.9111e+00 = 3.9111e+00
+
+Test Isentrope
+0.0000e+00 = -6.1182e-12

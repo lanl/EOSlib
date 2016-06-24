@@ -1,0 +1,33 @@
+EOS:ArrheniusHE::HMX; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.48
+#	P_ref = 0.0001; T_ref = 300
+	frozen = 1
+	lambda = 0
+	reactants = "Hayes::HMX-YC"
+	products  = "JWL::HMX4000"
+	#tol = 1e-06
+	n   = 1
+	k   = 55788.3
+	T_a = 17922.4
+	T_cutoff = 527.826
+	 dlambda = 0.01
+}
+
+copy
+
+EOS:ArrheniusHE::HMX; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.48
+#	P_ref = 10.8366; T_ref = 2658.82
+	frozen = 1
+	lambda = 0.55
+	reactants = "Hayes::HMX-YC"
+	products  = "JWL::HMX4000"
+	#tol = 1e-06
+	n   = 1
+	k   = 55788.3
+	T_a = 17922.4
+	T_cutoff = 527.826
+	 dlambda = 0.01
+}

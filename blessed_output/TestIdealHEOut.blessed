@@ -1,0 +1,48 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+IdealHEv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:IdealHE::HMX; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.00250627
+#	P_ref = 0.01; T_ref = 1.25313
+	frozen = 1
+	lambda = 0
+	gamma = 3.1
+	  Cv  = 0.002
+	  Q   = 4.5
+	n   = 1
+	k   = 55788.3
+	T_a = 17922.4
+	T_cutoff = 527.826
+	 dlambda = 0.01
+}
+IDOF name = ArrheniusIDOF
+index of lambda = 0
+index of dummy = -1
+
+Reference state: V, e, lambda = 0.526316, 0.00250627, 0
+ambient state for reactants
+P, T, S = 0.01, 1.25313, 0
+constant volume burn state
+P, T, S = 17.965, 2251.25, 0.0149872
+
+CJ detonation state
+V e P T = 0.397973, 2.30867, 35.9276, 3404.33
+D, u, c = 8.80469, 2.14703, 6.65766
+VN spike state
+V e u = 0.26963, 9.22459, 4.29407
+P T = 71.8451, 4612.29
+rate at VN = 1145.42
+
+shock to Pcj: T, rate = 2306.93, 23.5793
+xeox->var(lambda) = 0
+xeox->var(ddt_lambda) = 23.5793
+xeox->var(timestep) = 3, 0.00212637
+xeox->var(dummy) = 1, 0.00212637
+
+CJ deflagration state
+V e P T = 610.332, -3.79067, 0.00244062, 354.663
+D, u, c = 0.00185308, -2.14703, 2.14889

@@ -30,7 +30,7 @@ execute_process(
   )
 
 if(test_failed_to_run)
-  message(SEND_ERROR "${output_test} filed to run successfully!")
+  message(SEND_ERROR "${output_test} failed to run successfully!")
   return(test_failed_to_run)
 endif(test_failed_to_run)
 

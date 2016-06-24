@@ -1,0 +1,10 @@
+DataBase_error_handler::Log, DataBase::GetHandle, file `FetchObj.C' line 270
+dlopen failed for `/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so'
+/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux/EOS.so: cannot open shared object file: No such file or directory
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS:HEburn2::PBX9502.HotSpotCC
+
+Error in ./TestHEburn2CC: FetchEOS failed
+	(Exiting with error status -1)
+

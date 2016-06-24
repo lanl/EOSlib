@@ -1,0 +1,26 @@
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+StiffenedGasv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:StiffenedGas::HMX; units=hydro::std
+{
+	V_ref = 0.52; e_ref = 0
+#	P_ref = 0.0001; T_ref = 79.9128
+	Gamma = 8.75784
+	  e_p = -0.818713; 	P_p = 1.41309
+	   Cv = 0.00105
+	#  P_ref = 0.0001; 	T_ref = 79.9128
+	#  c_ref = 2.6778; 	    s = 2.68946
+}
+EOS_VT:StiffenedGas::HMX; units=hydro::std
+{
+	V_ref = 0.52; T_ref = 79.9128
+#	P_ref = 0.0001; e_ref = 0
+	Gamma = 8.75784
+	  e_p = -0.818713; 	P_p = 1.41309
+	   Cv = 0.00105
+	#  P_ref = 0.0001; 	e_ref = 0
+	#  c_ref = 2.6778; 	    s = 2.68946
+}

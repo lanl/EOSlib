@@ -1,0 +1,75 @@
+eos->ref_count = 3
+reactants->ref_count = 3
+products->ref_count = 3
+Base info
+EOSv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+ArrheniusHEv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+EOS:ArrheniusHE::HMX; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.48
+#	P_ref = 0.0001; T_ref = 300
+	frozen = 1
+	lambda = 0
+	reactants = "Hayes::HMX-YC"
+	products  = "JWL::HMX4000"
+	#tol = 1e-06
+	n   = 1
+	k   = 55788.3
+	T_a = 17922.4
+	T_cutoff = 527.826
+	 dlambda = 0.01
+}
+EOS:Hayes::HMX-YC; units=hydro::std
+{
+	V_ref = 0.526316; e_ref = 0.48
+#	P_ref = 0.0001; T_ref = 300
+	     V0 = 0.526316; 	     e0 = 0.48
+	     P0 = 0.0001; 	     T0 = 300
+	     K0 = 16.4555; 	      N = 5.96883
+	 Gamma0 = 1.1; 	     Cv = 0.0016
+#	     c0 = 3.04; 	      s = 1.65
+}
+EOS:JWL::HMX4000; units=hydro::std
+{
+	V_ref = 0.525976; e_ref = 0.174655
+#	P_ref = 16.1863; T_ref = 4172.4
+	  V0    = 0.525976
+	  e0    = 0.174655
+	  A     = 858.081; 	  R1    = 4.306
+	  B     = 7.54653; 	  R2    = 0.8
+	  omega = 0.3
+	Edet    = 5.78574
+	  C     = 0.781274
+	Cv      = 0.0015
+	Tcj     = 4000; 	Scj     = 0.0029104
+	#Vcj     = 0.390155; 	Pcj     = 40.5058
+	#Dcj     = 9.08323; 	ucj     = 2.34554; 	ccj     = 6.73769
+}
+IDOF name = ArrheniusIDOF
+index of lambda = 0
+index of dummy = -1
+
+Reference state: V, e, lambda = 0.526316, 0.48, 0
+ambient state for reactants
+P, T, S = 0.0001, 300, 0
+constant volume burn state
+P, T, S = 16.3285, 4378.82, 0.00318084
+CJ state
+V e P T = 0.390041, 3.25953, 40.793, 4219.68
+D, u, c = 9.10608, 2.35776, 6.74832
+reactants at PT: V, e, rate = 0.351962, 7.96025, 797.897
+xeox->var(lambda) = 0
+xeox->var(ddt_lambda) = 797.897
+xeox->var(timestep) = 3, 0.000101072
+xeox->var(dummy) = 1, 0.000101072
+VN spike state
+V e u = 0.316761, 7.05256, 3.62561
+P T = 62.7289, 2807.76
+rate at VN = 94.269
+shock to Pcj: T, rate = 1675.18, 1.25922
+reactants->ref_count = 4
+products->ref_count = 4
+eos->ref_count = 3

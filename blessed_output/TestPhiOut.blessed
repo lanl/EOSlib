@@ -1,0 +1,17 @@
+Base info
+PhiEqv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+Type info
+PhiEqv2.0.1 : Jan. 5, 2013 : Please report bugs to rtm@lanl.gov
+
+PhiEq:Phi0::estane; units=hydro::std
+{
+	     V0 = 0.833333; 	     P0 = 0.0001
+	   phi0 = 0.985; 	     Pc = 0.1
+	   PV_0 = 8.33333e-05; 	   PV_1 = 0.833333
+	abs_tol = 0.0001; 	rel_tol = 0.0001
+	# knots: phi = 6 	energy = 173
+	# phi_min = 0.985, 	phi_max = 1
+	#  PV_min = 8.33333e-05, 	 PV_max = 0.871439
+	#    Pmin = 0.0001, 	  e_max = 0.00125283
+}

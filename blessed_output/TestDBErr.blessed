@@ -1,0 +1,3 @@
+DataBase_error_handler::Log, DataBase::GetFunction, file `FetchObj.C' line 219
+dlsym failed to get `Units_Units_Init'
+	dlerror=./TestDB: undefined symbol: Units_Units_Init
