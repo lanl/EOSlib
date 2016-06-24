@@ -14,7 +14,7 @@ add_subdirectory(IdealGas)
 # add_subdirectory(PTequilibrium)
 # add_subdirectory(Porous)
 #add_subdirectory(Sesame)
-# add_subdirectory(StiffenedGas)
+ add_subdirectory(StiffenedGas)
 # add_subdirectory(Uniaxial)
 
 add_library( EOStypes ${${projectName}_policy} dummy.cpp)
