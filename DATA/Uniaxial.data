@@ -8,7 +8,7 @@
 
 :SharedLibs.=EOS
 {
-    VonMisesElasticPlastic = $SharedLibDirEOS/Uniaxial.so
+    VonMisesElasticPlastic = $SharedLibDirEOS/Uniaxial
 }
 .base=EOS
 .units = hydro::std

@@ -8,7 +8,7 @@
 
 :SharedLibs.=EOS_VT
 {
-    Shear1  = $SharedLibDirEOS/ExtElasticPlastic.so
+    Shear1  = $SharedLibDirEOS/ExtElasticPlastic
 }
 .base  = Shear1
 .units = hydro::std
@@ -27,8 +27,8 @@ EOS_VT:Shear1=HMX; units=hydro::std
 
 :SharedLibs.=EOS
 {
-    EqExtEOS = $SharedLibDirEOS/ExtElasticPlastic.so
-    VonMises = $SharedLibDirEOS/ExtElasticPlastic.so
+    EqExtEOS = $SharedLibDirEOS/ExtElasticPlastic
+    VonMises = $SharedLibDirEOS/ExtElasticPlastic
 }
 .base  = EOS
 .units = hydro::std

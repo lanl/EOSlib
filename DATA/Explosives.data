@@ -8,12 +8,12 @@
 
 :SharedLibs.=HErate
 {
-    HErate    = $SharedLibDirEOS/ExtHE.so
-    Arrhenius = $SharedLibDirEOS/ExtHE.so
-    PnRate    = $SharedLibDirEOS/ExtHE.so
-    IgnitionGrowth = $SharedLibDirEOS/ExtHE.so
-    FFrate    = $SharedLibDirEOS/ExtHE.so
-    FFQrate   = $SharedLibDirEOS/ExtHE.so
+    HErate    = $SharedLibDirEOS/ExtHE
+    Arrhenius = $SharedLibDirEOS/ExtHE
+    PnRate    = $SharedLibDirEOS/ExtHE
+    IgnitionGrowth = $SharedLibDirEOS/ExtHE
+    FFrate    = $SharedLibDirEOS/ExtHE
+    FFQrate   = $SharedLibDirEOS/ExtHE
 }
 
 HErate:Arrhenius=HMX; units=hydro::std
@@ -45,17 +45,17 @@ HErate:PnRate=PBX9501; units=hydro::std
 #
 :SharedLibs.=EOS
 {
-    JWL            = $SharedLibDirEOS/MaterialLib.so
-    HEfit          = $SharedLibDirEOS/MaterialLib.so
-    BKW            = $SharedLibDirEOS/MaterialLib.so
-    DavisReactants = $SharedLibDirEOS/MaterialLib.so
-    DavisProducts  = $SharedLibDirEOS/MaterialLib.so
+    JWL            = $SharedLibDirEOS/MaterialLib
+    HEfit          = $SharedLibDirEOS/MaterialLib
+    BKW            = $SharedLibDirEOS/MaterialLib
+    DavisReactants = $SharedLibDirEOS/MaterialLib
+    DavisProducts  = $SharedLibDirEOS/MaterialLib
     #
-    ArrheniusHE    = $SharedLibDirEOS/ExtHE.so
-    IdealHE        = $SharedLibDirEOS/ExtHE.so
-    StiffIdealHE   = $SharedLibDirEOS/ExtHE.so
-    StiffIdealHEav = $SharedLibDirEOS/ExtHE.so
-    HEburn         = $SharedLibDirEOS/ExtHE.so
+    ArrheniusHE    = $SharedLibDirEOS/ExtHE
+    IdealHE        = $SharedLibDirEOS/ExtHE
+    StiffIdealHE   = $SharedLibDirEOS/ExtHE
+    StiffIdealHEav = $SharedLibDirEOS/ExtHE
+    HEburn         = $SharedLibDirEOS/ExtHE
 }
 .base =EOS
 .units=hydro::std

@@ -9,7 +9,7 @@
 
 :SharedLibs.=EOS
 {
-    Sesame = $SharedLibDirEOS/Sesame.so
+    Sesame = $SharedLibDirEOS/Sesame
 }
 .base =EOS
 .units=hydro::std
@@ -212,7 +212,7 @@ Sesame=Epoxy03
 #
 :SharedLibs.=EOS_VT
 {
-    Sesame = $SharedLibDirEOS/Sesame.so
+    Sesame = $SharedLibDirEOS/Sesame
 }
 
 .base =EOS_VT

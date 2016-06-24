@@ -15,8 +15,6 @@ set_property(TARGET Eos PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( Eos Spline ODE Calc DataBase)
 
-#configure_file(Test.data ${CMAKE_CURRENT_BINARY_DIR}/Test.data COPYONLY)
-
 list( APPEND tests Test1 Test2 )
 
 foreach(test ${tests})

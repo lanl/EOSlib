@@ -3,13 +3,13 @@
 :SharedLibs=EOS
 {
     EOS      = NULL
-    IdealGas = $EOSLIB_DATA_PATH/../src/EOStypes/IdealGas/libIdealGas.dylib
+    IdealGas = $EOSLIB_DATA_PATH/../src/EOStypes/IdealGas/libIdealGas
 }
 
 :SharedLibs=EOS_VT
 {
     EOS_VT      = NULL
-    IdealGas = $EOSLIB_DATA_PATH/../src/EOStypes/IdealGas/libIdealGas.dylib
+    IdealGas = $EOSLIB_DATA_PATH/../src/EOStypes/IdealGas/libIdealGas
 }
 
 .base =EOS

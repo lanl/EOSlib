@@ -16,31 +16,31 @@
     #       ld with option
     #               -rpath SharedLibDirEOS with g++
     #               -R SharedLibDirEOS     with SUN
-    EOS            = $SharedLibDirEOS/EOS.so
+    EOS            = $SharedLibDirEOS/EOS
     #                   void *EOS_Duplicate(void*)
     #                   void  EOS_Destructor()
     #                    int  EOS_Initialize(void*)
-    IdealGas       = $SharedLibDirEOS/MaterialLib.so
+    IdealGas       = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_IdealGas_Constructor()
-    StiffenedGas   = $SharedLibDirEOS/MaterialLib.so
+    StiffenedGas   = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_StiffenedGas_Constructor()
-    Hayes          = $SharedLibDirEOS/MaterialLib.so
+    Hayes          = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_Hayes_Constructor()
-    HayesBM        = $SharedLibDirEOS/MaterialLib.so
+    HayesBM        = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_HayesBM_Constructor()
-    BirchMurnaghan = $SharedLibDirEOS/MaterialLib.so
+    BirchMurnaghan = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_BirchMurnaghan_Constructor()
-    Keane          = $SharedLibDirEOS/MaterialLib.so
+    Keane          = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_Keane_Constructor()
-    UsUp           = $SharedLibDirEOS/MaterialLib.so
+    UsUp           = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_UsUp_Constructor()
-    UsUpSpline     = $SharedLibDirEOS/MaterialLib.so
+    UsUpSpline     = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_UsUpSpline_Constructor()
-    PeSpline       = $SharedLibDirEOS/MaterialLib.so
+    PeSpline       = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_PeSpline_Constructor()
-    PTequilibrium  = $SharedLibDirEOS/MaterialLib.so
+    PTequilibrium  = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_PTequilibrium_Constructor()
-    StiffIdeal     = $SharedLibDirEOS/MaterialLib.so
+    StiffIdeal     = $SharedLibDirEOS/MaterialLib
     #                   void *EOS_StiffIdeal_Constructor()
 }
 .base  = EOS

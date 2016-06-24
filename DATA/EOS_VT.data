@@ -8,17 +8,17 @@
 
 :SharedLibs=EOS_VT
 {
-    EOS_VT         = $SharedLibDirEOS/EOS.so
-    IdealGas       = $SharedLibDirEOS/MaterialLib.so
-    StiffenedGas   = $SharedLibDirEOS/MaterialLib.so
-    Hayes          = $SharedLibDirEOS/MaterialLib.so
-    HayesBM        = $SharedLibDirEOS/MaterialLib.so
-    BirchMurnaghan = $SharedLibDirEOS/MaterialLib.so
-    Keane          = $SharedLibDirEOS/MaterialLib.so
-    UsUp           = $SharedLibDirEOS/MaterialLib.so
-    UsUpSpline     = $SharedLibDirEOS/MaterialLib.so
-    PeSpline       = $SharedLibDirEOS/MaterialLib.so
-    JWL            = $SharedLibDirEOS/MaterialLib.so
+    EOS_VT         = $SharedLibDirEOS/EOS
+    IdealGas       = $SharedLibDirEOS/MaterialLib
+    StiffenedGas   = $SharedLibDirEOS/MaterialLib
+    Hayes          = $SharedLibDirEOS/MaterialLib
+    HayesBM        = $SharedLibDirEOS/MaterialLib
+    BirchMurnaghan = $SharedLibDirEOS/MaterialLib
+    Keane          = $SharedLibDirEOS/MaterialLib
+    UsUp           = $SharedLibDirEOS/MaterialLib
+    UsUpSpline     = $SharedLibDirEOS/MaterialLib
+    PeSpline       = $SharedLibDirEOS/MaterialLib
+    JWL            = $SharedLibDirEOS/MaterialLib
 }
 .base  = EOS_VT
 .units = hydro::std
