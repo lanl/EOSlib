@@ -29,11 +29,11 @@ int main(int, char **argv)
         cerr << Error("db.FetchObj failed\n") << Exit;
     
     units->Print(cout);
-    cout << "units " << units << "\n";
+    //    cout << "units " << units << "\n";
     Units *u2 = (Units *)db.FetchObj("Units",type,name);
-    cout << "again " << u2 << "\n";
+    //    cout << "again " << u2 << "\n";
     Units *u3 = (Units *)db.FetchNewObj("Units",type,name);
-    cout << "  new " << u3 << "\n";
+    //    cout << "  new " << u3 << "\n";
 
     
     deleteUnits(u2);

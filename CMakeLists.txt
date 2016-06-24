@@ -268,3 +268,4 @@ set(CTEST_ENVIRONMENT
 
 add_subdirectory(src)
 add_subdirectory(DATA)
+add_subdirectory(TEST)
