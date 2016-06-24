@@ -1,9 +1,0 @@
-
-Begin Test
-error status = 0
-error status = 1
-error status = 0
-if is true 
-error status = 0
-if is true 
-error status = 2
