@@ -269,3 +269,4 @@ set(CTEST_ENVIRONMENT
 add_subdirectory(src)
 add_subdirectory(DATA)
 add_subdirectory(TEST)
+message(STATUS "Blessed output dir = ${EOSLIB_BLESSED_OUTPUT}")
