@@ -1,0 +1,16 @@
+:UnitsNames=std 	#USE = 1
+{
+	length               = mm
+	time                 = micro`s
+	mass                 = mg
+	temperature          = K
+	force                = kN
+	energy               = J
+	velocity             = km/s
+	density              = g/cm^3
+	specific_volume      = cm^3/g
+	specific_energy      = MJ/kg
+	pressure             = GPa
+	specific_heat        = MJ/kg/K
+	:use                 = hydro
+}

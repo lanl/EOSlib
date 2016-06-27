@@ -53,7 +53,7 @@ set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 ###startHere#######################################jrc2016
 
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base ''		# global base class")
+set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base '' ")	# global base class")
 add_test(NAME Data1
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
