@@ -1,0 +1,4 @@
+:DataBase=Environment
+{
+	PWD                  = /usr/projects/verification/EOSlib/src/DataBase
+}
