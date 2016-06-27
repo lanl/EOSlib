@@ -49,6 +49,7 @@ add_test(NAME Data0
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 ###startHere#######################################jrc2016
 
@@ -61,6 +62,7 @@ add_test(NAME Data1
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data1err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS")
 add_test(NAME Data2
@@ -71,6 +73,7 @@ add_test(NAME Data2
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data2err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data type DataBase name Environment parameters")
 add_test(NAME Data3
@@ -81,6 +84,7 @@ add_test(NAME Data3
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data3err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data type SharedLibs parameters")
 add_test(NAME Data4
@@ -91,6 +95,7 @@ add_test(NAME Data4
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data4err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 ##$HEdata - not sure if this is defined correctly
 set(args "file ${EOSLIB_DATA_PATH}/test_data/$HEdata type SharedLibs parameters")
@@ -102,6 +107,7 @@ add_test(NAME Data5
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data5err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data UnitsNames name std parameters")
 add_test(NAME Data6
@@ -112,6 +118,7 @@ add_test(NAME Data6
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data6err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type UnitsNames name std use")
 add_test(NAME Data7
@@ -122,6 +129,7 @@ add_test(NAME Data7
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data7err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base Units type hydro name std use")
 add_test(NAME Data8
@@ -132,6 +140,7 @@ add_test(NAME Data8
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data8err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS type Hayes name HMX")
 add_test(NAME Data9
@@ -142,6 +151,7 @@ add_test(NAME Data9
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data9err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std parameters")
 add_test(NAME Data10
@@ -152,6 +162,7 @@ add_test(NAME Data10
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data10err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use")
 add_test(NAME Data11
@@ -162,6 +173,7 @@ add_test(NAME Data11
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data11err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS type Hayes name HMX-YC parameters")
 add_test(NAME Data12
@@ -172,6 +184,7 @@ add_test(NAME Data12
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data12err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro from std to HiP e u u^2 P V 'P*V'")
 add_test(NAME Convert0
@@ -182,6 +195,7 @@ add_test(NAME Convert0
   -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/convert0err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
+set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 ###endHere###############################delete me
 
 #These tests aren't actually doing anything; they need to compare terminal
