@@ -57,6 +57,3 @@ Units:hydro::std
 	m                    = mg
 	T                    = K
 }
-units 0x206eec0
-again 0x206eec0
-  new 0x206ee30

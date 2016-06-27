@@ -2,6 +2,9 @@ if(${verbose_traversal})
   message(STATUS "Entered DataBase subdirectory")
 endif(${verbose_traversal})
 
+message(STATUS "blessed output in database: ${EOSLIB_BLESSED_OUTPUT}\n")
+set(EOSLIB_DATABASE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/DataBase)
+
 set(DataBase_src)
 
 add_subdirectory(Subs)
@@ -29,24 +32,28 @@ foreach(test ${tests})
 #  add_test(${test} ${test})
 endforeach(test)
 
+message(STATUS "database blessed output ${EOSLIB_DATABASE_BLESSED_OUTPUT}/testdbout.blessed\n")
+
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME TestDB
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestDB
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/testdbout.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/testdberr.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBOut.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBErr.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+
+message(STATUS "out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBOut.blessed\n")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use")
 add_test(NAME Data0
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data0err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data0out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data0err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -58,8 +65,8 @@ add_test(NAME Data1
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data1out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data1err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data1out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data1err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -69,8 +76,8 @@ add_test(NAME Data2
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data2out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data2err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data2out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data2err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -80,8 +87,8 @@ add_test(NAME Data3
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data3out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data3err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data3out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data3err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -91,8 +98,8 @@ add_test(NAME Data4
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data4out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data4err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data4out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data4err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -103,8 +110,8 @@ add_test(NAME Data5
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data5out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data5err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data5out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data5err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -114,8 +121,8 @@ add_test(NAME Data6
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data6out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data6err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data6out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data6err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -125,8 +132,8 @@ add_test(NAME Data7
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data7out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data7err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data7out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data7err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -136,8 +143,8 @@ add_test(NAME Data8
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data8out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data8err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data8out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data8err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -147,8 +154,8 @@ add_test(NAME Data9
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data9out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data9err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data9out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data9err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -158,8 +165,8 @@ add_test(NAME Data10
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data10out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data10err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data10out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data10err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -169,8 +176,8 @@ add_test(NAME Data11
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data11out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data11err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data11out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data11err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -180,8 +187,8 @@ add_test(NAME Data12
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Data
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/data12out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/data12err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data12out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data12err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -191,8 +198,8 @@ add_test(NAME Convert0
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Convert
   -D test_args:string=${args}
-  -D out_blessed=${CMAKE_CURRENT_BINARY_DIR}/convert0out.blessed
-  -D err_blessed=${CMAKE_CURRENT_BINARY_DIR}/convert0err.blessed 
+  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/convert0out.blessed
+  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/convert0err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

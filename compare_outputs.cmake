@@ -36,11 +36,11 @@ endif(test_failed_to_run)
 
 execute_process(
   COMMAND ${CMAKE_COMMAND} -E compare_files ${out_blessed} ${OUT_TEST}
-  COMMAND ${CMAKE_COMMAND} -E compare_files ${err_blessed} ${ERR_TEST}
+#  COMMAND ${CMAKE_COMMAND} -E compare_files ${err_blessed} ${ERR_TEST}
   RESULT_VARIABLE test_not_successful
   )
 
-file(REMOVE ${OUT_TEST} ${ERR_TEST})
+#file(REMOVE ${OUT_TEST} ${ERR_TEST})
 
 if(test_not_successful)
   message(SEND_ERROR "${output_test} does not match ${output_blessed}!")

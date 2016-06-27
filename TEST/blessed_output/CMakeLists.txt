@@ -9,10 +9,11 @@ list(APPEND subdirectories Applications Calc DataBase
   OneDFunction Spline)
 
 foreach( subdirectory ${subdirectories})
+  add_subdirectory(${subdirectory})
   set( blessed_files )
   file(GLOB blessed_files ./${subdirectory}/*.blessed)
   foreach( blessed_file ${blessed_files} )
-    configure_file(${blessed_file} ${CMAKE_CURRENT_BINARY_DIR}/${subdirectory} COPYONLY)
+    configure_file(${blessed_file} ${CMAKE_CURRENT_BINARY_DIR}/${subdirectory}/ COPYONLY)
   endforeach(blessed_file)
 endforeach(subdirectory)
 

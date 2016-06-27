@@ -266,7 +266,7 @@ set(CTEST_ENVIRONMENT
   "BOOST_TEST_LOG_LEVEL='message'"
   )
 
-add_subdirectory(src)
 add_subdirectory(DATA)
 add_subdirectory(TEST)
+add_subdirectory(src)
 message(STATUS "Blessed output dir = ${EOSLIB_BLESSED_OUTPUT}")
