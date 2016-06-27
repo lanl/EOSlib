@@ -1,6 +1,8 @@
 #include <Arg.h>
 //#include "/home/woodscn/git-repos/eoslib/data_path.h"
 #include "DataBase.h"
+#include <sstream>
+
 using namespace std;
 int main(int, char **argv)
 {
@@ -29,12 +31,18 @@ int main(int, char **argv)
         cerr << Error("db.FetchObj failed\n") << Exit;
     
     units->Print(cout);
-    cout << "units " << units << "\n";
-    Units *u2 = (Units *)db.FetchObj("Units",type,name);
-    cout << "again " << u2 << "\n";
-    Units *u3 = (Units *)db.FetchNewObj("Units",type,name);
-    cout << "  new " << u3 << "\n";
 
+    std::ostringstream test1;
+    std::ostringstream test2;
+    std::ostringstream test3;
+
+    test1 << units << "\n";
+    Units *u2 = (Units *)db.FetchObj("Units",type,name);
+    test2 << u2 << "\n";
+    Units *u3 = (Units *)db.FetchNewObj("Units",type,name);
+    test3 << u3 << "\n";
+
+    if(test1.str() != test2.str() || test1.str() == test3.str()){return 1;}
     
     deleteUnits(u2);
     deleteUnits(units);
