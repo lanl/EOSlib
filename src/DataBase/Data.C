@@ -9,8 +9,8 @@ int main(int, char **argv)
 	ProgName(*argv);
 	const char *files = NULL;
 	const char *base = "";
-	const char *type = NULL;
-	const char *name = NULL;
+	const char *type = "*";
+	const char *name = "*";
 		
 	int print = 0;
 	
