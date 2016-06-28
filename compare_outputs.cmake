@@ -35,7 +35,7 @@ if(test_failed_to_run)
 endif(test_failed_to_run)
 
 execute_process(
-  COMMAND ${CMAKE_COMMAND} -E compare_files ${out_blessed} ${OUT_TEST}
+ COMMAND ${CMAKE_COMMAND} -E compare_files ${out_blessed} ${OUT_TEST}
 #  COMMAND ${CMAKE_COMMAND} -E compare_files ${err_blessed} ${ERR_TEST}
   RESULT_VARIABLE test_not_successful
   )
