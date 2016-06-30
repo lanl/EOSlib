@@ -3,10 +3,10 @@
 
 int EOS::NotInDomain(double V, double e)
 {
-    if( isnan(V) || isnan(e) || V <= 0 )
+    if( std::isnan(V) || isnan(e) || V <= 0 )
         return 1;
     double csq = c2(V,e);
-    return (isnan(csq) || csq <= 0.0) ? 1 : 0;
+    return (std::isnan(csq) || csq <= 0.0) ? 1 : 0;
 }
 
 double EOS::c2(double V, double e)
@@ -157,7 +157,7 @@ int EOS::Evaluate(const HydroState &state1, WaveState &state2)
     (HydroState &) state2 = state1;
     state2.P   =  P(state1.V, state1.e);
     double c_2 = c2(state1.V, state1.e);
-    if( isnan(c_2) || c_2 < 0 )
+    if( std::isnan(c_2) || c_2 < 0 )
         return 1;
     state2.us = sqrt(c_2);
     return 0;
@@ -169,7 +169,7 @@ int EOS::Evaluate(const HydroState &state1, ThermalState &state2)
     state2.e = state1.e;
     state2.P   =  P(state1.V, state1.e);
     state2.T   =  T(state1.V, state1.e);
-    return isnan(state2.T);
+    return std::isnan(state2.T);
 }
 
 int EOS::Evaluate(const HydroState &state1, HydroThermal &state2)
@@ -178,7 +178,7 @@ int EOS::Evaluate(const HydroState &state1, HydroThermal &state2)
     state2.P   =  P(state1.V, state1.e);
     state2.T   =  T(state1.V, state1.e);
     double c_2 = c2(state1.V, state1.e);
-    if( isnan(c_2) || c_2 < 0 )
+    if( std::isnan(c_2) || c_2 < 0 )
         return 1;
     state2.c = sqrt(c_2);
     return 0;
@@ -196,7 +196,7 @@ double EOS::e_PV(double p, double V)
     while( --count )
     {
         double p1 = P(V,e);
-        if( isnan(p1) )
+        if( std::isnan(p1) )
             break;
         if( std::abs(p-p1) < tol )
             return e;

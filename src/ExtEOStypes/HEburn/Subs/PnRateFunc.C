@@ -4,7 +4,7 @@
 int PnRate::Rate(double V, double e, const double *z, double *zdot)
 {
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     if( p>P_cutoff && z[0]<1.0 )
     {
@@ -25,7 +25,7 @@ int PnRate::TimeStep(double V, double e, const double *z, double &dt)
     {
         double lambda  = z[0];
         double p = P(V,e,z[0]);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return -1;                  // error
         if( p < P_cutoff )
             return 0;                   // no constraint
@@ -47,7 +47,7 @@ int PnRate::Integrate(double V, double e, double *z, double dt)
         return 0;
     }
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     if( p < P_cutoff )
         return 0;
@@ -117,23 +117,23 @@ int PnRate::Integrate(double V, double e, double *z, double dt)
 int PnRate::step1(double lambda, double dt)
 {
     double p0 = P(V0,e0,lambda);
-    if( isnan(p0) )
+    if( std::isnan(p0) )
         return 1;
     double rate0  = Rate(lambda,p0);
     double lambda1 = min(1.,lambda+dt*rate0);
     double p1 = P(V0,e0,lambda1);
-    if( isnan(p1) )
+    if( std::isnan(p1) )
         return 1;
     y1 = 0.5*(lambda+lambda1+dt*Rate(lambda1,p1));  // second order
     //
     y2 = min(1.,lambda+0.5*dt*rate0);
     lambda1 = y2;
     p1 = P(V0,e0,lambda1);
-    if( isnan(p1) )
+    if( std::isnan(p1) )
         return 1;
     lambda1 = min(1.,lambda+dt*Rate(lambda1,p1));  
     p1= P(V0,e0,lambda1);
-    if( isnan(p1) )
+    if( std::isnan(p1) )
         return 1;
     rate1 = Rate(lambda1,p1);
     y2 = 0.5*(y2+lambda1+0.5*dt*rate1);             // second order
@@ -145,7 +145,7 @@ int PnRate::step1(double lambda, double dt)
 int PnRate::step2(double &lambda, double dt)
 {
     double p0 = P(V0,e0,lambda);
-    if( isnan(p0) )
+    if( std::isnan(p0) )
         return 1;   
     double kt = k*dt*pow(p0/Pcj,N);
     if( nu == 1. )
@@ -170,7 +170,7 @@ double PnRate::Dt(double V, double e, const double *z, double lambda)
     if( z[0] >= lambda )
         return 0.0;
     double p = P(V,e,z[0]);
-    if( isnan(p) || p < P_cutoff )
+    if( std::isnan(p) || p < P_cutoff )
         return EOS::NaN;
     double t = 0.0;
     double dt = dlambda/Rate(z[0],p);

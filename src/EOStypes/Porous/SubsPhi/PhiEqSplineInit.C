@@ -63,7 +63,7 @@ int  PhiEq_spline::InitPV(double PV_0, double PV_1)
 	    return 2;
 	}
 	
-	if( isnan(e_max=Energy(phi_max)) )
+	if( std::isnan(e_max=Energy(phi_max)) )
 	{
 	    EOSstatus = EOSlib::bad;
 	    EOSerror->Log(FUNC, "Energy(%lf) = NaN\n", phi_max );

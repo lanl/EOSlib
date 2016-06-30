@@ -11,10 +11,10 @@ int Polynomial::ReInit(double *a, int n)
     {
 	    for( n=0;n<=Nmax; ++n)
 	    {
-	        if( isnan(a[n]) )
+	        if( std::isnan(a[n]) )
 	            break;
 	    }
-        if( ! isnan(a[n]) )
+        if( ! std::isnan(a[n]) )
         {
             delete [] A;
             N=0;

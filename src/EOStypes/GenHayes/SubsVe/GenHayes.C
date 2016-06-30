@@ -69,5 +69,5 @@ double GenHayes::c2(double V, double e)
 int GenHayes::NotInDomain(double V, double e)
 {
     double csq = c2(V,e);
-    return isnan(csq) || csq <= 0.;
+    return std::isnan(csq) || csq <= 0.;
 }

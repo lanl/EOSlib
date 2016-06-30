@@ -50,9 +50,9 @@ int Keane::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     EOSstatus = EOSlib::good;
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
     {
          double theta_ref = theta(V_ref);
          double T_ref;
@@ -91,7 +91,7 @@ int Keane::InitParams(Parameters &p, Calc &calc, DataBase *)
     // Adjust V0 such that V_ref = V_PTref at (P_ref,T_ref)
     double T_ref, P_ref;
     calc.Fetch("T_ref",T_ref);
-    if( calc.Fetch("P_ref",P_ref) || isnan(P_ref) )
+    if( calc.Fetch("P_ref",P_ref) || std::isnan(P_ref) )
     {
          EOSerror->Log(FUNC,"V_PTref > 0 and P_ref = NaN\n");
          return 1;

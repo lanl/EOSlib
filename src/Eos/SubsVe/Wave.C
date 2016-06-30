@@ -2,7 +2,7 @@
 
 Wave::Wave(EOS &e, double pvac) : eos(e.Duplicate()), p_vac(pvac)
 {
-    if( isnan(p_vac) )
+    if( std::isnan(p_vac) )
         p_vac = eos->P_vac;
 }
 

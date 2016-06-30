@@ -155,7 +155,7 @@ double BKWdeflagration::f(double var)
 
 int BKWdeflagration::P(double p1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( abs(Pcj - p1) < rel_tol*Pcj  )
         return CJwave( dir, wave );
@@ -187,7 +187,7 @@ int BKWdeflagration::P(double p1,  int dir, WaveState &wave)
 
 int BKWdeflagration::u(double u1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.u = u1;
     u1 = dir*(u1-u0);
@@ -224,7 +224,7 @@ int BKWdeflagration::u(double u1,  int dir, WaveState &wave)
 
 int BKWdeflagration::u_s(double us, int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.us = us;        
     us = dir*(us-u0);
@@ -261,7 +261,7 @@ int BKWdeflagration::u_s(double us, int dir, WaveState &wave)
 
 int BKWdeflagration::V(double v1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );

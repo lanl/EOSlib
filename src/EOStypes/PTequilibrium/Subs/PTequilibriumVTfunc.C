@@ -40,8 +40,8 @@ double PTequilibrium_VT::P(double V, double T)
       for( i=10; i; i-- )
       {
           V1 = V1_0 - dV1;
-          if( !(isnan(P1=eos1->P(V1,T)) || P1 <= 0
-                  || isnan(K1=eos1->cT2(V1,T)) || K1 <= 0) )
+          if( !(std::isnan(P1=eos1->P(V1,T)) || P1 <= 0
+                  || std::isnan(K1=eos1->cT2(V1,T)) || K1 <= 0) )
           {
             break;
           }
@@ -57,8 +57,8 @@ double PTequilibrium_VT::P(double V, double T)
       for( i=10; i; i-- )
       {
           V2 = V2_0 - dV2;
-          if( !(isnan(P2=eos2->P(V2,T)) || P2 <= 0
-                  || isnan(K2=eos2->cT2(V2,T)) || K2 <= 0) )
+          if( !(std::isnan(P2=eos2->P(V2,T)) || P2 <= 0
+                  || std::isnan(K2=eos2->cT2(V2,T)) || K2 <= 0) )
           {
             break;
           }
@@ -85,7 +85,7 @@ double PTequilibrium_VT::e(double V, double T)
         return eos1->e(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->e(V,T) - de;
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     return lambda1*eos1->e(V1,T) + lambda2*(eos2->e(V2,T)-de);
 }
@@ -96,7 +96,7 @@ double PTequilibrium_VT::S(double V, double T)
         return eos1->S(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->S(V,T);
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     return lambda1*eos1->S(V1,T) + lambda2*eos2->S(V2,T);
 }
@@ -107,7 +107,7 @@ double PTequilibrium_VT::P_V(double V, double T)
         return eos1->P_V(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->P_V(V,T);
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     double dPdV1 = eos1->P_V(V1,T);
     double dPdV2 = eos2->P_V(V2,T);
@@ -120,7 +120,7 @@ double PTequilibrium_VT::P_T(double V, double T)
         return eos1->P_T(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->P_T(V,T);
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     double dPdV1 = lambda2*eos1->P_V(V1,T);
     double dPdT1 = eos1->P_T(V1,T);
@@ -135,7 +135,7 @@ double PTequilibrium_VT::CV(double V, double T)
         return eos1->CV(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->CV(V,T);
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     double dPdV1 = eos1->P_V(V1,T);
     double CV1   = eos1->CV(V1,T);
@@ -156,7 +156,7 @@ double PTequilibrium_VT::Gamma(double V, double T)
         return eos1->Gamma(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->Gamma(V,T);
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     // Gamma/V = (dP/de|V) = (dP/dT|V) / (de/dT|V) = P_T/CV
     double dPdV1 = eos1->P_V(V1,T);
@@ -181,7 +181,7 @@ double PTequilibrium_VT::c2(double V, double T)
         return eos1->c2(V,T);
     if( lambda2 >= 1.0 && eos2 )
         return eos2->c2(V,T);
-    if( isnan(P(V,T)) )
+    if( std::isnan(P(V,T)) )
         return NaN;
     //
     double dPdV1 = eos1->P_V(V1,T);
@@ -209,5 +209,5 @@ int PTequilibrium_VT::NotInDomain(double V, double T)
     if( lambda2 >= 1.0 && eos2 )
         return eos2->NotInDomain(V,T);
     double Peq_V = P_V(V,T); // (rho*cT)^2 = -P_V
-    return isnan(Peq_V) || Peq_V >= 0.0;
+    return std::isnan(Peq_V) || Peq_V >= 0.0;
 }

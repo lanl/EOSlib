@@ -316,10 +316,10 @@ int main(int, char **argv)
         cerr << Error("eos not HE") << Exit;
 // ref state
     HydroState state0;
-    state0.u = isnan(u0) ? 0 : u0;
-    state0.V = isnan(V0) ? eos->V_ref : V0;
-    state0.e = isnan(e0) ? eos->e_ref : e0;
-    if( !isnan(P0) && !isnan(T0) )
+    state0.u = std::isnan(u0) ? 0 : u0;
+    state0.V = std::isnan(V0) ? eos->V_ref : V0;
+    state0.e = std::isnan(e0) ? eos->e_ref : e0;
+    if( !std::isnan(P0) && !isnan(T0) )
 	{
 	    if( eos->PT(P0,T0,state0) )
 	        cerr << Error("eos->PT failed\n") << Exit;
@@ -327,7 +327,7 @@ int main(int, char **argv)
 // init state
    int status;
    WaveState InitState;
-   if( isnan(var0) )
+   if( std::isnan(var0) )
        status = eos->Evaluate(state0,InitState);
    else
    {
@@ -368,7 +368,7 @@ int main(int, char **argv)
     WaveLocus Locus = (WaveLocus)NULL;
     if( loop == VAR::none )
         lname = "CJ Deflagration";
-    else if( isnan(var2) )
+    else if( std::isnan(var2) )
         cerr << Error("var2 not set") << Exit;
     else
     {
@@ -377,7 +377,7 @@ int main(int, char **argv)
         if( loop == VAR::P )
         {
              Locus = &Wave::P;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = CJ.P;
              if( var2 < CJ.P )
                  range = 1;
@@ -385,7 +385,7 @@ int main(int, char **argv)
         else if( loop == VAR::V )
         {
              Locus = &Wave::V;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = CJ.V;
              if( var2 > CJ.V )
                  range = 1;
@@ -393,7 +393,7 @@ int main(int, char **argv)
         else if( loop == VAR::Up )
         {
              Locus = &Wave::u;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = CJ.u;
              if( dir*(var2-CJ.u) < 0. )
                  range = 1;
@@ -401,7 +401,7 @@ int main(int, char **argv)
         else if( loop == VAR::Us )
         {
              Locus = &Wave::u_s;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = CJ.us;
              if( dir*(var2-CJ.us) > 0. )
                  range = 1;

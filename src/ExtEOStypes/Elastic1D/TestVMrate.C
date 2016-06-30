@@ -69,7 +69,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
         cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         cout << "EOS\n"
              << "          T = " << eos->T(V,e)         << "\n"
@@ -90,7 +90,7 @@ int main(int, char **argv)
              << "          P = " << EP->P(V,e)         << "\n"      
              << "          S = " << EP->S(V,e)         << "\n";      
         EP->Frozen();
-        if( isnan(tau0) )
+        if( std::isnan(tau0) )
             tau0 = (*EP->Zref())[1];
         double z[2] = {eps_pl, 1./tau0};
         double zdot[2];
@@ -113,7 +113,7 @@ int main(int, char **argv)
         double dt_step;
         int status = EP->TimeStep(V,e,z,dt_step); 
         cout << "TimeStep dt = " << dt_step << ", status " << status << "\n";
-        if( isnan(dt) )
+        if( std::isnan(dt) )
             dt = dt_step;
         else
             nf = 1;

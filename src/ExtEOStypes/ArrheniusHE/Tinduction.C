@@ -82,7 +82,7 @@ int main(int, char **argv)
 	cout.setf(ios::showpoint);
     int i;
     double P;
-    if( isnan(dP) )
+    if( std::isnan(dP) )
         dP = (Pmax-Pmin)/nsteps;
     else
         nsteps = int((Pmax-Pmin)/dP + 0.99);

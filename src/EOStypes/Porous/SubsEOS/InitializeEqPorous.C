@@ -58,9 +58,9 @@ int EqPorous::InitParams(Parameters &p, Calc &calc, DataBase *db)
     delete [] phi_name;
         
     // set reference state    
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = solid->e_ref;
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref =solid->V_ref/phi_eq->phi_0();
 
     return InitPhi();  

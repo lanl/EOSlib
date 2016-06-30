@@ -11,7 +11,7 @@ int EOS_VT::NotInDomain(double V, double T)
     if( V <= 0 || T < 0 )
         return 1;
     double csq = cT2(V,T);
-    return (isnan(csq) || csq <= 0.0) ? 1 : 0;
+    return (std::isnan(csq) || csq <= 0.0) ? 1 : 0;
 }
 
 double EOS_VT::CP(double V, double T)

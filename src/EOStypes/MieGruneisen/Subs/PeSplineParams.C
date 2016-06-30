@@ -26,7 +26,7 @@ int PeSplineParams::init(EOSbase::Error *EOSerror)
 {
     if( EOSerror == NULL )
         EOSerror = EOSbase::ErrorDefault;
-    if( Vmin <= 0 || isnan(V0) || Vmin >= V0 )
+    if( Vmin <= 0 || std::isnan(V0) || Vmin >= V0 )
     {
         EOSerror->Log("PeSplineParams::init",__FILE__,__LINE__,NULL,
                 "bad input, V0 or Vmin\n");
@@ -177,13 +177,13 @@ void PeSplineParams::PrintParams(ostream &out) const
         << "; \t" << setw(10) << "G2 = " << G2 << "\n"
         << "\t"   << setw(10) << "Cv = " << Cv << "\n"
         << "\t"   << setw(10) << "Vmin = "  << Vmin  << "\n";
-    if( !isnan(dPdV0) )
+    if( !std::isnan(dPdV0) )
         out << "\t" << setw(10) << "dPdV0 = " << dPdV0 << "\n";
-    if( !isnan(dPdV1) )
+    if( !std::isnan(dPdV1) )
         out << "\t" << setw(10) << "dPdV1 = " << dPdV1 << "\n";
-    if( !isnan(dedV0) )
+    if( !std::isnan(dedV0) )
         out << "\t" << setw(10) << "dedV0 = " << dedV0 << "\n";
-    if( !isnan(dedV1) )
+    if( !std::isnan(dedV1) )
         out << "\t" << setw(10) << "dedV1 = " << dedV1 << "\n";
     if( n_data > 0 )
     {
@@ -246,14 +246,14 @@ int PeSplineParams::ConvertParams(Convert &convert, EOSbase::Error *EOSerror)
 #define FUNC "PeSplineParams::ParamsOK",__FILE__,__LINE__,NULL
 int PeSplineParams::ParamsOK(Calc &calc, EOSbase::Error *EOSerror)
 {
-    if( isnan(V0) || isnan(e0) || isnan(P0) || isnan(T0) || isnan(S0) )
+    if( std::isnan(V0) || isnan(e0) || isnan(P0) || isnan(T0) || isnan(S0) )
     {
         EOSerror->Log(FUNC,"variable not set: "
                 "V0=%lf, e0=%lf, P0=%lf, T0=%lf, S0=%lf\n",
                 V0, e0, P0, T0, S0);
         return 1;
     }
-    if( isnan(G0) || isnan(G1) || isnan(Cv) )
+    if( std::isnan(G0) || isnan(G1) || isnan(Cv) )
     {
         EOSerror->Log(FUNC,"variable not set: G0=%lf, G1=%lf, Cv=%lf\n",
                 G0, G1, Cv);

@@ -27,7 +27,7 @@ int Phi0::InitParams(Parameters &p, Calc &calc, DataBase *db)
         return 1;
     }
            
-    if( isnan(V0) || isnan(P0) || isnan(phi0) || isnan(Pc) )
+    if( std::isnan(V0) || isnan(P0) || isnan(phi0) || isnan(Pc) )
     {
         EOSerror->Log(FUNC, "variable not set: V0=%lf, P0=%lf, phi0=%lf, Pc=%lf\n",
                V0, P0, phi0, Pc );
@@ -40,10 +40,10 @@ int Phi0::InitParams(Parameters &p, Calc &calc, DataBase *db)
         V0 /= phi0;
     }
 
-    if( isnan(PV_0) )
+    if( std::isnan(PV_0) )
         PV_0 = P0*V0;
     
-    if( isnan(PV_1) )
+    if( std::isnan(PV_1) )
         PV_1 = 10*Pc*V0;
     
     if( InitPV(PV_0, PV_1) )

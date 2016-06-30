@@ -144,7 +144,7 @@ int StiffIdeal::InitParams(Parameters &p, Calc &calc, DataBase *db)
     lambda2 = 1. - lambda1;
     if( c0 > 0. && s > 1. )
     {
-        if( isnan(V_ref) || isnan(P_ref) )
+        if( std::isnan(V_ref) || isnan(P_ref) )
         {
             EOSerror->Log(FUNC, "V_ref and P_ref needed to use c0 and s\n" );
             return 1;            
@@ -159,31 +159,31 @@ int StiffIdeal::InitParams(Parameters &p, Calc &calc, DataBase *db)
         CalcVar *Tcalc =calc.Fetch("T_ref");
         Tcalc->set(T_ref);
     }   
-    if( isnan(G1) || G1 < 0. )
+    if( std::isnan(G1) || G1 < 0. )
     {
         EOSerror->Log(FUNC, "G1 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(G2) || G2 < 0. )
+    if( std::isnan(G2) || G2 < 0. )
     {
         EOSerror->Log(FUNC, "G2 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(Cv1) || Cv1 <= 0. )
+    if( std::isnan(Cv1) || Cv1 <= 0. )
     {
         EOSerror->Log(FUNC, "Cv1 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(Cv2) || Cv2 <= 0. )
+    if( std::isnan(Cv2) || Cv2 <= 0. )
     {
         EOSerror->Log(FUNC, "Cv2 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(dS) )
+    if( std::isnan(dS) )
     {
         if( Q > 0. )
         {
-            if( isnan(T_ref) )
+            if( std::isnan(T_ref) )
             {
                 EOSerror->Log(FUNC, "T_ref needed to set dS\n" );
                 return 1;            

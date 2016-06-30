@@ -38,7 +38,7 @@ int ShockPolar::Initialize(PolarState &s)
     P0 = eos->P(hstate);
     c0 = eos->c(hstate);
     B  = 0.5*state0.q*state0.q + state0.e + P0*state0.V;
-    if( isnan(P0) || isnan(c0) || s.q < c0 )
+    if( std::isnan(P0) || isnan(c0) || s.q < c0 )
         return 1;
     beta0_min = asin(c0/state0.q);
     hug = eos->shock(hstate);
@@ -117,7 +117,7 @@ int PrandtlMeyer::Initialize(PolarState &s)
     state0 = s;
     P0 = eos->P(s.V,s.e);
     c0 = eos->c(s.V,s.e);
-    if( isnan(P0) || isnan(c0) || s.q < c0 )
+    if( std::isnan(P0) || isnan(c0) || s.q < c0 )
         return 1;
     B = 0.5*s.q*s.q + s.e + P0*s.V;
     return 0;

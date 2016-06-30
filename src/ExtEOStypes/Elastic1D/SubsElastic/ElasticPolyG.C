@@ -183,9 +183,9 @@ int  ElasticPolyG::InitParams(Parameters &p, Calc &calc, DataBase *db)
     }
     PG = dynamic_cast<PolyG*>(shear);
     
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = hydro->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
     {
         double T_ref = hydro->T(hydro->V_ref,hydro->e_ref);
         e_ref = hydro->e_ref + PG->e(V_ref,T_ref,eps_el_ref);

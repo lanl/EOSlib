@@ -56,7 +56,7 @@ int Spline::Init(double fp_0, double fp_1)
 	int i;
 	double *U = new double[N];	// decomposition for tridiagonal matrix
 	
-	if( isnan(fp_0) )
+	if( std::isnan(fp_0) )
 	{  // natural boundary
 		F2[0] = 0.;
 		 U[0] = 0.;
@@ -79,7 +79,7 @@ int Spline::Init(double fp_0, double fp_1)
 	}
 	
 	double Q1, U1;
-	if( isnan(fp_1) )
+	if( std::isnan(fp_1) )
 	{  // natural boundary
 		Q1 = 0.;
 		U1 = 0.;

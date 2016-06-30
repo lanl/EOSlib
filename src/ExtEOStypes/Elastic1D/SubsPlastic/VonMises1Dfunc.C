@@ -3,14 +3,14 @@
 double VonMises1D::f(double eps_el)
 {// yield_function
     double Tve = elastic->T(V1,e1, eps_el);
-    return isnan(Tve) ? NaN : yield_function(V1,Tve,eps_el);
+    return std::isnan(Tve) ? NaN : yield_function(V1,Tve,eps_el);
 }
 //
 double VonMises1D::yield_function(double V, double e, const double *z)
 {
     double eps_el = elastic->Eps_el(V) - z[0];
     double Tve    = elastic->T(V,e, eps_el);
-    return isnan(Tve) ? NaN : yield_function(V,Tve,eps_el);
+    return std::isnan(Tve) ? NaN : yield_function(V,Tve,eps_el);
 }
 
 double VonMises1D::yield_strength(double V, double e, const double *z)
@@ -33,7 +33,7 @@ int VonMises1D::Rate(double V, double e, const double *z, double *zdot)
     zdot[0] = 0.;
     double eps_el = elastic->Eps_el(V) - z[0];
     double Tve    = elastic->T(V,e,eps_el);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;
     double Yf = yield_function(V,Tve,eps_el);
     double Y  = yield_strength(V,e,z);
@@ -51,7 +51,7 @@ int VonMises1D::TimeStep(double V, double e, const double *z, double &dt)
     dt = 0;
     double eps_el = elastic->Eps_el(V) - z[0];
     double Tve    = elastic->T(V,e,eps_el);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;
     double Yf = yield_function(V,Tve,eps_el);
     double Y  = yield_strength(V,e,z);
@@ -103,7 +103,7 @@ int VonMises1D::Integrate(double V, double e, double *z, double dt)
 int VonMises1D::Step(double &eps_el, double &t)
 {
     double Tve = elastic->T(V1,e1,eps_el);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;
     double Yf = yield_function(V1,Tve,eps_el);
     if( Yf <= Y1 )
@@ -124,7 +124,7 @@ int VonMises1D::Equilibrate(double V, double e, double *z)
     double eps_V = elastic->Eps_el(V);
     double eps0   = eps_V - z[0];
     double Tve = elastic->T(V,e,eps0);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;  // error
 
     double Yz0 = yield_function(V,Tve,eps0);

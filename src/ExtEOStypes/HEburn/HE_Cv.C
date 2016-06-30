@@ -49,7 +49,7 @@ int EVT::F(double *yp, const double *y, double)
 {
     double e = y[0];
     yp[0] = eos->CV(state0.V,e);
-    return isnan(yp[0]);    
+    return std::isnan(yp[0]);    
 }
 int EVT::T(double T1, ThermalState &state)
 {

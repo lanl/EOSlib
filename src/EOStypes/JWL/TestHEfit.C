@@ -50,7 +50,7 @@ int main(int, char **argv)
     if( gas == NULL )
         cerr << Error("cast failed") << Exit;
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";
@@ -61,7 +61,7 @@ int main(int, char **argv)
         cout << "EOS::c = " << sqrt(max(0.,c2)) << "\n";
         cout << eos->FD(V,e) << "\n";
 
-        if( !isnan(P0) )
+        if( !std::isnan(P0) )
         {
             HydroState state0(V,e,0.0);
             Detonation *det = gas->detonation(state0,P0);

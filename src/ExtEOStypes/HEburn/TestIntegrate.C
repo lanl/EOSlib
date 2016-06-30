@@ -146,7 +146,7 @@ int main(int, char **argv)
     if( status != N )
         cerr << Error("HE->Rate failed") << Exit;
     double tinduct = HE->Dt(V,e,y0,0.99);
-    if( isnan(tinduct) )
+    if( std::isnan(tinduct) )
         cerr << Error("Dt = NaN, check T(V,e) < T_cutoff") << Exit;        
     cout << "rate = " << yp[0]
          << ", time(lambda=0.99) =" << tinduct << "\n";

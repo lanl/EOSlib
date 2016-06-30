@@ -57,9 +57,9 @@ int main(int, char **argv)
         cerr << Error("dynamic_cast failed") << Exit;
     EP->Frozen();
 
-    if( isnan(V0) )
+    if( std::isnan(V0) )
         V0 = EP->V_ref;
-    if( isnan(e0) )
+    if( std::isnan(e0) )
         e0 = EP->e_ref;
     double T0 = EP->T(V0,e0);
     double u0 = 0;

@@ -379,10 +379,10 @@ int main(int, char **argv)
     //    cerr << Error("eos not HE") << Exit;
 // ref state
     HydroState state0;
-    state0.u = isnan(u0) ? 0 : u0;
-    state0.V = isnan(V0) ? eos->V_ref : V0;
-    state0.e = isnan(e0) ? eos->e_ref : e0;
-    if( !isnan(P0) && !isnan(T0) )
+    state0.u = std::isnan(u0) ? 0 : u0;
+    state0.V = std::isnan(V0) ? eos->V_ref : V0;
+    state0.e = std::isnan(e0) ? eos->e_ref : e0;
+    if( !std::isnan(P0) && !isnan(T0) )
 	{
 	    if( eos->PT(P0,T0,state0) )
 	        cerr << Error("eos->PT failed\n") << Exit;
@@ -390,7 +390,7 @@ int main(int, char **argv)
 // init state
    int status;
    WaveState InitState;
-   if( isnan(var0) )
+   if( std::isnan(var0) )
        status = eos->Evaluate(state0,InitState);
    else
    {
@@ -413,7 +413,7 @@ int main(int, char **argv)
    }
    if( status )
        cerr << Error("InitState failed") << Exit;
-    if( InitVar != VAR::none || isnan(P0) )
+    if( InitVar != VAR::none || std::isnan(P0) )
         P0 = eos->P(InitState);
     else
         InitState.P = P0;
@@ -448,7 +448,7 @@ int main(int, char **argv)
 // Dstate and wave
     WaveState Dstate;
     Wave *wave;
-    if( !isnan(Pdet) )
+    if( !std::isnan(Pdet) )
     {
         if( det->P(Pdet,dir,Dstate) )
             cerr << Error("det failed for Pwave") << Exit;
@@ -470,14 +470,14 @@ int main(int, char **argv)
     const char *lname;
     if( loop == VAR::none )
     {
-        if( isnan(Pdet) )
+        if( std::isnan(Pdet) )
             lname = "CJ detonation";
         else if( Pdet >= CJstate.P )
             lname = "strong detonation";
         else
             lname = "weak detonation";
     }
-    else if( isnan(var2) )
+    else if( std::isnan(var2) )
         cerr << Error("var2 not set") << Exit;
     else
     {
@@ -485,9 +485,9 @@ int main(int, char **argv)
         if( loop == VAR::P )
         {
              Locus = &Wave::P;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = Dstate.P;
-             if( var2 < Dstate.P && isnan(Pdet) )
+             if( var2 < Dstate.P && std::isnan(Pdet) )
              {
                  if( weak )
                      lname = "Detonation (weak) locus";
@@ -498,9 +498,9 @@ int main(int, char **argv)
         else if( loop == VAR::V )
         {
              Locus = &Wave::V;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = Dstate.V;
-             if( var2 > Dstate.V && isnan(Pdet) )
+             if( var2 > Dstate.V && std::isnan(Pdet) )
              {
                  if( weak )
                      lname = "Detonation (weak) locus";
@@ -511,9 +511,9 @@ int main(int, char **argv)
         else if( loop == VAR::Up )
         {
              Locus = &Wave::u;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = Dstate.u;
-             if( dir*(var2-Dstate.u) < 0. && isnan(Pdet) )
+             if( dir*(var2-Dstate.u) < 0. && std::isnan(Pdet) )
              {
                  if( weak )
                      lname = "Detonation (weak) locus";
@@ -524,9 +524,9 @@ int main(int, char **argv)
         else if( loop == VAR::Us )
         {
              Locus = &Wave::u_s;
-             if( isnan(var1) )
+             if( std::isnan(var1) )
                  var1 = Dstate.us;
-             if( isnan(Pdet) )
+             if( std::isnan(Pdet) )
              {
                  if( (var2-Dstate.us)*(var1-Dstate.us) < 0. )
                      cerr << Error("Range of us inconsistent\n") << Exit;
@@ -542,7 +542,7 @@ int main(int, char **argv)
         if( release == 1 )
         {
             lname = "isentrope";
-            if( isnan(Pdet) )
+            if( std::isnan(Pdet) )
             {
 	            delete wave;
 	            if( (wave=HE->isentrope(CJstate)) == NULL )
@@ -560,7 +560,7 @@ int main(int, char **argv)
       cout << "  lambda2=" << fixed << setprecision(3) << lambda2;
     cout << "\n";
     PrintState(InitState, "init state");
-    if( loop == VAR::none  && (isnan(Pdet) || Pdet >= CJstate.P) )
+    if( loop == VAR::none  && (std::isnan(Pdet) || Pdet >= CJstate.P) )
     {
         WaveState VN;
         Wave *shock = eos->shock(InitState);

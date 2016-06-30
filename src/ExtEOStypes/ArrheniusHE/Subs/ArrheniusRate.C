@@ -79,7 +79,7 @@ int ArrheniusRate::ParamsOK()
 int ArrheniusRate::Rate(double V, double e, const double *z, double *zdot)
 {
     double T = eos->T(V,e,z);
-    if( isnan(T) )
+    if( std::isnan(T) )
         return 1;
     if( T>T_cutoff && z[0]<1.0 )
     {
@@ -101,7 +101,7 @@ int ArrheniusRate::TimeStep(double V, double e, const double *z, double &dt)
     double lambda1 = min(1.0,lambda+DLAMBDA);
     double ztmp[1] = {lambda1};
     double T = eos->T(V,e,ztmp);
-    if( isnan(T) )
+    if( std::isnan(T) )
         return 1;
     if( T < T_cutoff )
         return 0;
@@ -117,7 +117,7 @@ int ArrheniusRate::Integrate(double V, double e, double *z, double dt)
     if( dt <= 0.0 || z[0] >= 1. )
         return 0;
     double T = eos->T(V,e,z);
-    if( isnan(T) )
+    if( std::isnan(T) )
         return 1;
     if( T < T_cutoff )
         return 0;
@@ -151,18 +151,18 @@ int ArrheniusRate::Integrate(double V, double e, double *z, double dt)
 int ArrheniusRate::step1(double *z, double dt)
 {
     double T0 = eos->T(V0,e0,z);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;
     ddt0  = Rate(z[0],T0);
     // half step
     z1[0] = min(1.,z[0]+0.5*dt*ddt0);
     double T1 = eos->T(V0,e0,z1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return 1;
     // full step using midpoint integration
     z2[0] = min(1.,z[0]+dt*Rate(z1[0],T1));
     double T2 = eos->T(V0,e0,z2);
-    if( isnan(T2) )
+    if( std::isnan(T2) )
         return 1;
     ddt2 = Rate(z2[0],T2);
     // full step using trapezoidal integration
@@ -174,7 +174,7 @@ int ArrheniusRate::step1(double *z, double dt)
 int ArrheniusRate::step2(double *z, double dt)
 {
     double T0 = eos->T(V0,e0,z);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;   
     double kt = k*dt*exp(-T_a/T0);
     if( n == 1. )
@@ -201,7 +201,7 @@ double ArrheniusRate::Dt(double V, double e, const double *z, double lambda)
         return 0.0;
     double t = 0.0;
     double T = eos->T(V,e,z);
-    if( isnan(T) || T < T_cutoff )
+    if( std::isnan(T) || T < T_cutoff )
         return EOS::NaN;
     double dt = dlambda/Rate(z[0],T);
     V0 = V;

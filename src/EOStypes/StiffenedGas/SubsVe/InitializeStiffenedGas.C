@@ -23,7 +23,7 @@ int StiffenedGas::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
     	
-    if( !isnan(s) )
+    if( !std::isnan(s) )
     { // s = 0.5*FundDeriv = 0.5*(1+0.5*G)
         G = 2*(2*s-1);
     }
@@ -33,9 +33,9 @@ int StiffenedGas::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
 
-	if( !isnan(c0) )
+	if( !std::isnan(c0) )
 	{ // assume V_0 = V_ref and e_0 = e_ref
-	    if( isnan(P0) || isnan(V_ref) )
+	    if( std::isnan(P0) || isnan(V_ref) )
 	    {
 	        EOSerror->Log(FUNC,"must specify P0 and V_ref with c0\n");
 	    	return 1;

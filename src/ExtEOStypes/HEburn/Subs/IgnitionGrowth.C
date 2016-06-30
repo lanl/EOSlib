@@ -116,27 +116,27 @@ int IgnitionGrowth::PostInit(Calc &, DataBase *)
         return 1;
     if( a<0.0 || a>1. )
         return 1;
-    if( isnan(I) || I<=0. )
+    if( std::isnan(I) || I<=0. )
         return 1;
-    if( isnan(b) || b<0.0 || 1 < b )
+    if( std::isnan(b) || b<0.0 || 1 < b )
         return 1;
-    if( isnan(x) || x<0. )
+    if( std::isnan(x) || x<0. )
         return 1;
-    if( isnan(G1) || G1<=0. )
+    if( std::isnan(G1) || G1<=0. )
         return 1;
-    if( isnan(c) || c<0.0 || 1.<c )
+    if( std::isnan(c) || c<0.0 || 1.<c )
         return 1;
-    if( isnan(d) || d<0.0 || 1.<d )
+    if( std::isnan(d) || d<0.0 || 1.<d )
         return 1;
-    if( isnan(y) || y<0.)
+    if( std::isnan(y) || y<0.)
         return 1;
-    if( isnan(G2) || G2<=0. )
+    if( std::isnan(G2) || G2<=0. )
         return 1;
-    if( isnan(e) || e<0.0 || 1.<e )
+    if( std::isnan(e) || e<0.0 || 1.<e )
         return 1;
-    if( isnan(g) || g<0.0 || 1.<g )
+    if( std::isnan(g) || g<0.0 || 1.<g )
         return 1;
-    if( isnan(zp) || zp<0. )
+    if( std::isnan(zp) || zp<0. )
         return 1;
     //
     if( dlambda<=0. || dlambda>=1. )

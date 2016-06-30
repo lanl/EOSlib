@@ -48,11 +48,11 @@ int main(int, char **argv)
     EOS *reactants = HE->reactants();
     EOS *products  = HE->products();
     double lambda_ref = HE->lambda_ref();
-    if( isnan(V) )
+    if( std::isnan(V) )
         V = HE->V_ref;            
-    if( isnan(e) )
+    if( std::isnan(e) )
         e = HE->e_ref;
-    if( isnan(lambda) )
+    if( std::isnan(lambda) )
         lambda = lambda_ref;
     else
         HE->set_lambda(lambda);

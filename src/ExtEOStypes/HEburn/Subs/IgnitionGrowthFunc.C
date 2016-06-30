@@ -21,7 +21,7 @@ int IgnitionGrowth::Rate(double V, double e, const double *z, double *zdot)
     else
     {
         double p = P(V,e,z[0]);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return 1;
         zdot[0] = Rate(z[0],V,p);
     }
@@ -34,7 +34,7 @@ int IgnitionGrowth::TimeStep(double V, double e, const double *z, double &dt)
     if( z[0]<0.|| 1.<=z[0] )
         return 0;
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return -1;
     double rate = Rate(z[0],V,p);
     if( rate == 0. )
@@ -53,7 +53,7 @@ int IgnitionGrowth::Integrate(double V, double e, double *z, double dt)
     if( dt<=0.0 || z[0]>=1. )
         return 0;
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     V0 = V;
     e0 = e;
@@ -95,23 +95,23 @@ int IgnitionGrowth::Integrate(double V, double e, double *z, double dt)
 int IgnitionGrowth::step1(double lambda, double dt)
 {
     double P0 = P(V0,e0,lambda);
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     double rate0  = Rate(lambda,V0,P0);
     double lambda1 = min(1.,lambda+dt*rate0);
     double P1 = P(V0,e0,lambda1);
-    if( isnan(P1) )
+    if( std::isnan(P1) )
         return 1;
     w1 = 0.5*(lambda+lambda1+dt*Rate(lambda1,V0,P1));    // second order
     //
     w2 = min(1.,lambda+0.5*dt*rate0);
     lambda1 = w2;
     P1 = P(V0,e0,lambda1);
-    if( isnan(P1) )
+    if( std::isnan(P1) )
         return 1;
     lambda1 = min(1.,lambda+dt*Rate(lambda1,V0,P1));  
     P1= P(V0,e0,lambda1);
-    if( isnan(P1) )
+    if( std::isnan(P1) )
         return 1;
     rate1 = Rate(lambda1,V0,P1);
     w2 = 0.5*(w2+lambda1+0.5*dt*rate1);           // second order
@@ -123,7 +123,7 @@ int IgnitionGrowth::step1(double lambda, double dt)
 int IgnitionGrowth::step2(double &lambda, double dt)
 {
     double p = P(V0,e0,lambda);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;   
     double kt = G2*pow(lambda,g)*pow(p,zp)*dt;
     if( e == 1. )
@@ -149,7 +149,7 @@ double IgnitionGrowth::Dt(double V, double e, const double *z, double lambda)
     if( z[0] >= lambda )
         return 0.0;
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return EOS::NaN;
     double t = 0.0;
     double dt = dlambda/Rate(z[0],V,p);

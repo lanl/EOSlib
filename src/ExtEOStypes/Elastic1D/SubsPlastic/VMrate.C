@@ -126,7 +126,7 @@ int VMrate::PostInit(Calc &calc, DataBase *db)
                       "shear not type PolyG\n");
         return 1;      
     }
-    if( isnan(tau1) || tau1 <= 0. || isnan(epsy_el) || epsy_el < 0.)
+    if( std::isnan(tau1) || tau1 <= 0. || isnan(epsy_el) || epsy_el < 0.)
     {
         EOSerror->Log("VMrate::PostInit", __FILE__, __LINE__, this,
                       "tau1 or epsy_el not defined or wrong sign\n");

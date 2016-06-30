@@ -22,7 +22,7 @@ UsUpSplineParams::~UsUpSplineParams()
 
 int UsUpSplineParams::init(EOSbase::Error *EOSerror)
 {
-    if( isnan(s1) ||  s1 <= 1  )
+    if( std::isnan(s1) ||  s1 <= 1  )
     {
 	    EOSerror->Log("UsUpSplineParams::init",__FILE__,__LINE__,NULL,
                       "bad input: s1=%lf\n", s1);
@@ -60,7 +60,7 @@ int UsUpSplineParams::init(EOSbase::Error *EOSerror)
         eta_last = eta[i];
         us_inv_last = us_inv[i];
     }
-    double fp_0 = isnan(dusdup0) ? dusdup0 : -dusdup0*us_inv[0];
+    double fp_0 = std::isnan(dusdup0) ? dusdup0 : -dusdup0*us_inv[0];
     double fp_1 = EOS::NaN;
     int status = Us_inv.ReInit(n_data+1, eta,us_inv, fp_0,fp_1);
     // Spline::~Spline() will delete eta & us_inv
@@ -168,7 +168,7 @@ void UsUpSplineParams::PrintParams(ostream &out) const
 	    << "\t" << setw(10) << "Cv = " << Cv << "\n";
     if( n_data > 0 )
     {
-        if( !isnan(dusdup0) )
+        if( !std::isnan(dusdup0) )
             out << "\t"   << setw(10) << "dusdup0 = " << dusdup0 << "\n";
         int i;
         out << "\t#n_data = " << n_data << "\n";
@@ -229,14 +229,14 @@ int UsUpSplineParams::ConvertParams(Convert &convert, EOSbase::Error *EOSerror)
 #define FUNC "UsUpSplineParams::ParamsOK",__FILE__,__LINE__,NULL
 int UsUpSplineParams::ParamsOK(Calc &calc, EOSbase::Error *EOSerror)
 {
-    if( isnan(V0) || isnan(e0) || isnan(P0) || isnan(T0) || isnan(S0) )
+    if( std::isnan(V0) || isnan(e0) || isnan(P0) || isnan(T0) || isnan(S0) )
     {
         EOSerror->Log(FUNC,"variable not set: "
                            "V0=%lf, e0=%lf, P0=%lf, T0=%lf, S0=%lf\n",
                            V0, e0, P0, T0, S0);
         return 1;
     }
-    if( isnan(G0) || isnan(G1) || isnan(Cv) )
+    if( std::isnan(G0) || isnan(G1) || isnan(Cv) )
     {
         EOSerror->Log(FUNC,"variable not set: G0=%lf, G1=%lf, Cv=%lf\n",
                            G0, G1, Cv);

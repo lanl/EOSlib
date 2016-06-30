@@ -36,15 +36,15 @@ int Phi1::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
     
-    if( isnan(V0) || isnan(P0) || isnan(PV1) || isnan(phi0)
-        || isnan(dphidP0) || isnan(dphidP1) || isnan(a) || n < 0 )
+    if( std::isnan(V0) || isnan(P0) || isnan(PV1) || isnan(phi0)
+        || std::isnan(dphidP0) || isnan(dphidP1) || isnan(a) || n < 0 )
     {
         EOSerror->Log(FUNC, "variable not set: V0=%lf, P0=%lf, PV1=%lf, phi0=%lf\n"
                 "\tdphidP0=%lf, dphidP1=%lf, a=%lf, n=%d\n",
                V0, P0, PV1, phi0, dphidP0, dphidP1, a, n );
         return 1;
     }
-    if( isnan(PV0) )
+    if( std::isnan(PV0) )
         PV0 = P0*V0;
 
     sPV1 *= PV1;

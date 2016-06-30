@@ -48,11 +48,11 @@ int main(int, char **argv)
     EOS *products  = HE->products();
     cout << "reactants->ref_count = " << reactants->RefCount() << "\n";
     cout << "products->ref_count = "  << products->RefCount()  << "\n";    
-    if( !isnan(lambda) )
+    if( !std::isnan(lambda) )
         HE->set_lambda(lambda);
     lambda = HE->get_lambda();
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         cout << "EOS\n"
              << "          T = " << eos->T(V,e)         << "\n"

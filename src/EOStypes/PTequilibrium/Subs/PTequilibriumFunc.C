@@ -122,7 +122,7 @@ int PTequilibrium::NotInDomain(double V, double e)
     if( lambda2 >= lambda2_max )
         return eos2 ? eos2->NotInDomain(V,e+de) : 1;
     double ceq2 = c2(V,e);
-    return isnan(ceq2) || ceq2 <= 0;
+    return std::isnan(ceq2) || ceq2 <= 0;
 }
 
 int PTequilibrium::PT(double P, double T, HydroState &state)

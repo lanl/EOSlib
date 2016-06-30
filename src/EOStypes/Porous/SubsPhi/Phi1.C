@@ -91,9 +91,9 @@ double Phi1::f(double sPV)
 
 int Phi1::InitPV(double PV_0, double PV_1)  
 {
-	if( isnan(PV_0) )
+	if( std::isnan(PV_0) )
 		PV_0 = PV0;
-	if( isnan(PV_1) )
+	if( std::isnan(PV_1) )
 		PV_1 = 0.98*sPV1;
 	PhiEq::Pmin = P0;
 	return PhiEq_spline::InitPV(PV_0, PV_1);

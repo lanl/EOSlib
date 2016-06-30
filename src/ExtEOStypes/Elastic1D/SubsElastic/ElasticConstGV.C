@@ -180,9 +180,9 @@ int  ElasticConstGV::InitParams(Parameters &p, Calc &calc, DataBase *db)
     deleteUnits(u);
     shear = GV;
     
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = hydro->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
     {
         double T_ref = hydro->T(hydro->V_ref,hydro->e_ref);
         e_ref = hydro->e_ref + GV->e(V_ref,T_ref,eps_el_ref);

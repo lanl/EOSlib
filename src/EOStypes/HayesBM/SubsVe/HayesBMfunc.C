@@ -67,7 +67,7 @@ int HayesBM::PT(double P, double T, HydroState &state)
 	if( P<0 || T<0 )
 		return 1;
 	state.V = V_PT(P,T);
-	if( isnan(state.V) || state.V <= 0 )
+	if( std::isnan(state.V) || state.V <= 0 )
 		return 1;
 		
 	state.e = e_VT(state.V,T);

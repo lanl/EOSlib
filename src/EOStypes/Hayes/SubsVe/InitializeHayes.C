@@ -21,18 +21,18 @@ int Hayes::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( !isnan(c0) )
+    if( !std::isnan(c0) )
     {
-        if( isnan(Gamma0) || isnan(V0) || isnan(Cv) || isnan(T0) )
+        if( std::isnan(Gamma0) || isnan(V0) || isnan(Cv) || isnan(T0) )
         {
             EOSerror->Log(FUNC,"must specify Gamma0, V0, Cv, T0 with c0\n");
             return 1;
         }
         K0 = (c0*c0 - Gamma0*Gamma0*Cv*T0)/V0;
     }
-    if( !isnan(s) )
+    if( !std::isnan(s) )
     {
-        if( isnan(Gamma0) || isnan(V0) || isnan(K0) || isnan(Cv) || isnan(T0) )
+        if( std::isnan(Gamma0) || isnan(V0) || isnan(K0) || isnan(Cv) || isnan(T0) )
         {
             EOSerror->Log(FUNC,"must specify Gamma0, V0, K0, Cv, T0 with s\n");
             return 1;
@@ -48,9 +48,9 @@ int Hayes::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = e0;
     return 0;
 }

@@ -50,8 +50,8 @@ int HEfit::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
 
-    if( isnan(V0) || isnan(rho_CJ) || isnan(P_CJ)
-        || isnan(rho_min)|| isnan(rho_max) )
+    if( std::isnan(V0) || isnan(rho_CJ) || isnan(P_CJ)
+        || std::isnan(rho_min)|| isnan(rho_max) )
     {
         EOSerror->Log(FUNC,"variable not set: V0=%lf, rho_CJ=%lf, P_CJ=%lf\n"
               "\trho_min=%lf, rho_max=%lf, Pmin=%lf, Pmax=%lf, Gamma0=%lf\n",
@@ -65,7 +65,7 @@ int HEfit::InitParams(Parameters &p, Calc &calc, DataBase *)
     {
         for( i =0; i<nfCJ; i++)
         {
-            if( isnan(fCJ[i]) )
+            if( std::isnan(fCJ[i]) )
             {
                 nfCJ = -1;
                 break;
@@ -82,7 +82,7 @@ int HEfit::InitParams(Parameters &p, Calc &calc, DataBase *)
     {
         for( i =0; i<ngCJ; i++)
         {
-            if( isnan(gCJ[i]) )
+            if( std::isnan(gCJ[i]) )
             {
                 ngCJ = -1;
                 break;
@@ -95,9 +95,9 @@ int HEfit::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = e0;
    
     double y[1];

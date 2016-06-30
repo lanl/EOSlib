@@ -88,9 +88,9 @@ int PeSpline_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
 	    return 1;
     }        
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(T_ref) )
+    if( std::isnan(T_ref) )
         T_ref = T0;
     return 0;
 }

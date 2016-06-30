@@ -64,9 +64,9 @@ int main(int, char **argv)
         EP->Equilibrium();
     **************/
 
-    if( isnan(V0) )
+    if( std::isnan(V0) )
         V0 = EP->V_ref;
-	if( isnan(e0) )
+	if( std::isnan(e0) )
         e0 = EP->e_ref;
     double c0 = EP->c(V0,e0);
 	HydroState state0(V0,e0,u0);
@@ -74,7 +74,7 @@ int main(int, char **argv)
 
     int i;
 	double Nsteps = (double) nsteps;
-    if( isnan(umax) )
+    if( std::isnan(umax) )
         umax = 0.5*c0;
    
 	Hugoniot *H1 = EP->shock(state0);

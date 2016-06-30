@@ -88,7 +88,7 @@ double PhiEq_spline::PV(double phi)
 int PhiEq_spline::F(double *yp, const double *, double phi)
 {
     yp[0] = PV(phi)/phi;
-    return  isnan(yp[0]);
+    return  std::isnan(yp[0]);
 }
 
 double PhiEq_spline::Energy(double phi)

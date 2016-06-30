@@ -3,13 +3,13 @@
 double HEprods::P(double V, double e)
 {
     double P_ref = Pref(V);
-    if( isnan(P_ref) ) return NaN;
+    if( std::isnan(P_ref) ) return NaN;
     return P_ref + GammaVref(V)*(e-eref(V));
 }
 double HEprods::e_PV(double p, double V)
 {
     double P_ref = Pref(V);
-    if( isnan(P_ref) ) return NaN;
+    if( std::isnan(P_ref) ) return NaN;
 
     double GammaV = GammaVref(V);
     return (p-P_ref)/GammaV + eref(V);
@@ -18,7 +18,7 @@ double HEprods::e_PV(double p, double V)
 double HEprods::c2(double V, double e)
 {
     double c2_ref = c2ref(V);
-    if( isnan(c2_ref) || c2_ref<0. ) return NaN;
+    if( std::isnan(c2_ref) || c2_ref<0. ) return NaN;
     double Gamma = V*GammaVref(V);
     double dGammaV = dGammaVref(V);
 
@@ -36,7 +36,7 @@ double HEprods::FD(double V, double e)
 double HEprods::Gamma(double V, double e)
 {
     double GammaV = GammaVref(V);
-    return isnan(GammaV) ?  NaN : V*GammaV;
+    return std::isnan(GammaV) ?  NaN : V*GammaV;
 }
 
 //
@@ -45,7 +45,7 @@ double HEprods::Gamma(double V, double e)
 int HEprods::NotInDomain(double V, double e)
 {
     double c2_Ve = c2(V,e);
-    if( isnan(c2_Ve) ) return NaN;
+    if( std::isnan(c2_Ve) ) return NaN;
     return (c2_Ve>0. && P(V,e)>0.) ? 0 : 1;
 }
 
@@ -59,7 +59,7 @@ double HEprods::T(double V, double e)
 double HEprods::S(double V, double e)
 {
     double T_Ve = T(V,e);
-    return (isnan(T_Ve) && T_Ve<=0.) ? NaN : Cv*log(T_Ve/T_cj) + S_cj;
+    return (std::isnan(T_Ve) && T_Ve<=0.) ? NaN : Cv*log(T_Ve/T_cj) + S_cj;
 }
 
 double HEprods::CV(double, double)

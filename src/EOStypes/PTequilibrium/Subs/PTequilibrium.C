@@ -301,9 +301,9 @@ int PTequilibrium::InitParams(Parameters &p, Calc &calc, DataBase *db)
         tol_P = TOL_P;
     if( tol_T < 0.0 )
         tol_T = TOL_T;
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = lambda1*V1+lambda2*V2;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = lambda1*e1+lambda2*e2;
     OneDFunc_rel_tol = max(OneDFunc_rel_tol,max(eos1->OneDFunc_rel_tol,
                                                 eos2->OneDFunc_rel_tol));

@@ -45,7 +45,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(T) )
+    if( !std::isnan(V) && !isnan(T) )
     {
         double P = eos->P(V,T);
         cout << "P = " << P << "\n";
@@ -56,13 +56,13 @@ int main(int, char **argv)
         double c = eos->c(V,T);
         cout << "c = " << c << "\n";
     }
-    else if( !isnan(P) && !isnan(T) )
+    else if( !std::isnan(P) && !isnan(T) )
     {
         Sesame_VT *seos = dynamic_cast< Sesame_VT *>(eos);
         if( seos == NULL )
 		    cerr << Error("cast to Sesame_VT failed") << Exit;
         double V = seos->V(P,T);
-        if( isnan(V) )
+        if( std::isnan(V) )
             cerr << Error("seos->V failed") << Exit;
         cout << "P(" << V << "," << T << ") = " << eos->P(V,T) << "\n";         
     }

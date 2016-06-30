@@ -9,7 +9,7 @@ int ArrheniusRT::Rate(double V, double e, const double *z, double *zdot)
     // z[3] = s
     double lambda = max(0.,z[2]);
     double Tz = T(V,e,lambda);
-    if( isnan(Tz) )
+    if( std::isnan(Tz) )
         return 1;
     if( Tz>T_cutoff && lambda<1.0 )
         zdot[2] = Rate(lambda,Tz);
@@ -27,7 +27,7 @@ int ArrheniusRT::TimeStep(double V, double e, const double *z, double &dt)
     double lambda  = z[2];
     double lambda1 = min(1.0,lambda+dlambda_dt);
     double T1 = T(V,e,lambda1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return -1;                      // error
     if( T1 < T_cutoff )
         return 0;                       // no constraint
@@ -47,7 +47,7 @@ int ArrheniusRT::Integrate(double V, double e, double *z, double dt)
     if( dt <= 0.0 || z[2] >= 1. )
         return 0;
     double T0 = T(V,e,z[2]);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;
     if( T0 < T_cutoff )
         return 0;
@@ -94,23 +94,23 @@ int ArrheniusRT::Integrate(double V, double e, double *z, double dt)
 int ArrheniusRT::step1(double lambda, double dt)
 {
     double T0 = T(V0,e0,lambda);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;
     double rate0  = Rate(lambda,T0);
     double lambda1 = min(1.,lambda+dt*rate0);
     double T1 = T(V0,e0,lambda1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return 1;
     y1 = 0.5*(lambda+lambda1+dt*Rate(lambda1,T1));  // second order
     //
     y2 = min(1.,lambda+0.5*dt*rate0);
     lambda1 = y2;
     T1 = T(V0,e0,lambda1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return 1;
     lambda1 = min(1.,lambda+dt*Rate(lambda1,T1));  
     T1= T(V0,e0,lambda1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return 1;
     rate1 = Rate(lambda1,T1);
     y2 = 0.5*(y2+lambda1+0.5*dt*rate1);             // second order
@@ -122,7 +122,7 @@ int ArrheniusRT::step1(double lambda, double dt)
 int ArrheniusRT::step2(double &lambda, double dt)
 {
     double T0 = T(V0,e0,lambda);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;   
     double kt = dt*Rate(T0);
     if( n == 1. )
@@ -148,7 +148,7 @@ double ArrheniusRT::Dt(double V, double e, const double *z, double lambda)
     if( z[2] >= lambda )
         return 0.0;
     double Tz = T(V,e,z[2]);
-    if( isnan(Tz) || Tz < T_cutoff )
+    if( std::isnan(Tz) || Tz < T_cutoff )
         return EOS::NaN;
     double t = 0.0;
     double dt = dlambda/Rate(z[2],Tz);

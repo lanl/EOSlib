@@ -50,7 +50,7 @@ int Deflagration::Initialize(const HydroState &state, double p0)
 
 int Deflagration::InitState(HydroState &state, double &p0)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     state.V = V0;
     state.e = e0;
@@ -61,7 +61,7 @@ int Deflagration::InitState(HydroState &state, double &p0)
 
 int Deflagration::CJwave(int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.V  = Vcj;
     wave.e  = ecj;
@@ -74,7 +74,7 @@ int Deflagration::CJwave(int dir, WaveState &wave)
 int Deflagration::P0wave(int dir, WaveState &wave)
 {
     std::numeric_limits<double> Dlimits;     // move to LocalMath
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.V  = Vp0;
     wave.e  = ep0;

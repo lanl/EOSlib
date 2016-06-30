@@ -61,7 +61,7 @@ void JWL_VT::PrintParams(ostream &out)
 	    << "\t"   << setw(10) << "C     = " << C  << "\n"
 	    << "\t"   << setw(10) << "omega = " << omega << "\n"
         << "\t"   << setw(10) << "Edet    = " << Edet << "\n";
-    if( !isnan(Tcj) )
+    if( !std::isnan(Tcj) )
     {
         double Dcj = V0*sqrt(Pcj/(V0-Vcj));
         double ucj = sqrt(Pcj*(V0-Vcj));
@@ -140,8 +140,8 @@ int JWL_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( isnan(V0) || isnan(A) || isnan(R1) || isnan(B) || isnan(R2)
-        || isnan(omega) || isnan(Edet) )
+    if( std::isnan(V0) || isnan(A) || isnan(R1) || isnan(B) || isnan(R2)
+        || std::isnan(omega) || isnan(Edet) )
     {
         EOSerror->Log(FUNC,"variable not set: V0=%lf, A=%lf, R1=%lf, "
               "B=%lf, R2=%lf, omega=%lf, Edet=%lf\n",
@@ -149,7 +149,7 @@ int JWL_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
     de = Edet - e0;
-    if( !isnan(Tcj) )
+    if( !std::isnan(Tcj) )
     {
         JWL HE(*this);
         Vcj = HE.Vcj;
@@ -158,9 +158,9 @@ int JWL_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         Tcj = HE.Tcj;
         Scj = HE.Scj;
     }
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(T_ref) )
+    if( std::isnan(T_ref) )
         T_ref = Tref(V_ref) + (e0-eref(V_ref))/Cv;
     return 0;
 }

@@ -48,7 +48,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
         cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";
@@ -74,7 +74,7 @@ int main(int, char **argv)
         double dt_step;
         int status = EP->TimeStep(V,e,z,dt_step); 
         cout << "TimeStep dt = " << dt_step << ", status " << status << "\n";
-        if( isnan(dt) )
+        if( std::isnan(dt) )
             dt = dt_step;
         else
             nf = 1;

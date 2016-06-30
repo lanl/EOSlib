@@ -105,7 +105,7 @@ int ZNDprofile::F(double *y_prime, const double *y_xi, double xi)
 
 
     double c2 = HE.c2(V,e,z_xi);
-    if( isnan(c2) || c2 <= du*du )
+    if( std::isnan(c2) || c2 <= du*du )
         return 1;
 
     if( Rate->Rate(V,e,z_xi, zp) )

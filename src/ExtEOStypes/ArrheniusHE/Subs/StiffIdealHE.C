@@ -149,9 +149,9 @@ int StiffIdealHE::PostInit(Calc &calc, DataBase *db)
         EOSerror->Log(FUNC, "ArrheniusRate::ParamsOK failed\n" );
         return 1;
     }    
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = HE->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = HE->e_ref;  
     return 0;
 }

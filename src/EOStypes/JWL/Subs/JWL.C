@@ -36,17 +36,17 @@ JWL::JWL(JWL_VT &eos) : EOS("JWL")
     Scj   = eos.Scj;
     Vcj   = eos.Vcj;
     Pcj   = eos.Pcj;
-    if( isnan(C) )
+    if( std::isnan(C) )
     {
         if( Edet <= 0.0 )
         { // replace (Vcj,ecj) with (V_0,e0) for ref isentrope
             C  = Pcj-A*exp(-R1)-B*exp(-R2);
 	        Vcj = V0;
-	        if( isnan(e_ref) )
+	        if( std::isnan(e_ref) )
 	            e_ref = V0*((A/R1)*exp(-R1)+(B/R2)*exp(-R2)+C/omega) -de;       
-	        if( isnan(Tcj) )
+	        if( std::isnan(Tcj) )
 	            Tcj = (V0/omega)*(Pcj-A*exp(-R1)-B*exp(-R2))/Cv;
-	        if( isnan(Scj) )
+	        if( std::isnan(Scj) )
 	            Scj = 0.;            
         }
         else if( de > 0. )
@@ -68,10 +68,10 @@ JWL::JWL(JWL_VT &eos) : EOS("JWL")
                 delete det;
                 C = omega*pow(Vcj/V0,omega)*( (CJ.e+de)/V0
                            -(A/R1)*exp(-R1*Vcj/V0)-(B/R2)*exp(-R2*Vcj/V0) );
-                if( isnan(Tcj) )
+                if( std::isnan(Tcj) )
                     Tcj = ( CJ.e+de - V0*
                               (A/R1*exp(-R1*Vcj/V0)+B/R2*exp(-R2*Vcj/V0)) )/Cv;
-                if( isnan(Scj) )
+                if( std::isnan(Scj) )
                 {
                     double T0 = T(V0,e0);
                     Scj = Edet/T0 - Cv*(log(T0/Tcj)+omega*log(V0/Vcj));

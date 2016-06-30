@@ -6,7 +6,7 @@ int Sesame::NotInDomain(double V, double e)
 {
     //if( V == Vcache && e == ecache )
     //    return 0;
-    if( isnan(V) || isnan(e) )  // sanity check
+    if( std::isnan(V) || isnan(e) )  // sanity check
         return 1;
     double rho = 1./V;
     int i = SESsrch(rho,rho_grd,rho_n);
@@ -107,7 +107,7 @@ int Sesame::PT(double P, double T, HydroState &state)
         return 1;
 
     double V = ses_VT->V(P,T);
-    if( isnan(V) )
+    if( std::isnan(V) )
         return 1;
 
     state.V = V;

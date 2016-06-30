@@ -45,7 +45,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         if( 0 && eos->NotInDomain(V,e) )
         {
@@ -87,7 +87,7 @@ int main(int, char **argv)
                  << ", T1 = " << T1
                  << ", T2 = " << T2
                  << "\n";
-            if( isnan(P) )
+            if( std::isnan(P) )
                 cerr << Error("failed") << Exit;
             double S = eos->S(V,e);
             cout << "S = " << S << "\n";

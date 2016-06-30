@@ -79,7 +79,7 @@ int Isentrope_ODE::F(double *yp, const double *y, double V)
     // double u = y[1];
     
     double csq = eos->c2(V,e);
-    if( isnan(csq) || csq < 0. )
+    if( std::isnan(csq) || csq < 0. )
     {
         //eos->ErrorHandler()->Log("Isentrope_ODE::F",
         //     __FILE__, __LINE__, eos, "failed, c2<0\n");
@@ -87,7 +87,7 @@ int Isentrope_ODE::F(double *yp, const double *y, double V)
     }
     yp[0] = -eos->P(V,e);
     yp[1] = sqrt(csq)/V;
-    return isnan(yp[0]);
+    return std::isnan(yp[0]);
 }
 
 int Isentrope_ODE::V(double v, int direction, WaveState &wave)

@@ -77,7 +77,7 @@ int Shear1::PreInit(Calc &calc)
 
 int Shear1::PostInit()
 {
-    if( isnan(G) || G < 0 )
+    if( std::isnan(G) || G < 0 )
     {
         EOSerror->Log("Shear1::PostInit", __FILE__, __LINE__, this,
                       "G not defined or not positive\n");

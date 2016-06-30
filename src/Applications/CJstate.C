@@ -114,7 +114,7 @@ int main(int, char **argv)
 	    state1.V = shock1.V;
 	    state1.e = shock1.e + de;    
         double PcV = gas->P(state1);    // pressure for const volume burn
-        if( !isnan(PcV) && PcV > shock1.P )
+        if( !std::isnan(PcV) && PcV > shock1.P )
         {
             if( hug1->P(PcV,RIGHT,cV) )
                 cerr << Error("hug1->P failed") << Exit;

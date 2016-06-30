@@ -147,9 +147,9 @@ int main(int, char **argv)
 	if( eos1->ConvertUnits(*Cunits) )
 		cerr << Error("ConvertUnits for `") << mat1 << "' failed" << Exit;
 	HydroState state1;		
-	state1.u = isnan(u1) ? u0 : u1;
-	state1.V = isnan(V1) ? eos1->V_ref : V1;
-	state1.e = isnan(e1) ? eos1->e_ref : e1;
+	state1.u = std::isnan(u1) ? u0 : u1;
+	state1.V = std::isnan(V1) ? eos1->V_ref : V1;
+	state1.e = std::isnan(e1) ? eos1->e_ref : e1;
 
 // eos2 and state2	
 	if( mat2 == NULL )
@@ -161,9 +161,9 @@ int main(int, char **argv)
 	if( eos2->ConvertUnits(*Cunits) )
         cerr << Error("ConvertUnits for `") << mat2 << "' failed" << Exit; 
 	HydroState state2;		
-	state2.u = isnan(u2) ? 0 : u2;
-	state2.V = isnan(V2) ? eos2->V_ref : V2;
-	state2.e = isnan(e2) ? eos2->e_ref : e2;
+	state2.u = std::isnan(u2) ? 0 : u2;
+	state2.V = std::isnan(V2) ? eos2->V_ref : V2;
+	state2.e = std::isnan(e2) ? eos2->e_ref : e2;
 
 // phi_eq
 	EqPorous *phi_eq1 = dynamic_cast<EqPorous *>(eos1);
@@ -181,14 +181,14 @@ int main(int, char **argv)
 // incident shock	
 	Hugoniot *H_in = eos1->shock(state1);	
 	WaveState incident;
-	if( !isnan(Ps) )
+	if( !std::isnan(Ps) )
 	{
 		if( H_in->P(Ps,RIGHT,incident) )
 			cerr << Error("H_in->P failed") << Exit;
 	}
 	else
 	{
-		if( isnan(u_p) )
+		if( std::isnan(u_p) )
 			u_p = state1.u;
 		
 		if( H_in->u(u_p,RIGHT,incident) )

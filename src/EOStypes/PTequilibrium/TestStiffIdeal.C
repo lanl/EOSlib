@@ -43,7 +43,7 @@ int main(int, char **argv)
     StiffIdeal *eosSI = dynamic_cast<StiffIdeal *>(eos);
     if( eosSI == NULL )
         cerr << Error("eosSI is NULL") << Exit;
-    if( isnan(V) || isnan(e) )
+    if( std::isnan(V) || isnan(e) )
     {
         const char *info = db.BaseInfo("EOS");
         if( info == NULL )
@@ -111,7 +111,7 @@ int main(int, char **argv)
         //
         // error checks
         // 
-        if( isnan(P) )
+        if( std::isnan(P) )
         {
 	        cout.setf(ios::fixed, ios::floatfield);
             cout <<        setw(7) << setprecision(2) << lambda1 << "\n";

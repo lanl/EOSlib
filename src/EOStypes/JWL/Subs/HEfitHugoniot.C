@@ -21,10 +21,10 @@ int HEfitdetonation::InitCJ()
 {
     fzero = CJ;
     double fmin = f(V_min);
-    if( isnan(fmin) )
+    if( std::isnan(fmin) )
         fmin = HUGE;
     double fmax = f(V_max);
-    if( isnan(fmax) )
+    if( std::isnan(fmax) )
         fmax = -HUGE;
     Vcj = zero(V_min,fmin, V_max,fmax);
     if( Status() )
@@ -79,7 +79,7 @@ double HEfitdetonation::f(double var)
 
 int HEfitdetonation::P(double p1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( abs(Pcj - p1) < rel_tol*Pcj  )
         return CJwave( dir, wave );
@@ -111,7 +111,7 @@ int HEfitdetonation::P(double p1,  int dir, WaveState &wave)
 
 int HEfitdetonation::u(double u1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     u1 = dir*(u1-u0);
     if( abs(ucj - u1) < rel_tol*ucj  )
@@ -143,7 +143,7 @@ int HEfitdetonation::u(double u1,  int dir, WaveState &wave)
 
 int HEfitdetonation::u_s(double us, int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     us = dir*(us-u0);
     if( abs(Dcj - us) < rel_tol*Dcj  )
@@ -180,7 +180,7 @@ int HEfitdetonation::w_u_s(double us, int dir, WaveState &wave)
 
 int HEfitdetonation::V(double v1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );

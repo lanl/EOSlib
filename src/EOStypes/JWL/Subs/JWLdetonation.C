@@ -91,7 +91,7 @@ double JWLdetonation::f(double var)
 
 int JWLdetonation::P(double p1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( abs(Pcj - p1) < rel_tol*Pcj  )
         return CJwave( dir, wave );
@@ -127,7 +127,7 @@ int JWLdetonation::P(double p1,  int dir, WaveState &wave)
 
 int JWLdetonation::u(double u1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     u1 = dir*(u1-u0);
     if( abs(ucj - u1) < rel_tol*ucj  )
@@ -163,7 +163,7 @@ int JWLdetonation::u(double u1,  int dir, WaveState &wave)
 
 int JWLdetonation::u_s(double us, int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     us = dir*(us-u0);
     if( abs(Dcj - us) < rel_tol*Dcj  )
@@ -204,7 +204,7 @@ int JWLdetonation::w_u_s(double us, int dir, WaveState &wave)
 
 int JWLdetonation::V(double v1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );

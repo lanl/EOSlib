@@ -61,12 +61,12 @@ int main(int, char **argv)
     EOS *products  = HE->Products();
     cout << "reactants->ref_count = " << reactants->RefCount() << "\n";
     cout << "products->ref_count = "  << products->RefCount()  << "\n";    
-    if( !isnan(lambda) )
+    if( !std::isnan(lambda) )
         HE->lambda_ref(lambda);
     else
         lambda = HE->lambda_ref();
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         eos->c2_tol = 1e-6;
         double c2 = eos->EOS::c2(V,e);

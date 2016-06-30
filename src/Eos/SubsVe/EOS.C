@@ -98,7 +98,7 @@ int EOS::InitBase(Parameters &p, Calc &calc, DataBase *db)
     }
 
     EOSstatus = EOSlib::good;
-    if( !isnan(P_ref) && !isnan(T_ref) )
+    if( !std::isnan(P_ref) && !isnan(T_ref) )
     {
         HydroState state;
         if( this->PT(P_ref,T_ref,state) )
@@ -110,7 +110,7 @@ int EOS::InitBase(Parameters &p, Calc &calc, DataBase *db)
         V_ref = state.V;
         e_ref = state.e;
     }
-    else if( isnan(V_ref) || isnan(e_ref) )
+    else if( std::isnan(V_ref) || isnan(e_ref) )
     {
         EOSstatus = EOSlib::bad;
         EOSerror->Log(FUNC,"ref state undefined: V_ref=%lf, e_ref=%lf\n",V_ref,e_ref);

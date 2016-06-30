@@ -91,9 +91,9 @@ int PeSpline::InitParams(Parameters &p, Calc &calc, DataBase *)
     }        
     P_vac = Pmin;
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = e0;
     return 0;
 }

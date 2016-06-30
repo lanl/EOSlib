@@ -180,9 +180,9 @@ int HEburn2::PostInit(Calc &calc, DataBase *db)
     double tol;
     if( calc.Fetch("PTtol",tol)==0 )
         HE->tol = tol;
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = HE->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = HE->e_ref;  
     const char *HE_rate;
     calc.Fetch("HErate2",HE_rate);

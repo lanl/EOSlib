@@ -46,7 +46,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";
@@ -60,7 +60,7 @@ int main(int, char **argv)
         double c2 = eos->EOS::c2(V,e);
         cout << "EOS::c = " << sqrt(max(0.,c2)) << "\n";
     }
-    else if( !isnan(P) && !isnan(T) )
+    else if( !std::isnan(P) && !isnan(T) )
     {
         Sesame *seos = dynamic_cast<Sesame*>(eos);
         if( seos == NULL )

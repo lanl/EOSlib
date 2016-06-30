@@ -102,13 +102,13 @@ int main(int, char **argv)
 
     if( rho > 0.0 )
         V = 1/rho;
-    else if( isnan(V) )
+    else if( std::isnan(V) )
         V = V0;
-    if( isnan(P) )
+    if( std::isnan(P) )
         P = P0;
 
     // initial guess for e such that (V,e) in domain
-    if( isnan(e) )
+    if( std::isnan(e) )
     {
         e = e0;
         if( V<V0)

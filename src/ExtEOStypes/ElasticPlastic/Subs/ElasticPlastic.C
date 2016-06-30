@@ -104,9 +104,9 @@ int ElasticPlastic::PostInit(Calc &calc, DataBase *db)
         return 1;
     }
     z_el = new double[elastic->ExtEOS_VT::N()];
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = elastic->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
     {
         z_el[0] = elastic->eps_el(V_ref) - (*z_ref)[0];
         e_ref = elastic->e(V_ref,elastic->T_ref,z_el);

@@ -76,7 +76,7 @@ int Hugoniot_generic::Vbound_P(double p, double &Vmin, double &fmin,
     for( ;count--; Vmin = 0.5*(Vlimit+Vmax)  )
     {
         fmin = f(Vmin);
-        if( isnan(fmin) || p1 <= state0.P )
+        if( std::isnan(fmin) || p1 <= state0.P )
         { // outside domain of EOS
             Vlimit = Vmin;
             continue;
@@ -195,7 +195,7 @@ int Hugoniot_generic::Vbound_us(double us, double &Vmin, double &fmin,
     for( ;count--; Vmin = 0.5*(Vlimit+Vmax)  )
     {
         fmin = f(Vmin);
-        if( isnan(fmin) || p1 <= state0.P )
+        if( std::isnan(fmin) || p1 <= state0.P )
         { // outside domain of EOS
             Vlimit = Vmin;
             continue;
@@ -238,9 +238,9 @@ int Hugoniot_generic::u_s(double us, int dir, WaveState &shock)
     fmax = f(Vmax);
     if( fmax >= 0 )
     {
-        if( isnan(s) )
+        if( std::isnan(s) )
             s = 0.5*eos->FD(state0.V,state0.e);
-        if( isnan(s) || s < 0 )
+        if( std::isnan(s) || s < 0 )
             return -1;
         double D = dir*(us -state0.u);
         double u = (D - state0.c)/s;
@@ -293,7 +293,7 @@ int Hugoniot_generic::Vbound_u(double u, double &Vmin, double &fmin,
     for( ;count--; Vmin = 0.5*(Vlimit+Vmax)  )
     {
         fmin = f(Vmin);
-        if( isnan(fmin) || p1 <= state0.P )
+        if( std::isnan(fmin) || p1 <= state0.P )
         { // outside domain of EOS
             Vlimit = Vmin;
             continue;
@@ -401,7 +401,7 @@ int Hugoniot_generic::e_bound(double v, double &e_min, double &fmin,
         return 1;
     e_min = wave.e;
     fmin = f(e_min);
-    if( isnan(fmin)|| fmin > 0 )
+    if( std::isnan(fmin)|| fmin > 0 )
         return 1;
     double dV = state0.V - V1;
     
@@ -409,7 +409,7 @@ int Hugoniot_generic::e_bound(double v, double &e_min, double &fmin,
     while( count-- )
     {
         double Gamma = eos->Gamma(V1,e_min);
-        if( isnan(Gamma) )
+        if( std::isnan(Gamma) )
             return 1;
         
         double den = 1 - 0.5*Gamma*dV/V1;
@@ -452,9 +452,9 @@ int Hugoniot_generic::V(double v, int dir, WaveState &shock)
     double dV = state0.V - v;
     if( dV < 0.01*state0.V )
     { // weak shock, u_s = c0 + s*u_p
-        if( isnan(s) )
+        if( std::isnan(s) )
             s = 0.5*eos->FD(state0.V,state0.e);
-        if( isnan(s) || s < 0 )
+        if( std::isnan(s) || s < 0 )
             return -1;
         double c0 = state0.c;
         double V0 = state0.V;

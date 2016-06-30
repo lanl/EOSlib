@@ -101,8 +101,8 @@ int Elastic1D_VT::NotInDomain(double V, double T, double eps_el)
     if( V<=0 || T<0 )
         return 1;
     double c2 = hydro->cT2(V,T);
-    if( isnan(c2) || c2 < 0 )
+    if( std::isnan(c2) || c2 < 0 )
         return 1;
     c2 = shear->cT2(V,T,eps_el);
-    return isnan(c2) || c2 < 0;
+    return std::isnan(c2) || c2 < 0;
 }

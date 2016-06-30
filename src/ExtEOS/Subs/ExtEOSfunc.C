@@ -149,7 +149,7 @@ double  ExtEOS::e_PV(double p, double V, const double *z)
     while( --count )
     {
         double p1 = P(V,e,z);
-        if( isnan(p1) )
+        if( std::isnan(p1) )
             break;
         if( abs(p-p1) < tol )
             return e;
@@ -257,7 +257,7 @@ double ExtEOS::Gamma(double V, double e, const double *z)
 double ExtEOS::CV(double V, double e, const double *z)
 {
     double T0 = T(V,e, z);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return NaN;
     double de = de_factor*c2(V,e, z);
     
@@ -305,7 +305,7 @@ int ExtEOS::NotInDomain(double V, double e, const double *z)
     if( V <= 0 )
         return 1;
     double csq = c2(V,e, z);
-    return (isnan(csq) || csq <= 0.0) ? 1 : 0;
+    return (std::isnan(csq) || csq <= 0.0) ? 1 : 0;
 }
 //
 // dummy functions

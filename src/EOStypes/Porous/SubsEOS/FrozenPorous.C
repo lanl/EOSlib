@@ -16,14 +16,14 @@ FrozenPorous::FrozenPorous(EqPorous &porous, double phi1, double B1,
         EOSerror->Abort("FrozenPorous::FrozenPorous", __FILE__, __LINE__, this,
                          "porous is not well defined");
     }
-    else if( isnan(B_f) )
+    else if( std::isnan(B_f) )
         B_f = phi_eq->energy(phi_f);
 }
 
 void FrozenPorous::Reset(double phi1, double B1)
 {
     phi_f = phi1;
-    B_f = isnan(B1) ? phi_eq->energy(phi_f) : B1;
+    B_f = std::isnan(B1) ? phi_eq->energy(phi_f) : B1;
 }
 
 FrozenPorous::~FrozenPorous()

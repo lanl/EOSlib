@@ -310,9 +310,9 @@ int DefProfile::F(double *yp_z, const double *y_z, double zeta)
     double Vh     = y_z[4];
     set_lambda(lambda);
     double P = HE->P(V,T);
-    if( isnan(P) )
+    if( std::isnan(P) )
     {
-        //cout << "debug: P isnan\n";
+        //cout << "debug: P std::isnan\n";
         return 1;
     }
     double e = HE->e(V,T);

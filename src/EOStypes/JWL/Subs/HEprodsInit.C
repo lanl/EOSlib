@@ -109,7 +109,7 @@ int HEprods::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     for( int i=0; i<na1; i++)
     {
-        if( isnan(a1[i]) )
+        if( std::isnan(a1[i]) )
         {
             EOSerror->Log(FUNC,"a1[%d] not defined\n",i);
             return 1;
@@ -117,7 +117,7 @@ int HEprods::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     for( int i=0; i<na2; i++)
     {
-        if( isnan(a2[i]) )
+        if( std::isnan(a2[i]) )
         {
             EOSerror->Log(FUNC,"a2[%d] not defined\n",i);
             return 1;
@@ -136,7 +136,7 @@ int HEprods::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     for( int i=0; i<nb1; i++)
     {
-        if( isnan(a1[i]) )
+        if( std::isnan(a1[i]) )
         {
             EOSerror->Log(FUNC,"a1[%d] not defined\n",i);
             return 1;
@@ -144,7 +144,7 @@ int HEprods::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     for( int i=0; i<nb2; i++)
     {
-        if( isnan(a2[i]) )
+        if( std::isnan(a2[i]) )
         {
             EOSerror->Log(FUNC,"a2[%d] not defined\n",i);
             return 1;
@@ -159,7 +159,7 @@ int HEprods::InitParams(Parameters &p, Calc &calc, DataBase *)
 
     // CJ state
     rho_cj = FindCJ();
-    if( isnan(rho_cj) )
+    if( std::isnan(rho_cj) )
     {
         EOSerror->Log(FUNC,"FindCJ failed\n");
         return 1;
@@ -170,9 +170,9 @@ int HEprods::InitParams(Parameters &p, Calc &calc, DataBase *)
     e_sw = eref(1./rho_sw);
     T_sw = Tref(1./rho_sw);
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = e0;
 
     return 0;

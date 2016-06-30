@@ -118,9 +118,9 @@ void Polymer::PrintParams(ostream &out)
         << "\teps0 = " << eps0 << "\n"
         << "\t   n = " << n    << "\n"
         << "\tVmin = " << Vmin << "\n";
-    if( !isnan(depsdeta0) )
+    if( !std::isnan(depsdeta0) )
 	    out << "\t" << setw(10) << "depsdeta0 = " << depsdeta0 << "\n";
-    if( !isnan(depsdeta1) )
+    if( !std::isnan(depsdeta1) )
 	    out << "\t" << setw(10) << "depsdeta1 = " << depsdeta1 << "\n";
     if( n_data > 0 )
     {
@@ -190,7 +190,7 @@ int Polymer::PostInit(Calc &calc, DataBase *db)
                       "shear not type PolyG\n");
         return 1;      
     }
-    if( isnan(tau0) || tau0 < 0. || isnan(eps0) || eps0 < 0.)
+    if( std::isnan(tau0) || tau0 < 0. || isnan(eps0) || eps0 < 0.)
     {
         EOSerror->Log("Polymer::PostInit", __FILE__, __LINE__, this,
                       "tau0 or eps0 not defined or not positive\n");

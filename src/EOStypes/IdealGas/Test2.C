@@ -48,8 +48,8 @@ int main(int, char **argv)
 		cerr << Error("ConvertUnits failed") << Exit;
     cout << "eos->ref_count = " << eos->RefCount() << "\n";
 
-    if( !::isnan(V)
-	&& !::isnan(e) )
+    if( !::std::isnan(V)
+	&& !::std::isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";

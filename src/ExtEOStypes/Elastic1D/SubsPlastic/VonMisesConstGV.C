@@ -155,7 +155,7 @@ int VonMisesConstGV::PostInit(Calc &calc, DataBase *db)
         return 1;
     hydro   = elastic->hydro;
     shear   = elastic->shear;    
-    if( isnan(Y0) || Y0 < 0 || isnan(nu) || nu < 0)
+    if( std::isnan(Y0) || Y0 < 0 || isnan(nu) || nu < 0)
     {
         EOSerror->Log("VonMisesConstGV::PostInit",__FILE__,__LINE__,this,
                       "Y0 or nu not defined or not positive\n");

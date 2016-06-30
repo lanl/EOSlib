@@ -149,9 +149,9 @@ int StiffIdealHEav::PostInit(Calc &calc, DataBase *db)
         EOSerror->Log(FUNC, "AvArrheniusRate::ParamsOK failed\n" );
         return 1;
     }
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = HE->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = HE->e_ref;  
     if( (*z_ref)[1] <= 0.0 )
     {
@@ -168,7 +168,7 @@ int StiffIdealHEav::var(const char *name, double V, double e, const double *z,
     if( !strcmp(name,"t_induction") )
     {
         value = t_induction(V,e,z[0]);
-        return isnan(value);
+        return std::isnan(value);
     }
 ***************/
     return ExtEOS::var(name,V,e,z,value);    

@@ -90,7 +90,7 @@ int VonMises::PostInit(Calc &calc, DataBase *db)
 {
     if( ElasticPlastic::PostInit(calc,db) )
         return 1;
-    if( isnan(Y) || Y < 0 || isnan(nu) || nu < 0)
+    if( std::isnan(Y) || Y < 0 || isnan(nu) || nu < 0)
     {
         EOSerror->Log("VonMises::PostInit", __FILE__, __LINE__, this,
                       "Y or nu not defined or not positive\n");
@@ -144,7 +144,7 @@ int VonMises::ConvertParams(Convert &convert)
 double VonMises::yield_func(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : (V/V_ref)*abs(elastic->shear(V,Tve, z_el[0]));
+    return std::isnan(Tve) ? NaN : (V/V_ref)*abs(elastic->shear(V,Tve, z_el[0]));
 }
 
 double VonMises::yield_surf(double V, double e, const double *z)
@@ -156,7 +156,7 @@ int VonMises::Rate(double V, double e, const double *z, double *zdot)
 {
     zdot[0] = 0;
     double Tve = T(V,e, z);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;
 
     double shear = elastic->shear(V,Tve, z_el[0]);   
@@ -176,7 +176,7 @@ int VonMises::TimeStep(double V, double e, const double *z, double &dt)
 {
     dt = 0;
     double Tve = T(V,e, z);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;  // error
 
     double shear = elastic->shear(V,Tve, z_el[0]);   
@@ -215,7 +215,7 @@ int VonMises::Integrate(double V, double e, double *z, double dt)
 int VonMises::Step(double V, double e, double *z, double &t)
 {
     double Tve = T(V,e, z);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;  // error
 
     double shear = elastic->shear(V,Tve, z_el[0]);   
@@ -256,7 +256,7 @@ double VonMises::ZonYield::f(double eps)
 int VonMises::Equilibrate(double V, double e, double *z)
 {
     double Tve = T(V,e, z);
-    if( isnan(Tve) )
+    if( std::isnan(Tve) )
         return -1;  // error
 
     double shear = elastic->shear(V,Tve, z_el[0]);

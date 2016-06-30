@@ -92,7 +92,7 @@ int main(int, char **argv)
     if( HE == NULL )
         cerr << Error("dynamic_cast failed") << Exit;
     double lambda_ref = HE->lambda_ref();
-    if( isnan(V) || isnan(e) )
+    if( std::isnan(V) || isnan(e) )
         cerr << Error("Must specify V & e") << Exit;
     lambda = max(lambda,lambda_ref);    
     double y[1] = {lambda};
@@ -107,7 +107,7 @@ int main(int, char **argv)
     if( status != 1 )
         cerr << Error("HE->Rate failed") << Exit;
     double tinduct = HE->Dt(V,e,y,0.99);
-    if( isnan(tinduct) )
+    if( std::isnan(tinduct) )
         cerr << Error("Dt = NaN, check T(V,e) < T_cutoff") << Exit;        
     cout << "rate = " << yp[0]
          << ", time(lambda=0.99) =" << tinduct << "\n";

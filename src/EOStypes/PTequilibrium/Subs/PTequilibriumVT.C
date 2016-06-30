@@ -149,9 +149,9 @@ int PTequilibrium_VT::InitParams(Parameters &p, Calc &calc, DataBase *db)
                      units->Type(),units->Name() );
         return 1;
     }   
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = lambda1*eos1->V_ref+lambda2*eos2->V_ref;
-    if( isnan(T_ref) )
+    if( std::isnan(T_ref) )
         T_ref = max(eos1->T_ref, eos2->T_ref);
     return 0;
 }

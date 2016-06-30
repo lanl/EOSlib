@@ -6,7 +6,7 @@
 
 Isotherm::Isotherm(EOS &e, double pvac) : eos(e.Duplicate()), p_vac(pvac)
 {
-    if( isnan(p_vac) )
+    if( std::isnan(p_vac) )
         p_vac = eos->P_vac;
 }
 
@@ -62,7 +62,7 @@ int Isotherm_ODE::F(double *yp, const double *y, double V)
     double Cv = eos->CV(V,e);
     
     yp[0] = -(p-Gamma*Cv*T/V);
-    return isnan(yp[0]) || p < 0.9999*p_vac;
+    return std::isnan(yp[0]) || p < 0.9999*p_vac;
 }
 
 int Isotherm_ODE::V(double v, ThermalState &state)

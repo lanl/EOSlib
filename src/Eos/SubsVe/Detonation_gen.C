@@ -25,7 +25,7 @@ int Detonation_gen::F(double *y_prime, const double *y, double V)
     double c2 = eos->c2(V,e);
     double dV = V0-V;
     y_prime[0] = -0.5*(P+P0 +(c2/V-Gamma*P)*dV/V)/(1.-0.5*Gamma*dV/V);
-    return isnan(y_prime[0]);
+    return std::isnan(y_prime[0]);
 }
 
 class Detonation_gen_CJ : public ODEfunc
@@ -45,7 +45,7 @@ double Detonation_gen_CJ::f(double V, const double *y, const double *yp)
 int Detonation_gen::InitCJ()
 {
     Pw = eos->P(V0,e0);
-    if( isnan(Pw) || Pw <= P0 )
+    if( std::isnan(Pw) || Pw <= P0 )
         return 1;
     e[0] = e0;
     double dV = -0.01*V0;
@@ -86,7 +86,7 @@ double Detonation_gen_P::f(double V, const double *y, const double *yp)
 }
 int Detonation_gen::P(double p,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( std::abs(Pcj - p) < rel_tol*Pcj  )
         return CJwave( dir, wave );
@@ -126,7 +126,7 @@ double Detonation_gen_u2::f(double V, const double *y, const double *yp)
 }
 int Detonation_gen::u(double u1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.u  = u1;
     u1 = dir*(u1-u0);
@@ -170,7 +170,7 @@ double Detonation_gen_us::f(double V, const double *y, const double *yp)
 }
 int Detonation_gen::u_s(double us, int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.us = us;  
     us = dir*(us-u0);
@@ -219,7 +219,7 @@ double Detonation_gen_weak_us::f(double V, const double *y, const double *yp)
 }
 int Detonation_gen::w_u_s(double us, int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.us = us;  
     us = dir*(us-u0);
@@ -246,7 +246,7 @@ int Detonation_gen::w_u_s(double us, int dir, WaveState &wave)
 
 int Detonation_gen::V(double v1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( std::abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );

@@ -116,9 +116,9 @@ int Elastic_VT::InitParams(Parameters &p, Calc &calc, DataBase *db)
         return 1;
     }
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = hydro->V_ref;
-    if( isnan(T_ref) )
+    if( std::isnan(T_ref) )
         T_ref = hydro->T_ref;
 
     EOSstatus = EOSlib::good;

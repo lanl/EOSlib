@@ -37,7 +37,7 @@ double EqPorous::f(double phi)
       P_f = phi_f*solid->P(phi_f*V_f, e_f-B_f);
     // debug
     //double fphi = V_f*P_f - phi*e[1];
-    //if( isnan(fphi) )
+    //if( std::isnan(fphi) )
     //    return EOSerror->Log("EqPorous::f", __FILE__, __LINE__, this,
     //           "debug, V,e,B, phi = %e,%e,%e,%e\n",V_f,e_f,B_f,phi_f);
     //return fphi;

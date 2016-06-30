@@ -47,7 +47,7 @@ int Elastic1D::NotInDomain(double V, double e)
 double Elastic1D::P(double V, double e, double eps_el)
 {
     double Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double e_hyd = e - shear->e(V,Te,eps_el);
     return hydro->P(V,e_hyd)+shear->Ps(V,Te,eps_el)+shear->Pdev(V,Te,eps_el);
@@ -56,7 +56,7 @@ double Elastic1D::P(double V, double e, double eps_el)
 double Elastic1D::Phydro(double V, double e, double eps_el)
 {
     double Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double e_hyd = e - shear->e(V,Te,eps_el);
     return hydro->P(V,e_hyd);
@@ -65,7 +65,7 @@ double Elastic1D::Phydro(double V, double e, double eps_el)
 double Elastic1D::Pshear(double V, double e, double eps_el)
 {
     double Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     return shear->Ps(V,Te,eps_el);
 }
@@ -73,7 +73,7 @@ double Elastic1D::Pshear(double V, double e, double eps_el)
 double Elastic1D::Pdev(double V, double e, double eps_el)
 {
     double Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     return shear->Pdev(V,Te,eps_el);
 }
@@ -102,7 +102,7 @@ double Elastic1D::T(double V, double e, double eps_el)
 double Elastic1D::S(double V, double e, double eps_el)
 {
     double Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double e_hyd = e - shear->e(V,Te,eps_el);
     return hydro->S(V,e_hyd)+shear->S(V,Te,eps_el);
@@ -111,7 +111,7 @@ double Elastic1D::S(double V, double e, double eps_el)
 double Elastic1D::CV(double V, double e, double eps_el)
 {
     double Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double e_hyd = e - shear->e(V,Te,eps_el);
     return hydro->CV(V,e_hyd)+shear->CV(V,Te,eps_el);
@@ -120,7 +120,7 @@ double Elastic1D::CV(double V, double e, double eps_el)
 double Elastic1D::c2(double V, double e, double eps_el)
 {
     double  Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double   e_hyd = e - shear->e(V,Te,eps_el);
     double  CV_hyd = hydro->CV(V,e_hyd);
@@ -135,7 +135,7 @@ double Elastic1D::c2(double V, double e, double eps_el)
 double Elastic1D::Gamma(double V, double e, double eps_el)
 {
     double  Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double  e_hyd = e - shear->e(V,Te,eps_el);
     double CV_hyd = hydro->CV(V,e_hyd);
@@ -148,7 +148,7 @@ int Elastic1D::NotInDomain(double V, double e, double eps_el)
     if( V <= 0 )
         return 1;
     double Te = T(V,e,eps_el);
-    return isnan(Te) || Te < 0; 
+    return std::isnan(Te) || Te < 0; 
 }
 
 //
@@ -156,7 +156,7 @@ int Elastic1D::NotInDomain(double V, double e, double eps_el)
 double Elastic1D::KT(double V, double e, double eps_el)
 {
     double  Te = T(V,e,eps_el);
-    if( isnan(Te) )
+    if( std::isnan(Te) )
         return NaN;
     double   e_hyd = e - shear->e(V,Te,eps_el);
     return hydro->KT(V,e_hyd)+shear->cT2(V,Te,eps_el)/V;

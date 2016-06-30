@@ -203,7 +203,7 @@ int HotSpotCC_Rate::Rate(double V, double e, const double *z, double *zdot)
         if( n != 0 )
         {
             double p = P(V,e,s,s2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return 1;
             Dp = D(p/Ps);
         }
@@ -241,7 +241,7 @@ int HotSpotCC_Rate::TimeStep(double V, double e, const double *z, double &dt)
     if( n != 0 )
     {
         double p = P(V,e,s,s2);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return -1;      // error
         Dp = D(p/Ps);
     }
@@ -286,13 +286,13 @@ int HotSpotCC_Rate::Integrate(double V, double e, double *z, double dt)
         {
             // predictor
             double p = P(V,e, s,s2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return 1;
             Dp = D(p/Ps);
             // corrector
             double rate2 = rate_s2(s*s,s2);
             p = P(V,e, s+dt*Dp*rate0,s2+dt*rate2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return 1;
             Dp = 0.5*(Dp+D(p/Ps));
         }
@@ -349,7 +349,7 @@ double HotSpotCC_Rate::Dt(double V, double e, const double *z, double lambda)
         // predictor
         double s2 = z[4];
         double p = P(V,e,s,s2);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return EOS::NaN;
         Dp = D(p/Ps);
         double dt = (s_t - s)/(Dp*rate0);
@@ -358,7 +358,7 @@ double HotSpotCC_Rate::Dt(double V, double e, const double *z, double lambda)
         s2 += rate2*dt;
         // corrector
         p = P(V,e,s_t,s2);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return EOS::NaN;
         Dp = 0.5*(Dp+D(p/Ps));
     }

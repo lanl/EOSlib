@@ -40,7 +40,7 @@ int HotSpotRate::Rate(double V, double e, const double *z, double *zdot)
     if( lambda < 1. && Ps > 0.0 && ts >= 0.0 )
     {
         double p = P(V,e,lambda);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return 1;
         double s  = z[3];
         zdot[3] = f(Ps)*D(p/Ps)/tref;      // ds/dt
@@ -69,7 +69,7 @@ int HotSpotRate::TimeStep(double V, double e, const double *z, double &dt)
     if( source_type != 2 )
     {
         double p = P(V,e,lambda);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return -1;                          // error
         double r0   = f(Ps);
         double dsdt = f(Ps)*D(p/Ps)/tref;
@@ -98,7 +98,7 @@ int HotSpotRate::Integrate(double V, double e, double *z, double dt)
         return 0;
     }
     double p = P(V,e,lambda);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     s += f(Ps)*D(p/Ps)*dt/tref;
     if( s < smax )
@@ -135,10 +135,10 @@ double HotSpotRate::Dt(double V, double e, const double *z, double lambda)
         return 0.0;
 
     double p0 = P(V,e,z[2]);
-    if( isnan(p0) )
+    if( std::isnan(p0) )
         return EOS::NaN;
     double p1 = P(V,e,lambda);
-    if( isnan(p1) )
+    if( std::isnan(p1) )
         return EOS::NaN;
     double Dp = 0.5*(D(p0/Ps)+D(p1/Ps));  // approximate average D(p/Ps)
 

@@ -25,7 +25,7 @@ int P_eosVT::findT(double p, double &T)
 {
     double T1 = eos->T_ref;
     double P1 = eos->P(V,T1);
-    if( isnan(P1) )
+    if( std::isnan(P1) )
         return -1;
     double T2, P2;
     if( p >P1)
@@ -38,7 +38,7 @@ int P_eosVT::findT(double p, double &T)
                 return -1;
             T2 = T1 + 2.*(p-P1)/dPdT;
             P2 = eos->P(V,T2);
-            if( isnan(P2) )
+            if( std::isnan(P2) )
                 return -1;
             if( P2 == p )
             {
@@ -63,7 +63,7 @@ int P_eosVT::findT(double p, double &T)
             if( T2 <= 0. )
                 T2 = 0.5*T1;
             P2 = eos->P(V,T2);
-            if( isnan(P2) )
+            if( std::isnan(P2) )
                 return -1;
             if( P2 == p )
             {

@@ -114,7 +114,7 @@ int ViscousProfile::F(double *y_prime, const double *y_xi, double xi)
     double      u = y_xi[0];
     double lambda = y_xi[1];
     Hydrostate(u,lambda);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     double c = FF.c(V,e,lambda);
     //

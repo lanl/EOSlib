@@ -166,20 +166,20 @@ int BKW_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( isnan(V0) || isnan(Cv) )
+    if( std::isnan(V0) || isnan(Cv) )
     {
         EOSerror->Log(FUNC,"parameter not all set\n");
         return 1;
     }
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(T_ref) )
+    if( std::isnan(T_ref) )
         T_ref = Tref(V_ref) + (e0+de-eref(V_ref))/Cv;
     // CJ state
     BKW HE(*this);
     double p0 = HE.P(V0,e0);
     double T0 = HE.T(V0,e0);
-    if( isnan(p0) || isnan(T0) )
+    if( std::isnan(p0) || isnan(T0) )
     {
         EOSerror->Log(FUNC,"P or T failed at (V0,e0)\n");
         return 1;
@@ -197,7 +197,7 @@ int BKW_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
     Vcj = CJ.V;
     Pcj = CJ.P;
     Tcj = HE.T(Vcj,CJ.e);
-    if( isnan(Scj) )
+    if( std::isnan(Scj) )
     {   // pick something reasonable ?
         Scj = Vcj*Pcj/Tcj;
         // If one knew reactants EOS

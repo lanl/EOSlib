@@ -237,7 +237,7 @@ int main(int, char **argv)
 	cout.setf(ios::showpoint);
 	cout.setf(ios::scientific, ios::floatfield);
 	
-	if( (loop_P || loop_V) && isnan(var2) )
+	if( (loop_P || loop_V) && std::isnan(var2) )
 	    cerr << Error("var2 not set") << Exit;
 	
 	if( material )
@@ -270,20 +270,20 @@ int main(int, char **argv)
 
 	HydroState state0;        
 	state0.u = 0;
-	state0.V = isnan(V0) ? eos->V_ref : V0;
-	state0.e = isnan(e0) ? eos->e_ref : e0;
+	state0.V = std::isnan(V0) ? eos->V_ref : V0;
+	state0.e = std::isnan(e0) ? eos->e_ref : e0;
 
-	if( !isnan(P0) || !isnan(T0) )
+	if( !std::isnan(P0) || !isnan(T0) )
 	{
-	    if( isnan(P0) )
+	    if( std::isnan(P0) )
 	        P0 = eos->P(state0);
-	    if( isnan(T0) )
+	    if( std::isnan(T0) )
 	        T0 = eos->T(state0);
 	    if( eos->PT(P0,T0,state0) )
 	        cerr << Error("eos->PT failed\n") << Exit;
 	}
 	else
-	    if( isnan(P0 = eos->P(state0)) )
+	    if( std::isnan(P0 = eos->P(state0)) )
 	        cerr << Error("eos->P returned NaN\n") << Exit;
 	
 // incident shock or isentrope
@@ -294,12 +294,12 @@ int main(int, char **argv)
 	    H = eos->isentrope(state0);
 
 	WaveState incident;
-	if( !isnan(Ps) )
+	if( !std::isnan(Ps) )
 	{
 	    if( H->P(Ps,RIGHT,incident) )
 	        cerr << Error("H->P failed") << Exit;
 	}
-	else if( !isnan(Vs) )
+	else if( !std::isnan(Vs) )
 	{
 	    if( H->V(Vs,RIGHT,incident) )
 	        cerr << Error("H->V failed") << Exit;
@@ -317,13 +317,13 @@ int main(int, char **argv)
 	if( loop_P )
 	{
 	    Locus = &Isotherm::P;
-	    if( isnan(var1) )
+	    if( std::isnan(var1) )
 	        var1 = incident.P;
 	}
 	else if( loop_V )
 	{
 	    Locus = &Isotherm::V;
-	    if( isnan(var1) )
+	    if( std::isnan(var1) )
 	        var1 = incident.V;
 	}
 	    
@@ -362,7 +362,7 @@ int main(int, char **argv)
 	}
 	PrintLine();
 	
-	if( isnan(var2) )
+	if( std::isnan(var2) )
     {
 	    if( incident.u == state0.u )
 	        eos->Evaluate(state0, Tstate);

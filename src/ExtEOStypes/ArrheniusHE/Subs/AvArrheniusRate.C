@@ -84,7 +84,7 @@ int AvArrheniusRate::ParamsOK()
 int AvArrheniusRate::Rate(double V, double e, const double *z, double *zdot)
 {
     double T = eos->T(V,e,z);
-    if( isnan(T) )
+    if( std::isnan(T) )
         return 1;
     double Tav = z[1];
     if( T>T_cutoff && z[0]<1.0 )
@@ -109,7 +109,7 @@ int AvArrheniusRate::TimeStep(double V, double e, const double *z, double &dt)
     double lambda1 = min(1.0,lambda+DLAMBDA);
     double ztmp[2] = {lambda1,Tav};
     double T = eos->T(V,e,ztmp);
-    if( isnan(T) )
+    if( std::isnan(T) )
         return 1;
     T = max(T,Tav);
     if( T < T_cutoff )
@@ -167,7 +167,7 @@ int AvArrheniusRate::Integrate(double V, double e, double *z, double dt)
 int AvArrheniusRate::step0(double *z, double dt)
 {
     double T = eos->T(V0,e0,z);
-    if( isnan(T) )
+    if( std::isnan(T) )
         return 1;
     z[1] = T - (T-z[1])*exp(-dt/tau);
     return 0;      
@@ -176,7 +176,7 @@ int AvArrheniusRate::step0(double *z, double dt)
 int AvArrheniusRate::step1(double *z, double dt)
 {
     double T0 = eos->T(V0,e0,z);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;
     double exp_dt = exp(-0.5*dt/tau);        
     ddt0[1] = (T0-z[1])/tau;
@@ -184,7 +184,7 @@ int AvArrheniusRate::step1(double *z, double dt)
     ddt0[0] = Rate(z[0],z[1]);
       z1[0] = min(1.,z[0]+0.5*dt*ddt0[0]);
     double T1 = eos->T(V0,e0,z1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return 1;
     z1[1] += (T1-T0)*(1.+0.5*(tau/dt)*(exp_dt-1.)); 
     //
@@ -192,7 +192,7 @@ int AvArrheniusRate::step1(double *z, double dt)
     z2[0] = min(1.,z[0]+dt*Rate(z1[0],z1[1]));
     z2[1] = T0 - (T0-z[1])*exp_dt; 
     double T2 = eos->T(V0,e0,z2);
-    if( isnan(T2) )
+    if( std::isnan(T2) )
         return 1;
     z2[1] += (T2-T0)*(1.+(tau/dt)*(exp_dt-1.)); 
     ddt2[0] = Rate(z2[0],z2[1]);
@@ -201,7 +201,7 @@ int AvArrheniusRate::step1(double *z, double dt)
     z3[0] = min(1.,z[0]+0.5*dt*(ddt0[0]+ddt2[0]));
     z3[1] = T0 - (T0-z[1])*exp_dt;   
     double T3 = eos->T(V0,e0,z3);
-    if( isnan(T3) )
+    if( std::isnan(T3) )
         return 1;
     z3[1] += (T3-T0)*(1.+(tau/dt)*(exp_dt-1.));   
     return 0;
@@ -212,7 +212,7 @@ int AvArrheniusRate::step2(double *z, double dt)
 {
     // d(Tav)/dt = (T-Tav)/tau and T = const
     double T0 = eos->T(V0,e0,z);
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         return 1;   
     double exp_dt = exp(-dt/tau);
     z[1] = T0 - (T0-z[1])*exp_dt;
@@ -229,7 +229,7 @@ int AvArrheniusRate::step2(double *z, double dt)
         z[0] = (x>0.) ? max(z[0],1.-pow(x,1./(1.-n))) : 1.;
     }
     double T1 = eos->T(V0,e0,z);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return 1;
     z[1] += (T1-T0)*(1. + (tau/dt)*(exp_dt-1.)); 
     return 0;
@@ -251,7 +251,7 @@ double AvArrheniusRate::Dt(double V, double e, const double *z, double lambda)
     if( z0[1] < T_cutoff )
     {
         z0[1] = eos->T(V,e,z);
-        if( isnan(z0[1]) || z0[1] < T_cutoff )
+        if( std::isnan(z0[1]) || z0[1] < T_cutoff )
             return EOS::NaN;
         t = tau;
     }

@@ -24,7 +24,7 @@ int Deflagration_gen::F(double *y_prime, const double *y, double V)
     double c2 = eos->c2(V,e);
     double dV = V0-V;
     y_prime[0] = -0.5*(P+P0 +(c2/V-Gamma*P)*dV/V)/(1.-0.5*Gamma*dV/V);
-    return isnan(y_prime[0]);
+    return std::isnan(y_prime[0]);
 }
 
 class Deflagration_gen_P : public ODEfunc
@@ -57,7 +57,7 @@ double Deflagration_gen_CJ::f(double V, const double *y, const double *yp)
 int Deflagration_gen::InitCJ()
 {
     double Pw = eos->P(V0,e0);
-    if( isnan(Pw) || Pw <= P0 )
+    if( std::isnan(Pw) || Pw <= P0 )
         return 1;
     e[0] = e0;
     double dV = 0.01*V0;
@@ -95,7 +95,7 @@ int Deflagration_gen::InitCJ()
 
 int Deflagration_gen::P(double p,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( std::abs(Pcj - p) < rel_tol*Pcj  )
         return CJwave( dir, wave );
@@ -151,7 +151,7 @@ double Deflagration_gen_u2::f(double V, const double *y, const double *yp)
 }
 int Deflagration_gen::u(double u1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.u = u1;
     u1 = dir*(u1-u0);
@@ -207,7 +207,7 @@ double Deflagration_gen_us::f(double V, const double *y, const double *yp)
 }
 int Deflagration_gen::u_s(double us, int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.us = us;  
     us = dir*(us-u0);
@@ -241,7 +241,7 @@ int Deflagration_gen::u_s(double us, int dir, WaveState &wave)
 
 int Deflagration_gen::V(double v1,  int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     if( std::abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );

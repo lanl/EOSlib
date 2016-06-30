@@ -81,9 +81,9 @@ int main(int, char **argv)
     PTequilibrium *PT = HE->HE;
     EOS *reactants = HE->Reactants();
     EOS *products  = HE->Products();
-    if( isnan(V0) ) V0 = eos->V_ref;
-    if( isnan(e0) ) e0 = eos->e_ref;
-    if( isnan(P0) ) P0 = reactants->P(V0,e0);
+    if( std::isnan(V0) ) V0 = eos->V_ref;
+    if( std::isnan(e0) ) e0 = eos->e_ref;
+    if( std::isnan(P0) ) P0 = reactants->P(V0,e0);
     cerr << "debug: V0,e0,P0 = " << V0 << " " << e0 << " " << P0 << "\n";
     //
     // constant volume burn

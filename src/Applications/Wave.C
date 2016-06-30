@@ -375,7 +375,7 @@ int main(int, char **argv)
     // input check
     if( u_esc != ESCAPE::off )
         locus = WAVE::isentrope;
-    if( loop!=VAR::none && isnan(var2) )
+    if( loop!=VAR::none && std::isnan(var2) )
         cerr << Error("var2 not set") << Exit;    
     if( material )
     {
@@ -410,29 +410,29 @@ int main(int, char **argv)
     phi_eq=dynamic_cast<EqPorous *>(eos);
 // ref state
     HydroState state0;        
-    state0.u = isnan(u0) ? 0 : u0;
-    state0.V = isnan(V0) ? eos->V_ref : V0;
-    state0.e = isnan(e0) ? eos->e_ref : e0;
+    state0.u = std::isnan(u0) ? 0 : u0;
+    state0.V = std::isnan(V0) ? eos->V_ref : V0;
+    state0.e = std::isnan(e0) ? eos->e_ref : e0;
     if( locus == WAVE::detonation )
     {
         if( InitVar != VAR::none )
             cerr << Error("InitVar not allowed with detonation locus") << Exit;
         InitLocus = WAVE::state;
         u_esc = ESCAPE::off;
-        if( isnan(P0) )
+        if( std::isnan(P0) )
             P0 = 0.;
     }
-    else if( !isnan(P0) || !isnan(T0) )
+    else if( !std::isnan(P0) || !isnan(T0) )
     {
-        if( isnan(P0) && isnan(P0=eos->P(state0)) )
+        if( std::isnan(P0) && isnan(P0=eos->P(state0)) )
             cerr << Error("eos->P returned NaN\n") << Exit;
-        if( isnan(T0) )
+        if( std::isnan(T0) )
             T0 = eos->T(state0);
         if( eos->PT(P0,T0,state0) )
             cerr << Error("eos->PT failed\n") << Exit;
     }
     else
-        if( isnan(P0=eos->P(state0)) )
+        if( std::isnan(P0=eos->P(state0)) )
             cerr << Error("eos->P returned NaN\n") << Exit;
 // init state
     WaveState InitState;
@@ -455,7 +455,7 @@ int main(int, char **argv)
     }
     else
     {
-        if( isnan(var0) )
+        if( std::isnan(var0) )
             cerr << Error("must specify variable for InitLocus") << Exit;                       
         Wave *InitWave = NULL;
         if( InitLocus==WAVE::shock )
@@ -521,26 +521,26 @@ int main(int, char **argv)
     }
     else if( loop != VAR::none )
     {
-        if( isnan(var2) )
+        if( std::isnan(var2) )
             cerr << Error("var2 not set") << Exit;    
         if( loop == VAR::P )
         {
             Locus = &Wave::P;
-            if( isnan(var1) )
+            if( std::isnan(var1) )
                 var1 = InitState.P;        
             branch = (var2 < InitState.P) ? WAVE::isentrope : WAVE::shock;
         }
         else if( loop == VAR::V )
         {
             Locus = &Wave::V;
-            if( isnan(var1) )
+            if( std::isnan(var1) )
                 var1 = InitState.V;        
             branch = (var2 > InitState.V) ? WAVE::isentrope : WAVE::shock;
         }
         else if( loop == VAR::Up )
         {
             Locus = &Wave::u;
-            if( isnan(var1) )
+            if( std::isnan(var1) )
                 var1 = InitState.u;        
             branch = (dir*(InitState.u-var2) > 0.) ? WAVE::isentrope : WAVE::shock;
         }
@@ -548,7 +548,7 @@ int main(int, char **argv)
         {
             Locus = &Wave::u_s;
             double c = sqrt(eos->c2(InitState.V, InitState.e));
-            if( isnan(var1) )
+            if( std::isnan(var1) )
                 var1 = InitState.us;        
             branch = (dir*(var2-InitState.us) > 0.) ? WAVE::shock : WAVE::isentrope;
         }

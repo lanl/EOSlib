@@ -96,9 +96,9 @@ int ElasticPlastic1D::PostInit(Calc &calc, DataBase *db)
                      units->Type(),units->Name() );
         return 1;
     }
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = elastic->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = elastic->e_ref;
     return 0;
 }

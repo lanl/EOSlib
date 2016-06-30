@@ -125,7 +125,7 @@ int StiffIdeal_VT::InitParams(Parameters &p, Calc &calc, DataBase *db)
         return 1;
     }
     lambda2 = 1. - lambda1;
-    if( isnan(V_ref) || isnan(T_ref) )
+    if( std::isnan(V_ref) || isnan(T_ref) )
     {
         EOSerror->Log(FUNC, "V_ref and T_ref not specified\n" );
         return 1;            
@@ -142,31 +142,31 @@ int StiffIdeal_VT::InitParams(Parameters &p, Calc &calc, DataBase *db)
         G1  = 4.*s-2.;
         P_p = c0*c0/V_ref/(G1+1.) - P_ref;
     }   
-    if( isnan(G1) || G1 < 0. )
+    if( std::isnan(G1) || G1 < 0. )
     {
         EOSerror->Log(FUNC, "G1 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(G2) || G2 < 0. )
+    if( std::isnan(G2) || G2 < 0. )
     {
         EOSerror->Log(FUNC, "G2 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(Cv1) || Cv1 <= 0. )
+    if( std::isnan(Cv1) || Cv1 <= 0. )
     {
         EOSerror->Log(FUNC, "Cv1 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(Cv2) || Cv2 <= 0. )
+    if( std::isnan(Cv2) || Cv2 <= 0. )
     {
         EOSerror->Log(FUNC, "Cv2 not defined or invalid\n" );
         return 1;        
     }
-    if( isnan(dS) )
+    if( std::isnan(dS) )
     {
         if( Q > 0. )
         {
-            if( isnan(T_ref) )
+            if( std::isnan(T_ref) )
             {
                 EOSerror->Log(FUNC, "T_ref needed to set dS\n" );
                 return 1;            

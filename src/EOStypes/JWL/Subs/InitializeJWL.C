@@ -37,8 +37,8 @@ int JWL::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( isnan(V0) || isnan(A) || isnan(R1) || isnan(B) || isnan(R2)
-                  || isnan(omega) || isnan(Edet) )
+    if( std::isnan(V0) || isnan(A) || isnan(R1) || isnan(B) || isnan(R2)
+                  || std::isnan(omega) || isnan(Edet) )
     {
         EOSerror->Log(FUNC,"parameter not set: V0=%lf, A=%lf, R1=%lf, "
               "B=%lf, R2=%lf, omega=%lf, Edet=%lf\n",
@@ -50,11 +50,11 @@ int JWL::InitParams(Parameters &p, Calc &calc, DataBase *)
     { // replace (Vcj,ecj) with isentrope thru P0 = P(V0,eref0)
         C  = P0-A*exp(-R1)-B*exp(-R2);
         Vcj = V0;
-        if( isnan(e_ref) )
+        if( std::isnan(e_ref) )
             e_ref = V0*((A/R1)*exp(-R1)+(B/R2)*exp(-R2)+C/omega) -de;       
-        if( isnan(Tcj) )
+        if( std::isnan(Tcj) )
             Tcj = (V0/omega)*(P0-A*exp(-R1)-B*exp(-R2))/Cv;
-        if( isnan(Scj) )
+        if( std::isnan(Scj) )
             Scj = 0.;
     }
     else if( de > 0. )
@@ -72,20 +72,20 @@ int JWL::InitParams(Parameters &p, Calc &calc, DataBase *)
         Vcj = CJ.V;
         Pcj = CJ.P;
         delete det;
-        if( isnan(C) )
+        if( std::isnan(C) )
             C = omega*pow(Vcj/V0,omega)
                 *((CJ.e+de)/V0-(A/R1)*exp(-R1*Vcj/V0)-(B/R2)*exp(-R2*Vcj/V0));
-        if( isnan(Tcj) )
+        if( std::isnan(Tcj) )
             Tcj = (CJ.e+de -V0*(A/R1*exp(-R1*Vcj/V0)+B/R2*exp(-R2*Vcj/V0)))/Cv;
-        if( isnan(Scj) )
+        if( std::isnan(Scj) )
         {
             double T0 = T(V0,e0);
             Scj = Edet/T0 - Cv*(log(T0/Tcj)+omega*log(V0/Vcj));
         }
     }
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = e0;
     return 0;
 }
@@ -108,12 +108,12 @@ void JWL::PrintParams(ostream &out)
 	    << "; \t" << setw(10) << "R2    = " << R2 << "\n"
 	    << "\t"   << setw(10) << "omega = " << omega << "\n"
         << "\t"   << setw(10) << "Edet    = " << Edet << "\n";
-    if( !isnan(C) )
+    if( !std::isnan(C) )
         out << "\t"   << setw(10) << "C     = " << C << "\n";
-    if( !isnan(Tcj) )
+    if( !std::isnan(Tcj) )
     {
         out << "\t"   << setw(10) << "Cv      = " << Cv  << "\n";
-        if( !isnan(Pcj) )
+        if( !std::isnan(Pcj) )
         {
             out << "\t"   << setw(10) << "Tcj     = " << Tcj
                 << "; \t" << setw(10) << "Scj     = " << Scj << "\n";

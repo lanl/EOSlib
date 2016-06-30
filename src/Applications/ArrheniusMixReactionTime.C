@@ -84,7 +84,7 @@ int IntegrateRate::F(double *y_prime, const double *y, double t)
     double e_p = VTproducts->e(V,T);
     y_prime[0] = rate(lambda,T);
     y_prime[1] = (e_r-e_p)/CV(lambda,T)*y_prime[0];    
-    return (isnan(y_prime[0])) ? 1 : 0;   
+    return (std::isnan(y_prime[0])) ? 1 : 0;   
 }
 double IntegrateRate::MaxNorm(const double *y0, const double *y1,
                    const double*, const double*)

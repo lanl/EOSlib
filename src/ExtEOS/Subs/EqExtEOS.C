@@ -79,9 +79,9 @@ int EqExtEOS::PostInit(Calc &calc, DataBase *db)
         return 1;
     }
     z_ref = exteos->Zref();
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = exteos->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = exteos->e_ref;
 	return 0;
 }

@@ -93,30 +93,30 @@ int DavisReactants::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( isnan(V0) || V0<=0.0 )
+    if( std::isnan(V0) || V0<=0.0 )
     {
         EOSerror->Log(FUNC,"V0 not set or invalid");
         return 1;
     }
-    if( isnan(A) || A<=0. || isnan(B) || B<=0. || isnan(C) || C<=0. )
+    if( std::isnan(A) || A<=0. || isnan(B) || B<=0. || isnan(C) || C<=0. )
     {
         EOSerror->Log(FUNC,"A, B or C not set or invalid");
         return 1;
     }
-    if( isnan(G0) || G0 <= 0. || isnan(Z) )
+    if( std::isnan(G0) || G0 <= 0. || isnan(Z) )
     {
         EOSerror->Log(FUNC,"G0 or Z not set or invalid");
         return 1;
     }
-    if( isnan(Cv) || Cv<=0 || isnan(alpha) || alpha < 0. )
+    if( std::isnan(Cv) || Cv<=0 || isnan(alpha) || alpha < 0. )
     {
         EOSerror->Log(FUNC,"Cv or alpha not set or invalid");
         return 1;
     }    
     ps = 0.25*A*A/B/V0;
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = e0;
     return 0;
 }

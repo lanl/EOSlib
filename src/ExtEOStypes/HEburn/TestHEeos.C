@@ -95,7 +95,7 @@ int main(int, char **argv)
         double lambda = lambda_min + (double(i)/double(nsteps))*dlambda;
         PT->set_lambda2(lambda);
         double P = PT->P(Vref,eref);
-        if( isnan(P) )
+        if( std::isnan(P) )
         {
             cout << "PT->P failed at lambda = " << lambda << "\n";
             break;
@@ -110,7 +110,7 @@ int main(int, char **argv)
         double V2 = PT->V2;  
         double e2 = PT->e2;
         double KT = PT->KT(Vref,eref);
-        //double ct = (isnan(KT) || KT<0.) ? 0. : sqrt(Vref*KT);
+        //double ct = (std::isnan(KT) || KT<0.) ? 0. : sqrt(Vref*KT);
         cout        << setw(13) << setprecision(6) << lambda
              << " " << setw(13) << setprecision(6) << P
              << " " << setw(13) << setprecision(6) << T

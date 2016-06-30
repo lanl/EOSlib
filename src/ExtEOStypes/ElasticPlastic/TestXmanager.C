@@ -55,7 +55,7 @@ int main(int, char **argv)
         cerr << Error("FetchEOS failed") << Exit;
     ExtEOS &xeos = materials.xeos(i);
     
-    if( !isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !isnan(e) )
     {
         double P = xeos.P(V,e);
         cout << "P = " << P << "\n";

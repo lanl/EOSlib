@@ -17,10 +17,10 @@ int PrandtlMeyer_ODE::F(double *yp, const double *y, double V)
     double e = y[0];
     // double theta = y[1];   
     double P = eos->P(V,e);
-    if( isnan(P) || P < 0. )
+    if( std::isnan(P) || P < 0. )
         return 1;
     double c2 = eos->c2(V,e);
-    if( isnan(c2) || c2 < 0. )
+    if( std::isnan(c2) || c2 < 0. )
         return 1;
     double q2 = 2.*(B - e - P*V);
     if( q2 < 0. )

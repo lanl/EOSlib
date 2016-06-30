@@ -5,15 +5,15 @@ int PTequilibrium::NotDomain1(double V, double e)
     if( V <= 0. )
         return 1;
     double T = eos1->T(V,e);
-    if( isnan(T) || T<=0.0 )
+    if( std::isnan(T) || T<=0.0 )
         return 1;
     double P = eos1->P(V,e);
-    if( isnan(P) || P<=0.0 )
+    if( std::isnan(P) || P<=0.0 )
         return 1;
     double c2    = eos1->c2(V,e);
     double Gamma = eos1->Gamma(V,e);
     double CV    = eos1->CV(V,e);
-    if( isnan(c2) || isnan(Gamma) || isnan(CV) )
+    if( std::isnan(c2) || isnan(Gamma) || isnan(CV) )
         return 1;
     /**/
     if( c2 - Gamma*Gamma*CV*T <= 0 ) // KT <= 0
@@ -33,15 +33,15 @@ int PTequilibrium::NotDomain2(double V, double e)
     if( V <= 0. )
         return 1;
     double T = eos2->T(V,e);
-    if( isnan(T) || T<=0.0 )
+    if( std::isnan(T) || T<=0.0 )
         return 1;
     double P = eos2->P(V,e);
-    if( isnan(P) || P<=0.0 )
+    if( std::isnan(P) || P<=0.0 )
         return 1;
     double c2    = eos2->c2(V,e);
     double Gamma = eos2->Gamma(V,e);
     double CV    = eos2->CV(V,e);
-    if( isnan(c2) || isnan(Gamma) || isnan(CV) )
+    if( std::isnan(c2) || isnan(Gamma) || isnan(CV) )
         return 1;
     /**/
     if( c2 - Gamma*Gamma*CV*T <= 0 ) // KT <= 0

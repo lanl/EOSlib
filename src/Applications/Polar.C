@@ -137,11 +137,11 @@ int main(int, char **argv)
         cerr << Error("ConvertUnits failed") << Exit;
     // polar state
     PolarState pstate0;
-    pstate0.V = isnan(V0) ? eos->V_ref : V0;
-    pstate0.e = isnan(e0) ? eos->e_ref : e0;
+    pstate0.V = std::isnan(V0) ? eos->V_ref : V0;
+    pstate0.e = std::isnan(e0) ? eos->e_ref : e0;
     pstate0.q     = q0;
     pstate0.theta = theta0;
-    if( !isnan(Ps) )
+    if( !std::isnan(Ps) )
     {
         HydroState state0(pstate0.V,pstate0.e);        
         Hugoniot *hug = eos->shock(state0);
@@ -153,14 +153,14 @@ int main(int, char **argv)
         pstate0.q = ws.us;
         delete hug;
     }
-    else if( !isnan(M0) )
+    else if( !std::isnan(M0) )
     {
         if( M0 <= 1 )
             cerr << Error("M0 <= 1") << Exit;
         double c0 =eos->c(pstate0.V,pstate0.e);
         pstate0.q = M0*c0;
     }
-    else if( isnan(pstate0.q) )
+    else if( std::isnan(pstate0.q) )
         cerr << Error("polar state not specified") << Exit;
     //
     ShockPolar_gen Polar(*eos);
@@ -168,7 +168,7 @@ int main(int, char **argv)
     if( Polar.Initialize(pstate0) )
         cerr << Error("Polar.Initialize(pstate0) failed") << Exit;
     PolarWaveState pwave0;
-    if( !isnan(P0) )
+    if( !std::isnan(P0) )
     {
         if( Polar.P(P0,dir0,pwave0) )
             cerr << Error("Polar.P(P0) failed") << Exit;
@@ -176,7 +176,7 @@ int main(int, char **argv)
             cerr << Error("Polar.Initialize(pwave0) failed") << Exit;
     }
     PrandtlMeyer_ODE PM(*eos);
-    if( isnan(P0) )
+    if( std::isnan(P0) )
     {
         if( PM.Initialize(pstate0) )
             cerr << Error("PM.Initialize(state0) failed") << Exit;
@@ -219,9 +219,9 @@ int main(int, char **argv)
                                            << " " << M_form << M << "\n";
         return 0;
     }
-    if( isnan(P1) )
+    if( std::isnan(P1) )
         P1 = Polar.P0;
-    if( isnan(P2) )
+    if( std::isnan(P2) )
         P2 = Polar.Pmax.P;
     //
     PolarWaveStateLabel(cout) << " " << Center(M_form, "M") << "\n";  

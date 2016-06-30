@@ -96,8 +96,8 @@ int main(int, char **argv)
 	VonMisesElasticPlastic *EPeos = (VonMisesElasticPlastic *)eos;
 	HydroState state0;		
 	state0.u = 0;
-	state0.V = isnan(V0) ? eos->V_ref : V0;
-	state0.e = isnan(e0) ? eos->e_ref : e0;
+	state0.V = std::isnan(V0) ? eos->V_ref : V0;
+	state0.e = std::isnan(e0) ? eos->e_ref : e0;
 	double P0 = eos->P(state0);
 	
 	cout << "Material " << eos->Name() << "::" << eos->Type() << "\n";

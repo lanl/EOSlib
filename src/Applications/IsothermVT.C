@@ -119,13 +119,13 @@ int main(int, char **argv)
     if( VT==NULL )
 		cerr << Error("eosVT failed") << Exit;
 
-    if( isnan(V0) )
+    if( std::isnan(V0) )
         V0 = VT->V_ref;
-    if( isnan(T0) )
+    if( std::isnan(T0) )
         T0 = VT->T_ref;
-    if( isnan(var1) )
+    if( std::isnan(var1) )
         var1 = V0;
-    if( isnan(var2) )
+    if( std::isnan(var2) )
         var2 = V0;
 
     cout << "EOS_VT isotherm for " << type<<"::"<<name << " at T = " << T0 << "\n";

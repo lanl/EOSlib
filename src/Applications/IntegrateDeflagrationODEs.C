@@ -164,9 +164,9 @@ int DefProfile::Fext(double *yp_z, const double *y_z, double lambda,
     }
     set_lambda(lambda);
     double Ph = HE->P(Vh,Th);
-    if( isnan(Ph) )
+    if( std::isnan(Ph) )
     {
-        //cout << "debug: P isnan\n";
+        //cout << "debug: P std::isnan\n";
         return 1;
     }    
     double eh = HE->e(Vh,Th);

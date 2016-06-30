@@ -355,7 +355,7 @@ int HotSpotRateCC::Rate(double V, double e, const double *z, double *zdot)
         if( n != 0 )
         {
             double p = P(V,e,lambda,s2*s2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return 1;
             zdot[2] *= D(p/Ps);
         }
@@ -384,7 +384,7 @@ int HotSpotRateCC::TimeStep(double V, double e, const double *z, double &dt)
     if( n != 0 )
     {
         double p = P(V,e,lambda,s2*s2);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return -1;      // error
         rate *= D(p/Ps);
     }
@@ -426,7 +426,7 @@ int HotSpotRateCC::Integrate(double V, double e, double *z, double dt)
             // predictor
             double lambda = g(s);
             double p = P(V,e, lambda,s2*s2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return 1;
             Dp = D(p/Ps);
             // corrector
@@ -434,7 +434,7 @@ int HotSpotRateCC::Integrate(double V, double e, double *z, double dt)
             lambda = g(s+dt*Dp*rate0);
             double s2p = s2+dt*rate2;
             p = P(V,e, lambda,s2p*s2p);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return 1;
             Dp = 0.5*(Dp+D(p/Ps));
         }
@@ -480,7 +480,7 @@ double HotSpotRateCC::Dt(double V, double e, const double *z,
         {
             // predictor
             double p = P(V,e,lambda_0,lambda2_0);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return EOS::NaN;
             Dp = D(p/Ps);
             dt1 = (s_t - s)/(Dp*rate0);
@@ -489,7 +489,7 @@ double HotSpotRateCC::Dt(double V, double e, const double *z,
             s2 += rate2*dt1;
             // corrector
             p = P(V,e,lambda,s2*s2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return EOS::NaN;
             Dp = 0.5*(Dp+D(p/Ps));
         }
@@ -507,7 +507,7 @@ double HotSpotRateCC::Dt(double V, double e, const double *z,
         if( n != 0 )
         {
             double p = P(V,e,lambda,lambda2);
-            if( isnan(p) )
+            if( std::isnan(p) )
                 return EOS::NaN;
             rate0 *= D(p/Ps);          
         }        

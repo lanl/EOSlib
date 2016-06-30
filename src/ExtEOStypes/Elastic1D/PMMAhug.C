@@ -62,9 +62,9 @@ int main(int, char **argv)
         cerr << Error("dynamic_cast failed") << Exit;
     PolyG *shear = EP->Pshear;
 
-    if( isnan(V0) )
+    if( std::isnan(V0) )
         V0 = EP->V_ref;
-	if( isnan(e0) )
+	if( std::isnan(e0) )
         e0 = EP->e_ref;
     double c0 = EP->c(V0,e0);
 	HydroState state0(V0,e0,u0);

@@ -52,13 +52,13 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(V) && !isnan(T) )
+    if( !std::isnan(V) && !isnan(T) )
     {
         PTequilibrium_VT *eosPT = dynamic_cast<PTequilibrium_VT*>(eos);
         if( eosPT == NULL )
             cerr << Error("eosPT is NULL") << Exit;
         double P = eos->P(V,T);
-        if( isnan(P) )
+        if( std::isnan(P) )
             cerr << Error("eos->P failed") << Exit;
         double V1 = eosPT->V1;
         double V2 = eosPT->V2;       

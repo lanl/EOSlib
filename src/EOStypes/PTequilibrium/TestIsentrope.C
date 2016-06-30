@@ -55,9 +55,9 @@ int main(int, char **argv)
     PTequilibrium *eosPT = dynamic_cast<PTequilibrium*>(eos);
     if( eosPT == NULL )
         cerr << Error("eosPT is NULL") << Exit;
-    if( isnan(V) )
+    if( std::isnan(V) )
         V = eos->V_ref;
-    if( isnan(e) )
+    if( std::isnan(e) )
         e = eos->e_ref;
     HydroState state0(V,e);
     Isentrope *SPT = eosPT->isentrope(state0);

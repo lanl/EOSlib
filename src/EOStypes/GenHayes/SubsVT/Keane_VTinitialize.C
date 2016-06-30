@@ -36,9 +36,9 @@ int Keane_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     EOSstatus = EOSlib::good;
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(T_ref) )
+    if( std::isnan(T_ref) )
          return 1;
     return 0;
 }

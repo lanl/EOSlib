@@ -103,7 +103,7 @@ int IsothermEqPorous::V(double v, ThermalState &state)
     }
     double Vmin = state_s.V;
     double fmin = f(Vmin);
-    if( isnan(fmin) || fmin < 0 )
+    if( std::isnan(fmin) || fmin < 0 )
     {
         eos->ErrorHandler()->Log("IsothermEqPorous::V",__FILE__,__LINE__,
                 eos, "fmin = NaN or < 0\n");
@@ -117,7 +117,7 @@ int IsothermEqPorous::V(double v, ThermalState &state)
     }
     double Vmax = state_s.V;
     double fmax = f(Vmax);
-    if( isnan(fmax) )
+    if( std::isnan(fmax) )
     {
         eos->ErrorHandler()->Log("IsothermEqPorous::V",
                  __FILE__,__LINE__, eos, "fmax = NaN\n");

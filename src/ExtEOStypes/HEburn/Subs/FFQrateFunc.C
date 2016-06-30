@@ -58,7 +58,7 @@ int FFQrate::Rate(double V, double e, const double *z, double *zdot)
     if( z[0] < 1.0 )
     {
         double p = P(V,e,z[0]);
-        if( isnan(p) )
+        if( std::isnan(p) )
             return 1;
         zdot[0] = Rate(z[0],p+max(z[1],0.0));
     }
@@ -73,7 +73,7 @@ int FFQrate::TimeStep(double V, double e, const double *z, double &dt)
     if( z[0]<0. || 1.<=z[0] )
         return 0;       // no constraint
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return -1;      // error
     double rate = Rate(z[0],p+max(z[1],0.0));
     if( rate == 0. )
@@ -90,7 +90,7 @@ int FFQrate::Integrate(double V, double e, double *z, double dt)
     if( dt<=0.0 || z[0]>=1. )
         return 0;
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     V0 = V;
     e0 = e;
@@ -138,23 +138,23 @@ int FFQrate::Integrate(double V, double e, double *z, double dt)
 int FFQrate::step1(double lambda, double dt)
 {
     double p = P(V0,e0,lambda);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     double rate0  = Rate(lambda,p+Q);
     double lambda1 = min(1.,lambda+dt*rate0);
     p = P(V0,e0,lambda1);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     w1 = 0.5*(lambda+lambda1+dt*Rate(lambda1,p+Q)); // second order
     //
     w2 = min(1.,lambda+0.5*dt*rate0);
     lambda1 = w2;
     p = P(V0,e0,lambda1);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     lambda1 = min(1.,lambda+dt*Rate(lambda1,p+Q));  
     p= P(V0,e0,lambda1);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     rate1 = Rate(lambda1,p+Q);
     w2 = 0.5*(w2+lambda1+0.5*dt*rate1);             // second order
@@ -166,7 +166,7 @@ int FFQrate::step1(double lambda, double dt)
 int FFQrate::step2(double &lambda, double dt)
 {
     double p = P(V0,e0,lambda);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return 1;
     double rate, w;
     p += Q;
@@ -203,7 +203,7 @@ double FFQrate::Dt(double V, double e, const double *z, double lambda)
     if( z[0] >= lambda )
         return 0.0;
     double p = P(V,e,z[0]);
-    if( isnan(p) )
+    if( std::isnan(p) )
         return EOS::NaN;
     V0 = V;
     e0 = e;

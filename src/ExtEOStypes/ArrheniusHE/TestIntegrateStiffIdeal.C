@@ -86,14 +86,14 @@ int main(int, char **argv)
     if( HE == NULL )
         cerr << Error("dynamic_cast failed") << Exit;
     double lambda_ref = HE->lambda_ref();
-    if( isnan(V) || isnan(e) )
+    if( std::isnan(V) || isnan(e) )
         cerr << Error("Must specify V & e") << Exit;
     lambda0 = max(lambda0,lambda_ref);    
     double t0 = 0.0;
     double y0[2] = {lambda0,0.0};
     double P = HE->P(V,e,y0);
     double T = HE->T(V,e,y0);
-    y0[1] = isnan(Tav) ? T : Tav;
+    y0[1] = std::isnan(Tav) ? T : Tav;
     cout << "Initial state: V, e = " << V       << ", " << e     << "\n"
          << "        lambda, Tav = " << lambda0 << ", " << y0[1] << "\n"
          << "               P, T = " << P       << ", " << T     << "\n";

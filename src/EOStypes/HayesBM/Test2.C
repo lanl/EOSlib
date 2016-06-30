@@ -45,7 +45,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !isnan(T0) && !isnan(P0) )
+    if( !std::isnan(T0) && !isnan(P0) )
     {
         HydroState state;
         if( eos->PT(P0,T0,state) )
@@ -55,7 +55,7 @@ int main(int, char **argv)
         cout << "P = " << eos->P(state) << "\n";
         cout << "T = " << eos->T(state) << "\n";
     }
-    else if( !isnan(V) && !isnan(e) )
+    else if( !std::isnan(V) && !isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";

@@ -48,9 +48,9 @@ int VonMisesElasticPlastic::InitParams(Parameters &p, Calc &calc, DataBase *db)
 	    return 1;
 	}
 	
-	if( isnan(V_ref) )
+	if( std::isnan(V_ref) )
 		V_ref = eos->V_ref;
-	if( isnan(e_ref) )
+	if( std::isnan(e_ref) )
 		e_ref = eos->e_ref;
 		
 	if( G == 0.0 )
@@ -58,7 +58,7 @@ int VonMisesElasticPlastic::InitParams(Parameters &p, Calc &calc, DataBase *db)
 		
 	if( Y == 0.0 )
 		Vy_comp = Vy_exp = V_ref;
-	else if( isnan(Y) )
+	else if( std::isnan(Y) )
 	{
 		Vy_comp = 0.0;
 		Vy_exp  = HUGE;

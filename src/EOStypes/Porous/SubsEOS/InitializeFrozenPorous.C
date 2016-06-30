@@ -60,15 +60,15 @@ int FrozenPorous::InitParams(Parameters &p, Calc &calc, DataBase *db)
     delete [] eos_name;
     delete [] phi_name;
 
-    if( isnan(phi_f) )
+    if( std::isnan(phi_f) )
         phi_f = phi_eq->phi_0();
-    if( isnan(B_f) )
+    if( std::isnan(B_f) )
         B_f = phi_eq->energy(phi_f);
         
     // set reference state    
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = solid->e_ref + B_f;
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = solid->V_ref/phi_f;
 
     return 0;  

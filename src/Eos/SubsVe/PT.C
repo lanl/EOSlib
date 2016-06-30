@@ -29,7 +29,7 @@ double e_EOS::e(double T, double e0)
 {
     double e1 = e0;
     double T1 = eos->T(V,e1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return eos->ErrorHandler()->Log("e_EOS::e", __FILE__, __LINE__, eos,
                 "T not defined at init state\n");
     if( std::abs(T-T1) < 1e-8*T )
@@ -37,7 +37,7 @@ double e_EOS::e(double T, double e0)
 
     e1 += eos->CV(V,e1)*(T-T1);
     T1 = eos->T(V,e1);
-    if( isnan(T1) )
+    if( std::isnan(T1) )
         return eos->ErrorHandler()->Log("e_EOS::e", __FILE__, __LINE__, eos,
                                         "trial outside domain\n");
     if( std::abs(T-T1) < 1e-8*T )
@@ -52,7 +52,7 @@ double e_EOS::e(double T, double e0)
             double Cv = eos->CV(V,e1);
             e2 = e1 + 1.0001*Cv*(T-T1);
             T2 = eos->T(V,e2);
-            if( isnan(T2) )
+            if( std::isnan(T2) )
                 return eos->ErrorHandler()->Log("e_EOS::e", __FILE__, __LINE__,
                         eos, "trial outside domain\n");
             if( T2 >= T )
@@ -77,7 +77,7 @@ double e_EOS::e(double T, double e0)
                 // Thermodynamics: Cv->0 as T->0
                 // e2 may lie below value on 0 isotherm
             T2 = eos->T(V,e2);
-            if( isnan(T2) )
+            if( std::isnan(T2) )
                 return eos->ErrorHandler()->Log("e_EOS::e", __FILE__, __LINE__,
                         eos, "trial outside domain\n");
             if( T2 <= T )
@@ -105,7 +105,7 @@ double e_EOS::e(double T, double e0)
 int EOS::PT(double p, double t, HydroState &state)
 {
     double Tref = T(V_ref, e_ref);
-    if( isnan(Tref) )
+    if( std::isnan(Tref) )
     {
         EOSerror->Log("EOS::PT", __FILE__, __LINE__, this, "Tref=NaN\n");
         return 1;
@@ -146,7 +146,7 @@ int EOS::PT(double p, double t, HydroState &state)
     }        
     e_EOS e_V(this, Vref); 
     double e_T = e_V.e(t,eref);
-    if( isnan(e_T) )
+    if( std::isnan(e_T) )
     {
         EOSerror->Log("EOS::PT",__FILE__,__LINE__,this,
                       "e_V.e() failed\n");

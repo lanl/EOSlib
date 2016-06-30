@@ -84,27 +84,27 @@ int DavisProducts::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( isnan(V0) || V0<=0.0 || isnan(e0) )
+    if( std::isnan(V0) || V0<=0.0 || isnan(e0) )
     {
         EOSerror->Log(FUNC,"V0 or e0 not set or invalid");
         return 1;
     }
-    if( isnan(a) || a<=0 || isnan(n) || n<=0 )
+    if( std::isnan(a) || a<=0 || isnan(n) || n<=0 )
     {
         EOSerror->Log(FUNC,"a or n not set or invalid");
         return 1;
     }
-    if( isnan(Vc) || Vc<=0 || isnan(pc) || pc<=0 )
+    if( std::isnan(Vc) || Vc<=0 || isnan(pc) || pc<=0 )
     {
         EOSerror->Log(FUNC,"Vc or pc not set or invalid");
         return 1;
     }
-    if( isnan(b) || b>1 || isnan(k) || k<1 )
+    if( std::isnan(b) || b>1 || isnan(k) || k<1 )
     {
         EOSerror->Log(FUNC,"b or k not set or invalid");
         return 1;
     }    
-    if( isnan(Cv) || Cv<=0 )
+    if( std::isnan(Cv) || Cv<=0 )
     {
         EOSerror->Log(FUNC,"Cv not set or invalid");
         return 1;
@@ -113,7 +113,7 @@ int DavisProducts::InitParams(Parameters &p, Calc &calc, DataBase *)
     if( Tc <= 0.0 )
         Tc = pow(2,-a*b/n)/(k-1.+a) * pc*Vc/Cv;
     T0 = Tref(V0);
-    if( isnan(S0) )
+    if( std::isnan(S0) )
     {
         S0 = 0.0;
         double SV0 = S(V0,0.);       
@@ -121,9 +121,9 @@ int DavisProducts::InitParams(Parameters &p, Calc &calc, DataBase *)
         // assumes Sreactants = 0 at V=V0 and e=0
         // and enthalpy difference(P=1 bar, T=300 K) = e0
     }
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = V0;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = 0;
     return 0;
 }

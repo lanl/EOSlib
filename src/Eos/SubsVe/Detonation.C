@@ -46,7 +46,7 @@ int Detonation::Initialize(const HydroState &state, double p0)
 
 int Detonation::InitState(HydroState &state, double &p0)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     state.V = V0;
     state.e = e0;
@@ -57,7 +57,7 @@ int Detonation::InitState(HydroState &state, double &p0)
 
 int Detonation::CJwave(int dir, WaveState &wave)
 {
-    if( isnan(P0) )
+    if( std::isnan(P0) )
         return 1;
     wave.V  = Vcj;
     wave.e  = ecj;

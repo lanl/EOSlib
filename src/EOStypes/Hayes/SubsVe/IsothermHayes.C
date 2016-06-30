@@ -35,7 +35,7 @@ int Isotherm_Hayes::P(double p, ThermalState &state)
 		return 1;
 		
 	state.V = h.V_PT(p,state0.T);
-	if( isnan(state.V) )
+	if( std::isnan(state.V) )
 		return 1;
 	state.e = h.e_VT(state.V,state0.T);
 	

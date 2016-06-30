@@ -55,7 +55,7 @@ double HEburn::P(double V, double e, const double *z)
         return NaN;
     double p = HE->P(V,e);
     /****
-    if( isnan(p) )
+    if( std::isnan(p) )
     {
         if( z[ilambda] < LAMBDA_MIN )
             return HE->eos1->P(V,e);
@@ -77,7 +77,7 @@ double HEburn::T(double V, double e, const double *z)
     if( set_lambda(z[ilambda]) )
         return NaN;
     double Tz = HE->T(V,e);
-    if( isnan(Tz) )
+    if( std::isnan(Tz) )
     {
         if( z[ilambda] < LAMBDA_MIN )
             return HE->eos1->T(V,e);
@@ -92,7 +92,7 @@ double HEburn::S(double V, double e, const double *z)
     if( set_lambda(z[ilambda]) )
         return NaN;
     double s = HE->S(V,e);
-    if( isnan(s) )
+    if( std::isnan(s) )
     {
         if( z[ilambda] < LAMBDA_MIN )
             return HE->eos1->S(V,e);
@@ -108,7 +108,7 @@ double HEburn::c2(double V, double e, const double *z)
         return NaN;
     double c_2 = HE->c2(V,e);
     /****
-    if( isnan(c_2) || c_2 <= 0.0 )
+    if( std::isnan(c_2) || c_2 <= 0.0 )
     {
         if( z[ilambda] < LAMBDA_MIN )
             return HE->eos1->c2(V,e);
@@ -124,7 +124,7 @@ double HEburn::Gamma(double V, double e, const double *z)
     if( set_lambda(z[ilambda]) )
         return NaN;
     double G = HE->Gamma(V,e);
-    if( isnan(G) )
+    if( std::isnan(G) )
     {
         if( z[ilambda] < LAMBDA_MIN )
             return HE->eos1->Gamma(V,e);

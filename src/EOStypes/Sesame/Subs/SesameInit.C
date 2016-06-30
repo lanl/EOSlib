@@ -59,9 +59,9 @@ int Sesame::InitParams(Parameters &p, Calc &calc, DataBase *db)
         return 1;
     }
 
-    if( isnan(V_ref) )
+    if( std::isnan(V_ref) )
         V_ref = ses_VT->V_ref;
-    if( isnan(e_ref) )
+    if( std::isnan(e_ref) )
         e_ref = ses_VT->e(V_ref, ses_VT->T_ref);
         
     EOSstatus = EOSlib::good;
