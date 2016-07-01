@@ -1,0 +1,38 @@
+OS=_OS
+CC_INCLUDE=$(CWD)/include
+CC_LIB=$(CWD)/lib/$(OS)
+
+
+IFLAGS=-I. -I$(CC_INCLUDE) 
+IFLAGS_SUB=-I.. -I$(CC_INCLUDE)
+
+INCLUDE_DIR=$(CC_INCLUDE)
+EXEC_DIR=$(CWD)/bin/$(OS)
+LIB_DIR=$(CWD)/lib/$(OS)
+
+#
+TestJWL:	    $(CC_LIB)/EOS.so -ldl ./JWL.so
+TestJWLPT:	    $(CC_LIB)/EOS.so -ldl ./JWL.so
+TestHEfit:	    $(CC_LIB)/EOS.so -ldl ./JWL.so
+TestHEprods:    $(CC_LIB)/EOS.so -ldl ./JWL.so
+TestBKW:	    $(CC_LIB)/EOS.so -ldl ./JWL.so
+TestDetonation:	$(CC_LIB)/EOS.so -ldl ./JWL.so
+TestDeflagration:	$(CC_LIB)/EOS.so -ldl ./JWL.so
+#
+Test1JWL_VT:	$(CC_LIB)/EOS.so -ldl ./JWL.so
+Test2JWL_VT:	$(CC_LIB)/EOS.so -ldl ./JWL.so
+
+#
+
+JWL.a:	Subs
+
+#
+.INSTALL
+JWL.h       JWL_VT.h
+BKW.h       BKW_VT.h    BKWwave.h
+HEfit.h     HEprods.h
+JWL.a
+#
+.INCLUDE
+JWL.so: JWL.a
+	SharedLib JWL.so JWL.a

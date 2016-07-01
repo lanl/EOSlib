@@ -13,7 +13,7 @@ set_property(TARGET JWL PROPERTY CXX_STANDARD 11)
 set_property(TARGET JWL PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( JWL EOS DataBase ODE)
+target_link_libraries( JWL EOS DataBase ODE Calc ${CMAKE_DL_LIBS})
 
 list (APPEND tests Test1JWL_VT Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestHEprods TestJWL TestJWLPT)
 

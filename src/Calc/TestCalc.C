@@ -89,9 +89,13 @@ int main(int, char **argv)
 	}
     cout << "darray(2+)\n";
 
-	while( 1 )
+//All commented lines below make TestCalc run without asking for input.
+
+	int index = 1;
+//	while( 1 )
+	while( argv[index] )
 	{	
-		cerr << "Input: ";
+/*		cerr << "Input: ";
 		int i;
 		int c;
 		for( i=0; ;i++ )
@@ -108,9 +112,10 @@ int main(int, char **argv)
 		}
 		if( line[0] == '\0' )
 			return 0;
-				
+*/
 		double ans;
-		if( calc.parse(line, ans) )
+//		if( calc.parse(line, ans) )
+		if( calc.parse(argv[index], ans) )
 		{
 			cerr << "parse failed\n";
 			calc.PrintMarker(cerr);
@@ -119,10 +124,11 @@ int main(int, char **argv)
 		else if( !finite(ans) )
 			cerr << "answer not finite\n";
 		else
-			cout << "ans = " << ans << "\n";
+			cout << "Input: " << argv[index] << " ans = " << ans << "\n";
+		index++;
 	}
 fini :	
-	double value;
+/*	double value;
 	if( calc.Fetch("rho", value) )
 		cerr << "fetch of rho failed\n";
 	cout << "rho = " << value << ", abc = " << abc << "\n";
@@ -153,5 +159,5 @@ fini :
        cout << ", " << ptr[i];
     cout << ")\n";
     delete [] ptr;	
-	return 0;
+*/	return 0;
 }

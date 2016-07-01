@@ -2,6 +2,8 @@ if(${verbose_traversal})
   message(STATUS "Entered Calc subdirectory")
 endif(${verbose_traversal})
 
+message(STATUS "blessed output in Calc: ${EOSLIB_BLESSED_OUTPUT}\n")
+set(EOSLIB_CALC_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Calc)
 set(Calc_src)
 
 add_subdirectory(Subs)
@@ -20,7 +22,24 @@ foreach(test ${tests})
   target_link_libraries(${test} Calc)
   # TestCalc requires interactive input.
   #  add_test(${test} ${test})
+########
+#  set(args "<< EOF m(2,2) rho abc \n EOF")
+	set(args "echo -e 'm(2,2)\nrho\nabc'")##this line provides correct output from terminal
+	set(args "rho abc m(2,2)")
+########
+  add_test(NAME ${test}
+    COMMAND ${CMAKE_COMMAND}
+#    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/"echo -e 'm\(2,2\)\nrho\nabc' | ./TestCalc" 
+    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
+    -D test_args:string=${args}
+    -D out_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Out.blessed
+    -D err_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Err.blessed 
+    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+    )
+  message(STATUS Applications ${CMAKE_CURRENT_BINARY_DIR}/${test})
+  set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
+
 
 if(${verbose_traversal})
   message(STATUS "Exiting Calc subdirectory")
