@@ -30,9 +30,9 @@ int main(int, char **argv)
 		
 		ArgError;
 	}
-	cout << "\n";
-	cout << file;
-	cout << "\n";
+	//	cout << "\n";
+	//	cout << file;
+	//	cout << "\n";
 	cout.flush();
 	if( file == NULL )
 		cerr << Error("Must specify data file") << Exit;

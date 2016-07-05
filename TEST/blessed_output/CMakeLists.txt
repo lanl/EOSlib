@@ -6,7 +6,7 @@ set(EOSLIB_BLESSED_OUTPUT ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
 
 list(APPEND subdirectories Applications Calc DataBase
   DnKappa EOStypes Eos ExtEOS ExtEOStypes LinkList Local
-  OneDFunction Spline)
+  ODE OneDFunction Spline)
 
 foreach( subdirectory ${subdirectories})
   add_subdirectory(${subdirectory})

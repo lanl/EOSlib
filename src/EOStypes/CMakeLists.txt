@@ -13,8 +13,8 @@ add_subdirectory(IdealGas)
 # add_subdirectory(MieGruneisen)
 # add_subdirectory(PTequilibrium)
 # add_subdirectory(Porous)
-#add_subdirectory(Sesame)
- add_subdirectory(StiffenedGas)
+# add_subdirectory(Sesame)
+add_subdirectory(StiffenedGas)
 # add_subdirectory(Uniaxial)
 
 add_library( EOStypes ${${projectName}_policy} dummy.cpp)
@@ -29,7 +29,16 @@ list( APPEND tests TestRiemann )
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} EOStypes)
-  add_test(TestRiemann TestRiemann)
+  # add_test(TestRiemann TestRiemann)
+  add_test(NAME TestRiemann
+    COMMAND ${CMAKE_COMMAND}
+    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestRiemann
+    -D test_args:string=${args}
+    -D out_blessed=${EOSLIB_SESAME_BLESSED_OUTPUT}/TestRiemannOut.blessed
+    -D err_blessed=${EOSLIB_SESAME_BLESSED_OUTPUT}/TestRiemannErr.blessed 
+    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+   )
+ set_tests_properties(TestRiemann PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
 if(${verbose_traversal})

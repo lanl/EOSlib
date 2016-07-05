@@ -31,6 +31,7 @@ include_directories(EOStypes/IdealGas)
 include_directories(EOStypes/StiffenedGas)
 include_directories(EOStypes/Hayes)
 #include_directories(EOStypes/Sesame)
+include_directories(EOStypes/JWL)
 add_subdirectory(EOStypes)
 
 if(${verbose_traversal})
