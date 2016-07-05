@@ -16,7 +16,7 @@ set_property(TARGET Porous PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( Porous Eos DataBase ODE)
 
-list( APPEND TestFrozenPorous TestPhi TestPorousEOS )
+list( APPEND tests TestFrozenPorous TestPhi TestPorousEOS )
 
 foreach(test ${tests})
   add_executable(${test}Porous ${test}.C)
