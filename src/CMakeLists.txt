@@ -29,6 +29,7 @@ add_subdirectory(Eos)
 include_directories(EOStypes)
 include_directories(EOStypes/IdealGas)
 include_directories(EOStypes/StiffenedGas)
+include_directories(EOStypes/Hayes)
 #include_directories(EOStypes/Sesame)
 add_subdirectory(EOStypes)
 

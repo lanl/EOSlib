@@ -6,7 +6,7 @@ set(EOStypes_src)
 
 # add_subdirectory(Davis)
 # add_subdirectory(GenHayes)
-# add_subdirectory(Hayes)
+ add_subdirectory(Hayes)
 # add_subdirectory(HayesBM)
 add_subdirectory(IdealGas)
 # add_subdirectory(JWL)
