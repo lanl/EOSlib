@@ -3,7 +3,7 @@
 #include "EOS.h"
 #include "IdealGas.h"
 
-#include "Riemann_gen.h"
+#include <Riemann_gen.h>
 #include "IdealGas_Riemann.h"
 #include <iostream>
 

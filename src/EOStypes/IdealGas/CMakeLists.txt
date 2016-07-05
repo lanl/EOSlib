@@ -16,8 +16,6 @@ set_property(TARGET IdealGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( IdealGas Eos DataBase ODE)
 
-list( APPEND tests IdealGas Test1 TestDetonation TestDeflagration TestPolar)
-
 foreach(test IdealGas Test1 TestDetonation TestDeflagration TestPolar)
   add_executable(${test}IdealGas ${test}.C)
   target_link_libraries(${test}IdealGas  IdealGas)
