@@ -5,7 +5,7 @@ endif(${verbose_traversal})
 add_subdirectory(test_data)
 
 list(APPEND data_files EOS EOS_VT ElasticPlastic ElasticPlastic1D Explosives HMX
-  Libersky Porous Sesame Uniaxial Units)
+  Libersky Porous Sesame Units)
 
 foreach(data_file ${data_files})
   configure_file(${data_file}.data ${CMAKE_CURRENT_BINARY_DIR}/${data_file}.data COPYONLY)

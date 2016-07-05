@@ -1,0 +1,46 @@
+.include DataBaseUnits.data
+
+:SharedLibs=EOS
+{
+    EOS     = NULL
+    HayesBM = $EOSLIB_DATA_PATH/../src/EOStypes/HayesBM/libHayesBM
+}
+
+.base =EOS
+.units=hydro::std
+
+
+HayesBM=HMX;
+{
+    rho0 = 1.9      # g/cm^3
+    P0   = 1.0e-4   # GPa
+    T0   = 300      # degrees K
+    K0   =  14.7    # GPa
+    Kp0  =   8.6
+    Cv   = 1.5e-3   # (MJ/kg)/K
+    G0 = G1 = 1.1   # Gamma/V = const
+    e0 = T0*Cv
+}
+
+
+
+:SharedLibs=EOS_VT
+{
+    EOS_VT  = NULL
+    HayesBM = $EOSLIB_DATA_PATH/../src/EOStypes/HayesBM/libHayesBM
+}
+
+.base =EOS_VT
+.units=hydro::std
+
+HayesBM=HMX;
+{
+    rho0 = 1.9      # g/cm^3
+    P0   = 1.0e-4   # GPa
+    T0   = 300      # degrees K
+    K0   =  14.7    # GPa
+    Kp0  =   8.6
+    Cv   = 1.5e-3   # (MJ/kg)/K
+    G0 = G1 = 1.1   # Gamma/V = const
+    e0 = T0*Cv
+}

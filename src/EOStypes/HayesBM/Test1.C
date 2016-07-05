@@ -5,6 +5,8 @@
 #include "Hugoniot_gen.h"
 #include "HayesBM.h"
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
