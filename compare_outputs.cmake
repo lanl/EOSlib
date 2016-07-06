@@ -43,7 +43,7 @@ execute_process(
 #file(REMOVE ${OUT_TEST} ${ERR_TEST})
 
 if(test_not_successful)
-  message(SEND_ERROR "${output_test} does not match ${output_blessed}!")
+  message(SEND_ERROR "${output_test} does not match ${out_blessed}!")
 endif(test_not_successful)
 
 return(test_not_successful)

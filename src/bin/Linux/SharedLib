@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#USAGE: SharedLib lib.so libs.a objs.o
+
+lib=$1
+shift
+rm -f $lib
+
+CWD=`dirname $0`
+CWD=`(cd $CWD; pwd)`
+
+#ld -g -shared  --export-dynamic -o $lib --whole-archive $CWD/dso_handle.o $@
+g++ -g -shared  -Wl,--export-dynamic -o $lib -Wl,--whole-archive $@ -Wl,--no-whole-archive
