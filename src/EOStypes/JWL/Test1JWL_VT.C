@@ -2,6 +2,7 @@
 #include <Arg.h>
 
 #include "JWL_VT.h"
+using namespace std;
 
 int main(int, char **argv)
 {

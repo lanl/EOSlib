@@ -166,7 +166,7 @@ int BKW_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( std::isnan(V0) || isnan(Cv) )
+    if( std::isnan(V0) || std::isnan(Cv) )
     {
         EOSerror->Log(FUNC,"parameter not all set\n");
         return 1;
@@ -179,7 +179,7 @@ int BKW_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
     BKW HE(*this);
     double p0 = HE.P(V0,e0);
     double T0 = HE.T(V0,e0);
-    if( std::isnan(p0) || isnan(T0) )
+    if( std::isnan(p0) || std::isnan(T0) )
     {
         EOSerror->Log(FUNC,"P or T failed at (V0,e0)\n");
         return 1;

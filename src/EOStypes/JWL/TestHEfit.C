@@ -3,6 +3,8 @@
 #include <EOS.h>
 #include "HEfit.h"
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
@@ -50,7 +52,7 @@ int main(int, char **argv)
     if( gas == NULL )
         cerr << Error("cast failed") << Exit;
 
-    if( !std::isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !std::isnan(e) )
     {
         double P = eos->P(V,e);
         cout << "P = " << P << "\n";

@@ -2,7 +2,7 @@ if(${verbose_traversal})
   message(STATUS "Entered EOStypes subdirectory")
 endif(${verbose_traversal})
 
-list(APPEND subdirectories_types IdealGas StiffenedGas)
+list(APPEND subdirectories_types Davis GenHayes Hayes HayesBM IdealGas JWL MieGruneisen Porous PTequilibrium Sesame StiffenedGas )
 
 foreach( subdirectory ${subdirectories_types})
   add_subdirectory(${subdirectory})

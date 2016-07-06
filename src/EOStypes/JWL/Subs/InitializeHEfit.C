@@ -50,8 +50,8 @@ int HEfit::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
 
-    if( std::isnan(V0) || isnan(rho_CJ) || isnan(P_CJ)
-        || std::isnan(rho_min)|| isnan(rho_max) )
+    if( std::isnan(V0) || std::isnan(rho_CJ) || std::isnan(P_CJ)
+        || std::isnan(rho_min)|| std::isnan(rho_max) )
     {
         EOSerror->Log(FUNC,"variable not set: V0=%lf, rho_CJ=%lf, P_CJ=%lf\n"
               "\trho_min=%lf, rho_max=%lf, Pmin=%lf, Pmax=%lf, Gamma0=%lf\n",

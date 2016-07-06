@@ -4,6 +4,8 @@
 #include <IO.h>
 #include "HEprods.h"
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);

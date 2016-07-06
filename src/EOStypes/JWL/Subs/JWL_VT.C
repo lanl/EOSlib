@@ -140,8 +140,8 @@ int JWL_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( std::isnan(V0) || isnan(A) || isnan(R1) || isnan(B) || isnan(R2)
-        || std::isnan(omega) || isnan(Edet) )
+    if( std::isnan(V0) || std::isnan(A) || std::isnan(R1) || std::isnan(B) || std::isnan(R2)
+        || std::isnan(omega) || std::isnan(Edet) )
     {
         EOSerror->Log(FUNC,"variable not set: V0=%lf, A=%lf, R1=%lf, "
               "B=%lf, R2=%lf, omega=%lf, Edet=%lf\n",

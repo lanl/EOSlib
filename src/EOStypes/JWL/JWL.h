@@ -9,6 +9,8 @@
 #undef  BugReport
 #define BugReport "Please report bugs to rtm@lanl.gov"
 
+using namespace std;
+
 extern const char *JWLlib_vers;
 extern const char *JWLlib_date;
 

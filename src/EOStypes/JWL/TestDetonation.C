@@ -5,6 +5,8 @@
 //
 #define NaN EOS::NaN
 
+using namespace std;
+
 int HugFail(double P0, HydroState &state0, WaveState &shock1)
 {
     double us = shock1.us;

@@ -4,6 +4,9 @@
 #include <EOS.h>
 
 #define NaN EOS_VT::NaN
+
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
@@ -44,7 +47,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !std::isnan(V) && !isnan(T) )
+    if( !std::isnan(V) && !std::isnan(T) )
     {
         double P = eos->P(V,T);
         cout << "P = " << P << "\n";
