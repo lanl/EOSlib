@@ -20,7 +20,7 @@ list (APPEND tests Test1JWL_VT Test2JWL_VT TestBKW TestDeflagration TestDetonati
 foreach(test ${tests} )
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} JWL)
-  set(args "file ${EOSLIB_DATA_PATH}/test_data/JWLTest.data")
+ # set(args "file ${EOSLIB_DATA_PATH}/test_data/JWLTest.data")
   add_test(NAME ${test}
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}

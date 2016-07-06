@@ -33,6 +33,7 @@ include_directories(EOStypes/Hayes)
 include_directories(EOStypes/HayesBM)
 #include_directories(EOStypes/Sesame)
 include_directories(EOStypes/JWL)
+include_directories(EOStypes/MieGruneisen)
 add_subdirectory(EOStypes)
 
 if(${verbose_traversal})

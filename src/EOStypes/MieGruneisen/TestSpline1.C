@@ -4,6 +4,8 @@
 #include <EOS.h>
 #include "UsUpSpline.h"
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);

@@ -10,7 +10,7 @@ add_subdirectory(Hayes)
 add_subdirectory(HayesBM)
 add_subdirectory(IdealGas)
 add_subdirectory(JWL)
-# add_subdirectory(MieGruneisen)
+add_subdirectory(MieGruneisen)
 # add_subdirectory(PTequilibrium)
 # add_subdirectory(Porous)
 # add_subdirectory(Sesame)
@@ -22,7 +22,7 @@ set_property(TARGET EOStypes PROPERTY CXX_STANDARD 11)
 set_property(TARGET EOStypes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET EOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( EOStypes IdealGas )
+target_link_libraries( EOStypes Hayes HayesBM IdealGas JWL MieGruneisen StiffenedGas )
 
 list( APPEND tests TestRiemann )
 

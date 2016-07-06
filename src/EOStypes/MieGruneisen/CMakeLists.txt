@@ -13,7 +13,7 @@ set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD 11)
 set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET MieGruneisen PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( MieGruneisen Eos DataBase ODE)
+target_link_libraries( MieGruneisen Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 
 list( APPEND tests Test1 Test2 Test2VT TestApproxT TestSpline1 TestSpline2 TestSpline2VT TestSplineParams TestSplinePe1 TestSplinePe2 TestSplinePMMA )
 

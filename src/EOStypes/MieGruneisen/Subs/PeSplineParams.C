@@ -246,14 +246,14 @@ int PeSplineParams::ConvertParams(Convert &convert, EOSbase::Error *EOSerror)
 #define FUNC "PeSplineParams::ParamsOK",__FILE__,__LINE__,NULL
 int PeSplineParams::ParamsOK(Calc &calc, EOSbase::Error *EOSerror)
 {
-    if( std::isnan(V0) || isnan(e0) || isnan(P0) || isnan(T0) || isnan(S0) )
+  if( std::isnan(V0) || std::isnan(e0) || std::isnan(P0) || std::isnan(T0) || std::isnan(S0) )
     {
         EOSerror->Log(FUNC,"variable not set: "
                 "V0=%lf, e0=%lf, P0=%lf, T0=%lf, S0=%lf\n",
                 V0, e0, P0, T0, S0);
         return 1;
     }
-    if( std::isnan(G0) || isnan(G1) || isnan(Cv) )
+  if( std::isnan(G0) || std::isnan(G1) || std::isnan(Cv) )
     {
         EOSerror->Log(FUNC,"variable not set: G0=%lf, G1=%lf, Cv=%lf\n",
                 G0, G1, Cv);
