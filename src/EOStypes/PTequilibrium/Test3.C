@@ -2,6 +2,9 @@
 
 #include <PTequilibrium.h>
 #include <EOS_VT.h>
+
+using namespace std;
+
 //
 // need to set environment variable SharedLibDirEOS
 // cd ../..; . SetEnv
@@ -74,7 +77,7 @@ int main(int, char **argv)
         e1 += (lambda2*(T2-T1)+dTde2*de)/dTde_av;
         T1 = eos1->T(V1,e1);
         T2 = eos2->T(V2,e2);
-        if( std::isnan(T1) || T1 < 0 || isnan(T2) || T2 < 0 )
+        if( std::isnan(T1) || T1 < 0 || std::isnan(T2) || T2 < 0 )
         {
             cerr << Error("Failed to equilibrate temperature") << Exit;
             return 1;

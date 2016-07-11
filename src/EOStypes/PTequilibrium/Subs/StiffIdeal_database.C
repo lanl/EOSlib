@@ -1,4 +1,4 @@
-#include "StiffIdeal.h"
+#include <StiffIdeal.h>
 #include "StiffIdeal_VT.h"
 
 #include <string>

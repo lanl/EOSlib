@@ -3,9 +3,9 @@
 :SharedLibs=EOS
 {
     EOS        = NULL
-    UsUp       = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/MieGruneisen
-    UsUpSpline = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/MieGruneisen
-    PeSpline   = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/MieGruneisen
+    UsUp       = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/libMieGruneisen
+    UsUpSpline = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/libMieGruneisen
+    PeSpline   = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/libMieGruneisen
 }
 .base =EOS
 .units=hydro::std
@@ -81,9 +81,9 @@ EOS:PeSpline=PMMA-hydro
 :SharedLibs=EOS_VT
 {
     EOS_VT     = NULL
-    UsUp       = ./UsUp.so
-    UsUpSpline = ./UsUp.so
-    PeSpline   = ./UsUp.so
+    UsUp       = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/libMieGruneisen
+    UsUpSpline = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/libMieGruneisen
+    PeSpline   = $EOSLIB_DATA_PATH/../src/EOStypes/MieGruneisen/libMieGruneisen
 }
 .base =EOS_VT
 .units=hydro::std

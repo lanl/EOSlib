@@ -2,6 +2,9 @@
 
 #include <PTequilibrium_VT.h>
 #include <EOS.h>
+
+using namespace std;
+
 //
 // need to set environment variable SharedLibDirEOS
 // cd ../..; . SetEnv
@@ -52,7 +55,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !std::isnan(V) && !isnan(T) )
+    if( !std::isnan(V) && !std::isnan(T) )
     {
         PTequilibrium_VT *eosPT = dynamic_cast<PTequilibrium_VT*>(eos);
         if( eosPT == NULL )

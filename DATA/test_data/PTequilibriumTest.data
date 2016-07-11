@@ -1,0 +1,111 @@
+.include ../../../DATA/EOS.data
+
+:DataBase.=Environment
+{
+#  SharedLibDirEOS = $PWD/../../lib/Linux
+# circumvent kdbg messing up environment variables (mx:t14rm only)
+  SharedLibDirEOS = /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
+}
+
+:SharedLibs.=EOS
+{
+    PTequilibrium   = ./PTequilibrium.so
+    StiffIdeal      = ./PTequilibrium.so
+}
+:SharedLibs.=EOS_VT
+{
+    PTequilibrium   = ./PTequilibrium.so
+}
+
+.units = hydro::std
+EOS_VT:PTequilibrium=mix0.8; units=hydro::std
+{
+    eos1 = "Hayes::HMX"
+    eos2 = "IdealGas::5/3"
+    lambda1 = 0.8
+}
+
+###
+
+EOS:PTequilibrium=mix0.8; units=hydro::std
+{
+    eos1 = "Hayes::HMX"
+    eos2 = "IdealGas::5/3"
+    lambda1 = 0.8
+}
+EOS:PTequilibrium=mix0.99; units=hydro::std
+{
+    eos1 = "Hayes::HMX"
+    eos2 = "IdealGas::5/3"
+    lambda1 = 0.99
+}
+EOS:PTequilibrium=mix0.01; units=hydro::std
+{
+    eos1 = "Hayes::HMX"
+    eos2 = "IdealGas::5/3"
+    lambda1 = 0.01
+}
+
+##
+/************** Replace from Explosive.data *****************/
+EOS:PTequilibrium!=HMX0.8; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::HMX"
+    eos2 = "JWL::HMX"
+    lambda1 = 0.8
+}
+EOS:PTequilibrium!=HMX0.99; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::HMX"
+    eos2 = "JWL::HMX"
+    lambda1 = 0.99
+    P_ref = 0.0001
+    T_ref = 300
+}
+EOS:PTequilibrium!=HMX0.01; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::HMX"
+    eos2 = "JWL::HMX"
+    lambda1 = 0.01
+}
+#
+#
+EOS:PTequilibrium!=PBX9501_0.01; units=hydro::std
+{
+    P_ref = 0.0001
+    T_ref = 300
+    eos1 = "Sesame::PBX9501"
+    eos2 =  "Hayes::PBX9501"
+    lambda1 = 0.01
+}
+EOS:Hayes!=PBX9501; units=hydro::std
+{
+    # Gibbs & Popolato, p 116
+    rho0 = 1.843            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # 0.1 < Up < 0.9
+    c0= 2.953
+    s = 1.507
+    #
+    rho0 = 1.833
+    e0 = 6.1021     # de from sesame products
+}
+#
+#
+#
+EOS:StiffIdeal=HMX; units=hydro::std
+{
+    lambda1 = 1;
+    rho_ref = 1.9;
+    P_ref   = 1.0e-4;
+    c0= 2.953
+    s = 1.507
+    Cv1 = 2.0e-3
+    G2 = 3-1
+    Cv2 = 2.1e-3
+    Q = 4  
+}

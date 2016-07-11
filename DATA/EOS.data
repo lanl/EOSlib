@@ -284,7 +284,7 @@ Hayes=Quartz.x-cut; units=hydro::std
 /********************************
 *       Uniaxial                * (depricated)
 ********************************/
-.include Uniaxial.data
+#.include Uniaxial.data
 
 /********************************
 *       ElasticPlastic          * (depricated)

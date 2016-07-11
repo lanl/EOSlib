@@ -3,10 +3,10 @@
 :SharedLibs=EOS
 {
     EOS     = NULL
-    JWL     = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/JWL
-    HEfit   = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/JWL
-    HEprods = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/JWL
-    BKW     = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/JWL
+    JWL     = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
+    HEfit   = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
+    HEprods = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
+    BKW     = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
 }
 .base =EOS
 .units=hydro::std

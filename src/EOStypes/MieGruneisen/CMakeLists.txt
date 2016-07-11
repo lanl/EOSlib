@@ -15,12 +15,12 @@ set_property(TARGET MieGruneisen PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( MieGruneisen Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 
-list( APPEND tests Test1 Test2 Test2VT TestApproxT TestSpline1 TestSpline2 TestSpline2VT TestSplineParams TestSplinePe1 TestSplinePe2 TestSplinePMMA )
+list( APPEND tests Test1 TestSpline1 TestSplineParams TestSplinePMMA )
+list( APPEND testsWithArgs Test2 Test2VT TestApproxT TestSpline2 TestSpline2VT TestSplinePe1 TestSplinePe2 )
 
 foreach(test ${tests})
   add_executable(${test}MieGruneisen ${test}.C)
   target_link_libraries(${test}MieGruneisen MieGruneisen)
- # add_test(${test}IdealGas ${test}IdealGas)
  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
   add_test(NAME ${test}MieGruneisen
     COMMAND ${CMAKE_COMMAND}
@@ -35,22 +35,22 @@ foreach(test ${tests})
 endforeach(test)
 
 #### use this if test(s) require file specification####
-#
-# foreach(test Test2 Test2VT)
-#   add_executable(${test}IdealGas ${test}.C)
-#   target_link_libraries(${test}IdealGas IdealGas)
-#   set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-#   add_test(NAME ${test}IdealGas
-#     COMMAND ${CMAKE_COMMAND}
-#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}IdealGas
-#     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_IDEALGAS_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_IDEALGAS_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-#     )
-#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}IdealGas)
-#   set_tests_properties(${test}IdealGas PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
+
+foreach(test ${testsWithArgs} )
+  add_executable(${test}MieGruneisen ${test}.C)
+  target_link_libraries(${test}MieGruneisen MieGruneisen)
+  set(args "file ${EOSLIB_DATA_PATH}/test_data/MieGruneisenTest.data")
+  add_test(NAME ${test}MieGruneisen
+    COMMAND ${CMAKE_COMMAND}
+    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen
+    -D test_args:string=${args}
+    -D out_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Out.blessed
+    -D err_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Err.blessed 
+    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+    )
+  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen)
+  set_tests_properties(${test}MieGruneisen PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+endforeach(test)
 
 if(${verbose_traversal})
   message(STATUS "Exiting MieGruneisen subdirectory")

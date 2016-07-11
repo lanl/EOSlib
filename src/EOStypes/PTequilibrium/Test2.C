@@ -45,7 +45,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !std::isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !std::isnan(e) )
     {
         if( 0 && eos->NotInDomain(V,e) )
         {

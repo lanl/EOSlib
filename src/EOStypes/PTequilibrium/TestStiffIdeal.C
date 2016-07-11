@@ -2,6 +2,8 @@
 
 #include <StiffIdeal.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
@@ -43,7 +45,7 @@ int main(int, char **argv)
     StiffIdeal *eosSI = dynamic_cast<StiffIdeal *>(eos);
     if( eosSI == NULL )
         cerr << Error("eosSI is NULL") << Exit;
-    if( std::isnan(V) || isnan(e) )
+    if( std::isnan(V) || std::isnan(e) )
     {
         const char *info = db.BaseInfo("EOS");
         if( info == NULL )
