@@ -3,7 +3,7 @@ if(${verbose_traversal})
 endif(${verbose_traversal})
 
 set(EOStypes_src)
-
+set(EOSLIB_EOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes)
 # add_subdirectory(Davis)
 # add_subdirectory(GenHayes)
 add_subdirectory(Hayes)
@@ -34,7 +34,7 @@ foreach(test ${tests})
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestRiemann
     -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_SESAME_BLESSED_OUTPUT}/TestRiemannOut.blessed
+    -D out_blessed=${EOSLIB_EOSTYPES_BLESSED_OUTPUT}/TestRiemannOut.blessed
     -D err_blessed=${EOSLIB_SESAME_BLESSED_OUTPUT}/TestRiemannErr.blessed 
     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
    )
