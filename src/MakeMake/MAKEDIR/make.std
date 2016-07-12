@@ -1,9 +1,0 @@
-.SUFFIXES:
-
-FILES=*.[hcCf]
-
-
-MakeFile: $(FILES) Depend
-	eval MakeMake EXEC $(FILES) > MakeFile \
-		"CWD=$(CWD)" "OS=$(OS)" $(SYSFLAGS)
-	make -f MakeFile SubMake

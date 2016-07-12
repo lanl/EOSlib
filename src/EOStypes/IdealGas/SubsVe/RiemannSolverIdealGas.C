@@ -75,7 +75,7 @@ int RiemannSolver_IdealGas::Solve(const HydroState &state_l,
 		dP = -du/(dudP_r - dudP_l);
 		
 		P += dP;
-		if( abs(dP) < RelErr*P )
+		if( std::abs(dP) < RelErr*P )
 		{
 			status = 0;
 			break;
