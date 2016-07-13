@@ -21,7 +21,7 @@ int main(int, char **argv)
 		GetVar(base,base);
 		GetVar(type,type);
 		GetVar(name,name);
-        GetVarValue(plain,print,-1);
+		GetVarValue(plain,print,-1);
 		GetVarValue(parameters, print, 1);
 		GetVarValue(use, print, 2);
 			
@@ -55,6 +55,6 @@ int main(int, char **argv)
     char *property = strdup(str.c_str());
     db.List(cout,property,print);
     
-	return 0;
+    return 0;
 }
     
