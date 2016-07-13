@@ -62,7 +62,6 @@ int main(int, char **argv)
         std::cerr << Error("Failed to fetch to = ") << to << Exit;
     
     Convert convert(*From, *To);
-    cout << convert; cout.flush();
     if( convert )
         std::cerr << Error("Bad convert status\n") << Exit;
     
