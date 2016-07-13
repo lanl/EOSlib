@@ -62,14 +62,15 @@ int main(int, char **argv)
         std::cerr << Error("Failed to fetch to = ") << to << Exit;
     
     Convert convert(*From, *To);
-    cout << convert; cout.flush();
+    //cout << convert;
+    cout.flush();
     if( convert )
         std::cerr << Error("Bad convert status\n") << Exit;
     
     for( ; *argv; ++argv)
     {    
         double factor = convert.factor(*argv);
-        cout << *argv
+	     cout << *argv
              << " "    << From->Unit(*argv)
              << " -> " << To->Unit(*argv)
              << " times " << factor << "\n";
