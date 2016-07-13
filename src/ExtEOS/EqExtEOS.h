@@ -74,7 +74,7 @@ public:
 inline double EqExtEOS::c(double V, double e)
 {
     double csq = c2(V,e);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 inline double EqExtEOS::KS(double V, double e)
 {
@@ -83,7 +83,7 @@ inline double EqExtEOS::KS(double V, double e)
 inline double EqExtEOS::c(double V, double e, const double *z)
 {
     double csq = c2(V, e, z);
-    return (isnan(csq) || csq < 0) ? EOS::NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? EOS::NaN : sqrt(csq);
 }
 inline double EqExtEOS::KS(double V, double e, const double *z)
 {

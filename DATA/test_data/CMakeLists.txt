@@ -3,7 +3,8 @@ if(${verbose_traversal})
 endif(${verbose_traversal})
 
 list(APPEND data_files DataBaseTest DataBaseUnits EosTest IdealGasTest
-   HayesTest HayesBMTest JWLTest MieGruneisenTest StiffenedGasTest )
+  HayesTest HayesBMTest JWLTest MieGruneisenTest StiffenedGasTest
+  PTequilibriumTest )
 
 foreach(data_file ${data_files})
   configure_file(${data_file}.data ${CMAKE_CURRENT_BINARY_DIR}/${data_file}.data COPYONLY)

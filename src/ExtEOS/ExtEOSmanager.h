@@ -2,7 +2,7 @@
 #define EOSLIB_EXT_EOS_MANAGER_H
 
 #include <iostream>
-#include "EOSmanager.h"
+#include "../Manager/EOSmanager.h"
 #include "ExtEOSstate.h"
 
 class ExtEOS_Array : public PointerArray<ExtEOS>

@@ -35,7 +35,14 @@ include_directories(EOStypes/HayesBM)
 include_directories(EOStypes/JWL)
 include_directories(EOStypes/MieGruneisen)
 include_directories(EOStypes/PTequilibrium)
+#include_directories(Uniaxial)
 add_subdirectory(EOStypes)
+
+include_directories(Manager)
+add_subdirectory(Manager)
+
+include_directories(ExtEOS)
+add_subdirectory(ExtEOS)
 
 if(${verbose_traversal})
   message(STATUS "Exiting src subdirectory")

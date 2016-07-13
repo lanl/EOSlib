@@ -3,6 +3,9 @@
 
 #include <EOS.h>
 #include "IDOF.h"
+
+using namespace std;
+
 //
 // base class for Extended EOS
 //      EOS with internal degrees of freedom (IDOF)
@@ -146,7 +149,7 @@ inline int ExtEOS::get_zref(const char *var, double &value)
 inline double ExtEOS::c(double V, double e)
 {
     double csq = c2(V,e);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 inline double ExtEOS::KS(double V, double e)
 {
@@ -155,7 +158,7 @@ inline double ExtEOS::KS(double V, double e)
 inline double ExtEOS::c(double V, double e, const double *z)
 {
     double csq = c2(V, e, z);
-    return (isnan(csq) || csq < 0) ? EOS::NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? EOS::NaN : sqrt(csq);
 }
 inline double ExtEOS::KS(double V, double e, const double *z)
 {

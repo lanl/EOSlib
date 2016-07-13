@@ -1,20 +1,21 @@
-.include ../../../DATA/EOS.data
+.include ../EOS.data
 
 :DataBase.=Environment
 {
 #  SharedLibDirEOS = $PWD/../../lib/Linux
 # circumvent kdbg messing up environment variables (mx:t14rm only)
-  SharedLibDirEOS = /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
+  SharedLibDirEOS = $EOSLIB_DATA_PATH/../src/EOStypes/PTequilibrium
+  #/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
 }
 
 :SharedLibs.=EOS
 {
-    PTequilibrium   = ./PTequilibrium.so
-    StiffIdeal      = ./PTequilibrium.so
+    PTequilibrium   = $EOSLIB_DATA_PATH/../src/EOStypes/PTequilibrium/libPTequilibrium
+    StiffIdeal      = $EOSLIB_DATA_PATH/../src/EOStypes/PTequilibrium/libPTequilibrium
 }
 :SharedLibs.=EOS_VT
 {
-    PTequilibrium   = ./PTequilibrium.so
+    PTequilibrium   = $EOSLIB_DATA_PATH/../src/EOStypes/PTequilibrium/libPTequilibrium
 }
 
 .units = hydro::std
