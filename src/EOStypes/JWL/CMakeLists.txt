@@ -15,7 +15,7 @@ set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( JWL Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 
-list (APPEND testsWithArgs Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestHEprods TestJWL TestJWLPT )
+list (APPEND testsWithArgs Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestJWL TestJWLPT )
 list (APPEND tests Test1JWL_VT  )
 
 foreach(test ${tests} )
