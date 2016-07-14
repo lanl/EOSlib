@@ -123,9 +123,9 @@ int main(int, char **argv)
             cout << "Peq, Teq = " << eosSI->Peq << ", " << eosSI->Teq << "\n";
             continue;
         }
-        if( abs(V-lambda1*V1-lambda2*V2) > 1e-4*V )
+        if( std::abs(V-lambda1*V1-lambda2*V2) > 1e-4*V )
             cout << "V error: " << V << " " << lambda1*V1+lambda2*V2 << "\n";
-        if( abs(e-lambda1*e1-lambda2*e2) > 1e-4*e )
+        if( std::abs(e-lambda1*e1-lambda2*e2) > 1e-4*e )
             cout << "e error: " << e << " " << lambda1*e1+lambda2*e2 << "\n";      
         // check PT
         HydroState PT;
@@ -133,20 +133,20 @@ int main(int, char **argv)
             cout << "PT failed\n";
         else
         {
-            if( abs(V-PT.V) > 0.001*V )
+            if( std::abs(V-PT.V) > 0.001*V )
                 cout << "PT.V error"  << V << ", " << PT.V << "\n";
-            if( abs(e-PT.e) > 0.001*abs(e) )
+            if( std::abs(e-PT.e) > 0.001*abs(e) )
                 cout << "PT.e error"  << e << ", " << PT.e << "\n";                
         }
         // check Gamma and CV
         double ep = e + 0.0001;
         double Pe = eos->P(V,ep);
         double Gammap = V*(Pe-P)/(ep-e);
-        if( abs(Gammap-Gamma) > 0.001*Gamma )
+        if( std::abs(Gammap-Gamma) > 0.001*Gamma )
             cout << "Gamma error: " << Gamma << " " << Gammap << "\n";
         double Te = eos->T(V,ep);
         double CVp = (ep-e)/(Te-T);
-        if( abs(CVp-CV) > 0.001*CV )
+        if( std::abs(CVp-CV) > 0.001*CV )
             cout << "CV error: " << CV << " " << CVp << "\n";        
         // check with d/d(lambda) with finite difference
         double lambdap = min(lambda1+0.0001,1.0);
@@ -159,9 +159,9 @@ int main(int, char **argv)
         double Tm = eosSI->Teq;
         double dPfd = (Pp-Pm)/(lambdap-lambdam);
         double dTfd = (Tp-Tm)/(lambdap-lambdam);
-        if( abs(dP-dPfd) > 0.001*(abs(dP)+abs(dPfd)) )
+        if( std::abs(dP-dPfd) > 0.001*(abs(dP)+abs(dPfd)) )
             cout << "dP error: " << dP << " " << dPfd << "\n";
-        if( abs(dT-dTfd) > 0.001*(abs(dT)+abs(dTfd)) )
+        if( std::abs(dT-dTfd) > 0.001*(abs(dT)+abs(dTfd)) )
             cout << "dT error: " << dT << " " << dTfd << "\n";
         //
         // end of check

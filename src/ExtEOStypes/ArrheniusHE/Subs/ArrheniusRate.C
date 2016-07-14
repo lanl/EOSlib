@@ -131,7 +131,7 @@ int ArrheniusRate::Integrate(double V, double e, double *z, double dt)
         dt1 = min(dt,dt1);
         if( step1(z,dt1) )
             return 1;
-        double eps = abs(z2[0]-z3[0])/1.e-4;       
+        double eps = std::abs(z2[0]-z3[0])/1.e-4;       
         if( eps > 1. )
         {
             dt1 *= 0.5;
@@ -211,7 +211,7 @@ double ArrheniusRate::Dt(double V, double e, const double *z, double lambda)
     {
         if( step1(z0,dt) )
             return EOS::NaN;
-        double eps = abs(z2[0]-z3[0])/1.e-4;
+        double eps = std::abs(z2[0]-z3[0])/1.e-4;
         if( eps > 1. )
         {
             dt *= 0.5;

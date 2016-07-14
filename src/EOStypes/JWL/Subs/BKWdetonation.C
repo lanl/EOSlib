@@ -93,7 +93,7 @@ int BKWdetonation::P(double p1,  int dir, WaveState &wave)
 {
     if( std::isnan(P0) )
         return 1;
-    if( abs(Pcj - p1) < rel_tol*Pcj  )
+    if( std::abs(Pcj - p1) < rel_tol*Pcj  )
         return CJwave( dir, wave );
     if( p1 < Pcj )
         return 1;
@@ -130,7 +130,7 @@ int BKWdetonation::u(double u1,  int dir, WaveState &wave)
     if( std::isnan(P0) )
         return 1;
     u1 = dir*(u1-u0);
-    if( abs(ucj - u1) < rel_tol*ucj  )
+    if( std::abs(ucj - u1) < rel_tol*ucj  )
         return CJwave( dir, wave );
     if( u1 < ucj )
         return 1;
@@ -166,7 +166,7 @@ int BKWdetonation::u_s(double us, int dir, WaveState &wave)
     if( std::isnan(P0) )
         return 1;
     us = dir*(us-u0);
-    if( abs(Dcj - us) < rel_tol*Dcj  )
+    if( std::abs(Dcj - us) < rel_tol*Dcj  )
         return CJwave( dir, wave );
     if( us < Dcj )
         return 1;
@@ -206,7 +206,7 @@ int BKWdetonation::V(double v1,  int dir, WaveState &wave)
 {
     if( std::isnan(P0) )
         return 1;
-    if( abs(Vcj - v1) < rel_tol*Vcj )
+    if( std::abs(Vcj - v1) < rel_tol*Vcj )
         return CJwave( dir, wave );
     if( v1 <= Vlimit || Vcj < v1 )
         return 1;

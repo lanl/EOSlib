@@ -8,7 +8,7 @@ double ViscousProfile::Q(double V, double e, double lambda, double dudx)
 {
     double du = dudx*len;
     double c  = FF.c(V,e,lambda); 
-    return - nu*(du/V)*(c + r*abs(du));
+    return - nu*(du/V)*(c + r*std::abs(du));
 }
 
 ViscousProfile::ViscousProfile(FFrate *rate, double pvn, double umin)
@@ -122,7 +122,7 @@ int ViscousProfile::F(double *y_prime, const double *y_xi, double xi)
     double nup = nu;
     //
     double S = -q*V/(c*c);
-    y_prime[0] = 0.5*c/(r*len)*(1.-sqrt(1.+4.*r*abs(S)/nup));
+    y_prime[0] = 0.5*c/(r*len)*(1.-sqrt(1.+4.*r*std::abs(S)/nup));
     if( S > 0.0 )
         y_prime[0] = -y_prime[0];
     y_prime[1] = - FF.Rate(lambda,p+max(0.,q))/(D-u);

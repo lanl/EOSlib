@@ -89,7 +89,7 @@ int main(int, char **argv)
         PolarWaveState pwave;
         if( Polar.beta0(beta,RIGHT,pwave) )
             cerr << Error("Polar.beta0 failed") << Exit;
-        if( abs(theta-pwave.theta) > tol )
+        if( std::abs(theta-pwave.theta) > tol )
             cout << "Polar.beta0 > tol: "
                  << setw(10) << setprecision(5) << theta
                  << setw(10) << setprecision(5) << pwave.theta
@@ -97,7 +97,7 @@ int main(int, char **argv)
         //
         if( Polar.P(p,RIGHT,pwave) )
             cerr << Error("Polar.P failed") << Exit;
-        if( abs(theta-pwave.theta) > tol )
+        if( std::abs(theta-pwave.theta) > tol )
             cout << "Polar.P > tol: "
                  << setw(10) << setprecision(5) << theta
                  << setw(10) << setprecision(5) << pwave.theta
@@ -107,7 +107,7 @@ int main(int, char **argv)
         {
             if( Polar.ThetaHi(theta,RIGHT,pwave) )
                 cerr << Error("Polar.ThetaHi failed") << Exit;
-            if( abs(p-pwave.P) > tol*(1.+p) )
+            if( std::abs(p-pwave.P) > tol*(1.+p) )
                 cout << "Polar.ThetaHi > tol: "
                      << setw(10) << setprecision(5) << p
                      << setw(10) << setprecision(5) << pwave.P
@@ -117,7 +117,7 @@ int main(int, char **argv)
         {
             if( Polar.ThetaLow(theta,RIGHT,pwave) )
                 cerr << Error("Polar.ThetaLow failed") << Exit;
-            if( abs(p-pwave.P) > tol*(1+p) )
+            if( std::abs(p-pwave.P) > tol*(1+p) )
                 cout << "Polar.ThetaLow > tol: "
                      << setw(10) << setprecision(5) << p
                      << setw(10) << setprecision(5) << pwave.P
@@ -154,7 +154,7 @@ int main(int, char **argv)
         if( PM.P(p,LEFT,pwave) )
             cerr << Error("PM.P failed") << Exit;
         double M = pwave.q/eos.c(pwave.V,pwave.e);
-        if( abs(theta-pwave.theta) > tol )
+        if( std::abs(theta-pwave.theta) > tol )
             cout << "PM.P > tol: "
                  << setw(10) << setprecision(5) << theta
                  << setw(10) << setprecision(5) << pwave.theta
@@ -162,7 +162,7 @@ int main(int, char **argv)
         //
         if( PM.Theta(theta,LEFT,pwave) )
             cerr << Error("PM.Theta failed") << Exit;
-        if( abs(p-pwave.P) > tol )
+        if( std::abs(p-pwave.P) > tol )
             cout << "PM.Theta > tol: "
                  << setw(10) << setprecision(5) << p
                  << setw(10) << setprecision(5) << pwave.P

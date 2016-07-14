@@ -176,12 +176,12 @@ void OneDFunction::ZERO()
     /**************************************
 	// check abs_tolerance if bracket contains 0, otherwise rel_tolerance	
 		if( ( (x0 > 0 && x1 > 0) || (x0 < 0 && x1 < 0) ) ?
-		    abs(dx) < rel_tolerance * abs(x) : abs(dx) < abs_tolerance )
+		    std::abs(dx) < rel_tolerance * abs(x) : abs(dx) < abs_tolerance )
 		{
 			return;
 		}
     ***************************************/
-        if( abs(dx) < max(abs_tolerance,rel_tolerance*abs(x)) )
+        if( std::abs(dx) < max(abs_tolerance,rel_tolerance*abs(x)) )
             return;
 
 	// Compute function at center point of bracket
@@ -208,7 +208,7 @@ void OneDFunction::ZERO()
 
 		// check quadratic is monotonic
 		dy = y1-y0;		
-		if( abs(y - 0.5 * (y1 + y0)) < 0.25*dy )
+		if( std::abs(y - 0.5 * (y1 + y0)) < 0.25*dy )
 		{
 		// Replace one end point of bracket by (x, y)
 		// and find new point x nearest to y_goal
@@ -249,7 +249,7 @@ void OneDFunction::ZERO()
 			}
 			
 		// Skip if next bisection better than Newton's step
-			if( abs(dx_prime) >= 0.125 )
+			if( std::abs(dx_prime) >= 0.125 )
 				continue;
 		
 		// Find best bracket centered on f(xi) = y_goal

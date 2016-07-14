@@ -414,7 +414,7 @@ int main(int, char **argv)
              << "\n";
          if( status )
          {
-            if( abs(D-(u+c)) < 0.0001*D ) break;
+            if( std::abs(D-(u+c)) < 0.0001*D ) break;
             cerr << Error("profile.Lambda2 failed with status ")
                  << profile.ErrorStatus(status)
                  << "\nD "  <<  setprecision(6) << D

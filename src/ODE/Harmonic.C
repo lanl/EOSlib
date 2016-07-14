@@ -16,7 +16,7 @@ public:
 	{
 		Omega2 = Omeg;
 		beta = b;
-		stop_value = abs(s);
+		stop_value = std::abs(s);
 	}
 	
 	int F(double *y_dot, const double* y, double t);

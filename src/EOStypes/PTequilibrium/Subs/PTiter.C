@@ -198,10 +198,10 @@ int PTequilibrium::PT1iter(double V, double e)
         e1 = (e - lambda2*e2)/lambda1;
         if( NotDomain1(V1,e1) )
             break;    
-        if( abs(P1-P2)<tol*P1+tol_P && abs(T1-T2)<tol*T1+tol_T )
+        if( std::abs(P1-P2)<tol*P1+tol_P && abs(T1-T2)<tol*T1+tol_T )
             return 0;
     }
-    if( abs(P1-P2)<0.1*P1 && abs(T1-T2)<0.1*T1 )
+    if( std::abs(P1-P2)<0.1*P1 && abs(T1-T2)<0.1*T1 )
     {
         return PT0iter(V,e);
     }
@@ -265,10 +265,10 @@ int PTequilibrium::PT2iter(double V, double e)
         e2 = (e - lambda1*e1)/lambda2;
         if( NotDomain2(V2,e2) )
             break;    
-        if( abs(P1-P2)<tol*P2+tol_P && abs(T1-T2)<tol*T2+tol_T )
+        if( std::abs(P1-P2)<tol*P2+tol_P && abs(T1-T2)<tol*T2+tol_T )
             return 0;
     }
-    if( abs(P1-P2)<0.1*P2 && abs(T1-T2)<0.1*T2 )
+    if( std::abs(P1-P2)<0.1*P2 && abs(T1-T2)<0.1*T2 )
     {
         return PT0iter(V,e);
     }
@@ -509,8 +509,8 @@ int PTequilibrium::PT0iter(double V, double e)
             ***/
         }
         // check convergence
-        if( abs(P1-P2)<tol*(lambda1*P1+lambda2*P2)+tol_P
-            && abs(T1-T2)<tol*(lambda1*T1+lambda2*T2)+tol_T )
+        if( std::abs(P1-P2)<tol*(lambda1*P1+lambda2*P2)+tol_P
+            && std::abs(T1-T2)<tol*(lambda1*T1+lambda2*T2)+tol_T )
         {
             return 0;
         }

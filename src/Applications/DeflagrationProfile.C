@@ -218,7 +218,7 @@ void DefProfile::Eigen(double AV[2], double AT[2], double e[2], double dTdV[2])
     for( i=0; i<2; i++ )
     {
         double y = e[i];
-        if( abs(1.-AV[0]/y) > abs(1.-AT[1]/y) )
+        if( std::abs(1.-AV[0]/y) > abs(1.-AT[1]/y) )
             dTdV[i] = (y-AV[0])/AV[1];
         else
             dTdV[i] = AT[0]/(y-AT[1]);
@@ -381,7 +381,7 @@ double DefProfile::MaxNorm(const double *y0, const double *y1,
 {
     double Norm = 0;
     for(int i=Dimension(); i--; y0++, y1++)
-        Norm = max(Norm, abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + 1.)*epsilon));
+        Norm = max(Norm, std::abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + 1.)*epsilon));
     return Norm;
 }
 class V_ODE : public ODEfunc

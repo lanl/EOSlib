@@ -241,7 +241,7 @@ double HotSpotRateCC::h(double t)
         double alpha;
         double dt1 = t1-h1/a2;
         double dt2 = 2.*h1/a2 - t1;
-        if( abs(dt2) > 1e-4 * t1 )
+        if( std::abs(dt2) > 1e-4 * t1 )
             alpha = (-dt1 + sqrt(sqr(t1-t-h1/a2) + t*(t1-t))) / dt2;
         else
             alpha = 0.5*t/dt1 * (1.0-0.5*t*dt2/sqr(dt1));

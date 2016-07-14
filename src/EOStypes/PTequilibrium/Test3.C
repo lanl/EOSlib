@@ -82,7 +82,7 @@ int main(int, char **argv)
             cerr << Error("Failed to equilibrate temperature") << Exit;
             return 1;
         }
-        if( abs(T1-T2) < 1.e-4*(T1+T2) )
+        if( std::abs(T1-T2) < 1.e-4*(T1+T2) )
             break;
     }
     if( count==11 )

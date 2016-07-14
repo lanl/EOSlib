@@ -143,7 +143,7 @@ int main(int, char **argv)
     {
         P1 = eos->P(V,e);
         double dP = P1 - P;
-        if( abs(dP) < tol )
+        if( std::abs(dP) < tol )
             break;
         double Gamma = eos->Gamma(V,e);
         double T =  eos->T(V,e);
@@ -154,7 +154,7 @@ int main(int, char **argv)
             de1 = HUGE_VAL;
         else
         {
-            de1 = abs(dP)*V/Gamma;
+            de1 = std::abs(dP)*V/Gamma;
             k = MAX_SUB_ITR;
         }
         if( T <= 0.0 || Cv <= 0.0 )

@@ -16,7 +16,7 @@ public:
 };
 int PlasticRate::F(double *y_prime, const double *y, double t)
 {
-    if( abs(EP.Eps_el(V,e,y)) > 1 )
+    if( std::abs(EP.Eps_el(V,e,y)) > 1 )
         return 1;
     return (EP.Rate(V,e,y,y_prime)!=2) ? 1 : 0;   
 }

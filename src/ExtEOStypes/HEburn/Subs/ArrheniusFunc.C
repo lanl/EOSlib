@@ -65,7 +65,7 @@ int Arrhenius::Integrate(double V, double e, double *z, double dt)
         dt1 = min(dt,dt1);
         if( step1(z[0],dt1) )
             return 1;
-        double eps = abs(y1-y2)/tol;       
+        double eps = std::abs(y1-y2)/tol;       
         if( eps > 1. )
         {
             max_level=max(++level,max_level);
@@ -156,7 +156,7 @@ double Arrhenius::Dt(double V, double e, const double *z, double lambda)
     {
         if( step1(lambda1,dt) )
             return EOS::NaN;
-        double eps = abs(y2-y1)/tol;
+        double eps = std::abs(y2-y1)/tol;
         if( eps > 1. )
         {
             dt *= 0.5;

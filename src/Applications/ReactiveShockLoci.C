@@ -93,7 +93,7 @@ int main(int, char **argv)
         double du = locus.ws.u + c - locus.ws.us;
         // consistency check
         double P = locus.P(locus.ws.V,locus.ws.e,lambda);
-        if( abs(P-locus.ws.P) > 1e-3*locus.ws.P )
+        if( std::abs(P-locus.ws.P) > 1e-3*locus.ws.P )
             cout << "Ps, P(V,e) = " << locus.ws.P << "," << P << "\n";
         //
         cout        << setw(13) << setprecision(6) << lambda

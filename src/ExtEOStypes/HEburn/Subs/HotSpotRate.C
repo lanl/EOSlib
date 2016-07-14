@@ -150,7 +150,7 @@ int HotSpotRate::PostInit(Calc &, DataBase *)
         if( df1 == 0.0 )
             B2 = 0.0;   // not used
         else
-            B2 = (B/abs(df1))*(exp(A+B*P1/Pref) - fp0)/f1;
+            B2 = (B/std::abs(df1))*(exp(A+B*P1/Pref) - fp0)/f1;
     }
     if( s1 > 0. )
     {

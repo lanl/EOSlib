@@ -22,7 +22,7 @@ int e_det(EOS *eos, double V0, double e0, double P0, double V, double &e)
         double P = eos->P(V,e);
         double PdV =  0.5*(P+P0)*(V0-V);
         double f = e-e0 - PdV;
-        if( abs(f) < TOL*PdV )
+        if( std::abs(f) < TOL*PdV )
             return 0;
         double Gamma = eos->Gamma(V,e);
         double dfde = 1. - 0.5*(Gamma/V)*(V0-V);
@@ -211,7 +211,7 @@ int main(int, char **argv)
         rhoD2 = (P-P0)/(V0-V);
         rhoc2 = c2/(V*V);
         f =  rhoD2 - rhoc2;
-        if( abs(f) < TOL*rhoD2 )
+        if( std::abs(f) < TOL*rhoD2 )
             break;
         if( f < 0. )
         {

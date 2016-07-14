@@ -26,14 +26,14 @@ double PTequilibrium_VT::P(double V, double T)
       double V1_0 = V1;
       double dV2 = (lambda1*(P1-P2)-K1*dV)/Kav;
       double dV1 = (lambda2*(P2-P1)-K2*dV)/Kav;
-      if( abs(dV1) > 0.5*V1 )
+      if( std::abs(dV1) > 0.5*V1 )
       {
-          //dV2 *= 0.5*V1/abs(dV1);
+          //dV2 *= 0.5*V1/std::abs(dV1);
           dV1 = (dV1 < 0.) ? -0.5*V1 : 0.5*V1;
       }
-      if( abs(dV2) > 0.5*V2 )
+      if( std::abs(dV2) > 0.5*V2 )
       {
-          //dV1 *= 0.5*V2/abs(dV2);
+          //dV1 *= 0.5*V2/std::abs(dV2);
           dV2 = (dV2 < 0.) ? -0.5*V2 : 0.5*V2;
       }
       int i;
@@ -72,7 +72,7 @@ double PTequilibrium_VT::P(double V, double T)
           P2=eos2->P(V2,T);
           K2=eos2->cT2(V2,T);         
       }
-      if( abs(P1-P2) < tol*abs(P1+P2) && abs(dV) < tol*V )
+      if( std::abs(P1-P2) < tol*abs(P1+P2) && abs(dV) < tol*V )
           return 0.5*(P1+P2);
     }
     // V1 = V2 = 0.0;

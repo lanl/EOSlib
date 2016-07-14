@@ -106,8 +106,8 @@ double PeSplineParams::MaxNorm(const double *y0, const double *y1,
 	
 	for(int i=Dimension(); i--; y0++, y1++)
     {
-        double e1 = abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + relerr)*relerr);
-        double e2 = abs(*y0 - *y1)/abserr;
+        double e1 = std::abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + relerr)*relerr);
+        double e2 = std::abs(*y0 - *y1)/abserr;
 		Norm = max(Norm, min(e1,e2) );
     }		
 	return Norm;

@@ -8,13 +8,13 @@ double IntSCv_ODE::MaxNorm(const double *y0, const double *y1,
 	double Norm = 0;
 	
 	for(int i=Dimension(); i--; y0++, y1++)
-		Norm = max(Norm, abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + eps_abs)));
+		Norm = max(Norm, std::abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + eps_abs)));
 
 	return Norm/eps_rel;
 }
 
 IntSCv_ODE::IntSCv_ODE(double eps_a, double eps_r)
-            : ODE(2,512), eps_abs(eps_a), eps_rel(eps_r)
+            : ODE(2,512), eps_std::abs(eps_a), eps_rel(eps_r)
 {
     // Null
 }

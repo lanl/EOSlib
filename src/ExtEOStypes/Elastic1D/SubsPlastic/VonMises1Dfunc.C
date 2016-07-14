@@ -24,7 +24,7 @@ double VonMises1D::Nu(double eps_pl, double Y, double Yf)
     if( Y>0 && A2>0 )
         f += A2*pow((Yf/Y-1),n2);
     if( eps_y>0 && A1>0 )
-        f += A1*pow(abs(eps_pl)/eps_y,n1);
+        f += A1*pow(std::abs(eps_pl)/eps_y,n1);
     return nu/f;
 }
 
@@ -141,7 +141,7 @@ int VonMises1D::Equilibrate(double V, double e, double *z)
         eps1 -= sign_s*0.5*(Yz0-Y)/G;
         Tve = elastic->T(V,e,eps1);
         double Yz1 = yield_function(V,Tve,eps1);
-        if( abs(Yz1-Y) < 1e-6*Y + 10*P_vac )
+        if( std::abs(Yz1-Y) < 1e-6*Y + 10*P_vac )
         {
             z[0] = eps_V - eps1;
             return 0;

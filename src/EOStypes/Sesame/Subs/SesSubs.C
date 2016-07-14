@@ -1,6 +1,6 @@
 #include "SesSubs.h"
 
-inline double abs(double x) { return x >= 0 ? x : -x; }
+inline double std::abs(double x) { return x >= 0 ? x : -x; }
 
 int SESsrch(double x, double *array, int n)
 {   // binary search
@@ -88,8 +88,8 @@ void SESratfn1(double x, double *xa, int idx, int nx, int kx,
                 c1 = (s-sm-sm)/d;
             double sp = (array[iy+ky+ky]-array[iy+ky])/(xa[ix+kx+kx]-xa[ix+kx]);
             double c2 = (sp-s)/(xa[ix+kx+kx]-xa[ix]);
-            double c3 = abs(c2*r);
-            double c4 = c3+abs(c1*q);
+            double c3 = std::abs(c2*r);
+            double c4 = c3+std::abs(c1*q);
             if( c4 > 0. )
                 c3 = c3/c4;
             c4 = c2+c3*(c1-c2);
@@ -145,8 +145,8 @@ void SESratfn2(double x, double y,
                  c1=(s-sm-sm)/dx;
              double sp = (tbls[iz+2]-tbls[iz+1])/(xa[ix+2]-xa[ix+1]);
              double c2 = (sp-s)/(xa[ix+2]-xa[ix]);
-             double c3 = abs(c2*rx);
-             double c4 = c3+abs(c1*qx);
+             double c3 = std::abs(c2*rx);
+             double c4 = c3+std::abs(c1*qx);
              if( c4>0. )
                  c3=c3/c4;
              c4 = c2+c3*(c1-c2);
@@ -190,8 +190,8 @@ void SESratfn2(double x, double y,
                  c1=(s-sm-sm)/dy;
              double sp = (tbls[iz+2*nx]-tbls[iz+nx])/(ya[iy+2]-ya[iy+1]);
              double c2 = (sp-s)/(ya[iy+2]-ya[iy]);
-             double c3 = abs(c2*ry);
-             double c4 = c3+abs(c1*qy);
+             double c3 = std::abs(c2*ry);
+             double c4 = c3+std::abs(c1*qy);
              if( c4 > 0. )
                  c3=c3/c4;
              c4 = c2+c3*(c1-c2);

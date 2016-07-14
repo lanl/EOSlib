@@ -38,9 +38,9 @@ double GenHayes::Gamma(double V, double)
 double GenHayes::T(double V, double e)
 {
     double ecV = ec(V);
-    if( V <= 0. ||  e -ecV < -1.e-10*abs(ecV) )
+    if( V <= 0. ||  e -ecV < -1.e-10*std::abs(ecV) )
         return NaN;
-    if( e -ecV <= 1.e-10*abs(ecV) )
+    if( e -ecV <= 1.e-10*std::abs(ecV) )
         return 0;
     double theta_V = theta(V);
     return theta_V*InvIntSCv( (e-ecV)/theta_V );
@@ -59,9 +59,9 @@ double GenHayes::S(double V, double e)
 double GenHayes::c2(double V, double e)
 {
    double ecV = ec(V);
-   if( V <= 0. ||  e -ecV < -1.e-10*abs(ecV) )
+   if( V <= 0. ||  e -ecV < -1.e-10*std::abs(ecV) )
        return NaN;
-   if( e -ecV <= 1.e-10*abs(ecV) )
+   if( e -ecV <= 1.e-10*std::abs(ecV) )
        return -sqr(V)*dPc(V);
    return sqr(V)*(D2theta(V)*(e-ecV)-dPc(V));
 }

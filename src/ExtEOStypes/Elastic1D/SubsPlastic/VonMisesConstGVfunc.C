@@ -28,7 +28,7 @@ int VonMisesConstGV::Rate(double V, double e, const double *z, double *zdot)
     if( Y0>0 && A2>0 )
         zdot[0] += A2*pow((Yf/Y0-1),n2);
     if( eps_y>0 && A1>0 )
-        zdot[0] += A1*pow(abs(z[0])/eps_y,n1);
+        zdot[0] += A1*pow(std::abs(z[0])/eps_y,n1);
     zdot[0] *= 0.5*(Yf-Y0)/nu;
     if( eps_el < 0 )
         zdot[0] = -zdot[0];
@@ -45,7 +45,7 @@ int VonMisesConstGV::TimeStep(double V, double e, const double *z, double &dt)
     if( Y0>0 && A2>0 )
         f += A2*pow((Yfunction(eps_el)/Y0-1),n2);
     if( eps_y>0 && A1>0 )
-        f += A1*pow(abs(z[0])/eps_y,n1);
+        f += A1*pow(std::abs(z[0])/eps_y,n1);
     dt = (nu/f)*(V/GV(eps_el)); // e-fold of relaxation = (0.5*(Yf-Y)/G)/|Rate|
     return 2;       // Stiff Integrate available
 }
@@ -84,7 +84,7 @@ int VonMisesConstGV::Step(double &eps_el, double &t)
     if( Y0>0 && A2>0 )
         f += A2*pow((Yf/Y0-1),n2);
     if( eps_y>0 && A1>0 )
-        f += A1*pow(abs(eps_V1-eps_el)/eps_y,n1);
+        f += A1*pow(std::abs(eps_V1-eps_el)/eps_y,n1);
     double G = GV(eps_el)/V1;
     double tau = (nu/f)/G;
     double dt = min(0.25*tau,t);

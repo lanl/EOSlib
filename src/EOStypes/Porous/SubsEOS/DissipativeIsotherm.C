@@ -93,7 +93,7 @@ int DissipativeIsotherm::P(double p, ThermalState &state)
 	state.P = phi*p;
 	state.T = eos->T(state.V, state.e);
 
-	return abs(state.T-state0.T) > 1e-3*state0.T;
+	return std::abs(state.T-state0.T) > 1e-3*state0.T;
 }
 
 int DissipativeIsotherm::V(double v, ThermalState &state)
@@ -123,7 +123,7 @@ int DissipativeIsotherm::V(double v, ThermalState &state)
 	state.P = phi*p;
 	state.T = eos->T(state.V, state.e);
 
-	return abs(state.T-state0.T) > 1e-3*state0.T;
+	return std::abs(state.T-state0.T) > 1e-3*state0.T;
 }
 
 Isotherm *DissipativePorous::isotherm(const HydroState &state)

@@ -110,8 +110,8 @@ void OneDFunctionI::PRE_CONDITION(int x_guess)
 			
 		
 		// check trial within bounds	
-			if( abs(dx_prime) < (y_guess > y_goal ?
-					abs(x_guess-x0) : abs(x1-x_guess)) )
+			if( std::abs(dx_prime) < (y_guess > y_goal ?
+					std::abs(x_guess-x0) : abs(x1-x_guess)) )
 			{
 			// Replace one end point of bracket by (x_guess,y_guess)
 				if( y_guess > y_goal )
@@ -176,7 +176,7 @@ void OneDFunctionI::ZERO()
 		
 	
 	status = OK;
-	for( cycles = 0; abs(dx = x1-x0) > 1; )
+	for( cycles = 0; std::abs(dx = x1-x0) > 1; )
 	{
 		cycles++;
 	// Compute function at center point of bracket
@@ -205,7 +205,7 @@ void OneDFunctionI::ZERO()
 		// check quadratic is monotonic
 		//
 		
-		if( abs(dx) > 4 && abs(y - 0.5 * (y1 + y0)) < 0.25*(dy=y1-y0) )
+		if( std::abs(dx) > 4 && abs(y - 0.5 * (y1 + y0)) < 0.25*(dy=y1-y0) )
 		{
 		// Replace one end point of bracket by (x, y)
 		// and find new point x nearest to y_goal
@@ -242,7 +242,7 @@ void OneDFunctionI::ZERO()
 			
 		// Skip if next bisction better than Newton's step
 			dx = round_up( 2.*dx_prime*dx );
-			if( 2*abs(dx) > abs(x1-x0) )
+			if( 2*std::abs(dx) > abs(x1-x0) )
 			{
 				continue;
 			}

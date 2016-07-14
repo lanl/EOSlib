@@ -144,7 +144,7 @@ int VonMises::ConvertParams(Convert &convert)
 double VonMises::yield_func(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return std::isnan(Tve) ? NaN : (V/V_ref)*abs(elastic->shear(V,Tve, z_el[0]));
+    return std::isnan(Tve) ? NaN : (V/V_ref)*std::abs(elastic->shear(V,Tve, z_el[0]));
 }
 
 double VonMises::yield_surf(double V, double e, const double *z)
@@ -160,14 +160,14 @@ int VonMises::Rate(double V, double e, const double *z, double *zdot)
         return -1;
 
     double shear = elastic->shear(V,Tve, z_el[0]);   
-    double Yf = (V/V_ref)*abs(shear);
+    double Yf = (V/V_ref)*std::abs(shear);
     if( Yf <= Y )
         zdot[0] = 0;
     else
     {
         zdot[0] = (3./4.)*(Yf-Y)/nu * (V/V_ref)*(shear/Yf);
         if( Y > 0 )
-            zdot[0] *= (1+A1*pow(abs(z[0])/eps_y,n1)+A2*(Yf/Y-1));
+            zdot[0] *= (1+A1*pow(std::abs(z[0])/eps_y,n1)+A2*(Yf/Y-1));
     }
     return 1;
 }
@@ -180,13 +180,13 @@ int VonMises::TimeStep(double V, double e, const double *z, double &dt)
         return -1;  // error
 
     double shear = elastic->shear(V,Tve, z_el[0]);   
-    double Yf = (V/V_ref)*abs(shear);
+    double Yf = (V/V_ref)*std::abs(shear);
     if( Yf <= Y )
         return 0;   // no constraint
     double G = elastic->dshear(V,Tve, z_el[0]); // 2*(isothermal shear modulus)
     dt = (4./3.)*nu *(V_ref/V)/G;
     if( Y > 0 )
-       dt /= (1+A1*pow(abs(z[0])/eps_y,n1)+A2*(Yf/Y-1));
+       dt /= (1+A1*pow(std::abs(z[0])/eps_y,n1)+A2*(Yf/Y-1));
     return 2;   // assuming dln(G)/deps << 1
 }
 
@@ -219,14 +219,14 @@ int VonMises::Step(double V, double e, double *z, double &t)
         return -1;  // error
 
     double shear = elastic->shear(V,Tve, z_el[0]);   
-    double Yf = (V/V_ref)*abs(shear);
+    double Yf = (V/V_ref)*std::abs(shear);
     if( Yf < Y )
         return 0;
     double G = elastic->dshear(V,Tve, z_el[0]);
     double deps = (V_ref/V)*(Yf-Y)/G;       // for Y = Yf
     double tau = (4./3.)*nu *(V_ref/V)/G;
     if( Y > 0 )
-        tau /= (1+A1*pow(abs(z[0])/eps_y,n1)+A2*(Yf/Y-1));
+        tau /= (1+A1*pow(std::abs(z[0])/eps_y,n1)+A2*(Yf/Y-1));
     if( shear < 0 )
         deps = -deps;
     double dt = min(0.5*tau,t);
@@ -260,7 +260,7 @@ int VonMises::Equilibrate(double V, double e, double *z)
         return -1;  // error
 
     double shear = elastic->shear(V,Tve, z_el[0]);
-    double Yz0 = (V/V_ref)*abs(shear);
+    double Yz0 = (V/V_ref)*std::abs(shear);
     if( Yz0 < Y + 10*P_vac )
         return 0;
 
@@ -273,8 +273,8 @@ int VonMises::Equilibrate(double V, double e, double *z)
         double G = elastic->dshear(V,Tve, z_el[0]);
         z1[0] += sign_s * (V_ref/V)*(Yz0-Y)/G;
         Tve = T(V,e,z1);
-        double Yz1 = (V/V_ref)*abs(elastic->shear(V,Tve, z_el[0]));
-        if( abs(Yz1 - Y) < 1e-6*Y + 10*P_vac )
+        double Yz1 = (V/V_ref)*std::abs(elastic->shear(V,Tve, z_el[0]));
+        if( std::abs(Yz1 - Y) < 1e-6*Y + 10*P_vac )
         {
             z[0] = z1[0];
             return 0;

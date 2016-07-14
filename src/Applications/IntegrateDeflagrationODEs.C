@@ -261,7 +261,7 @@ double DefProfile::MaxNorm(const double *y0, const double *y1,
     for(int i=Dimension(); i--; y0++, y1++)
     {
         eps[i] *= epsilon;
-        Norm = max(Norm, abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + 1.)*eps[i]));
+        Norm = max(Norm, std::abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + 1.)*eps[i]));
     }
     return Norm;
 }
@@ -500,7 +500,7 @@ int main(int, char **argv)
         {
            P1 = profile.P(lambda1,V1,T);
            dP =  P1 - (P0 + profile.m2*(V0-V1));
-           if( abs(dP) < 1e-6*P1 )
+           if( std::abs(dP) < 1e-6*P1 )
                break;
            double cT2 = profile.HE->cT2(V1,T);
            V1 += dP/(cT2/(V1*V1)-profile.m2);

@@ -72,7 +72,7 @@ int main(int, char **argv)
             cerr << Error("Integrate failed" ) << Exit;
         double T      = y[0];
         double lambda = y[1];
-        if( abs(T) > T_max || abs(lambda) > l_max )
+        if( std::abs(T) > T_max || abs(lambda) > l_max )
             break;
         cout << T << " " << lambda << "\n";
     }

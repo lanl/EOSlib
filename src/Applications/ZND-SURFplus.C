@@ -117,7 +117,7 @@ void ZNDprofile::LocusState(double &V, double &e, double &P, double &u)
        e = e0 + 0.5*m2*dV*dV + P0*dV;
        P = HE.HE->P(V,e);
        double h = e-e0 - 0.5*(P+P0)*(V0-V);
-       if( abs(h) < 1e-12*(P+P0)*(V0-V) ) break;
+       if( std::abs(h) < 1e-12*(P+P0)*(V0-V) ) break;
 
        double c2     = HE.HE->c2(V,e);
        double GammaV = HE.HE->Gamma(V,e) /V;

@@ -13,7 +13,7 @@ double Polymer::yield_strength(double V, double, const double *)
 
 double Polymer::Tau(double eps_pl, double V)
 {
-    return tau0/(1.+pow(abs(eps_pl-epsy_pl(V))/eps0,n));
+    return tau0/(1.+pow(std::abs(eps_pl-epsy_pl(V))/eps0,n));
 }
 
 static double eps_tol = 1.e-3;

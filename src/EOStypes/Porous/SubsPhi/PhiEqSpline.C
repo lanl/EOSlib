@@ -24,7 +24,7 @@ double PhiEq_spline::fp(double PV)
 
         double dphi = 0.5*(phi2-phi0);
         double d2phi = (phi2-2*phi1+phi0);
-        if( abs(d2phi) < 0.01*dphi )
+        if( std::abs(d2phi) < 0.01*dphi )
             return (dphi-d2phi)/dPV;
     }
     return NaN;

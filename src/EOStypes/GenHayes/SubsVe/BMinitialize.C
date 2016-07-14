@@ -76,7 +76,7 @@ int BirchMurnaghan::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"InitODE, V_PTref iteration, no bound\n");
         return 1;
     }
-    if( abs(P_min-P_max) < 1.e-6* P_ref )
+    if( std::abs(P_min-P_max) < 1.e-6* P_ref )
     {
         P_vac = max(P_vac,Pmin);
         return 0;
@@ -97,7 +97,7 @@ int BirchMurnaghan::InitParams(Parameters &p, Calc &calc, DataBase *)
         theta_ref = theta(V_ref);
         double P0 = Pc(V_ref)
                      + Dln_theta(V_ref) * theta_ref*IntSCv(T_ref/theta_ref);
-        if( abs(P0-P_ref) <=  1.e-6* P_ref )
+        if( std::abs(P0-P_ref) <=  1.e-6* P_ref )
             break;
         if( P0 > P_ref )
         {

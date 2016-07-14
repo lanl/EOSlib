@@ -170,7 +170,7 @@ int Keane::InitParams(Parameters &p, Calc &calc, DataBase *)
         theta_ref = theta(V_ref);
         double P0 = Pc(V_ref)
                      + Dln_theta(V_ref) * theta_ref*IntSCv(T_ref/theta_ref);
-        if( abs(P0-P_ref) <=  1.e-6* P_ref )
+        if( std::abs(P0-P_ref) <=  1.e-6* P_ref )
             break;
         if( P0 > P_ref )
         {

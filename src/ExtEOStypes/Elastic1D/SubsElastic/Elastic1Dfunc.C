@@ -86,7 +86,7 @@ double Elastic1D::T(double V, double e, double eps_el)
     double T1 = hydro->T(V, e);
     // e1 = e + eshear1;
     double de_1 = shear->e(V,T1, eps_el);               // e1 - e
-    if( abs(de_1) <= 1e-6*abs(e) )
+    if( std::abs(de_1) <= 1e-6*abs(e) )
         return T1;
     double T2 = hydro->T(V, e-de_1);
     // e2 = (e-de_1) + eshear2
