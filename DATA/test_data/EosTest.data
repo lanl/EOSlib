@@ -1,6 +1,6 @@
 :SharedLibs=EOS
 {
-    EOS = $EOSLIB_DATA_PATH/../src/Eos/libEos
+    EOS = $EOSLIB_SHARED_LIBRARY_PATH/libEos
 }
 
 EOS:EOS=NULL

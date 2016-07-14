@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered IdealGas subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/IdealGas: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_IDEALGAS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/IdealGas)
 set(IdealGas_src)
 

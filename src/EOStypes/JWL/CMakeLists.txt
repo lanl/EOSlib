@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered JWL subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in JWL: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_JWL_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/JWL)
 set(JWL_src)
 
@@ -15,8 +14,8 @@ set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( JWL Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 
-list (APPEND testsWithArgs Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestJWL TestJWLPT )
-list (APPEND tests Test1JWL_VT  )
+list (APPEND testsWithArgs Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestJWL TestJWLPT TestHEprods )
+list (APPEND tests Test1JWL_VT )
 
 foreach(test ${tests} )
   add_executable(${test} ${test}.C)

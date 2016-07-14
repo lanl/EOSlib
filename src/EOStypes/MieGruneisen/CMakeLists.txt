@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered MieGruneisen subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/MieGruneisen: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/MieGruneisen)
 set(MieGruneisen_src)
 

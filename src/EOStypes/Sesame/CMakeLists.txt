@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered Sesame subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in Sesame: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_SESAME_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/Sesame)
 
 set(Sesame_src)

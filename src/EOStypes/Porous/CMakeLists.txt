@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered Porous subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/Porous: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_POROUS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/Porous)
 set(Porous_src)
 

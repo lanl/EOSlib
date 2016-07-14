@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered HayesBM subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/HayesBM: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_HAYESBM_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/HayesBM)
 set(HayesBM_src)
 
