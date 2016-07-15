@@ -8,6 +8,8 @@
 #undef  BugReport
 #define BugReport "Please report bugs to rtm@lanl.gov"
 
+using namespace std;
+
 extern const char *DavisProductslib_vers;
 extern const char *DavisProductslib_date;
 

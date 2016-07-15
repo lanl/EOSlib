@@ -4,7 +4,7 @@ endif(${verbose_traversal})
 
 set(EOStypes_src)
 set(EOSLIB_EOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes)
-# add_subdirectory(Davis)
+add_subdirectory(Davis)
 # add_subdirectory(GenHayes)
 add_subdirectory(Hayes)
 add_subdirectory(HayesBM)

@@ -98,17 +98,17 @@ int DavisReactants::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"V0 not set or invalid");
         return 1;
     }
-    if( std::isnan(A) || A<=0. || isnan(B) || B<=0. || isnan(C) || C<=0. )
+    if( std::isnan(A) || A<=0. || std::isnan(B) || B<=0. || std::isnan(C) || C<=0. )
     {
         EOSerror->Log(FUNC,"A, B or C not set or invalid");
         return 1;
     }
-    if( std::isnan(G0) || G0 <= 0. || isnan(Z) )
+    if( std::isnan(G0) || G0 <= 0. || std::isnan(Z) )
     {
         EOSerror->Log(FUNC,"G0 or Z not set or invalid");
         return 1;
     }
-    if( std::isnan(Cv) || Cv<=0 || isnan(alpha) || alpha < 0. )
+    if( std::isnan(Cv) || Cv<=0 || std::isnan(alpha) || alpha < 0. )
     {
         EOSerror->Log(FUNC,"Cv or alpha not set or invalid");
         return 1;

@@ -84,22 +84,22 @@ int DavisProducts::InitParams(Parameters &p, Calc &calc, DataBase *)
         EOSerror->Log(FUNC,"parse failed for %s\n",line);
         return 1;
     }
-    if( std::isnan(V0) || V0<=0.0 || isnan(e0) )
+    if( std::isnan(V0) || V0<=0.0 || std::isnan(e0) )
     {
         EOSerror->Log(FUNC,"V0 or e0 not set or invalid");
         return 1;
     }
-    if( std::isnan(a) || a<=0 || isnan(n) || n<=0 )
+    if( std::isnan(a) || a<=0 || std::isnan(n) || n<=0 )
     {
         EOSerror->Log(FUNC,"a or n not set or invalid");
         return 1;
     }
-    if( std::isnan(Vc) || Vc<=0 || isnan(pc) || pc<=0 )
+    if( std::isnan(Vc) || Vc<=0 || std::isnan(pc) || pc<=0 )
     {
         EOSerror->Log(FUNC,"Vc or pc not set or invalid");
         return 1;
     }
-    if( std::isnan(b) || b>1 || isnan(k) || k<1 )
+    if( std::isnan(b) || b>1 || std::isnan(k) || k<1 )
     {
         EOSerror->Log(FUNC,"b or k not set or invalid");
         return 1;
