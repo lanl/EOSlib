@@ -3,8 +3,8 @@
 :SharedLibs=EOS
 {
     EOS            = NULL
-    DavisReactants = $EOSLIB_DATA_PATH/../src/EOStypes/Davis/libDavis
-    DavisProducts  = $EOSLIB_DATA_PATH/../src/EOStypes/Davis/libDavis
+    DavisReactants = $EOSLIB_SHARED_LIBRARY_PATH/libDavis
+    DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/libDavis
 }
 .base =EOS
 .units=hydro::std
