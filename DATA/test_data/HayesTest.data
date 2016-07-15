@@ -3,7 +3,7 @@
 :SharedLibs=EOS
 {
     EOS   = NULL
-    Hayes = $EOSLIB_DATA_PATH/../src/EOStypes/Hayes/libHayes
+    Hayes = $EOSLIB_SHARED_LIBRARY_PATH/libHayes
 }
 
 .base =EOS
@@ -77,7 +77,7 @@ Hayes=estane;
 :SharedLibs=EOS_VT
 {
     EOS_VT      = NULL
-    Hayes = $EOSLIB_DATA_PATH/../src/EOStypes/Hayes/libHayes
+    Hayes = $EOSLIB_SHARED_LIBRARY_PATH/libHayes
 }
 
 .base =EOS_VT

@@ -3,13 +3,13 @@
 :SharedLibs=EOS
 {
     EOS          = NULL
-    StiffenedGas = $EOSLIB_DATA_PATH/../src/EOStypes/StiffenedGas/libStiffenedGas
+    StiffenedGas = $EOSLIB_SHARED_LIBRARY_PATH/libStiffenedGas
 }
 
 :SharedLibs=EOS_VT
 {
     EOS_VT      = NULL
-    StiffenedGas = $EOSLIB_DATA_PATH/../src/EOStypes/StiffenedGas/libStiffenedGas
+    StiffenedGas = $EOSLIB_SHARED_LIBRARY_PATH/libStiffenedGas
 }
 
 .base =EOS

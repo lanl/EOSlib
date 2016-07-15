@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered StiffenedGas subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in database: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_STIFFENEDGAS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/StiffenedGas)
 set(StiffenedGas_src)
 

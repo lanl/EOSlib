@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered GenHayes subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/GenHayes: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_GENHAYES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/GenHayes)
 set(GenHayes_src)
 

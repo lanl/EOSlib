@@ -264,9 +264,8 @@ set(CTEST_ENVIRONMENT
   "EOSLIB_BLESSED_OUTPUT_PATH=${CMAKE_BINARY_DIR}/test/blessed_output"
   "CTEST_OUTPUT_ON_FAILURE=1"
   "BOOST_TEST_LOG_LEVEL='message'"
-  )
-
+  "EOSLIB_SHARED_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 add_subdirectory(DATA)
 add_subdirectory(TEST)
 add_subdirectory(src)
-message(STATUS "Blessed output dir = ${EOSLIB_BLESSED_OUTPUT}")

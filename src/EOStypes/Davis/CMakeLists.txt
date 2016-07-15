@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered Davis subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/Davis: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_DAVIS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/Davis)
 set(Davis_src)
 

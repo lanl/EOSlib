@@ -3,7 +3,7 @@
 :SharedLibs=EOS
 {
     EOS     = NULL
-    HayesBM = $EOSLIB_DATA_PATH/../src/EOStypes/HayesBM/libHayesBM
+    HayesBM = $EOSLIB_SHARED_LIBRARY_PATH/libHayesBM
 }
 
 .base =EOS
@@ -27,7 +27,7 @@ HayesBM=HMX;
 :SharedLibs=EOS_VT
 {
     EOS_VT  = NULL
-    HayesBM = $EOSLIB_DATA_PATH/../src/EOStypes/HayesBM/libHayesBM
+    HayesBM = $EOSLIB_SHARED_LIBRARY_PATH/libHayesBM
 }
 
 .base =EOS_VT

@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered PTequilibrium subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in EOStypes/PTequilibrium: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_PTEQUILIBRIUM_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/PTequilibrium)
 set(PTequilibrium_src)
 
