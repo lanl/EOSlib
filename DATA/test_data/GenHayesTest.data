@@ -1,0 +1,128 @@
+.include DataBaseUnits.data
+
+:SharedLibs=EOS
+{
+    EOS            = NULL
+    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes    
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes
+}
+:SharedLibs=EOS_VT
+{
+    EOS_VT         = NULL
+    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes
+}
+
+.base =EOS
+.units=hydro::std
+
+/********************************
+*       Solids                  *
+********************************/
+
+BirchMurnaghan=HMX; units=hydro::std
+{
+    T_ref = 300.
+    P_ref = 1.e-4
+    V0  = 0.511509      # cm^3/g
+    #
+    V0 = 1/1.90
+    # adjust cold curve V0 for ambient V_ref at (P_ref,T_ref)
+    V_PTref = V0
+    #
+    e0  = 0
+    K0  = 17.66         # GPa
+    Kp0 =  8.5          # dimensionless
+    # Gamma = a + b*(V/V0)
+    b   =  -0.25        # dimensionless
+    a   =  1.20         # dimensionless
+    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
+    cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
+    cv(3) = 1.8318931090834e5,  4.1941409666532e2    
+}
+
+EOS:BirchMurnaghan=PBX9501.reactant; units=hydro::std
+{
+    :use=HMX
+    V0 *= 1.9/1.833         # cm^3/g
+    Kp0 = 9.8               # dimensionless
+    K0  = 14.0              # GPa
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.9              # dimensionless
+    e0  = 5.89
+}
+
+
+EOS_VT:BirchMurnaghan=HMX; units=hydro::std
+{
+    T_ref = 300.
+    V_ref = 0.52146445  # P_ref = 1.e-4
+    V0  = 0.511509      # cm^3/g
+    e0  = 0
+    K0  = 17.66         # GPa
+    Kp0 =  8.5          # dimensionless
+    # Gamma = a + b*(V/V0)
+    b   =  -0.25        # dimensionless
+    a   =  1.20         # dimensionless
+    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
+    cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
+    cv(3) = 1.8318931090834e5,  4.1941409666532e2    
+}
+
+EOS_VT:BirchMurnaghan=HMX1; units=hydro::std
+{
+    T_ref = 300.
+    V_ref = 0.5259723215    # P_ref = 1.e-4
+    V0  = 0.515573          # cm^3/g (V0 at T=0)
+    e0  = 0
+    K0  = 16.5              # GPa
+    Kp0 =  8.7              # dimensionless
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.9              # dimensionless
+    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
+    cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
+    cv(3) = 1.8318931090834e5,  4.1941409666532e2    
+}
+EOS:BirchMurnaghan=HMX1; units=hydro::std
+{
+    P_ref = 1.e-4
+    T_ref = 300.
+    V0  = 0.515573          # cm^3/g (V0 at T=0)
+    e0  = 0
+    K0  = 16.5              # GPa
+    Kp0 =  8.7              # dimensionless
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.9              # dimensionless
+    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
+    cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
+    cv(3) = 1.8318931090834e5,  4.1941409666532e2    
+}
+
+EOS:Keane=TATB; units=hydro::std
+{
+    V_ref = 1/1.942
+    e_ref = 0.1
+    P_ref = 1.e-4 
+    T_ref = 300.
+    V0  = 1/1.942           # cm^3/g (V0 at T=0)
+    e0  = 0
+    P0  = -0.14
+    K0  =  8.5              # GPa
+    Kp0 = 24                # dimensionless
+    Kpinfty =  3            # dimensionless
+    # correct for cold curve
+    P0_ref = P_ref
+    # V_PTref = V0
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.9              # dimensionless
+    #b = 0.5
+    #eps1 = 0.03
+    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
+    #Cv = 0.5
+    cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
+    cv(3) = 1.8318931090834e5,  4.1941409666532e2 
+}
