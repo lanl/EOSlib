@@ -6,41 +6,41 @@
 
 :DataBase.=Environment
 { # circumvent kdbg messing up environment variables (mx:t14rm only)
-  # SharedLibDirEOS = /home/rsm/AMRITA/EP/EOSlib/src/lib/Linux
+  # EOSLIB_SHARED_LIBRARY_PATH = /home/rsm/AMRITA/EP/EOSlib/src/lib/Linux
 }
 :SharedLibs=EOS
 {
-    # $SharedLibDirEOS is environment variable
+    # $EOSLIB_SHARED_LIBRARY_PATH is environment variable
     # other options
     #       set LD_LIBRARY_PATH
     #       ld with option
-    #               -rpath SharedLibDirEOS with g++
-    #               -R SharedLibDirEOS     with SUN
-    EOS            = $SharedLibDirEOS/EOS
+    #               -rpath EOSLIB_SHARED_LIBRARY_PATH with g++
+    #               -R EOSLIB_SHARED_LIBRARY_PATH     with SUN
+    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libEos
     #                   void *EOS_Duplicate(void*)
     #                   void  EOS_Destructor()
     #                    int  EOS_Initialize(void*)
-    IdealGas       = $SharedLibDirEOS/MaterialLib
+    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_IdealGas_Constructor()
-    StiffenedGas   = $SharedLibDirEOS/MaterialLib
+    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_StiffenedGas_Constructor()
-    Hayes          = $SharedLibDirEOS/MaterialLib
+    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_Hayes_Constructor()
-    HayesBM        = $SharedLibDirEOS/MaterialLib
+    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_HayesBM_Constructor()
-    BirchMurnaghan = $SharedLibDirEOS/MaterialLib
+    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_BirchMurnaghan_Constructor()
-    Keane          = $SharedLibDirEOS/MaterialLib
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_Keane_Constructor()
-    UsUp           = $SharedLibDirEOS/MaterialLib
+    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_UsUp_Constructor()
-    UsUpSpline     = $SharedLibDirEOS/MaterialLib
+    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_UsUpSpline_Constructor()
-    PeSpline       = $SharedLibDirEOS/MaterialLib
+    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_PeSpline_Constructor()
-    PTequilibrium  = $SharedLibDirEOS/MaterialLib
+    PTequilibrium  = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_PTequilibrium_Constructor()
-    StiffIdeal     = $SharedLibDirEOS/MaterialLib
+    StiffIdeal     = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #                   void *EOS_StiffIdeal_Constructor()
 }
 .base  = EOS

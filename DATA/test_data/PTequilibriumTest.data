@@ -4,7 +4,7 @@
 {
 #  SharedLibDirEOS = $PWD/../../lib/Linux
 # circumvent kdbg messing up environment variables (mx:t14rm only)
-  SharedLibDirEOS = $EOS_SHARED_LIBRARY_PATH
+  SharedLibDirEOS = $EOSLIB_SHARED_LIBRARY_PATH
   #/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
 }
 

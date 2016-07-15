@@ -4,6 +4,7 @@ endif(${verbose_traversal})
 
 set(EOStypes_src)
 set(EOSLIB_EOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes)
+list(APPEND EOStypes_libs IdealGas StiffenedGas Hayes HayesBM GenHayes MieGruneisen Davis JWL PTequilibrium)
 # add_subdirectory(Davis)
 # add_subdirectory(GenHayes)
 add_subdirectory(Hayes)

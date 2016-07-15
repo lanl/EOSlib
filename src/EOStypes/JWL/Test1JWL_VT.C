@@ -22,7 +22,6 @@ int main(int, char **argv)
     param.Append("e0=0");
     param.Append("A=858.0805");
     param.Append("B=7.546531");
-    param.Append("C=0.781274");
     param.Append("R1=4.306");
     param.Append("R2=0.80");
     param.Append("omega=0.3");

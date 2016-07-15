@@ -149,15 +149,14 @@ int JWL_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
         return 1;
     }
     de = Edet - e0;
-    if( !std::isnan(Tcj) )
-    {
-        JWL HE(*this);
-        Vcj = HE.Vcj;
-        Pcj = HE.Pcj;
-        C = HE.Pcj;
-        Tcj = HE.Tcj;
-        Scj = HE.Scj;
-    }
+
+    JWL HE(*this);
+    Vcj = HE.Vcj;
+    Pcj = HE.Pcj;
+    C   = HE.C;
+    Tcj = HE.Tcj;
+    Scj = HE.Scj;
+    
     if( std::isnan(V_ref) )
         V_ref = V0;
     if( std::isnan(T_ref) )
