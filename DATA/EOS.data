@@ -20,27 +20,27 @@
     #                   void *EOS_Duplicate(void*)
     #                   void  EOS_Destructor()
     #                    int  EOS_Initialize(void*)
-    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_IdealGas_Constructor()
-    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_StiffenedGas_Constructor()
-    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_Hayes_Constructor()
-    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_HayesBM_Constructor()
-    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_BirchMurnaghan_Constructor()
-    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_Keane_Constructor()
-    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_UsUp_Constructor()
-    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_UsUpSpline_Constructor()
-    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_PeSpline_Constructor()
-    PTequilibrium  = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    PTequilibrium  = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_PTequilibrium_Constructor()
-    StiffIdeal     = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    StiffIdeal     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     #                   void *EOS_StiffIdeal_Constructor()
 }
 .base  = EOS
