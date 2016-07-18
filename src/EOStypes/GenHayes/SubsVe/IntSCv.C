@@ -14,7 +14,8 @@ double IntSCv_ODE::MaxNorm(const double *y0, const double *y1,
 }
 
 IntSCv_ODE::IntSCv_ODE(double eps_a, double eps_r)
-            : ODE(2,512), eps_std::abs(eps_a), eps_rel(eps_r)
+//    : ODE(2,512), eps_std::abs(eps_a), eps_rel(eps_r)
+  : ODE(2,512), eps_abs(eps_a), eps_rel(eps_r)
 {
     // Null
 }

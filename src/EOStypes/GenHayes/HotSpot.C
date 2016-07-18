@@ -2,6 +2,7 @@
 #include <EOS.h>
 #include <Riemann_gen.h>
 
+using namespace std;
 
 int main(int, char **argv)
 {

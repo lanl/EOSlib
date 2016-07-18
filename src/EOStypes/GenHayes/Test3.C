@@ -3,6 +3,8 @@
 #include <EOS.h>
 #include <EOS_VT.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);

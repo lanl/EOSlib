@@ -1,6 +1,8 @@
 #include <LocalMath.h>
 #include <Arg.h>
 
+using namespace std;
+
 double K0  = 14.0;
 double Kp0 =  9.8;
 double P_BM(double eta)
