@@ -1,0 +1,42 @@
+.include DataBaseUnits.data
+
+:SharedLibs=EOS
+{
+    EOS            = NULL
+    DavisReactants = $EOSLIB_SHARED_LIBRARY_PATH/libDavis
+    DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/libDavis
+}
+.base =EOS
+.units=hydro::std
+
+EOS:DavisProducts=PBX9501;
+{
+    rho0 = 1.844    # g/cm^3
+    e0   = 5.85     # MJ/kg
+    a    = 0.7965
+    n    = 1.758
+    Vc   = 0.8314   # cm^3/g
+    pc   = 3.738    # GPa
+    b    = 0.7
+    k    = 1.3
+    Cv   = 0.945e-3 # (MJ/kg)/K
+    Tc   = 2407.34
+    #Cv   = 2.0e-3
+}
+
+EOS:DavisReactants=PBX9501;
+{
+    rho0 = 1.844    # g/cm^3
+    e0   = 0.       # MJ/kg
+    P0   = 1.e-4    # GPa
+    T0   = 293.     # K
+    S0   = 0.       # (MJ/kg)/K
+    A    = 2.339    # km/s
+    B    = 2.737
+    C    = 1.45
+    G0   = 0.7989
+    Z    = -0.03076
+    Cv   = 1.088e-3 # (MJ/kg)/K
+    alpha = 0.9644
+}
+

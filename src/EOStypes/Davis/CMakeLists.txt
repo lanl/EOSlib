@@ -15,7 +15,7 @@ set_property(TARGET Davis PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( Davis Eos DataBase ODE)
 
 list( APPEND tests )
-list( APPEND testsWithArgs Hugoniot Overdriven TestCJ TestProducts TestReactants)
+list( APPEND testsWithArgs Hugoniot Overdriven )#TestCJ TestProducts TestReactants)
 
 foreach(test ${tests})
   add_executable(${test}Davis ${test}.C)
