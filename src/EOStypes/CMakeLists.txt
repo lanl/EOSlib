@@ -2,10 +2,12 @@ if(${verbose_traversal})
   message(STATUS "Entered EOStypes subdirectory")
 endif(${verbose_traversal})
 
-set(EOStypes_src)
 set(EOSLIB_EOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes)
+set(EOStypes_src)
+
+list(APPEND EOStypes_libs Davis GenHayes Hayes HayesBM IdealGas JWL MieGruneisen PTequilibrium StiffenedGas)
+
 add_subdirectory(Davis)
-list(APPEND EOStypes_libs IdealGas StiffenedGas Hayes HayesBM GenHayes MieGruneisen Davis JWL PTequilibrium)
 add_subdirectory(GenHayes)
 add_subdirectory(Hayes)
 add_subdirectory(HayesBM)

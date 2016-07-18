@@ -20,20 +20,20 @@ target_link_libraries( Elastic1D Io Math )
 list( APPEND tests PMMAhug TestElastic1D TestElasticPMMA TestEP TestEPshock TestRiemann TestVMrate TestXmanager TwoShockEP )
 
 foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} Elastic1D)
+  add_executable(${test}Elastic1D ${test}.C)
+  target_link_libraries(${test}Elastic1D Elastic1D)
  # add_test(${test}IdealGas ${test}IdealGas)
  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-  add_test(NAME ${test}
+  add_test(NAME ${test}Elastic1D
     COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
+    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D
     -D test_args:string=${args}
     -D out_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Out.blessed
     -D err_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Err.blessed 
     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
     )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
-  set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D)
+  set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
 if(${verbose_traversal})

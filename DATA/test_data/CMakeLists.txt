@@ -2,7 +2,7 @@ if(${verbose_traversal})
   message(STATUS "Entered test_data subdirectory")
 endif(${verbose_traversal})
 
-list(APPEND data_files DataBaseTest DataBaseUnits DavisTest EosTest GenHayesTest
+list(APPEND data_files DataBaseTest DataBaseUnits DavisTest EosTest ExtEOStypesTest GenHayesTest
   HayesTest HayesBMTest IdealGasTest JWLTest MieGruneisenTest PorousTest PTequilibriumTest StiffenedGasTest )
 
 foreach(data_file ${data_files})

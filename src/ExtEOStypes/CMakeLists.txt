@@ -2,10 +2,9 @@ if(${verbose_traversal})
   message(STATUS "Entered ExtEOStypes subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in ExtEOStypes: ${EOSLIB_BLESSED_OUTPUT}\n")
+#message(STATUS "blessed output in ExtEOStypes: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes)
-
-set(ExtEOStypes_src)
+set(ExtEOStypes_src dummy.cpp)
 
 add_subdirectory(ArrheniusHE)
 add_subdirectory(Elastic1D)
@@ -17,7 +16,7 @@ set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD 11)
 set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtEOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( ExtEOStypes Io Math )
+target_link_libraries( ExtEOStypes Io Math Eos DataBase ODE Calc ${CMAKE_DL_LIBS} )
 
 list( APPEND tests TestHE )
 

@@ -3,7 +3,7 @@ if(${verbose_traversal})
 endif(${verbose_traversal})
 
 message(STATUS "blessed output in ElasticPlastic: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_ELASTICPLASTIC_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypesElasticPlastic)
+set(EOSLIB_ELASTICPLASTIC_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/ElasticPlastic)
 
 set(ElasticPlastic_src)
 
@@ -23,7 +23,7 @@ foreach(test ${tests})
   target_link_libraries(${test}ElasticPlastic ElasticPlastic)
  # add_test(${test}IdealGas ${test}IdealGas)
  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-  add_test(NAME ${test}
+  add_test(NAME ${test}ElasticPlastic
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}ElasticPlastic
     -D test_args:string=${args}

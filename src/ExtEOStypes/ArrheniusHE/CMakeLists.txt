@@ -16,14 +16,14 @@ set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( ArrheniusHE Io Math )
 
-list( APPEND tests AvStiffIdealOverdriven CJprofile Hug IdealOverdriven Match OverDriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE  Tinduction ZNDProfile)
+list( APPEND tests AvStiffIdealOverdriven CJprofile Hug IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE  Tinduction ZNDprofile)
 
 foreach(test ${tests})
   add_executable(${test}ArrheniusHE ${test}.C)
   target_link_libraries(${test}ArrheniusHE ArrheniusHE)
  # add_test(${test}IdealGas ${test}IdealGas)
  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-  add_test(NAME ${test}
+  add_test(NAME ${test}ArrheniusHE
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE
     -D test_args:string=${args}
