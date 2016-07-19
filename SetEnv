@@ -1,0 +1,2 @@
+export EOSLIB_DATA_PATH=`pwd`/DATA
+export EOSLIB_SHARED_LIBRARY_PATH=`pwd`/lib

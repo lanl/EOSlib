@@ -7,8 +7,10 @@ using namespace std;
 int main(int, char **argv)
 {
     ProgName(*argv);
-    //    auto Files = "/home/woodscn/git-repos/eoslib/DATA/Units.data";
-    const char *files = "Units.data";
+    std::string files_;
+    files_ = getenv("EOSLIB_DATA_PATH");
+    files_ += "/test_data/DataBaseUnits.data";
+    const char *files = files_.c_str();
     const char *type = "hydro";
     const char *name = "std";
         

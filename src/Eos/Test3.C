@@ -1,17 +1,16 @@
 #include <LocalIo.h>
 #include "EOS.h"
 #include <iostream>
-#include <stdlib.h>
+//#include <stdlib.h>
+#include <string>
 
 using namespace std;
 int main(int, char **argv)
 {
-        char *file = new char[128];
-	file = strcpy(file, getenv("EOSLIB_DATA_PATH"));
-	cout << file;
-	cout << "\n";
-	cout.flush();
-	file = strcat(file, "/test_data/EosTest.data");
+        std::string files_;
+	files_ = getenv("EOSLIB_DATA_PATH");
+	files_ += "/test_data/EosTest.data";
+	const char *file = files_.c_str();
 	DataBase db;
 	if( db.Read(file) )
 		cerr << Error("Read failed" ) << Exit;

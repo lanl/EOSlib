@@ -7,10 +7,13 @@ int main(int, char **argv)
 	ProgName(*argv);
     EOS::Init();
 
-    const char *file = "Test.data";
-	const char *type = "PeSpline";
-	const char *name = "PMMA-hydro";
-	const char *units = NULL;
+    std::string file_;
+    file_ = getenv("EOSLIB_DATA_PATH");
+    file_ += "/test_data/MieGruneisenTest.data";
+    const char *file = file_.c_str();
+    const char *type = "PeSpline";
+    const char *name = "PMMA-hydro";
+    const char *units = NULL;
 
     int nsteps = 10;
 	int dir = RIGHT;

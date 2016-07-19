@@ -7,7 +7,10 @@
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	char *file = "Test.data";
+	std::string file_;
+	file_ = getenv("EOSLIB_DATA_PATH");
+	file_ += "/test_data/JWLTest.data";
+	const char *file = file_.c_str();
 	char *type = "JWL";
 	char *name = "HMX";
 	char *units = NULL;
