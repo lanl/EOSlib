@@ -6,7 +6,10 @@
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	const char *file = "Test.data";
+	std::string file_;
+	file_ = getenv("EOSLIB_DATA_PATH");
+	file_ += "/test_data/DavisTest.data";
+	const char *file = file_.c_str();
 	const char *type = "DavisProducts";
 	const char *name = "PBX9501";
 	const char *units = NULL;

@@ -65,7 +65,10 @@ double Eisentrope::dedu_inf()
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	const char *file = "Test.data";
+	std::string file_;
+	file_ = getenv("EOSLIB_DATA_PATH");
+	file_ += "/test_data/MieGruneisenTest.data";
+	const char *file = file_.c_str();
 	const char *type = "UsUp";
 	const char *name = "HMX";
 	const char *units = NULL;
