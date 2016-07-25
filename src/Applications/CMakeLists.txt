@@ -6,14 +6,14 @@ message(STATUS "blessed output in Applications: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_APPLICATIONS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Applications)
 set(Applications_src)
 
-add_subdirectory(Subs)
+add_subdirectory(LocalEOSdata)
 
-add_library(  ${${projectName}_policy} ${Applications_src} )
+add_library( Applications ${${projectName}_policy} ${Applications_src} )
 set_property(TARGET Applications PROPERTY CXX_STANDARD 11)
 set_property(TARGET Applications PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Applications Eos DataBase ODE)
+target_link_libraries( Applications Eos DataBase ODE ${CMAKE_DL_LIBS)
 
 list( APPEND tests TestXisentrope TestXmanager TestXRiemann)
 

@@ -86,7 +86,7 @@ int main(int, char **argv)
     if( HE == NULL )
         cerr << Error("dynamic_cast failed") << Exit;
     double lambda_ref = HE->lambda_ref();
-    if( std::isnan(V) || isnan(e) )
+    if( std::isnan(V) || std::isnan(e) )
         cerr << Error("Must specify V & e") << Exit;
     lambda0 = max(lambda0,lambda_ref);    
     double t0 = 0.0;

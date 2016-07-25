@@ -3,6 +3,7 @@
 #include <EOS.h>
 #include <EOS_VT.h>
 #include "Elastic1D.h"
+using namespace std;
 
 int main(int, char **argv)
 {
@@ -45,7 +46,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !std::isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !std::isnan(e) )
     {
         if( eos->NotInDomain(V,e) )
         {

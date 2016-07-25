@@ -1,14 +1,22 @@
 #include <Arg.h>
-
+#include "EOSmanager.h"
 #include "ExtEOSmanager.h"
+using namespace std;
 
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	const char *file     = "Test.data";
-    const char *uname    = "std";
-    const char *lib      = "../lib/Linux";
-    const char *material = "StiffIdealHEav::PBX9501";
+//	const char *file     = "Test.data";
+	std::string file_;
+        file_ = getenv("EOSLIB_DATA_PATH");
+	file_ += "/test_data/ExtEOStypesTest.data";
+	const char * file = file_.c_str();
+        const char *uname    = "std";
+//	const char *lib      = "../lib/Linux";
+        std::string libPath;
+        libPath  = getenv("EOSLIB_SHARED_LIBRARY_PATH");
+        const char * lib     = libPath.c_str();
+        const char *material = "StiffIdealHEav::PBX9501";
 	while(*++argv)
 	{
 		GetVar(file,file);

@@ -14,7 +14,7 @@ set_property(TARGET ElasticPlastic PROPERTY CXX_STANDARD 11)
 set_property(TARGET ElasticPlastic PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ElasticPlastic PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( ElasticPlastic Io Math )
+target_link_libraries( ElasticPlastic Io Math Eos Materials ExtEOS ${CMAKE_DL_LIBS})
 
 list( APPEND tests TestElastic TestEP TestRiemann TestXmanager)
 

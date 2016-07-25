@@ -15,7 +15,7 @@ set_property(TARGET Elastic1D PROPERTY CXX_STANDARD 11)
 set_property(TARGET Elastic1D PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Elastic1D PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Elastic1D Io Math )
+target_link_libraries( Elastic1D Io Math Eos ExtEOS Materials ${CMAKE_DL_LIBS})
 
 list( APPEND tests PMMAhug TestElastic1D TestElasticPMMA TestEP TestEPshock TestRiemann TestVMrate TestXmanager TwoShockEP )
 

@@ -4,7 +4,6 @@ endif(${verbose_traversal})
 
 message(STATUS "blessed output in database: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_DATABASE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/DataBase)
-
 set(DataBase_src)
 
 add_subdirectory(Subs)

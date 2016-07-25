@@ -6,17 +6,21 @@ endif(${verbose_traversal})
 set(EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes)
 set(ExtEOStypes_src dummy.cpp)
 
-add_subdirectory(ArrheniusHE)
-add_subdirectory(Elastic1D)
-add_subdirectory(ElasticPlastic)
-add_subdirectory(HEburn)
+list(APPEND ExtEOStypes_libs ArrheniusHE Elastic1D ElasticPlastic HEburn ) 
+foreach(ExtEOStype ${ExtEOStypes_libs})
+  add_subdirectory(${ExtEOStype})
+endforeach(ExtEOStype)
+#add_subdirectory(ArrheniusHE)
+#add_subdirectory(Elastic1D)
+#add_subdirectory(ElasticPlastic)
+#add_subdirectory(HEburn)
+
 
 add_library( ExtEOStypes ${${projectName}_policy} ${ExtEOStypes_src} )
 set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD 11)
 set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtEOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
-target_link_libraries( ExtEOStypes Io Math Eos DataBase ODE Calc ${CMAKE_DL_LIBS} )
+target_link_libraries( ExtEOStypes ODE Manager Materials Eos DataBase ExtEOS ${ExtEOStypes_libs} )
 
 list( APPEND tests TestHE )
 

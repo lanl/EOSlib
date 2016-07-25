@@ -61,7 +61,7 @@ int main(int, char **argv)
              << ",  V,e = " << PT.V << ", " << PT.e << "\n";
         return 0;
     }
-    if( !std::isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !std::isnan(e) )
     {
         HE->lambda_ref(lambda);
         cout << "EOS\n"

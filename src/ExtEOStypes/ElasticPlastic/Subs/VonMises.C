@@ -90,7 +90,7 @@ int VonMises::PostInit(Calc &calc, DataBase *db)
 {
     if( ElasticPlastic::PostInit(calc,db) )
         return 1;
-    if( std::isnan(Y) || Y < 0 || isnan(nu) || nu < 0)
+    if( std::isnan(Y) || Y < 0 || std::isnan(nu) || nu < 0)
     {
         EOSerror->Log("VonMises::PostInit", __FILE__, __LINE__, this,
                       "Y or nu not defined or not positive\n");

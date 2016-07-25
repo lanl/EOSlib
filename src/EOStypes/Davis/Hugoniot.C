@@ -7,7 +7,19 @@ using namespace std;
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	const char *file = "Test.data";
+	////////////REMOVE Test.data input dependency//////////
+	const char * tmpPath = getenv("EOSLIB_DATA_PATH");   //
+	std::string path1;                                   //
+	if ( tmpPath == NULL ) {                             //
+	  std::cerr << "GETENV FAILED!\n";                   //
+	} else {                                             //
+	  path1 = tmpPath;                                   //
+	}                                                    //
+        std::string name1 = "/test_data/DavisTest.data";     //
+	std::string file_ = path1 + name1;                   // 
+	const char * file = file_.c_str();                   //
+	///////////////////////////////////////////////////////
+	//	const char *file = "Test.data";
 	const char *type = "DavisReactants";
 	const char *name = "PBX9501";
 	const char *units = NULL;

@@ -2,6 +2,9 @@ if(${verbose_traversal})
   message(STATUS "Entered src subdirectory")
 endif(${verbose_traversal})
 
+#include_directories(Applications)
+#add_subdirectory(Applications)
+
 include_directories(Local)
 add_subdirectory(Local)
 
@@ -47,12 +50,12 @@ add_subdirectory(Manager)
 include_directories(ExtEOS)
 add_subdirectory(ExtEOS)
 
-# include_directories(ExtEOStypes)
-# include_directories(ExtEOStypes/ArrheniusHE)
-# include_directories(ExtEOStypes/Elastic1D)
-# include_directories(ExtEOStypes/ElasticPlastic)
-# include_directories(ExtEOStypes/HEburn)
-# add_subdirectory(ExtEOStypes)
+include_directories(ExtEOStypes)
+include_directories(ExtEOStypes/ArrheniusHE)
+include_directories(ExtEOStypes/Elastic1D)
+include_directories(ExtEOStypes/ElasticPlastic)
+include_directories(ExtEOStypes/HEburn)
+add_subdirectory(ExtEOStypes)
 
 if(${verbose_traversal})
   message(STATUS "Exiting src subdirectory")

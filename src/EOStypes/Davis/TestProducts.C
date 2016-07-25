@@ -1,19 +1,19 @@
 #include <Arg.h>
+#include <string.h>
 
 #include <EOS.h>
 #include <DavisProducts.h>
 
 int main(int, char **argv)
 {
-	ProgName(*argv);
+        ProgName(*argv);
 	std::string file_;
-	file_ = getenv("EOSLIB_DATA_PATH");
+        file_ = getenv("EOSLIB_DATA_PATH");
 	file_ += "/test_data/DavisTest.data";
-	const char *file = file_.c_str();
+	const char * file = file_.c_str();
 	const char *type = "DavisProducts";
 	const char *name = "PBX9501";
 	const char *units = NULL;
-
     EOS::Init();
     double V = EOS::NaN;
     double e = EOS::NaN;
@@ -30,7 +30,6 @@ int main(int, char **argv)
 		
 		ArgError;
 	}
-
 	if( file == NULL )
 		cerr << Error("Must specify data file") << Exit;
 
@@ -43,7 +42,6 @@ int main(int, char **argv)
 		cerr << Error("Fetch failed") << Exit;
     if( units && eos->ConvertUnits(units, db) )
 		cerr << Error("ConvertUnits failed") << Exit;
-
     if( !std::isnan(V) && !std::isnan(e) )
     {
         if( eos->NotInDomain(V,e) )

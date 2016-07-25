@@ -44,7 +44,7 @@ int main(int, char **argv)
     if( units && eos->ConvertUnits(units, db) )
         cerr << Error("ConvertUnits failed") << Exit;
 
-    if( !std::isnan(V) && !isnan(T) )
+    if( !std::isnan(V) && !std::isnan(T) )
     {
         double P = eos->P(V,T);
         cout << "P = " << P << "\n";

@@ -7,11 +7,16 @@
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	const char *file = "../../DATA/EOS.data";
-    const char *uname = "std";
-    const char *lib = "../lib/Linux";
-
-    const char *mat[] = {
+	//const char *file = "../../DATA/EOS.data";
+	std::string file_;
+        file_ = getenv("EOSLIB_DATA_PATH");
+	file_ += "/EOSTest.data";
+	const char * file = file_.c_str();
+	const char *uname = "std";
+	//const char *lib = "../lib/Linux";
+	const char *lib = "../../lib";
+    
+	const char *mat[] = {
         "EqExtEOS::HMX",
         "Hayes::HMX",
         "BirchMurnaghan::HMX",

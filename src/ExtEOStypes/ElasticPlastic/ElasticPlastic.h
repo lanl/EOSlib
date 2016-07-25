@@ -106,63 +106,63 @@ inline double ElasticPlastic::eps_el(double V, double e, const double *z)
 inline double ElasticPlastic::Fshear(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->Fshear(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->Fshear(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::Sshear(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->Sshear(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->Sshear(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::eshear(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->eshear(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->eshear(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::Pshear(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->Pshear(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->Pshear(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::shear(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->shear(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->shear(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::stress  (double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->stress(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->stress(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::stress_V(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->stress_V(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->stress_V(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::stress_T(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->stress_T(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->stress_T(V, Tve, z_el[0]);   
 }
 inline double ElasticPlastic::CVshear(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->CVshear(V, Tve, z_el[0]);   
+    return std::isnan(Tve) ? NaN : elastic->CVshear(V, Tve, z_el[0]);   
 }
     
 inline double ElasticPlastic::Phydro(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->Phydro(V, Tve);   
+    return std::isnan(Tve) ? NaN : elastic->Phydro(V, Tve);   
 }
 inline double ElasticPlastic::Shydro(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->Shydro(V, Tve);   
+    return std::isnan(Tve) ? NaN : elastic->Shydro(V, Tve);   
 }
 inline double ElasticPlastic::ehydro(double V, double e, const double *z)
 {
     double Tve = T(V,e, z);
-    return isnan(Tve) ? NaN : elastic->ehydro(V, Tve);   
+    return std::isnan(Tve) ? NaN : elastic->ehydro(V, Tve);   
 }
     
 #endif // EOSLIB_ELASTIC_PLASTIC_H

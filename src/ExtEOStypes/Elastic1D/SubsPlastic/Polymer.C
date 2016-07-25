@@ -190,7 +190,7 @@ int Polymer::PostInit(Calc &calc, DataBase *db)
                       "shear not type PolyG\n");
         return 1;      
     }
-    if( std::isnan(tau0) || tau0 < 0. || isnan(eps0) || eps0 < 0.)
+    if( std::isnan(tau0) || tau0 < 0. || std::isnan(eps0) || eps0 < 0.)
     {
         EOSerror->Log("Polymer::PostInit", __FILE__, __LINE__, this,
                       "tau0 or eps0 not defined or not positive\n");

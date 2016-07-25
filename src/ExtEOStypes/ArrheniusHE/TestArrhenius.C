@@ -52,7 +52,7 @@ int main(int, char **argv)
         HE->set_lambda(lambda);
     lambda = HE->get_lambda();
 
-    if( !std::isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !std::isnan(e) )
     {
         cout << "EOS\n"
              << "          T = " << eos->T(V,e)         << "\n"

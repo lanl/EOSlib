@@ -119,7 +119,7 @@ int IdealHE::PreInit(Calc &calc)
 #define FUNC "IdealHE::PostInit",__FILE__,__LINE__,this
 int IdealHE::PostInit(Calc &calc, DataBase *db)
 {
-    if( std::isnan(gamma) || gamma<=1. || isnan(Cv) || Cv<=0.
+  if( std::isnan(gamma) || gamma<=1. || std::isnan(Cv) || Cv<=0.
                      || std::isnan(Q)  || Q<=0. )
     {
         EOSerror->Log(FUNC, "gamma or Cv or Q not defined or wrong sign\n");

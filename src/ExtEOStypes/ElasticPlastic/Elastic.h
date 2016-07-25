@@ -246,61 +246,61 @@ inline double ElasticEOS::Fshear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->Fshear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->Fshear(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::Sshear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->Sshear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->Sshear(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::eshear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->eshear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->eshear(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::Pshear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->Pshear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->Pshear(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::shear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->shear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->shear(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::dshear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->dshear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->dshear(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::stress(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->stress(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->stress(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::stress_V(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->stress_V(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->stress_V(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::stress_T(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->stress_T(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->stress_T(V,Tve, ztmp[0]);    
 }
 inline double ElasticEOS::CVshear(double V, double e, double epsel)
 {
     ztmp[0] = epsel;
     double Tve = T(V,e, ztmp);
-    return isnan(Tve) ? NaN : elastic->CVshear(V,Tve, ztmp[0]);    
+    return std::isnan(Tve) ? NaN : elastic->CVshear(V,Tve, ztmp[0]);    
 }   
 
 #endif // EOSLIB_ELASTIC_H

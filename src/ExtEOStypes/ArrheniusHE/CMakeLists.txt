@@ -14,7 +14,7 @@ set_property(TARGET ArrheniusHE PROPERTY CXX_STANDARD 11)
 set_property(TARGET ArrheniusHE PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( ArrheniusHE Io Math )
+target_link_libraries( ArrheniusHE Io Math ODE DataBase Eos ExtEOS Materials ${CMAKE_DL_LIBS} )
 
 list( APPEND tests AvStiffIdealOverdriven CJprofile Hug IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE  Tinduction ZNDprofile)
 

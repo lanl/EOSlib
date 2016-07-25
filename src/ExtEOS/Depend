@@ -17,9 +17,14 @@ ExtEOS.a
 
 .INCLUDE
 ExtEOS.so: ExtEOS.a
-	SharedLib ExtEOS.so ExtEOS.a 
+	SharedLib ExtEOS.so ExtEOS.a
+#ExtElasticPlastic.so: ExtElasticPlastic.a
+#	SharedLib ExtElasticPlastic.so ExtElasticPlastic.a
 
 InstallExtEOS: ExtEOS.so
 	@cp ExtEOS.so $(LIB_DIR)/ExtEOS.so; \
 	$(ECHO) "*** shared object $(LIB_DIR)/ExtEOS.so installed"
+#InstallExtElasticPlastic: ExtElasticPlastic.so
+#	@cp ExtElasticPlastic.so $(LIB_DIR)/ExtElasticPlastic.so; \
+#	$(ECHO) "*** shared object $(LIB_DIR)/ExtElasticPlastic.so installed"
 
