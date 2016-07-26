@@ -49,7 +49,12 @@ int main(int, char **argv)
 {
     EOS::Init();
     ProgName(*argv);
-    const char *file = "Test.data";
+    //const char *file = "Test.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ArrheniusTest.data";
+    const char * file = file_.c_str();
+    
     const char *type = "StiffIdealHEav";
     const char *name = "PBX9501";
     const char *units = NULL;

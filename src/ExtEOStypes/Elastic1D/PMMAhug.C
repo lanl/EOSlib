@@ -9,7 +9,12 @@ int main(int, char **argv)
 {
     ProgName(*argv);
     EOS::Init();
-    const char *file = "Test.data";
+    //const char *file = "Test.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/Elastic1DTest.data";
+    const char * file = file_.c_str();
+    
     const char *type = "Polymer";
     const char *name = "PMMA";
     const char *units = NULL;

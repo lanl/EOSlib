@@ -3,7 +3,7 @@ if(${verbose_traversal})
 endif(${verbose_traversal})
 
 message(STATUS "blessed output in ArrheniusHE: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypesArrheniusHE)
+set(EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/ArrheniusHE)
 
 set(ArrheniusHE_src)
 
@@ -16,13 +16,12 @@ set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( ArrheniusHE Io Math ODE DataBase Eos ExtEOS Materials ${CMAKE_DL_LIBS} )
 
-list( APPEND tests AvStiffIdealOverdriven CJprofile Hug IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE  Tinduction ZNDprofile)
+list( APPEND tests AvStiffIdealOverdriven CJprofile Hug IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE Tinduction )
+#ZNDprofile - ZNDprofile is designed to take file, material, etc as input, not be hardcoded to a test.data file
 
 foreach(test ${tests})
   add_executable(${test}ArrheniusHE ${test}.C)
   target_link_libraries(${test}ArrheniusHE ArrheniusHE)
- # add_test(${test}IdealGas ${test}IdealGas)
- # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
   add_test(NAME ${test}ArrheniusHE
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE

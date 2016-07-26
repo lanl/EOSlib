@@ -4,7 +4,7 @@ endif(${verbose_traversal})
 
 add_subdirectory(test_data)
 
-list(APPEND data_files EOS EOS_VT ElasticPlastic ElasticPlastic1D Explosives HMX
+list(APPEND data_files EOS EOS_VT ElasticPlastic ElasticPlastic1D Explosives HE HMX
   Libersky Porous Sesame Units )
 
 foreach(data_file ${data_files})

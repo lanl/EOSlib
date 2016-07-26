@@ -6,7 +6,12 @@
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file = "Test.data";
+    //const char *file = "Test.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/HEburnTest.data";
+    const char * file = file_.c_str();
+
     const char *type = "HEburn";
     const char *name = "PBX9501.sam";
     const char *units = NULL;
@@ -66,7 +71,7 @@ int main(int, char **argv)
     else
         lambda = HE->lambda_ref();
 
-    if( !std::isnan(V) && !isnan(e) )
+    if( !std::isnan(V) && !std::isnan(e) )
     {
         eos->c2_tol = 1e-6;
         double c2 = eos->EOS::c2(V,e);

@@ -8,7 +8,12 @@
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file = "Test.data";
+    //const char *file = "Test.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ElasticPlasticTest.data";
+    const char * file = file_.c_str();
+    
     const char *type = "VonMises";
     const char *name = "HMX";
     const char *units = "std";

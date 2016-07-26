@@ -15,16 +15,15 @@ set_property(TARGET HEburn PROPERTY CXX_STANDARD 11)
 set_property(TARGET HEburn PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET HEburn PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( HEburn Io Math )
+target_link_libraries( HEburn Io Math Eos ExtEOS ODE Materials ${CMAKE_DL_LIBS})
 
-list( APPEND test CJtest FFprofile HE_Cv HE_Gamma PopPlotTrajectory ReactionTime TestAllocation TestHEburn2CC TestHEburn TestHEburnCC TestHEeos TestHErate TestIntegrate TestTimeStep ViscousProfile ZNDprofile)
+list( APPEND tests CJtest FFprofile HE_Cv HE_Gamma PopPlotTrajectory ReactionTime TestAllocation TestHEburn2CC TestHEburn TestHEburnCC TestHEeos TestHErate TestIntegrate TestTimeStep ViscousProfile )
+#ZNDprofile - made for dynamic input, not to be hardcoded to a test.data file
 
 foreach(test ${tests})
   add_executable(${test}HEburn ${test}.C)
   target_link_libraries(${test}HEburn HEburn)
- # add_test(${test}IdealGas ${test}IdealGas)
- # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-  add_test(NAME ${test}
+  add_test(NAME ${test}HEburn
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}HEburn
     -D test_args:string=${args}

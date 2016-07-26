@@ -1,0 +1,630 @@
+.include ../EOS.data
+.include PorousTest.data
+
+:DataBase.=Environment
+{
+#  SharedLibDirEOS = $PWD/../../lib/Linux
+#  SharedLibDirEOS = /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
+   SharedLibDirEOS = $EOSLIB_SHARED_LIB_PATH
+}
+
+:SharedLibs.=EOS
+{
+    HEburn    = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    HEburn2   = $EOSLIB_SHARED_LIB_PATH/libHEburn
+}
+
+:SharedLibs.=HErate
+{
+    HErate         = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    Arrhenius      = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    PnRate         = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    IgnitionGrowth = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    FFrate         = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    FFQrate        = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    #HotSpotCC     = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    HotSpotCC_Rate = $EOSLIB_SHARED_LIB_PATH/libHEburn
+}
+
+:SharedLibs.=HErate2
+{
+    HErate2        = $EOSLIB_SHARED_LIB_PATH/libHEburn
+    HotSpotRateCC  = $EOSLIB_SHARED_LIB_PATH/libHEburn
+}
+
+HErate:Arrhenius!=HMX; units=hydro::std
+{
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499
+    tol = 1.e-6
+    n   =  1                        # reaction order
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    m   = -1
+    T_m = 600
+}
+HErate:FFrate!=PBX9501; units=hydro::std
+{
+# Pop plot parameters: log_10(P) = a - b*log_10(x)
+# Gibbs & Popolato p 115, PBX 9501 @ rho0 = 1.844
+    a = 1.10
+    b = 0.51
+    lambda_max = 0.95
+    #n = 2/3
+}
+HErate:FFQrate!=PBX9501; units=hydro::std
+{
+# Pop plot parameters: log_10(P) = a - b*log_10(x)
+# Gibbs & Popolato p 115, PBX 9501 @ rho0 = 1.844
+    a = 1.10
+    b = 0.51
+    lambda_max = 0.95
+}
+
+HErate:PnRate!=PBX9501; units=hydro::std
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics in HMX-based
+#       Condensed Explosive PBX-9501"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       draft 1/4/04
+    tol = 1.e-5
+    nu  = 0.93
+    k   = 110                        # 1/microsec
+    Pcj = 36.3                       # GPa
+    N   = 3.5
+}
+#
+#
+#
+.units = hydro::std
+.base  = EOS
+
+EOS:HEburn!=PBX9501.sam; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =  "Hayes::PBX9501.sam"
+    products  = "Sesame::PBX9501"
+    HErate    = "Arrhenius::HMX";
+}
+EOS:HEburn!=PBX9501.sam.FF; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =  "Hayes::PBX9501.sam"
+    products  = "Sesame::PBX9501"
+    HErate    = "FFrate::PBX9501"
+}
+EOS:HEburn!=PBX9501.sam.FFQ; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =   "Hayes::PBX9501.sam"
+    products  =  "Sesame::PBX9501"
+    HErate    = "FFQrate::PBX9501"
+}
+EOS:HEburn!=PBX9501.sam.Pn; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =  "Hayes::PBX9501.sam"
+    products  = "Sesame::PBX9501"
+    HErate    = "PnRate::PBX9501"
+}
+
+EOS:HEburn!=PBX9501.davis; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "DavisReactants::PBX9501"
+    products  =  "DavisProducts::PBX9501"
+    HErate    =         "PnRate::PBX9501"
+}
+#
+#
+#
+EOS:Hayes!=PBX9501.sam; units=hydro::std
+{
+    # Gibbs & Popolato, p 116
+    rho0 = 1.843            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # 0.1 < Up < 0.9
+    c0= 2.953
+    s = 1.507 + 0.179
+    #
+    rho0 = 1.833
+    e0 = 6.1021
+    #Cv = 2.1e-3             # (MJ/kg)/K    
+    Cv = 2.0e-3             # (MJ/kg)/K    
+}
+#
+#
+#
+EOS:DavisProducts!=PBX9501;
+{
+    rho0 = 1.844    # g/cm^3
+    e0   = 5.85     # MJ/kg
+    a    = 0.7965
+    n    = 1.758
+    Vc   = 0.8314   # cm^3/g
+    pc   = 3.738    # GPa
+    b    = 0.7
+    k    = 1.3
+    Cv   = 0.945e-3 # (MJ/kg)/K
+    Tc   = 2407.34
+    #
+    Cv   = 2e-3
+    Tc  -= 227
+}
+
+EOS:DavisReactants!=PBX9501;
+{
+    rho0 = 1.844    # g/cm^3
+    e0   = 0.       # MJ/kg
+    P0   = 1.e-4    # GPa
+    T0   = 293.     # K
+    S0   = 0.       # (MJ/kg)/K
+    A    = 2.339    # km/s
+    B    = 2.737
+    C    = 1.45
+    G0   = 0.7989
+    Z    = -0.03076
+    Cv   = 1.088e-3 # (MJ/kg)/K
+    alpha = 0.9644
+}
+#
+# TATB
+#
+EOS:JWL=LX-17.reactants; units=hydro::std
+{
+# LX-17 = 92.5 % TATB + 7.5 % KelF 800
+# Ref. Detonation waves in triaminotrinitrobenzene
+#   C M Tarver, J. W. Kury and R. D. Breithaupt
+#   J. Appl. Phys. 82 (1997) pp. 3771-3782
+    rho0  = 1.905        # g/cm^3
+    A     = 778.1e2      # GPa
+    B     =  -5.031      # GPa
+    R1    =  11.3        # -
+    R2    =   1.13       # -
+    omega =   0.8938     # -
+    Edet  =   0.0        # MJ/kg
+    # Ref isentrope thru (V0,P0) for T
+    P0   = 1.e-4        # GPa
+    #S0   = 0.0
+    Cv    = 2.487e-3*V0  # (MJ/kg)/K
+    e0    = 0.32112819517131481     # e_ref = 0 for ambient state
+}
+EOS:JWL=LX-17.products; units=hydro::std
+{
+# LX-17 = 92.5 % TATB + 7.5 % KelF 800
+# Ref. Detonation waves in triaminotrinitrobenzene
+#   C M Tarver, J. W. Kury and R. D. Breithaupt
+#   J. Appl. Phys. 82 (1997) pp. 3771-3782
+    rho0  =    1.905     # g/cm^3
+    A     = 1345.4       # GPa
+    B     =   67.27      # GPa
+    R1    =    6.2       # -
+    R2    =    2.2       # -
+    omega =    0.5       # -
+    Edet  =    6.9*V0    # MJ/kg
+    Scj   = 0.01
+    Cv    = 1.0e-3*V0    # (MJ/kg)/K
+}
+
+HErate:PnRate!=LX-17; units=hydro::std
+{
+#
+#   Test example (not physical model)
+#
+    tol = 1.e-5
+    nu  = 0.93
+    k   = 100            # 1/microsec
+    Pcj = 25             # GPa
+    N   = 3.5
+}
+
+EOS:HEburn!=LX-17.Pn; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =    "JWL::LX-17.reactants"
+    products  =    "JWL::LX-17.products"
+    HErate    = "PnRate::LX-17"
+}
+
+
+HErate:IgnitionGrowth!=LX-17; units=hydro::std
+{
+# Ref. Detonation waves in triamino-trinitrobenzene
+#  C. M. Tarver, J. W. Kury, R. D. Breithaupt 
+#  J. Appl. Phys 82 (1997) pp 3771--3782, Table III
+    tol = 1.e-5
+    rho0 = 1.905         # g/cm^3
+    lambda_igmax = 0.02
+    I = 4.0e6            # 1/microsec
+    a = 0.22
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.70
+    G1 = 550/100^2             # 1/microsec
+    y = 2.0
+    c=0.667
+    d=1.0
+    lambda_G2min = 0.70
+    G2 = 15.0/100            # 1/microsec
+    e = 0.667
+    g = 0.667
+    z = 1.0
+}
+
+EOS:HEburn!=LX-17.IG; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =            "JWL::LX-17.reactants"
+    products  =            "JWL::LX-17.products"
+    HErate    = "IgnitionGrowth::LX-17"
+}
+#
+#
+#
+EOS:JWL!=PBX9502.reactants; units=hydro::std
+{
+    rho0   =  1.8910        # g/cm^3
+    A      = 63207.0        # GPa
+    B      = -4.4720        # GPa
+    R1     = 11.30          # -
+    R2     = 1.130          # -
+    omega  = 0.89380        # -
+    Cv     = 2.4870e-3*V0   # (MJ/kg)/K
+    # Ref isentrope thru (V0,P0) for T
+    Edet   = 0.0            # MJ/kg
+    P0     = 1.e-4          # GPa
+    e0     = 2.473921214e-01     # MJ/kg
+}
+EOS:JWL!=PBX9502.products; units=hydro::std
+{
+    rho0   =  1.8910        # g/cm^3
+    A      = 1361.77        # GPa
+    B      = 71.990         # GPa
+    R1     = 6.20           # -
+    R2     = 2.20           # -
+    omega  = 0.50           # -
+    Cv     = 1.0e-3*V0      # (MJ/kg)/K
+    Edet   = 6.90*V0        # MJ/kg
+    #Scj    = 0.01    
+    #Tcj = 1800
+}
+HErate:IgnitionGrowth=LX17; units=hydro::std
+{
+# Ref. Detonation waves in triamino-trinitrobenzene
+#  C. M. Tarver, J. W. Kury, R. D. Breithaupt 
+#  J. Appl. Phys 82 (1997) pp 3771--3782, Table III
+    tol = 1.e-5
+    rho0 = 1.891            # g/cm^3
+    lambda_igmax = 0.02
+    I = 4.0e6               # 1/microsec
+    a = 0.22
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.70
+    G1 = 550/100^2          # 1/microsec
+    y = 2.0
+    c=0.667
+    d=1.0
+    lambda_G2min = 0.70
+    G2 = 15.0/100           # 1/microsec
+    e = 0.667
+    g = 0.667
+    z = 1.0
+}
+EOS:HEburn=PBX9502; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::PBX9502.reactants"
+    products  = "JWL::PBX9502.products"
+    HErate    = "IgnitionGrowth::LX17"
+    #
+    #HErate    = "PnRate::LX-17";
+    e_ref = 0
+}
+#
+# HotSpot rate
+#
+EOS:HEburn=PBX9502.HotSpotCC; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-8
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    P_ref = 1e-4
+    T_ref = 296.15
+    lambda = 0  # all reactants
+    reactants = "EqPorous::PBX9502.Keane2"
+    products  = "Sesame::PBX9502"
+    HErate    = "HotSpotCC_Rate::PBX9502"
+}
+EOS:EqPorous=PBX9502.Keane2; units=hydro::std
+{
+    P_ref = 1e-4
+    T_ref = 296.15
+    V_ref = 1/1.889
+    e_ref = 0.21816342481541
+    EOS   = "Keane::TATB.2"
+    PhiEq =  "Phi0::PBX9502"
+}
+EOS:Keane=TATB.2; units=hydro::std
+{
+    P_vac = -1              # reset to Pmin
+    V_ref = 1/1.942
+    e_ref = 0.22289
+    P_ref = 1.e-4 
+    T_ref = 300.
+    V0  = 1/1.942           # cm^3/g (V0 at T=0)
+    e0  = 0
+    # Fit to DAC data for TATB at room temperature
+    P0_ref   = P_ref
+    K0       = 13.6         # GPa
+    Kp0      = 12.4         # dimensionless
+    Kp0infty =  5.0         # dimensionless
+    V1       =  0.79*V0
+    Kp1      =  4           # dimensionless
+    Kp1infty =  3           # dimensionless    
+    ##
+    V1       = 0.812*V0
+    Kp1      = 6.0
+    Kp1infty = 1.000001
+    ##
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.5              # dimensionless
+    eps1 = 0.3
+    # Specific heat = Cv*sT^3/(cv_1+sT*cv_2+sT^2*cv_3+sT^3*cv_4) # MJ/kg/K
+    # where sT = T/theta(V)
+    Cv = 1e-3                       # MJ/(kg*K) = 1e-3 J/(g*K)
+    cv(1) = 4.4798e-4, 0.22288      # dimensionless 
+    cv(3) = 1.2560e2,  0.40340      # dimensionless
+}
+PhiEq:Phi0=PBX9502; units=hydro::std
+{
+    Pc      = 0.4           # crushup pressure (GPa)
+    V0      = 0.5147609693696      # 1/TMD (cm^3/g)
+    P0      = 1e-4           # P0 (GPa)
+    phi0    = 0.972383471139174     # 1 - initial porosity
+    abs_tol = 1e-6
+    rel_tol = 1e-6
+}
+HErate:HotSpotCC_Rate=PBX9502; units=hydro::std
+{
+#  first, fast hot spot rate
+#  lambda = 1 - exp(-s^2)
+#   ds/dt = D*exp(A+B*Ps/Pref),                            for        Ps < Pign
+#         = D*(fmax*(Ps-Pign)+fign*(Pmax-Ps))/(Pmax-Pign), for Pign < Ps < Pmax
+#       D = (p/Ps)^n
+#       p = P(V, e-lambda*ecc, lambda)
+#
+    sc =  2.        # cutoff for lambda(s)
+    n  =  0.
+    A  = -3.87
+    B  =  0.30
+    Pign = 24
+    Pmax = 37
+    #fign = exp(A+B*Pign) = 28
+    fmax = 60
+# second, slow CC rate
+# lambda2 = s2^2
+# ds2/dt = 0.5*lambda^2 * hinv(s2)
+# ecc = [(1+lambda2*(Nratio-1))^(-1/3) -Nratio^(-1/3)]*Q
+    Q  = 2
+    Nratio = 250
+    # parameters for lambda2 = h(t)
+    t1 = 0.15
+    t2 = 0.35
+    h1 = 0.2
+    h2 = 0.8
+    source_type = 3     # use rate constraint on time step
+    #
+    # adjustment
+    #
+    A += 0.25
+    #
+    Q  = 1.9
+    Nratio = 1/1.8e-3
+    Pign = 23.5
+    #fign = exp(A+B*Pign) = 30.9        
+    Pmax = 30
+    fmax = 44
+}
+#
+# HotSpotRateCC
+#
+EOS:HEburn2=PBX9502.HotSpotCC; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-8
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    P_ref = 1e-4
+    T_ref = 296.15
+    lambda = 0  # all reactants
+    reactants = "EqPorous::PBX9502.Keane2"
+    products  = "Sesame::PBX9502"
+    HErate2   = "HotSpotRateCC::PBX9502"
+}
+EOS:HEburn2=PBX9502.HotSpotCC.new; units=hydro::std
+{
+    :use=PBX9502.HotSpotCC
+
+    HErate2   = "HotSpotRateCC::PBX9502.new"
+}
+EOS:HEburn2=PBX9502.HotSpotCC.alt; units=hydro::std
+{
+    :use=PBX9502.HotSpotCC
+
+    HErate2   = "HotSpotRateCC::PBX9502.alt"
+}
+HErate2:HotSpotRateCC=PBX9502; units=hydro::std
+{
+#  first, fast hot spot rate
+#  lambda = 1 - exp(-s^2)
+#   ds/dt = D*exp(A+B*Ps/Pref),                            for        Ps < Pign
+#         = D*(fmax*(Ps-Pign)+fign*(Pmax-Ps))/(Pmax-Pign), for Pign < Ps < Pmax
+#       D = (p/Ps)^n
+#       p = P(V, e-lambda*ecc, lambda)
+#
+    sc =  2.        # cutoff for lambda(s)
+    n  =  0.
+    A  = -3.87
+    B  =  0.30
+    Pign = 24
+    Pmax = 37
+    #fign = exp(A+B*Pign) = 28
+    fmax = 60
+# second, slow CC rate
+# lambda2 = s2^2
+# ds2/dt = 0.5*lambda^2 * hinv(s2)
+# ecc = [(1+lambda2*(Nratio-1))^(-1/3) -Nratio^(-1/3)]*Q
+    Q  = 2
+    Nratio = 250
+    # parameters for lambda2 = h(t)
+    t1 = 0.15
+    t2 = 0.35
+    h1 = 0.2
+    h2 = 0.8
+    source_type = 3     # use rate constraint on time step
+    #
+    # adjustment
+    #
+    A += 0.25
+    #
+    Q  = 1.9
+    Nratio = 1/1.8e-3
+    Pign = 23.5
+    #fign = exp(A+B*Pign) = 30.9        
+    Pmax = 30
+    fmax = 44
+}
+HErate2:HotSpotRateCC=PBX9502.new; units=hydro::std
+{
+#  first, fast hot spot rate
+#  lambda = 1 - exp(-s^2)
+#   ds/dt = D*f(Ps)
+#
+#         =  0,                                          for Ps < P0
+#   f(Ps) = f0(Ps) - f0(P0)*(1+B*(Ps-P0)/Pref),          for P0 < Ps < P1
+#         = f1*(1+df1*[1-exp(-B2*(Ps-P1)/Pref)],         for      P1 < Ps
+#  where
+#   f0(Ps) = exp(A+B*Ps/Pref) / tref
+#      f1  = f(P1) = f0(P1) - f0(P0)*(1+B*(P1-P0)/Pref)
+#      B2  = Pref*(df/dPs)(P1)/(f1*df1)
+#
+#       D = (p/Ps)^n
+#       p = P(V, e-lambda*ecc, lambda)
+    A =  -3.1
+    B  =  0.28
+    P0 =  2.5
+    P1 = 21.5
+   df1 =  3
+#
+    sc =  2.        # cutoff for lambda(s)
+    n  =  0.
+# second, slow CC rate
+# lambda2 = s2^2
+# ds2/dt = 0.5*lambda^2 * hinv(s2)
+# ecc = [(1+lambda2*(Nratio-1))^(-1/3) -Nratio^(-1/3)]*Q
+    Q  = 2
+    Nratio = 250
+    # parameters for lambda2 = h(t)
+    t1 = 0.15
+    t2 = 0.35
+    h1 = 0.2
+    h2 = 0.8
+    source_type = 3     # use rate constraint on time step
+    #
+    # adjustment
+    #
+    Q  = 1.9
+    Nratio = 1/1.8e-3
+}
+
+HErate2:HotSpotRateCC=PBX9502.alt; units=hydro::std
+{
+#  first, fast hot spot rate
+#  lambda = 1 - exp(-s^2)
+#   ds/dt = D*f(Ps)
+#
+#              =  0,                                    for Ps < P0
+#  t_ref*f(Ps) = C*[(Ps-P0)/Pref]**fn,                  for P0 < Ps < P1
+#              = f1*(1+df1*[1-exp(-B2*(Ps-P1)/Pref)],   for      P1 < Ps
+#
+#       D = (p/Ps)^n
+#       p = P(V, e-lambda*ecc, lambda)
+    Cr =  0.44
+    Pr = 10.
+    P0 =  2.5
+    P1 = 27
+    fn =  3.5
+   df1 =  1.5
+#
+    sc =  2.        # cutoff for lambda(s)
+    n  =  0.
+# second, slow CC rate
+# lambda2 = s2^2
+# ds2/dt = 0.5*lambda^2 * hinv(s2)
+# ecc = [(1+lambda2*(Nratio-1))^(-1/3) -Nratio^(-1/3)]*Q
+    Q  = 2
+    Nratio = 250
+    # parameters for lambda2 = h(t)
+    t1 = 0.15
+    t2 = 0.35
+    h1 = 0.2
+    h2 = 0.8
+    source_type = 3     # use rate constraint on time step
+    #
+    # adjustment
+    #
+    Q  = 1.9
+    Nratio = 1/1.8e-3
+}
+

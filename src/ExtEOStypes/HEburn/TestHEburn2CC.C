@@ -10,7 +10,12 @@ int main(int, char **argv)
     EOS::Init();
     InitFormat();
 
-    const char *file = "Test.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/HEburnTest.data";
+    const char * file = file_.c_str();
+ 
+    //const char *file = "Test.data";
     const char *type = "HEburn2";
     const char *name = "PBX9502.HotSpotCC";
     const char *units = "hydro::std";

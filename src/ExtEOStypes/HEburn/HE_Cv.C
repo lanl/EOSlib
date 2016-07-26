@@ -69,7 +69,13 @@ int EVT::T(double T1, ThermalState &state)
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file = "HE.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/HE.data";
+    const char * file = file_.c_str();
+ 
+
+    //const char *file = "HE.data";
     const char *type = "HEburn";
     const char *name = "PBX9501.BM";
     const char *units = NULL;

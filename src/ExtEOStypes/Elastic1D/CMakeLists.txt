@@ -1,8 +1,8 @@
 if(${verbose_traversal})
-  message(STATUS "Entered ElasticPlastic1D subdirectory")
+  message(STATUS "Entered Elastic1D subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in ElasticPlastic1D: ${EOSLIB_BLESSED_OUTPUT}\n")
+message(STATUS "blessed output in Elastic1D: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_ELASTIC1D_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/Elastic1D)
 
 set(Elastic1D_src)
@@ -22,8 +22,6 @@ list( APPEND tests PMMAhug TestElastic1D TestElasticPMMA TestEP TestEPshock Test
 foreach(test ${tests})
   add_executable(${test}Elastic1D ${test}.C)
   target_link_libraries(${test}Elastic1D Elastic1D)
- # add_test(${test}IdealGas ${test}IdealGas)
- # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
   add_test(NAME ${test}Elastic1D
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D

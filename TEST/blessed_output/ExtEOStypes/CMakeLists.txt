@@ -1,0 +1,20 @@
+if(${verbose_traversal})
+  message(STATUS "Entered ExtEOStypes subdirectory")
+endif(${verbose_traversal})
+
+list(APPEND subdirectories_types ArrheniusHE Elastic1D ElasticPlastic HEburn  )
+
+foreach( subdirectory ${subdirectories_types})
+  add_subdirectory(${subdirectory})
+  set( blessed_files )
+  file(GLOB blessed_files ./${subdirectory}/*.blessed)
+  foreach( blessed_file ${blessed_files} )
+    configure_file(${blessed_file} ${CMAKE_CURRENT_BINARY_DIR}/${subdirectory}/ COPYONLY)
+  endforeach(blessed_file)
+endforeach(subdirectory)
+
+
+
+if(${verbose_traversal})
+  message(STATUS "Exiting ExtEOStypes subdirectory")
+endif(${verbose_traversal})
