@@ -1,18 +1,19 @@
 .include ../EOS.data
-.include PorousTest.data
+#.include PorousTest.data
 
 :DataBase.=Environment
 {
 #  SharedLibDirEOS = $PWD/../../lib/Linux
 #  SharedLibDirEOS = /home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
-   SharedLibDirEOS = $EOSLIB_SHARED_LIB_PATH
+   SharedLibDirEOS = /home/childrj/git-repos/eoslib/build/lib
+   #$EOSLIB_SHARED_LIB_PATH
 }
 
-:SharedLibs.=EOS
-{
-    HEburn    = $EOSLIB_SHARED_LIB_PATH/libHEburn
-    HEburn2   = $EOSLIB_SHARED_LIB_PATH/libHEburn
-}
+#:SharedLibs.=EOS
+#{
+#    HEburn    = $EOSLIB_SHARED_LIB_PATH/libHEburn
+#    HEburn2   = $EOSLIB_SHARED_LIB_PATH/libHEburn
+#}
 
 :SharedLibs.=HErate
 {

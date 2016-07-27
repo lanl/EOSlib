@@ -13,7 +13,7 @@ set_property(TARGET Sesame PROPERTY CXX_STANDARD 11)
 set_property(TARGET Sesame PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Sesame PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Sesame Eos DataBase ODE )
+target_link_libraries( Sesame Eos DataBase ODE ${CMAKE_DL_LIBS})
 
 list( APPEND tests Test2 Test2VT Test3)
 

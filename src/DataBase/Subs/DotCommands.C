@@ -5,7 +5,7 @@ inline char* Strdup(const char* str)
     return (str==NULL) ?  NULL : strdup(str);
 }
 using namespace std;
-#include "DataBase.h"
+#include "../DataBase.h"
 
 /*
 Commands before Parameters:

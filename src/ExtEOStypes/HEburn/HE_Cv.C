@@ -79,7 +79,10 @@ int main(int, char **argv)
     const char *type = "HEburn";
     const char *name = "PBX9501.BM";
     const char *units = NULL;
-    const char *lib   = "../../lib/Linux";
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib   = "../../lib/Linux";
     int nsteps  = 10;
     double V = 0.;
     double e = 0.;

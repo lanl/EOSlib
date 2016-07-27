@@ -17,7 +17,7 @@ set_property(TARGET HEburn PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( HEburn Io Math Eos ExtEOS ODE Materials ${CMAKE_DL_LIBS})
 
-list( APPEND tests CJtest FFprofile HE_Cv HE_Gamma PopPlotTrajectory ReactionTime TestAllocation TestHEburn2CC TestHEburn TestHEburnCC TestHEeos TestHErate TestIntegrate TestTimeStep ViscousProfile )
+list( APPEND tests CJtest )#FFprofile HE_Cv HE_Gamma PopPlotTrajectory ReactionTime TestAllocation TestHEburn2CC TestHEburn TestHEburnCC TestHEeos TestHErate TestIntegrate TestTimeStep ViscousProfile )
 #ZNDprofile - made for dynamic input, not to be hardcoded to a test.data file
 
 foreach(test ${tests})

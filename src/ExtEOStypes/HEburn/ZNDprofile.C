@@ -136,7 +136,7 @@ int main(int, char **argv)
     const char *file     = NULL;
     const char *type     = NULL;
     const char *name     = NULL;
-	const char *material = NULL;
+    const char *material = NULL;
     const char *units    = NULL;
     const char *lib      = NULL;
     double epsilon = 1.e-6;

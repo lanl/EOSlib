@@ -18,7 +18,12 @@ int main(int, char **argv)
     const char *name     = "PBX9501.sam.FF";
     const char *material = NULL;
     const char *units    = NULL;
-    const char *lib      = "../../lib/Linux";
+
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib      = "../../lib/Linux";
+
     double epsilon = 1.e-6;
     //
     double nu      = 1.0;   // viscous coefficient (dimesionless)

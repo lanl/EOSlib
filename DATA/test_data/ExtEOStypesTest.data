@@ -1,4 +1,4 @@
-.include ../../DATA/EOS.data
+.include ../EOS.data
 
 .units = hydro::std
 .base  = EOS

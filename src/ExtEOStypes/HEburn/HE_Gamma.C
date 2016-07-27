@@ -10,12 +10,15 @@ int main(int, char **argv)
     file_ += "/HE.data";
     const char * file = file_.c_str();
  
-
     //const char *file = "HE.data";
     const char *type = "HEburn";
     const char *name = "PBX9501.BM";
     const char *units = NULL;
-    const char *lib   = "../../lib/Linux";
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib   = "../../lib/Linux";
+
     int nsteps  = 10;
     double V_min = 0.3;
     double V_max = 0.;

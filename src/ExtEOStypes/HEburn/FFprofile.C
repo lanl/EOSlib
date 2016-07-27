@@ -11,14 +11,17 @@ int main(int, char **argv)
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
     file_ += "/HE.data";
     const char * file = file_.c_str();
- 
     
     //const char *file     = "HE.data";
     const char *type     = "HEburn";
     const char *name     = "PBX9501.sam.FF";
-	const char *material = NULL;
+    const char *material = NULL;
     const char *units    = NULL;
-    const char *lib      = "../../lib/Linux";    
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib      = "../../lib/Linux";    
+
     double epsilon = 1.e-6;     // accuracy for ODE
     double tol     = 1.e-4;     // tolerance for bisection routine for nu
     double lambda_max = 0.999;  // end of profile
