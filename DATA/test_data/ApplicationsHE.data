@@ -1,0 +1,499 @@
+# EOS data used for AMRITA simulations
+
+.include ../EOS.data
+#.include PorousTest.data
+.include ../HE.data
+#
+# Local Data
+#
+.include ApplicationsPBX9501.data
+.include ApplicationsPBX9502.data
+.include ApplicationsNitromethane.data
+
+.include ApplicationsValidationHE.data
+.include ApplicationsPolymer.data
+#.include ApplicationsTest.data
+
+EOS:Hayes=Cu; units=hydro::std
+{
+     	     rho0 = 8.924
+     	     P0 = 0.0001
+             T0 = 300
+     	 Gamma0 = 1.5
+             Cv = 0.001
+      	     c0 = 3.91;  s = 1.51
+             e0 = Cv*T0
+}
+
+
+/***
+EOS:Hayes=backfoam; units=hydro::std
+{
+     	     rho0 = 0.1
+     	     P0 = 0.0001
+             T0 = 300
+     	 Gamma0 = 1.1
+             Cv = 0.001
+      	     c0 = 0.5;  s = 1.2
+             e0 = Cv*T0
+}
+***/
+
+/***
+EOS:UsUp=backfoam; units=hydro::std
+{
+     	     rho0 = 0.1
+             e0 = 1
+     	     P0 = 0.0001
+             T0 = 300
+     	     G0 = G1 = 1.1
+             Cv = 0.0001
+      	     c0 = 0.2;  s = 1.2
+}
+***/
+
+
+/*****  TEST ********/
+EOS:EqPorous=PBX9502.test; units=hydro::std
+{
+    P_ref = 1.0e-4 
+    T_ref = 300.
+    V_ref = 1/1.89
+    e_ref = 0.22289
+    EOS   = "Keane::TATB"
+    PhiEq =  "Phi0::PBX9502.test"
+}
+PhiEq:Phi0=PBX9502.test; units=hydro::std
+{
+    Pc      = 0.4           # crushup pressure (GPa)
+    V0      = 1/1.942       # 1/TMD (cm^3/g)
+    P0      = 1.0e-4        # P0 (GPa)
+    phi0    = 1.89*V0       # 1 - initial porosity
+    abs_tol=1e-4
+    rel_tol=1e-4
+}
+#
+EOS:EqPorous=PBX9502.test.cold; units=hydro::std
+{
+    P_ref = 1.0e-4 
+    T_ref = 250.
+    V_ref = 5.1324e-01    # 1/TMD (cm^3/g), 1.948, EOS at P_ref & T_ref
+    V_ref /= 0.950        # porosity, 1 - 0.950 = 5 %
+    e_ref = 0.16430       # solid at P_ref and T_ref
+    EOS   = "Keane::TATB"
+    PhiEq =  "Phi0::PBX9502.test.cold"
+}
+PhiEq:Phi0=PBX9502.test.cold; units=hydro::std
+{
+    Pc      = 0.4           # crushup pressure (GPa)
+    V0      = 5.1324e-01    # 1/TMD (cm^3/g), 1.948, solid at T0=250 K
+    P0      = 1.0e-4        # P0 (GPa)
+    phi0=0.950              # initial porosity, 1-phi0 = 5 %
+    abs_tol=1e-6
+    rel_tol=1e-6
+}
+
+/*** Test TPX ***/
+EOS:Keane=TPX; units=hydro::std
+{
+# ploymethylpentene, C6 H12
+# ref
+# Tariq, note dated July 14, 2010
+# Multiple Shock Experiments in Lexan-Ta-TPX-LiF
+    P_vac = -1              # reset to Pmin
+    V_ref = 1/0.831
+    e_ref = 0.22289
+    P_ref = 1.e-4 
+    T_ref = 300.
+    V0  = 1/0.831           # cm^3/g (V0 at T=0)
+    e0  = 0
+    # 
+    K0 =  2.7               # GPa
+    Kp0 = 7.9               # dimensionless
+    Kp0infty =  5.2         # dimensionless
+    # corrected for cold curve
+    V_PTref = V0
+    P0_ref = P_ref
+    # Gamma = a + b*(V/V0)
+    a   =  0.57             # dimensionless
+    b   =  0.0              # dimensionless
+    eps1 = 0.3
+    # Specific heat = Cv*sT^3/(cv_1+sT*cv_2+sT^2*cv_3+sT^3*cv_4) # MJ/kg/K
+    # where sT = T/theta(V), and theta(V0) = 1 K
+    # generic parameters
+    # classical limit at Tlimit=3000 K
+    # 1/2 classical limit at 300 K
+    AtWt_H =  1.079                 # Atomic Weight H,  g/mol
+    AtWt_C = 12.011                 # Atomic Weight C,  g/mol
+    MolWt = 6*AtWt_C + 12*AtWt_H    # molecular weight, g/mol
+    atoms = 6+12                    # atoms/molecule
+    R  = 8.314472                   # Gas constant,    (J/mol)/K
+    Cv = 3*atoms*R/(1000*MolWt)     # classical limit, (MJ/kg)/K = (J/mg)/K
+    Tlimit = 3000                   # Tclassical/theta(V0)
+    cv(1) =  1e-4 * Tlimit^3
+    cv(2) =  0.01 * Tlimit^2
+    cv(3) = -0.01 * Tlimit
+    cv(4) =  1
+}
+EOS:Keane=Lexan; units=hydro::std
+{
+# polycarbonate, C16 H14 O3
+# ref
+# Tariq, note dated July 14, 2010
+# Multiple Shock Experiments in Lexan-Ta-TPX-LiF
+    P_vac = -1              # reset to Pmin
+    V_ref = 1/1.193
+    e_ref = 0.22289
+    P_ref = 1.e-4 
+    T_ref = 300.
+    V0  = 1/1.193           # cm^3/g (V0 at T=0)
+    e0  = 0
+    # 
+    K0 =   4.44             # GPa
+    Kp0 = 11.               # dimensionless
+    Kp0infty =  4.1         # dimensionless
+    # corrected for cold curve
+    V_PTref = V0
+    P0_ref = P_ref
+    # Gamma = a + b*(V/V0)
+    a   =  0.0              # dimensionless
+    b   =  0.6              # dimensionless
+    eps1 = 0.3
+    # Specific heat = Cv*sT^3/(cv_1+sT*cv_2+sT^2*cv_3+sT^3*cv_4) # MJ/kg/K
+    # where sT = T/theta(V), and theta(V0) = 1 K
+    # generic parameters
+    # classical limit at Tlimit=3000 K
+    # 1/2 classical limit at 300 K
+    AtWt_H =  1.079                 # Atomic Weight H,  g/mol
+    AtWt_C = 12.011                 # Atomic Weight C,  g/mol
+    AtWt_O = 15.994                 # Atomic Weight O,  g/mol
+    MolWt = 16*AtWt_C + 14*AtWt_H +3*AtWt_O   # molecular weight, g/mol
+    atoms = 16+14+3                 # atoms/molecule
+    R  = 8.314472                   # Gas constant,    (J/mol)/K
+    Cv = 3*atoms*R/(1000*MolWt)     # classical limit, (MJ/kg)/K = (J/mg)/K
+    Tlimit = 3000                   # Tclassical/theta(V0)
+    cv(1) =  1e-4 * Tlimit^3
+    cv(2) =  0.01 * Tlimit^2
+    cv(3) = -0.01 * Tlimit
+    cv(4) =  1
+}
+EOS:UsUp=Ta; units=hydro::std
+{
+# ref
+# Tariq, note dated July 14, 2010
+# Multiple Shock Experiments in Lexan-Ta-TPX-LiF
+    rho0 = 16.654           # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    # Gamma = G0 + G1*(V/V0 - 1)
+    G0 = G1 = 1.8196        # Gamma * rho = constant = G0*rho0
+    #
+    c0= 3.402
+    s = 1.2196
+    #
+    R = 8.314472            # Gas constant,    (J/mol)/K
+    AtWt = 180.9479         # atomic weight,    g/mol
+    Cv = 3*R/(1000*AtWt)    # classical limit, (MJ/kg)/K = (J/mg)/K
+}    
+#
+#
+#
+EOS:HEburn=PBX9502.HotSpot2; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "Keane::TATB"
+    products  = "Sesame::PBX9502"
+    HErate    = "HotSpotRate2::PBX9502"
+}
+
+HErate:HotSpotRate2=PBX9502; units=hydro::std
+{
+# Sam's temperature dependent hot-spot rate model
+#   lambda(s) = 1 - exp(-s^2)
+#   (d/dt)s = dsdt(0) * D/D(Ps)
+#
+    # D/D(Ps) = (p/Ps)^n
+    n =  0.
+    # Ths = Ts + a*Ps
+    a = 30
+    # dsdt(0) = b * [erfc( (Ti-Ths)/sigma )]^(1/3)
+    b = (1.2075e5)^(1/3)
+    sigma =  345
+    Ti    = 1900
+    source_type = 3             # use rate constraint on time step
+}
+
+#
+# Test
+#
+EOS:HEburn=PBX9502.HOM-sesame; units=hydro::std
+{
+        V_ref = 0.527983; e_ref = 0
+#       P_ref = 0.0001; T_ref = 300
+        frozen = 1
+        lambda = 0
+        reactants = "UsUp::PBX9502"
+        products  = "Sesame::PBX9502"
+          #PTtol  = 1e-06
+          HErate  = "Arrhenius::HMX.BM.mod"
+}
+
+EOS:HEburn=PBX9502.IG.0; units=hydro::std
+{
+        V_ref = 0.527704; e_ref = 7.83538e-08
+#       P_ref = 0.0001; T_ref = 298.104
+        frozen = 1
+        Ps     = 0
+        ts     = 0
+        lambda = 0
+        s      = 0
+        reactants = "JWL::PBX9502.reactants"
+        products  = "JWL::PBX9502.products"
+          #PTtol  = 1e-06
+          HErate  = "IgnitionGrowth::PBX9502"
+}
+HErate:IgnitionGrowth!=PBX9502; units=hydro::std
+{
+           rho0   = 1.895
+              I   = 4e+06
+              a   = 0.214
+              b   = 0.667
+              x   = 7
+         lambda_igmax   = 0.025
+              G1  = 0.11
+              c   = 0.667
+              d   = 1
+              y   = 2
+         lambda_G1max   = 0.8
+              G2  = 0.3
+              e   = 0.667
+              g   = 0.667
+              z   = 1
+         lambda_G2min   = 0.8
+         dlambda    = 0.01
+         dlambda_dt = 0.1
+         tol        = 1e-05
+}
+#
+# move to LocalEOSdata, file Extex.data
+#
+EOS:JWL=XTX8003; units=hydro::MKS
+{
+# Extex = 80 wt% PETN + 20 Wt% Sylgard 182
+# CTH library via Phil Rae
+    V0    = 1e-3/1.540      # m^3/kg
+    e0    = 0.0             # J/kg
+    A     = 5.3910E+11      # Pa
+    B     = 3.3500E+9       # Pa
+    #C     =   0.781274      # GPa
+    R1    =   4.600         # -
+    R2    =   1.100         # -
+    omega =   0.4           # -
+    Edet  =  0.066e11*V0    # J/kg
+    #Gibbs & Popolato, p191
+    # Cp = 0.252 + 8.5e-4*T cal/g/C, 37 < T < 127 C
+    Cv    = 1.18e3          # (J/kg)/K
+    Tcj   = 4060            # K
+}
+EOS:Hayes=XTX8003; units=hydro::std
+{
+# Extex = 80 wt% PETN + 20 Wt% Sylgard 182
+    # Gibbs & Popolato, p 193
+    rho0 = 1.540            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = 0
+    c0= 1.59
+    s = 3.24-0.6
+}
+
+EOS:HEburn=XTX8003; units=hydro::std
+{
+# Extex = 80 wt% PETN + 20 Wt% Sylgard 182
+        V_ref = 1/1.540; e_ref = 0
+        reactants = "Hayes::XTX8003"
+        products  = "JWL::XTX8003"
+          #PTtol  = 1e-06
+          # dummy rate
+          HErate  = "IgnitionGrowth::PBX9502"
+}
+#
+#
+#
+#
+/*********************************************
+EOS:HEburn=PBX9502_e0.Keane2.sam; units=hydro::std
+{
+	V_ref = 1/1.894; e_ref = 0
+	P_ref = 0.0001; T_ref = 300
+	frozen = 1
+	lambda = 0
+	reactants = "EqPorous::PBX9502_e0.Keane2"
+	products  = "Sesame::PBX9502"
+	  #PTtol  = 1e-06
+	  HErate  = "Arrhenius::TATB"
+}
+EOS:EqPorous=PBX9502_e0.Keane2; units=hydro::std
+{
+    P_ref = 1.0e-4 
+    T_ref = 300.
+    V_ref = 1/1.894
+    e_ref = 0
+    EOS   = "Keane::TATB_e0.2"
+    PhiEq =  "Phi0::PBX9502_e0"
+}
+PhiEq:Phi0=PBX9502_e0; units=hydro::std
+{
+    Pc      = 0.4           # crushup pressure (GPa)
+    V0      = 1/1.942       # 1/TMD (cm^3/g)
+    P0      = 1.0e-4        # P0 (GPa)
+    phi0    = 1.894*V0      # 1 - initial porosity
+    abs_tol=1e-4
+    rel_tol=1e-4
+}
+EOS:Keane=TATB_e0.2; units=hydro::std
+{
+    P_vac = -1              # reset to Pmin
+    V_ref = 1/1.942
+    e_ref = 0
+    P_ref = 1.e-4 
+    T_ref = 300.
+    V0  = 1/1.942           # cm^3/g (V0 at T=0)
+    e0  = -0.22289 - 1.5463e-06 - 1.6919e-11
+    # Fit to DAC data for TATB at room temperature
+    P0_ref   = P_ref
+    K0       = 13.6         # GPa
+    Kp0      = 12.4         # dimensionless
+    Kp0infty =  5.0         # dimensionless
+    V1       =  0.79*V0
+    Kp1      =  4           # dimensionless
+    Kp1infty =  3           # dimensionless    
+    ##
+    V1       = 0.812*V0
+    Kp1      = 6.0
+    Kp1infty = 1.000001
+    ##
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.5              # dimensionless
+    eps1 = 0.3
+    # Specific heat = Cv*sT^3/(cv_1+sT*cv_2+sT^2*cv_3+sT^3*cv_4) # MJ/kg/K
+    # where sT = T/theta(V)
+    Cv = 1e-3                       # MJ/(kg*K) = 1e-3 J/(g*K)
+    cv(1) = 4.4798e-4, 0.22288      # dimensionless 
+    cv(3) = 1.2560e2,  0.40340      # dimensionless
+}
+
+*********************************************/
+
+#
+#  polyurea aerogel
+#
+EOS:EqPorous=aerogel; units=hydro::std
+{
+    EOS   = "Hayes::polyurea"
+    PhiEq =  "Phi0::polyurea"
+}
+
+EOS:Hayes=polyurea; units=hydro::std
+{
+    P_vac=-1
+	rho_ref = 1.083; e_ref = 0.0
+#	P_ref = 0.0001; T_ref = 300
+	     rho0 = 1.083; 	     e0 = 0.0
+	     P0 = 0.0001; 	     T0 = 300
+	 Gamma0 = 0.55; 	     Cv = 0.002
+	     c0 = 1.8; 	      s = 2
+}
+
+PhiEq:Phi0=polyurea; units=hydro::std
+{   # simple crush-up model
+    phi0    = 0.2          # initial solid volume fraction (1-porostiy)
+    Pc      = 0.02          # crushup pressure (GPa)
+    V0      = 1/1.083       # polyurea V0 (cm^3/g)
+    P0      = 1.0e-4        # polyurea P0 (GPa)
+    scale = 1               # P0 *= phi0, V0 /= phi0
+    abs_tol=1e-4
+    rel_tol=1e-4
+}
+
+EOS:EqPorous=aerogel.UsUp; units=hydro::std
+{
+    EOS   = "UsUp::polyurea"
+    PhiEq =  "Phi0::polyurea"
+}
+
+EOS:UsUp=polyurea; units=hydro::std
+{
+    P_vac=-1
+	rho_ref = 1.083; e_ref = 0.0
+#	P_ref = 0.0001; T_ref = 300
+	     rho0 = 1.083; 	     e0 = 0.0
+	     P0 = 0.0001; 	     T0 = 300
+         # Gamma(V) = G0 + G1*(V/V0 - 1)
+	     G0 = 0.55;          G1 = 0
+	     c0 = 1.8; 	          s = 2
+         Cv = 0.002
+}
+
+#
+# Test
+#
+
+EOS:HEburn2=PBX9502.HotSpotCC.test; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+    PTtol = 1.e-12
+    P_ref = 1e-4
+    T_ref = 296.13
+    #
+    reactants = "DavisReactants::PBX9502.tol"
+    products  = "DavisProducts::PBX9502.tol"
+    HErate2   = "HotSpotRateCC::PBX9502.test"
+}
+EOS:DavisReactants=PBX9502.tol;  units=hydro::std
+{
+    :use=PBX9502
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+}
+EOS:DavisProducts=PBX9502.tol;  units=hydro::std
+{
+    :use=PBX9502
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+}
+HErate2:HotSpotRateCC=PBX9502.test; units=hydro::std
+{
+    :use=PBX9502
+    # test, CC rate comparable to hot spot rate
+    #t1 *= 0.05
+    #t2 *= 0.05
+    #n=2
+    Q = 1
+}
+###
+EOS:HEburn2=PBX9502.HotSpotCC.SURF; units=hydro::std
+{
+    :use=PBX9502.HotSpotCC.test
+    HErate2   = "HotSpotRateCC::PBX9502.SURF"
+}
+HErate2:HotSpotRateCC=PBX9502.SURF; units=hydro::std
+{
+    :use=PBX9502
+    Q=0 
+    #n=2
+}
+

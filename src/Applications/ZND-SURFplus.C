@@ -273,7 +273,11 @@ void ZNDprofile::Last(double &xi, double &V, double &e, double &P, double &u)
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file     = "HE.data";;
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * file = file_.c_str();
+    //const char *file     = "HE.data";;
     const char *type     = "HEburn2";
     const char *name     = "PBX9502.HotSpotCC.davis_SURFplus";
 	const char *material = NULL;

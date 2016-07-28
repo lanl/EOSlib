@@ -8,6 +8,8 @@
   #define NaN EOS::NaN
 #endif
 
+using namespace std;
+
 int MAX_ITR     = 20;
 int MAX_SUB_ITR = 20;
 
@@ -19,11 +21,15 @@ int main(int, char **argv)
     Format CV_form;
     Format beta_form;
 
-    const char *file     = "HE.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * file = file_.c_str();
+    //const char *file     = "HE.data";
     const char *type     = NULL;
     const char *name     = NULL;
-	const char *material = NULL;
-	const char *units    = "hydro::std";
+    const char *material = NULL;
+    const char *units    = "hydro::std";
 
     double rho = 0.0;
     double V = NaN;

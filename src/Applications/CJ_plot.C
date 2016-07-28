@@ -1,12 +1,18 @@
 #include <Arg.h>
 #include <EOS.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
-	ProgName(*argv);
+    ProgName(*argv);
     InitFormat();
 
-	const char *files    = "EOS.data";    
+    //const char *files    = "EOS.data";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/EOS.data";
+    const char * files = file_.c_str();
     const char *reactant = "BirchMurnaghan::HMXfit";
     const char *products = "HEfit::PBX9501";
 

@@ -8,12 +8,19 @@ int main(int, char **argv)
 	ProgName(*argv);
     InitFormat();
     
-	const char *file  = "HE.data";
-	const char *type  = "HEburn";
-	const char *name  = "PBX9501.BM.mod";
-	const char *units = NULL;
-    const char *lib   = "../lib/Linux";
-
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * file = file_.c_str();
+    //const char *file  = "HE.data";
+    const char *type  = "HEburn";
+    const char *name  = "PBX9501.BM.mod";
+    const char *units = NULL;
+    //const char *lib   = "../lib/Linux";
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    
     double P1  = 1;
     double P2  = 20;
 	int nsteps = 19;

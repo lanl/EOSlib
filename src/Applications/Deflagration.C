@@ -130,7 +130,11 @@ int main(int, char **argv)
     EOS::Init();          // sets EOS::NaN
     InitFormat();
 
-    const char *files    = "EOS.data";    	
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/EOS.data";
+    const char * files = file_.c_str(); 
+    //const char *files    = "EOS.data";    	
     const char *type     = NULL;
     const char *name     = NULL;
     const char *material = NULL;
@@ -324,7 +328,7 @@ int main(int, char **argv)
     state0.u = std::isnan(u0) ? 0 : u0;
     state0.V = std::isnan(V0) ? eos->V_ref : V0;
     state0.e = std::isnan(e0) ? eos->e_ref : e0;
-    if( !std::isnan(P0) && !isnan(T0) )
+    if( !std::isnan(P0) && !std::isnan(T0) )
 	{
 	    if( eos->PT(P0,T0,state0) )
 	        cerr << Error("eos->PT failed\n") << Exit;

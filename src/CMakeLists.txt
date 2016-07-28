@@ -2,10 +2,13 @@ if(${verbose_traversal})
   message(STATUS "Entered src subdirectory")
 endif(${verbose_traversal})
 
-#include_directories(Applications)
-#add_subdirectory(Applications)
+include_directories(Applications)
+add_subdirectory(Applications)
 
 include_directories(Local)
+include_directories(Local/Io)
+include_directories(Local/String)
+include_directories(Local/Math)
 add_subdirectory(Local)
 
 include_directories(LinkList)

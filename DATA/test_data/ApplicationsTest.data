@@ -1,0 +1,23 @@
+#
+# Test data
+#
+EOS:HEburn=test; units=hydro::std
+{
+    :use=PBX9501.davis
+    lambda=0.0052913887
+}
+
+HErate:Arrhenius!=HMX.BM; units=hydro::std
+{
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499
+    tol   = 1.e-6
+    n   =  1                        # reaction order
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+#   Rate adjusted to 25 micron reaction zone width at 90% burnt
+    k  *= 0.1
+    k  *= 0.5
+    T_cutoff = 400
+}

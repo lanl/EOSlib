@@ -12,8 +12,17 @@ int main(int, char **argv)
     const char *material = NULL;
     const char *uname    = "std";
     const char *state    = NULL;
-	const char *file     = "HE.data";
-    const char *lib      = "../lib/Linux";
+    //const char *file     = "/test_data/ApplicationsHE.data";
+    //const char *lib      = "../lib/Linux";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * file = file_.c_str();
+    //	const char *lib      = "../lib/Linux";
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+
     const char *EOSlog   = "EOSlog";
     // parameters for debugging
     material = "HEburn::PBX9501.BM.mod";

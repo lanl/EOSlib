@@ -70,7 +70,11 @@ int main(int, char **argv)
 	double Ps   = NaN;	// or shock pressure
 	double u0   = 0.0;	// or flyer velocity
 	
-	const char *files = "EOS.data";
+	std::string file_;
+        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+	file_ += "/EOS.data";
+        const char * files = file_.c_str();
+	//const char *files = "EOS.data";
 	const char *units = "hydro::std";
 
 	const char *mat1 = NULL;

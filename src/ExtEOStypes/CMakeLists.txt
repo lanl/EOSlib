@@ -6,8 +6,7 @@ endif(${verbose_traversal})
 set(EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes)
 set(ExtEOStypes_src dummy.cpp)
 
-list(APPEND ExtEOStypes_libs ArrheniusHE Elastic1D ElasticPlastic )
-#HEburn ) - excluded ->contains numerous Sesame references
+list(APPEND ExtEOStypes_libs ArrheniusHE Elastic1D ElasticPlastic )#HEburn ) #HEburn tests - excluded ->contains numerous Sesame references
 foreach(ExtEOStype ${ExtEOStypes_libs})
   add_subdirectory(${ExtEOStype})
 endforeach(ExtEOStype)

@@ -1,7 +1,7 @@
 #include <Arg.h>
 #include <String.h>
 
-#include "ExtEOSmanager.h"
+#include <ExtEOSmanager.h>
 #include "Riemann_genX.h"
 
 void Evaluate(ExtEOSstate &s, const char *state)
@@ -89,8 +89,16 @@ int main(int, char **argv)
     EOS::Init();
     //
     const char *uname  = "std";
-    const char *file   = "HE.data";
-    const char *lib    = "../lib/Linux";
+    //const char *file   = "HE.data";
+    //const char *lib    = "../lib/Linux";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * file = file_.c_str();
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+
     ExtEOSmanager *pt_Xmanager = NULL;
     const char *EOSlog = "EOSlog";
     // parameters for debugging

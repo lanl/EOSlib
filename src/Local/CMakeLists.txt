@@ -2,23 +2,17 @@ if(${verbose_traversal})
   message(STATUS "Entered Local subdirectory")
 endif(${verbose_traversal})
 
-set(Io_src)
-add_subdirectory(Io)
-
-set(Math_src)
-add_subdirectory(Math)
-
-set(String_src)
-add_subdirectory(String)
-
+list( APPEND subs Io Math String )
+foreach(sub ${subs})
+  set(${sub}_src)
+  add_subdirectory(${sub})
+  add_library( ${sub} ${${projectName}_policy} ${${sub}_src} )
+  set_property(TARGET ${sub} PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ${sub} PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ${sub} PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+endforeach(sub)
 #add_subdirectory(Test)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
- 
-add_library( Io ${${projectName}_policy} ${Io_src} )
-set_property(TARGET Io PROPERTY CXX_STANDARD 11)
-set_property(TARGET Io PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Io PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(TestIo Test.C)
 target_link_libraries(TestIo Io)
@@ -32,19 +26,9 @@ add_executable(TestManip TestManip.C)
 target_link_libraries(TestManip Io) 
 add_test(TestManip TestManip)
 
-add_library( Math ${${projectName}_policy} ${Math_src} )
-set_property(TARGET Math PROPERTY CXX_STANDARD 11)
-set_property(TARGET Math PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Math PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
 add_executable(TestFunc TestFunc.C)
 target_link_libraries(TestFunc Math )
 add_test(TestFunc TestFunc )
-
-add_library( String ${${projectName}_policy} ${String_src} )
-set_property(TARGET String PROPERTY CXX_STANDARD 11)
-set_property(TARGET String PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET String PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 add_executable(TestCat TestCat.C)
 target_link_libraries(TestCat String Io) 
