@@ -1,0 +1,25 @@
+locus of shock polar / Prandtl-Meyer fan
+material:
+  name        name    # material name
+  type        name    # EOS type
+  material    name    # type::name
+  file[s]     file    # : separated list of data files [EOS.data]
+  units       name    # default units from data base [hydro::std]
+initial polar state:
+  V0          value   # specific volume of reference state [V_ref]
+  e0          value   # specific energy of reference state [e_ref]
+  state       V0 e0   # reference state
+  q0          value   # incoming particle speed
+  theta0      value   # angle between incoming particle path and x-axis [0]
+  M0          value   # q0 = M0*c0
+  Ps          value   # incident polar with Pmax=Ps
+  P0          value   # q0 from pressure P0 on incident polar
+  left0               # left  facing incident polar
+  right0              # right facing incident polar
+loop P from P1 to P2:
+  P1          value   # [P0   on shock polar]
+  P2          value   # [Pmax on shock polar]
+  nsteps      value   # number of points on polar
+  left                # left  facing wave
+  right               # right facing wave
+  states              # print distinguished states on polar

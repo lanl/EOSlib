@@ -16,7 +16,8 @@ set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( ArrheniusHE Io Math ODE DataBase Eos ExtEOS Materials ${CMAKE_DL_LIBS} )
 
-list( APPEND tests AvStiffIdealOverdriven CJprofile Hug IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE Tinduction )
+#tests excluded for Sesame dependency - Hug 
+list( APPEND tests AvStiffIdealOverdriven CJprofile IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE )#Tinduction )
 #ZNDprofile - ZNDprofile is designed to take file, material, etc as input, not be hardcoded to a test.data file
 
 foreach(test ${tests})

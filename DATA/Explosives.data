@@ -14,6 +14,12 @@
     IgnitionGrowth = $SharedLibDirEOS/ExtHE
     FFrate    = $SharedLibDirEOS/ExtHE
     FFQrate   = $SharedLibDirEOS/ExtHE
+    # HErate    = $SharedLibDirEOS/ExtHE
+    # Arrhenius = $SharedLibDirEOS/ExtHE
+    # PnRate    = $SharedLibDirEOS/ExtHE
+    # IgnitionGrowth = $SharedLibDirEOS/ExtHE
+    # FFrate    = $SharedLibDirEOS/ExtHE
+    # FFQrate   = $SharedLibDirEOS/ExtHE
 }
 
 HErate:Arrhenius=HMX; units=hydro::std

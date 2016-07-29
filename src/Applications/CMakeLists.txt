@@ -21,7 +21,7 @@ set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( Applications Eos DataBase ODE Materials Calc Io Math String ExtEOS Manager ${CMAKE_DL_LIBS})
 
 #tests in this list have a hardcoded input file
-list( APPEND tests  CJ_plot Deflagration Polar PVstate TestXRiemann )
+list( APPEND tests  CJ_plot Deflagration Polar PVstate )#TestXRiemann )
 #the tests not listed do not have hardcoded input files
 #####################################################
 #tests that depend on Sesame - TestXisentrope TestXmanager

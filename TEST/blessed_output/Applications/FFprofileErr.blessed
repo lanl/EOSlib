@@ -1,0 +1,12 @@
+DataBase_error_handler::Log, DataBase::FullPath, file `FetchObj.C' line 311
+no environment variable SharedLibDirEOS, needed for lib = $SharedLibDirEOS/EOS.so
+
+DataBase_error_handler::Log, DataBase::GetHandle, file `FetchObj.C' line 264
+FullPath failed for $SharedLibDirEOS/EOS.so
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS:HEburn::PBX9501.sam.FF
+
+Error in ./FFprofile: FetchEOS failed
+	(Exiting with error status -1)
+

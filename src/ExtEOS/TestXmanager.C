@@ -10,11 +10,14 @@ int main(int, char **argv)
 	//const char *file = "../../DATA/EOS.data";
 	std::string file_;
         file_ = getenv("EOSLIB_DATA_PATH");
-	file_ += "/EOSTest.data";
+	file_ += "/test_data/EOSTest.data";
 	const char * file = file_.c_str();
 	const char *uname = "std";
 	//const char *lib = "../lib/Linux";
-	const char *lib = "../../lib";
+	//const char *lib = "../../lib";
+	std::string libPath;
+        libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+        const char * lib     = libPath.c_str();
     
 	const char *mat[] = {
         "EqExtEOS::HMX",

@@ -19,8 +19,6 @@ list( APPEND tests Hugoniot Overdriven TestCJ TestProducts TestReactants)
 foreach(test ${tests})
   add_executable(${test}Davis ${test}.C)
   target_link_libraries(${test}Davis Davis)
- # add_test(${test}IdealGas ${test}IdealGas)
- # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
   add_test(NAME ${test}Davis
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Davis

@@ -1,0 +1,69 @@
+EOSbase::Error::Log, Sesame_VT::InitParams, file `SesameVTinit.C' line 66
+open failed for file /usr/projects/eap/users/rtm/EOSlib/DATA/SESAME/008201/301/item_directory
+
+EOS_VT = Sesame::PBX9501, status=abort
+EOSbase::Error::Log, EOS_VT::Initialize, file `EOS_VT.C' line 79
+Initialize for Sesame failed
+
+EOS_VT = Sesame::PBX9501, status=abort
+EOSbase::Error::Log, EOSbase::Initialize, file `BaseInitialize.C' line 84
+Initialize for Sesame failed
+
+EOS_VT = Sesame::PBX9501, status=abort
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS_VT:Sesame::PBX9501'
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS_VT:Sesame::PBX9501
+
+EOSbase::Error::Log, Sesame::InitParams, file `SesameInit.C' line 50
+Fetch SesameVT failed
+
+EOS = Sesame::PBX9501, status=abort
+EOSbase::Error::Log, EOS::InitBase, file `EOS.C' line 96
+Initialize for Sesame failed
+
+EOS = Sesame::PBX9501, status=abort
+EOSbase::Error::Log, EOSbase::Initialize, file `BaseInitialize.C' line 84
+Initialize for Sesame failed
+
+EOS = Sesame::PBX9501, status=abort
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS:Sesame::PBX9501'
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS:Sesame::PBX9501
+
+EOSbase::Error::Log, PTequilibrium::InitParams, file `PTequilibrium.C' line 283
+FetchEOS failed for Sesame::PBX9501
+
+EOS = PTequilibrium::PBX9501.BM.mod, status=abort
+EOSbase::Error::Log, EOS::InitBase, file `EOS.C' line 96
+Initialize for PTequilibrium failed
+
+EOS = PTequilibrium::PBX9501.BM.mod, status=abort
+EOSbase::Error::Log, EOSbase::Initialize, file `BaseInitialize.C' line 84
+Initialize for PTequilibrium failed
+
+EOS = PTequilibrium::PBX9501.BM.mod, status=abort
+EOSbase::Error::Log, HEburn::PostInit, file `HEburn.C' line 173
+HE->Initialize failed
+
+EOS = HEburn::PBX9501.BM.mod, status=good
+EOSbase::Error::Log, EOS::InitBase, file `EOS.C' line 96
+Initialize for HEburn failed
+
+EOS = HEburn::PBX9501.BM.mod, status=abort
+EOSbase::Error::Log, EOSbase::Initialize, file `BaseInitialize.C' line 84
+Initialize for HEburn failed
+
+EOS = HEburn::PBX9501.BM.mod, status=abort
+DataBase_error_handler::Log, DataBase::NewObject, file `FetchObj.C' line 197
+Initialization failed for `EOS:HEburn::PBX9501.BM.mod'
+
+DataBase_error_handler::Log, DataBase::FetchObj, file `FetchObj.C' line 98
+NewObject failed for EOS:HEburn::PBX9501.BM.mod
+
+Error in ./HotSpotDeflagration: material not found, HEburn::PBX9501.BM.mod
+	(Exiting with error status -1)
+
