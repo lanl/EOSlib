@@ -84,7 +84,7 @@ endif(${${projectName}_static_libraries})
 #
 # That said, means to augment or over-write the compiler flags are
 # provided, either in general or for a specific project 
-# 
+#
 if(DEFINED compiler_flags)
   if (NOT DEFINED ${projectName}_compiler_flags)
     set(${projectName}_compiler_flags "${compiler_flags}")
@@ -184,8 +184,8 @@ else(DEFINED ${projectName}_compiler_flags)
 
   # base flags used by every project
   set( ${projectName}_flags
-    "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} " )
-
+  #  "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} " )
+    "-std=c++11 -w ${CMAKE_CXX_FLAGS} " )
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)
     set( ${projectName}_flags
