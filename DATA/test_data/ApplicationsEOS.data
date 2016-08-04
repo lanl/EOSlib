@@ -1,0 +1,20 @@
+.include ../EOS.data
+
+EOS:IdealGas=Air; units=hydro::MKS
+{
+    gamma = 1.4
+    rho_ref = 1.163             # kg/m^3
+    P = 1e5                     # Pa
+    e_ref = P*V_ref/(gamma-1)
+    Cv    = e_ref/300           # T = 300 K at ref state
+}
+
+EOS:IdealGas=SF6; units=hydro::MKS
+{
+    gamma   = 1.09
+    rho_ref = 5.856             # kg/m^3
+    P = 1e5                     # Pa
+    e_ref = P*V_ref/(gamma-1)
+    Cv    = e_ref/300           # T = 300 K at ref state
+}
+

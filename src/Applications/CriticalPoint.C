@@ -2,6 +2,8 @@
 #include <LocalMath.h>
 #include <ODE.h>
 
+using namespace std;
+
 class Trajectory : public ODE
 {
 // (d/dz) T      =     T - b*lambda

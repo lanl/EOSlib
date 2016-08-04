@@ -4,7 +4,7 @@
 
 #define NaN EOS::NaN
 
-     EOS *eos    = NULL;
+EOS *eos    = NULL;
 EqPorous *phi_eq = NULL;
 int print_S = 0 ;   // flag to print entropy
 
@@ -166,10 +166,17 @@ int main(int, char **argv)
     EOS::Init();
     InitFormat();
 
-    const char *files    = "EOS.data";    
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * files = file_.c_str();
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *files    = "EOS.data";    
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = NULL;
+    const char *material = "BirchMurnaghan::HMX";// NULL;
     const char *units    = "hydro::std";
     const char *EOSlog   = "EOSlog";      // EOS error log file
 
@@ -195,8 +202,8 @@ int main(int, char **argv)
     double var2          = NaN;
         
 // process command line arguments
-    if( argv[1] == NULL )
-        Help(-1);    
+//    if( argv[1] == NULL )
+//        Help(-1);    
     while(*++argv)
     {
         GetVar(file,files);
@@ -422,9 +429,9 @@ int main(int, char **argv)
         if( std::isnan(P0) )
             P0 = 0.;
     }
-    else if( !std::isnan(P0) || !isnan(T0) )
+    else if( !std::isnan(P0) || !std::isnan(T0) )
     {
-        if( std::isnan(P0) && isnan(P0=eos->P(state0)) )
+      if( std::isnan(P0) && std::isnan(P0=eos->P(state0)) )
             cerr << Error("eos->P returned NaN\n") << Exit;
         if( std::isnan(T0) )
             T0 = eos->T(state0);

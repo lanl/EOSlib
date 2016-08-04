@@ -13,7 +13,7 @@ set_property(TARGET GenHayes PROPERTY CXX_STANDARD 11)
 set_property(TARGET GenHayes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET GenHayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( GenHayes Eos DataBase ODE)
+target_link_libraries( GenHayes Eos DataBase ODE Calc ${CMAKE_DL_LIBS} )
 
 list( APPEND tests Test1  MinP)
 list( APPEND testsWithArgs HotSpot Isobar Test2 Test2K Test2VT Test3)

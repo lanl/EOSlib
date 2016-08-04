@@ -89,12 +89,19 @@ double lambda_ODE::f(double, const double *y, const double *yp)
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file     = NULL;
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * file = file_.c_str();
+    //const char *file     = NULL;
     const char *type     = "HEburn";
     const char *name     = NULL;
 	const char *material = NULL;
     const char *units    = NULL;
-    const char *lib      = NULL;
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib      = NULL;
     //
     double T0 = 1000.;
     double lambda_ref = 0.5;

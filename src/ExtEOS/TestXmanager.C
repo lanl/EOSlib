@@ -10,7 +10,7 @@ int main(int, char **argv)
 	//const char *file = "../../DATA/EOS.data";
 	std::string file_;
         file_ = getenv("EOSLIB_DATA_PATH");
-	file_ += "/test_data/EOSTest.data";
+	file_ += "/EOS.data";
 	const char * file = file_.c_str();
 	const char *uname = "std";
 	//const char *lib = "../lib/Linux";

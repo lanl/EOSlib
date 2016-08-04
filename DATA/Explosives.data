@@ -8,18 +8,18 @@
 
 :SharedLibs.=HErate
 {
-    HErate    = $SharedLibDirEOS/ExtHE
-    Arrhenius = $SharedLibDirEOS/ExtHE
-    PnRate    = $SharedLibDirEOS/ExtHE
-    IgnitionGrowth = $SharedLibDirEOS/ExtHE
-    FFrate    = $SharedLibDirEOS/ExtHE
-    FFQrate   = $SharedLibDirEOS/ExtHE
-    # HErate    = $SharedLibDirEOS/ExtHE
-    # Arrhenius = $SharedLibDirEOS/ExtHE
-    # PnRate    = $SharedLibDirEOS/ExtHE
-    # IgnitionGrowth = $SharedLibDirEOS/ExtHE
-    # FFrate    = $SharedLibDirEOS/ExtHE
-    # FFQrate   = $SharedLibDirEOS/ExtHE
+    HErate    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    Arrhenius = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    PnRate    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    IgnitionGrowth = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    FFrate    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    FFQrate   = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    # HErate    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    # Arrhenius = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    # PnRate    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    # IgnitionGrowth = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    # FFrate    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    # FFQrate   = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
 }
 
 HErate:Arrhenius=HMX; units=hydro::std
@@ -51,17 +51,17 @@ HErate:PnRate=PBX9501; units=hydro::std
 #
 :SharedLibs.=EOS
 {
-    JWL            = $SharedLibDirEOS/MaterialLib
-    HEfit          = $SharedLibDirEOS/MaterialLib
-    BKW            = $SharedLibDirEOS/MaterialLib
-    DavisReactants = $SharedLibDirEOS/MaterialLib
-    DavisProducts  = $SharedLibDirEOS/MaterialLib
+    JWL            = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    HEfit          = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    BKW            = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    DavisReactants = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
+    DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/MaterialLib
     #
-    ArrheniusHE    = $SharedLibDirEOS/ExtHE
-    IdealHE        = $SharedLibDirEOS/ExtHE
-    StiffIdealHE   = $SharedLibDirEOS/ExtHE
-    StiffIdealHEav = $SharedLibDirEOS/ExtHE
-    HEburn         = $SharedLibDirEOS/ExtHE
+    ArrheniusHE    = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    IdealHE        = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    StiffIdealHE   = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    StiffIdealHEav = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
+    HEburn         = $EOSLIB_SHARED_LIBRARY_PATH/ExtHE
 }
 .base =EOS
 .units=hydro::std

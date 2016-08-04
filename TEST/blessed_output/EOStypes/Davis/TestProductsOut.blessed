@@ -10,7 +10,7 @@ EOS:DavisProducts::PBX9501; units=hydro::std
 #	P_ref = 16.0168; T_ref = 3941.51
 	   V0 = 0.542299
 	   e0 = 5.85
-	   S0 = 0.0105763
+	   S0 = 0.0105919
 	    a = 0.7965
 	    n = 1.758
 	   Vc = 0.8314
@@ -23,7 +23,7 @@ EOS:DavisProducts::PBX9501; units=hydro::std
 
 CJ detonation state
 V e P T = 0.406457, 2.46414, 36.2793, 3866.39
-D, u, c = 8.86239, 2.21997, 6.64242
+D, u, c = 8.86239, 2.21996, 6.64242
 Reference isentrope
 #  V             e             T             S         
  5.422993e-01 -7.580398e-01  3.139356e+03  1.034100e-02

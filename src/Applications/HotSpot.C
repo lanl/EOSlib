@@ -2,14 +2,22 @@
 #include <EOS.h>
 #include <Riemann_gen.h>
 
+using namespace std;
 
 int main(int, char **argv)
 {
-	ProgName(*argv);
-	const char *file     = "EOS.data";
-	const char *material = "BirchMurnaghan::HMX";
-	const char *units    = NULL;
-
+    ProgName(*argv);
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ArrheniusTest.data";
+    const char * file = file_.c_str();
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *file     = "EOS.data";
+    const char *material = "BirchMurnaghan::HMX";
+    const char *units    = NULL;
+    
     double T0  = 300;
     double P0  = 1e-4;
     double P1  = 1;

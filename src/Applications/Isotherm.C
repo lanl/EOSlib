@@ -2,7 +2,9 @@
 #include <EOS.h>
 #include <Porous.h>
 
-     EOS *eos    = NULL;
+using namespace std;
+
+EOS *eos    = NULL;
 EqPorous *phi_eq = NULL;
 
 Format FD_form;
@@ -10,8 +12,8 @@ Format phi_form;
 
 void PrintState(ThermalState &state)
 {            
-	double c = sqrt(eos->c2(state.V,state.e));
-	double FD = eos->FD(state.V,state.e);
+    double c = sqrt(eos->c2(state.V,state.e));
+    double FD = eos->FD(state.V,state.e);
     double KT = eos->KT(state.V,state.e);
     double cT = sqrt(state.V*KT);
     //
@@ -111,10 +113,14 @@ int main(int, char **argv)
 	double P0 = NaN;
 	double T0 = NaN;
 	
-	const char *files = "EOS.data";    
+	std::string file_;
+        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+	file_ += "/test_data/ApplicationsEOS.data";
+        const char * files = file_.c_str();
+	//const char *files = "EOS.data";    
 	const char *type     = NULL;
 	const char *name     = NULL;
-	const char *material = NULL;
+	const char *material = "BirchMurnaghan::HMX";//NULL;
 	const char *units    = "hydro::std";
 	
 	double var1 = NaN;
@@ -124,8 +130,8 @@ int main(int, char **argv)
 	int loop_V = 0;
 	
 // process command line arguments
-	if( argv[1] == NULL )
-	    Help(-1);    
+//	if( argv[1] == NULL )
+//	    Help(-1);    
 	while(*++argv)
 	{
 	    if( !strcmp(*argv,"Ps") )
@@ -273,7 +279,7 @@ int main(int, char **argv)
 	state0.V = std::isnan(V0) ? eos->V_ref : V0;
 	state0.e = std::isnan(e0) ? eos->e_ref : e0;
 
-	if( !std::isnan(P0) || !isnan(T0) )
+	if( !std::isnan(P0) || !std::isnan(T0) )
 	{
 	    if( std::isnan(P0) )
 	        P0 = eos->P(state0);

@@ -41,7 +41,7 @@ int main(int, char **argv)
     ExtEOSmanager *pt_Xmanager = NULL;
     const char *EOSlog = "EOSlog";
     // Debugging input parameters
-    const char *mat   = "HEburn::PBX9501.BM";
+    const char *mat   = "BirchMurnaghan::HMX";//"HEburn::PBX9501.BM";
     //char *state = "V=4.51255657368965e-01; e=1.00457400813203e+01; u=1.44551758702307;"
     const char *state = "V=1.718828; e=8.385752; u=0;"
                         "lambda=1.09449320773967e-02";

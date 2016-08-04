@@ -33,17 +33,21 @@ int main(int, char **argv)
     EOS::Init();
     InitFormat();
     // material
-    const char *files    = "EOS.data";    
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ArrheniusTest.data";
+    const char * files = file_.c_str();
+    //const char *files    = "EOS.data";    
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = NULL;
+    const char *material = "ArrheniusHE::PBX9501";//NULL;
     const char *units    = "hydro::std";
     int nsteps = 10;
     int dir = RIGHT;
     double Pmax = 0.0;
 // process command line arguments
-    if( argv[1] == NULL )
-        Help(-1);
+//    if( argv[1] == NULL )
+//        Help(-1);
     while(*++argv)
     {
         // material

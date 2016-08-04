@@ -25,7 +25,7 @@ int main(int, char **argv)
 
     const char *EOSlog   = "EOSlog";
     // parameters for debugging
-    material = "HEburn::PBX9501.BM.mod";
+    material = "BirchMurnaghan::HMX";//"HEburn::PBX9501.BM.mod";
     state    = "V=0.376695637;"
                "e=8.91044016;"
                "lambda=0.1570E-04";

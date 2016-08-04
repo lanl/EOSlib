@@ -26,8 +26,8 @@ int main(int, char **argv)
     file_ += "/HE.data";
     const char * file = file_.c_str();
     //const char *file     = "HE.data";
-    const char *type     = NULL;
-    const char *name     = NULL;
+    const char *type     = "ArrheniusHE";//NULL;
+    const char *name     = "PBX9501";//NULL;
     const char *material = NULL;
     const char *units    = "hydro::std";
 

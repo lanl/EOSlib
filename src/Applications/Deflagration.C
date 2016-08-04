@@ -132,11 +132,11 @@ int main(int, char **argv)
 
     std::string file_;
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/EOS.data";
+    file_ += "/test_data/ApplicationsEOS.data";
     const char * files = file_.c_str(); 
     //const char *files    = "EOS.data";    	
-    const char *type     = NULL;
-    const char *name     = NULL;
+    const char *type     = "ArrheniusHE";//NULL;
+    const char *name     = "PBX9501";//NULL;
     const char *material = NULL;
     const char *units    = "hydro::std";
 
@@ -159,8 +159,8 @@ int main(int, char **argv)
     double var1    = NaN;
     double var2    = NaN;
 // process command line arguments
-    if( argv[1] == NULL )
-        Help(-1);
+//    if( argv[1] == NULL )
+//        Help(-1);
     while(*++argv)
     {
         GetVar(file,files);

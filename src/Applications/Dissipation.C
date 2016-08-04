@@ -1,13 +1,18 @@
 #include <Arg.h>
 #include <EOS.h>
 
+using namespace std;
 
 int main(int, char **argv)
 {
-	ProgName(*argv);
-	const char *file     = "EOS.data";
-	const char *material = "BirchMurnaghan::HMX";
-	const char *units    = NULL;
+    ProgName(*argv);
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * file = file_.c_str();
+    //const char *file     = "EOS.data";
+    const char *material = "BirchMurnaghan::HMX";
+    const char *units    = NULL;
 
     double T0  = 300;
     double P0  = 1e-4;

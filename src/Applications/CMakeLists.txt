@@ -20,21 +20,9 @@ set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( Applications Eos DataBase ODE Materials Calc Io Math String ExtEOS Manager ${CMAKE_DL_LIBS})
 
-#tests in this list have a hardcoded input file
-list( APPEND tests  CJ_plot Deflagration Polar PVstate )#TestXRiemann )
-#the tests not listed do not have hardcoded input files
-#####################################################
-#tests that depend on Sesame - TestXisentrope TestXmanager
-####################################################
-#####problems to fix, if these files need to be included##########
-#FFprofile.C:81: undefined reference to `typeinfo for HEburn'
-#FFprofile.C:84: undefined reference to `typeinfo for FFrate'
-#FFprofile.C:84: undefined reference to `typeinfo for HErate'
-#FFprofile.C:87: undefined reference to `ViscousProfile::ViscousProfile(FFrate*, double, double)'
-#HotSpotDeflagration.C:55: undefined reference to `typeinfo for HEburn'
-#ImpedanceMatch.C:173: undefined reference to `typeinfo for EqPorous'
-#ZND-SURFplus.C:68: undefined reference to `typeinfo for HotSpotRateCC'
-###################################################################
+list( APPEND tests  CJ_plot CJstate CriticalPoint CV-rotation Deflagration Deflagration-0  Detonation DetPolar Dissipation EOSdata HotSpot ImpedanceMatch Isobar Isotherm IsothermVT ShockLocus Polar PVstate TestXisentrope TestXmanager TestXRiemann ThreeStepEvolution ThreeStepReactionTime Wave )
+#tests that do not compile - DetonationProfile FFprofile HEburnRate HEburnReactionTime HEburnEvolution HotSpotDeflagration ImpedanceMatch IntegrateDeflagrationODEs PopPlotTrajectory ViscousProfile ZNDprofile ZND-SURFplus ZND-SURFplus-0 
+#tests that depend on Sesame - SesameVT 
 
 foreach(test ${tests})
   add_executable(${test} ${test}.C)

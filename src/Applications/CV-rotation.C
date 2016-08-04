@@ -23,6 +23,8 @@ ref: Statistical Physics
 #include <Arg.h>
 #include <LocalMath.h>
 
+using namespace std;
+
 void RotateQ(double yinv, double &e, double &Cv)
 {
     // T/Trot = yinv

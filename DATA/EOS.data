@@ -7,6 +7,7 @@
 :DataBase.=Environment
 { # circumvent kdbg messing up environment variables (mx:t14rm only)
   # EOSLIB_SHARED_LIBRARY_PATH = /home/rsm/AMRITA/EP/EOSlib/src/lib/Linux
+  #SharedLibDirEOS = $EOSLIB_SHARED_LIBRARY_PATH
 }
 :SharedLibs=EOS
 {

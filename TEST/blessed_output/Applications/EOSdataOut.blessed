@@ -1,0 +1,14 @@
+EOS:BirchMurnaghan::HMX; units=hydro::std
+{
+	V_ref = 0.525974; e_ref = 0.174654
+#	P_ref = 0.0001; T_ref = 300
+	    V0  = 0.515573; 	    e0  = 0
+	    K0  = 16.5; 	    Kp0 = 8.7
+	     a  = 0; 	     b  = 0.9
+	   eps1 = 1; 	 theta0  = 1
+	    Cv  = 1
+	  cv(1) = 0.5265, 307.3, 183100, 419.4
+	eps_abs = 1; 	eps_rel = 1e-06
+	#Vmax    = 0.618737; 	e1      = 0.0917061
+	#Pmin    = -1.24704
+}

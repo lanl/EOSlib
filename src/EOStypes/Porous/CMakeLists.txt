@@ -13,34 +13,13 @@ set_property(TARGET Porous PROPERTY CXX_STANDARD 11)
 set_property(TARGET Porous PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Porous PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Porous Eos DataBase ODE)
+target_link_libraries( Porous Eos DataBase ODE Hayes ${CMAKE_DL_LIBS} )
 
-list( APPEND  tests )
-list( APPEND testsWithArgs TestFrozenPorous TestPhi TestPorousEOS )
+list( APPEND  tests TestFrozenPorous TestPhi TestPorousEOS )
 
 foreach(test ${tests})
   add_executable(${test}Porous ${test}.C)
   target_link_libraries(${test}Porous Porous)
- # add_test(${test}IdealGas ${test}IdealGas)
- # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-  add_test(NAME ${test}Porous
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Porous
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_POROUS_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_POROUS_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Porous)
-  set_tests_properties(${test}Porous PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
-
-#### use this if test(s) require file specification####
-foreach(test ${testsWithArgs})
-  add_executable(${test}Porous ${test}.C)
-  target_link_libraries(${test}Porous Porous)
- # add_test(${test}IdealGas ${test}IdealGas)
-  set(args "file ${EOSLIB_DATA_PATH}/test_data/PorousTest.data")
   add_test(NAME ${test}Porous
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Porous

@@ -58,19 +58,22 @@ int main(int, char **argv)
     // material
     std::string file_;
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/EOS.data";
+    file_ += "/test_data/ApplicationsEOS.data";
     const char * files = file_.c_str();
     //const char *files    = "EOS.data";    
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = NULL;
+    const char *material = "JWL::HMX";//NULL;
     const char *units    = "hydro::std";
     // initial polar state
     double     V0 = NaN;    // default: eos->V_ref
     double     e0 = NaN;    // default: eos->e_ref
     double     q0 = NaN;
-    double     M0 = NaN;    // q0 = M0*c0
-    double theta0 = 0.0;
+    //
+    //default test conditions added for testing: theta0 and M0
+    //
+    double     M0 = 3;//NaN;    // q0 = M0*c0
+    double theta0 = 0;//0.0;
     double Ps = NaN;        // shock pressure for q0
     double P0 = NaN;        // point on incident polar
     int dir0 = RIGHT;       // direction for incident polar
@@ -81,8 +84,8 @@ int main(int, char **argv)
     int nsteps = 10;
     int output = PRINT::loop;   // flag for type of output
 // process command line arguments
-    if( argv[1] == NULL )
-        Help(-1);
+//    if( argv[1] == NULL )
+//        Help(-1);
     while(*++argv)
     {
         // material

@@ -2,6 +2,7 @@
 #include <EOS.h>
 #include <EOS_VT.h>
 
+using namespace std;
 
 #define NaN EOS::NaN
 int main(int, char **argv)
@@ -12,20 +13,24 @@ int main(int, char **argv)
     Format CV_form;
     Format beta_form;
 	
-	int nsteps = 10;
+    int nsteps = 10;
 	
-	double V0 = NaN;
-	double T0 = NaN;
-	
-	const char *files    = "EOS.data";    
-	const char *type     = NULL;
-	const char *name     = NULL;
-	const char *material = NULL;
-	const char *units    = "hydro::std";
-	
-	double var1 = NaN;
-	double var2 = NaN;
-	
+    double V0 = NaN;
+    double T0 = NaN;
+    
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * files = file_.c_str();
+    //const char *files    = "EOS.data";    
+    const char *type     = NULL;
+    const char *name     = NULL;
+    const char *material = "BirchMurnaghan::HMX";//NULL;
+    const char *units    = "hydro::std";
+    
+    double var1 = NaN;
+    double var2 = NaN;
+    
 	
 // process command line arguments
 	while(*++argv)

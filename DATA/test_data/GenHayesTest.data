@@ -2,7 +2,7 @@
 
 :SharedLibs=EOS
 {
-    EOS            = NULL
+    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes  
     BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes    
     Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libGenHayes
 }

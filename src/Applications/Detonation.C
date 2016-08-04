@@ -120,10 +120,14 @@ int main(int, char **argv)
     EOS::Init();          // sets EOS::NaN
     InitFormat();
 
-    const char *files    = "EOS.data";    	
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * files = file_.c_str();
+    //const char *files    = "EOS.data";    	
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = NULL;
+    const char *material = "ArrheniusHE::PBX9501";//NULL;
     const char *units    = "hydro::std";
     const char *EOSlog   = "EOSlog";      // EOS error log file
 
@@ -151,8 +155,8 @@ int main(int, char **argv)
     double var1    = NaN;
     double var2    = NaN;
 // process command line arguments
-    if( argv[1] == NULL )
-        Help(-1);
+//    if( argv[1] == NULL )
+//        Help(-1);
     while(*++argv)
     {
         GetVar(file,files);
@@ -382,7 +386,7 @@ int main(int, char **argv)
     state0.u = std::isnan(u0) ? 0 : u0;
     state0.V = std::isnan(V0) ? eos->V_ref : V0;
     state0.e = std::isnan(e0) ? eos->e_ref : e0;
-    if( !std::isnan(P0) && !isnan(T0) )
+    if( !std::isnan(P0) && !std::isnan(T0) )
 	{
 	    if( eos->PT(P0,T0,state0) )
 	        cerr << Error("eos->PT failed\n") << Exit;

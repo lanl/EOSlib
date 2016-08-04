@@ -1,17 +1,26 @@
 #include <Arg.h>
 #include <EOS.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
     ProgName(*argv);
     EOS::Init();
     InitFormat();
 
-    const char *files    = "EOS.data";
-    const char *lib      = "../lib/Linux";
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * files = file_.c_str();
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *files    = "EOS.data";
+    //const char *lib      = "../lib/Linux";
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = NULL;
+    const char *material = "BirchMurnaghan::HMX";//NULL;
     const char *units    = "hydro::std";
 
     double P = 1e-4;

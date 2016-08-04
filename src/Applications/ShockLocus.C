@@ -2,9 +2,15 @@
 #include <LocalMath.h>
 #include <EOS.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
-    const char *files    = "HE.data";    
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsHE.data";
+    const char * files = file_.c_str();
+    //const char *files    = "HE.data";    
     const char *type     = NULL;
     const char *name     = NULL;
     const char *material = "BirchMurnaghan::PBX9501.reactant";

@@ -4,7 +4,7 @@ endif(${verbose_traversal})
 
 set(EOSLIB_EOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes)
 
-list(APPEND EOStypes_libs IdealGas StiffenedGas Hayes HayesBM GenHayes MieGruneisen Davis JWL PTequilibrium )
+list(APPEND EOStypes_libs IdealGas StiffenedGas Hayes HayesBM GenHayes MieGruneisen Davis JWL Porous PTequilibrium )
 foreach(EOStype ${EOStypes_libs})
   add_subdirectory(${EOStype})
 endforeach(EOStype)

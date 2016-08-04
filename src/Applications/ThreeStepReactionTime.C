@@ -3,6 +3,9 @@
 #include <ODE.h>
 #include <EOS.h>
 #include <EOS_VT.h>
+
+using namespace std;
+
 //
 // Calculates adiabatic induction time at constant volume
 // for three-step McGuire-Tarver burn model
@@ -126,12 +129,19 @@ double lambda_ODE::f(double, const double *y, const double *yp)
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file     = NULL;
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * file = file_.c_str();
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *file     = NULL;
     const char *type     = NULL;
     const char *name     = NULL;
-	const char *material = NULL;
+    const char *material = "BirchMurnaghan::HMX";//NULL;
     const char *units    = NULL;
-    const char *lib      = NULL;
+    //const char *lib      = NULL;
     //
     double T1      =  500.;
     double T2      = 2500.;
