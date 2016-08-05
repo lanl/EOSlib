@@ -28,18 +28,22 @@ void PrintLine()
 #define NaN EOS::NaN
 int main(int, char **argv)
 {
-	ProgName(*argv);
+    ProgName(*argv);
     EOS_Init();
 	
-	double V0 = NaN;
-	double e0 = NaN;
-	
-	const char *files    = "EOS.data";	
-	const char *type     = NULL;
+    double V0 = NaN;
+    double e0 = NaN;
+    
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * file = file_.c_str();
+    //const char *files    = "EOS.data";	
+    const char *type     = NULL;
     const char *name     = NULL;
-	const char *material = NULL;
-	const char *units    = "hydro::std";
-	
+    const char *material = NULL;
+    const char *units    = "hydro::std";
+    
 // process command line arguments	
 	while(*++argv)
 	{
