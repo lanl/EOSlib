@@ -132,12 +132,19 @@ int ZNDprofile::Lambda(double &lambda, double &xi,
 int main(int, char **argv)
 {
     ProgName(*argv);
-    const char *file     = NULL;
+    std::string file_;
+    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+    file_ += "/test_data/ApplicationsEOS.data";
+    const char * file = file_.c_str();
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *file     = NULL;
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = NULL;
+    const char *material = "ArrheniusHE::PBX9501";//NULL;
     const char *units    = NULL;
-    const char *lib      = NULL;
+    //const char *lib      = NULL;
     double epsilon = 1.e-6;
     int printddt   = 0;
 

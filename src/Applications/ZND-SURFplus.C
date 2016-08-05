@@ -280,9 +280,12 @@ int main(int, char **argv)
     //const char *file     = "HE.data";;
     const char *type     = "HEburn2";
     const char *name     = "PBX9502.HotSpotCC.davis_SURFplus";
-	const char *material = NULL;
+      const char *material = NULL;
     const char *units    = NULL;
-    const char *lib      = NULL;
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib      = NULL;
 
     double upiston =  0.;
     double umin    =  0.;       // velocity at end of Taylor Wave

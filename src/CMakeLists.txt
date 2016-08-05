@@ -57,7 +57,7 @@ include_directories(ExtEOStypes)
 include_directories(ExtEOStypes/ArrheniusHE)
 include_directories(ExtEOStypes/Elastic1D)
 include_directories(ExtEOStypes/ElasticPlastic)
-#include_directories(ExtEOStypes/HEburn)
+include_directories(ExtEOStypes/HEburn)
 add_subdirectory(ExtEOStypes)
 
 if(${verbose_traversal})

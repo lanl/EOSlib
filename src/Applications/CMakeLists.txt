@@ -18,10 +18,10 @@ set_property(TARGET Applications PROPERTY CXX_STANDARD 11)
 set_property(TARGET Applications PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Applications Eos DataBase ODE Materials Calc Io Math String ExtEOS Manager ${CMAKE_DL_LIBS})
+target_link_libraries( Applications Eos DataBase ODE Materials Calc Io Math String ExtEOS Manager HEburn ${CMAKE_DL_LIBS})
 
-list( APPEND tests  CJ_plot CJstate CriticalPoint CV-rotation Deflagration Deflagration-0  Detonation DetPolar Dissipation EOSdata HotSpot ImpedanceMatch Isobar Isotherm IsothermVT ShockLocus Polar PVstate TestXisentrope TestXmanager TestXRiemann ThreeStepEvolution ThreeStepReactionTime Wave ZNDprofile)
-#tests that do not compile - DetonationProfile FFprofile HEburnRate HEburnReactionTime HEburnEvolution HotSpotDeflagration ImpedanceMatch IntegrateDeflagrationODEs Plastic PopPlotTrajectory ReactiveShockLoci ViscousProfile  ZND-SURFplus  ZND-SURFplus-0 
+list( APPEND tests  CJ_plot CJstate CriticalPoint CV-rotation Deflagration Deflagration-0  Detonation DetPolar Dissipation EOSdata HotSpot ImpedanceMatch Isobar Isotherm IsothermVT ShockLocus Polar PVstate TestXisentrope TestXmanager TestXRiemann ThreeStepEvolution ThreeStepReactionTime Wave ZNDprofile ZNDprofileTW ZND-SURFplus  ZND-SURFplus-0)
+#tests that do not compile - DetonationProfile FFprofile HEburnRate HEburnReactionTime HEburnEvolution HotSpotDeflagration ImpedanceMatch IntegrateDeflagrationODEs Plastic PopPlotTrajectory ReactiveShockLoci ViscousProfile   
 #tests that depend on Sesame - SesameVT 
 
 foreach(test ${tests})
