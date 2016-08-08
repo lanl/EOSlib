@@ -23,7 +23,7 @@ int main(int, char **argv)
 
     std::string file_;
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/HE.data";
+    file_ += "/test_data/ApplicationsHE.data";
     const char * file = file_.c_str();
     //const char *file     = "HE.data";
     const char *type     = "ArrheniusHE";//NULL;

@@ -63,8 +63,8 @@ int main(int, char **argv)
     const char *name = "HMX";
     const char *units = NULL;
 
-    double V = NaN;
-    double e = NaN;
+    double V = 0.5; //NaN;
+    double e = 0.9; //NaN;
     double t = 1.0;
     double lambda = 0.0;
 

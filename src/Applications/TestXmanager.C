@@ -6,7 +6,7 @@
 
 int main(int, char **argv)
 {
-	ProgName(*argv);
+    ProgName(*argv);
     EOS::Init();
     //
     const char *material = NULL;

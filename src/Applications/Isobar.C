@@ -20,7 +20,7 @@ int main(int, char **argv)
     //const char *lib      = "../lib/Linux";
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = "BirchMurnaghan::HMX";//NULL;
+    const char *material = "JWL::HMX";//NULL;
     const char *units    = "hydro::std";
 
     double P = 1e-4;

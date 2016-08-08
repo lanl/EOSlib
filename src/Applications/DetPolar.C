@@ -35,7 +35,7 @@ int main(int, char **argv)
     // material
     std::string file_;
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ArrheniusTest.data";
+    file_ += "/test_data/ApplicationsEOS.data";
     const char * files = file_.c_str();
     //const char *files    = "EOS.data";    
     const char *type     = NULL;

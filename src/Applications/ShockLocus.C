@@ -15,8 +15,11 @@ int main(int, char **argv)
     const char *name     = NULL;
     const char *material = "BirchMurnaghan::PBX9501.reactant";
     const char *units    = "hydro::std";
-    const char *lib      = "../lib/Linux";
-
+    std::string libPath;
+    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
+    const char * lib     = libPath.c_str();
+    //const char *lib      = "../lib/Linux";
+    
     double Pmin =  5.;  // min P for shock
     double Pmax = 35.;  // max P for shock
     int nsteps  = 30;   // number of steps on Hugoniot locus

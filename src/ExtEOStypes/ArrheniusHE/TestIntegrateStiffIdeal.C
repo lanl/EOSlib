@@ -59,8 +59,8 @@ int main(int, char **argv)
     const char *name = "PBX9501";
     const char *units = NULL;
 
-    double V = NaN;
-    double e = NaN;
+    double V = 0.9;//NaN;
+    double e = 101;//NaN;
     double Tav = NaN;
     double lambda0 = 0.0;
     int nsteps = 10;
