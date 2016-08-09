@@ -1,0 +1,46 @@
+# EOS data used for AMRITA simulations
+
+.include ../EOS.data
+#.include ../Porous.data ##this could be the wrong Porous data file
+.include ../HE.data
+
+# test DnKappa data
+
+:SharedLibs=DnKappa
+{
+    DnKappa  = $EOSLIB_SHARED_LIBRARY_PATH/libDnKappa
+    #./DnKappa.so
+    ScaledDn = $EOSLIB_SHARED_LIBRARY_PATH/libDnKappa
+    #./DnKappa.so
+}
+
+/******************************
+Ref: ISD 14 (2010) pp 779-788
+    DSD Calibration for PBX9502 with T, rho and material lot variations
+    Larry Hill and Tariq Aslam
+******************************/
+
+DnKappa:ScaledDn=PBX9502; units=hydro::std
+{
+    rho0_r =   1.890
+      T0_r = 298.13
+     Dcj_r =   7.8
+       c2  =  4.807
+       c3  =  2.7768
+       c4  = 32.115
+       c5  = 78.183
+       c6  =  1.5885
+       c7  = 61.133
+       c8  =  0.027099
+       c9  =  1.8654
+       c10 =  2.0377
+     # lot HOL88H891-008
+     lscale_r = 4.4923
+     #
+     kappa_max = 3.5
+     omega_s = 0.9599   # radians
+     #
+     # ambient state
+     T0   = T0_r
+     rho0 = rho0_r
+}

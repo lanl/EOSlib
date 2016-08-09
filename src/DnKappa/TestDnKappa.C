@@ -3,10 +3,16 @@
 
 #include <DnKappa.h>
 
+using namespace std;
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
-	const char *file = "test.data";
+	//const char *file = "test.data";
+	std::string file_;
+        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+	file_ += "/test_data/DnKappaTest.data";
+        const char * file = file_.c_str();
 	const char *type = "ScaledDn";
 	const char *name = "PBX9502";
 	const char *units = NULL;

@@ -20,6 +20,9 @@ add_subdirectory(Calc)
 include_directories(DataBase)
 add_subdirectory(DataBase)
 
+include_directories(DnKappa)
+add_subdirectory(DnKappa)
+
 include_directories(OneDFunction)
 add_subdirectory(OneDFunction)
 
