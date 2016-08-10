@@ -9,9 +9,9 @@ int main(int, char **argv)
 	ProgName(*argv);
 	//const char *file = "../../DATA/EOS.data";
 	std::string file_;
-        file_ = getenv("EOSLIB_DATA_PATH");
+        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
 	file_ += "/EOS.data";
-	const char * file = file_.c_str();
+        const char * file = file_.c_str();
 	const char *uname = "std";
 	//const char *lib = "../lib/Linux";
 	//const char *lib = "../../lib";
