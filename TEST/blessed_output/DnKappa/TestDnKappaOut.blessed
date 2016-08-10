@@ -1,0 +1,23 @@
+DnKappa:ScaledDn::PBX9502; units=hydro::std
+{
+	kappa_max = 3.5
+	omega_s   = 0.9599
+	Dcj       = 7.8
+	d_max     = 1.2
+	   c2  = 4.807
+	   c3  = 2.7768
+	   c4  = 32.115
+	   c5  = 78.183
+	   c6  = 1.5885
+	   c7  = 61.133
+	   c8  = 0.027099
+	   c9  = 1.8654
+	   c10 = 2.0377
+	   Dcj_r = 7.8
+	lscale_r = 4.4923
+	  rho0_r = 1.89
+	    T0_r = 298.13
+	  lscale = 4.4923
+	    rh00 = 1.89
+	      T0 = 298.13
+}

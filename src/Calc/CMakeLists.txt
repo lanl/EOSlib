@@ -21,15 +21,12 @@ foreach(test ${tests})
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} Calc)
   # TestCalc requires interactive input.
-  #  add_test(${test} ${test})
-########
-#  set(args "<< EOF m(2,2) rho abc \n EOF")
-	set(args "echo -e 'm(2,2)\nrho\nabc'")##this line provides correct output from terminal
-	set(args "rho abc m(2,2)")
-########
+  
+  set(args "echo -e 'm(2,2)\nrho\nabc'")##this line provides correct output from terminal
+  set(args "rho abc m(2,2)")
+
   add_test(NAME ${test}
     COMMAND ${CMAKE_COMMAND}
-#    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/"echo -e 'm\(2,2\)\nrho\nabc' | ./TestCalc" 
     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
     -D test_args:string=${args}
     -D out_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Out.blessed

@@ -112,7 +112,7 @@ EOS:Keane=TATB; units=hydro::std
     P0  = -0.14
     K0  =  8.5              # GPa
     Kp0 = 24                # dimensionless
-    Kpinfty =  3            # dimensionless
+    Kp0infty =  3            # dimensionless
     # correct for cold curve
     P0_ref = P_ref
     # V_PTref = V0

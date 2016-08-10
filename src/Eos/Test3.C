@@ -7,10 +7,10 @@
 using namespace std;
 int main(int, char **argv)
 {
-        std::string files_;
-	files_ = getenv("EOSLIB_DATA_PATH");
-	files_ += "/test_data/EosTest.data";
-	const char *file = files_.c_str();
+	std::string file_;
+        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
+	file_ += "/test_data/EOSTest.data";
+        const char * file = file_.c_str();
 	DataBase db;
 	if( db.Read(file) )
 		cerr << Error("Read failed" ) << Exit;
