@@ -279,7 +279,7 @@ int main(int, char **argv)
     const char * file = file_.c_str();
     //const char *file     = "HE.data";;
     const char *type     = "HEburn2";
-    const char *name     = "PBX9502.HotSpotCC.davis_SURFplus";
+    const char *name     = "PBX9502.HotSpotCC.test";
       const char *material = NULL;
     const char *units    = NULL;
     std::string libPath;

@@ -30,11 +30,16 @@ void Handle::copy(const Handle &h)
 
 int Handle::dlopen(const char *shared_obj)
 {
-    std::ostringstream oss;
-    oss << shared_obj << SHARED_LIB_EXT;
-    //    handle = ::dlopen(shared_obj, RTLD_NOW | RTLD_GLOBAL);
-    auto s = oss.str();
-    handle = ::dlopen(s.c_str(), RTLD_NOW | RTLD_GLOBAL);
+    if( shared_obj == 0) return 1;  // empty string
+    std::string str(shared_obj);
+    // check and remove extension
+    std::size_t pos = str.find(".");
+    if( pos < std::string::npos)
+      str.erase(pos, std::string::npos);
+    // add new extension
+    str += SHARED_LIB_EXT;
+
+    handle = ::dlopen(str.c_str(), RTLD_NOW | RTLD_GLOBAL);
     if( handle )
     {
         del = 1;

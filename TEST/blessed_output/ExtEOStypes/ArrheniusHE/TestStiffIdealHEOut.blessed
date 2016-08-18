@@ -46,7 +46,7 @@ D, u, c = 8.73537, 2.18384, 6.55153
 VN spike state
 V e u = 0.303944, 11.15, 3.84209
 P T = 61.8551, 2160.93
-rate at VN = 139.499
+rate at VN = 139.5
 
 shock to Pcj: T, rate = 1367.55, 1.13473
 xeox->var(lambda) = 0
