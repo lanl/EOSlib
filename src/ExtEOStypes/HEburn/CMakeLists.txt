@@ -34,6 +34,9 @@ foreach(test ${tests})
   # set_tests_properties(${test}HEburn PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS HEburn)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting HEburn subdirectory")
 endif(${verbose_traversal})

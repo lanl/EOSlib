@@ -83,7 +83,7 @@ EOS:VonMises=HMX1
 
 :SharedLibs.=EOS_VT
 {
-    BirchMurnaghan = $SharedLibDirEOS/MaterialLib.so
+    BirchMurnaghan = $SharedLibDirEOS/libMaterials.so
 }
 EOS_VT:BirchMurnaghan=HMX; units=hydro::std
 {

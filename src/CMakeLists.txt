@@ -63,6 +63,8 @@ include_directories(ExtEOStypes/ElasticPlastic)
 include_directories(ExtEOStypes/HEburn)
 add_subdirectory(ExtEOStypes)
 
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting src subdirectory")
 endif(${verbose_traversal})

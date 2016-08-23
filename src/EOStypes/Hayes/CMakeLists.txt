@@ -31,6 +31,9 @@ foreach(test Test2 Test2VT)
   set_tests_properties(${test}Hayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS Hayes)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting Hayes subdirectory")
 endif(${verbose_traversal})

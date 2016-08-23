@@ -34,6 +34,9 @@ foreach(test ${tests})
   set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS Elastic1D)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting Elastic1D subdirectory")
 endif(${verbose_traversal})

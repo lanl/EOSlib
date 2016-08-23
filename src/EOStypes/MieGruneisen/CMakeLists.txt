@@ -51,6 +51,9 @@ foreach(test ${testsWithArgs} )
   set_tests_properties(${test}MieGruneisen PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS MieGruneisen)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting MieGruneisen subdirectory")
 endif(${verbose_traversal})

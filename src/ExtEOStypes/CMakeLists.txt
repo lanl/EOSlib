@@ -22,6 +22,13 @@ set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtEOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( ExtEOStypes ODE Manager Materials Eos DataBase ExtEOS ${ExtEOStypes_libs} )
 
+add_library( ExtHE ${${projectName}_policy} dummy.cpp)
+set_property(TARGET ExtHE PROPERTY CXX_STANDARD 11)
+set_property(TARGET ExtHE PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ExtHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+target_link_libraries( ExtHE ExtEOStypes ArrheniusHE HEburn PTequilibrium Manager )
+
+
 list( APPEND tests TestHE )
 
 foreach(test ${tests})
@@ -38,6 +45,9 @@ foreach(test ${tests})
   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
+
+list(APPEND INSTALL_TARGETS ExtEOStypes)
+set(INSTALL_TARGETS PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting ExtEOStypes subdirectory")

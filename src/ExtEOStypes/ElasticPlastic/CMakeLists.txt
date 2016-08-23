@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered ElasticPlastic subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in ElasticPlastic: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_ELASTICPLASTIC_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/ElasticPlastic)
 
 set(ElasticPlastic_src)
@@ -32,6 +31,9 @@ foreach(test ${tests})
   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}ElasticPlastic)
   set_tests_properties(${test}ElasticPlastic PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
+
+list(APPEND INSTALL_TARGETS ElasticPlastic)
+set(INSTALL_TARGETS PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting ElasticPlastic subdirectory")

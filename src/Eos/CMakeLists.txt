@@ -35,6 +35,8 @@ foreach(test ${tests})
   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS Eos)
+set(INSTALL_TARGETS PARENT_SCOPE)
 if(${verbose_traversal})
   message(STATUS "Exiting Eos subdirectory")
 endif(${verbose_traversal})

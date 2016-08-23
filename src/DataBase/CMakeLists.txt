@@ -30,8 +30,6 @@ foreach(test ${tests})
 #  add_test(${test} ${test})
 endforeach(test)
 
-message(STATUS "database blessed output ${EOSLIB_DATABASE_BLESSED_OUTPUT}/testdbout.blessed\n")
-
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME TestDB
   COMMAND ${CMAKE_COMMAND}
@@ -192,6 +190,9 @@ add_test(NAME Convert0
 set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 target_link_libraries(Testdl shared_obj)
+
+list(APPEND INSTALL_TARGETS DataBase shared_obj)
+set(INSTALL_TARGETS PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting DataBase subdirectory")

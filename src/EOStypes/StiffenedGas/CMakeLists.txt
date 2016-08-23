@@ -50,6 +50,9 @@ foreach(test Test2 Test2VT)
   set_tests_properties(${test}StiffenedGas PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS StiffenedGas)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting StiffenedGas subdirectory")
 endif(${verbose_traversal})

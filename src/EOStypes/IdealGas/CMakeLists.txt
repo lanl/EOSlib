@@ -48,6 +48,9 @@ foreach(test Test2 Test2VT)
   set_tests_properties(${test}IdealGas PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+list(APPEND INSTALL_TARGETS IdealGas)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting IdealGas subdirectory")
 endif(${verbose_traversal})

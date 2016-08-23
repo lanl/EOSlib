@@ -68,7 +68,8 @@ add_test(NAME RandomHarmonic
   )
 set_tests_properties(RandomHarmonic PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
-
+list(APPEND INSTALL_TARGETS ODE)
+set(INSTALL_TARGETS PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting ODE subdirectory")

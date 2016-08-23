@@ -42,6 +42,9 @@ add_executable(teststrlen teststrlen.C)
 target_link_libraries(teststrlen String) 
 add_test(teststrlen teststrlen)
 
+list(APPEND INSTALL_TARGETS ${subs})
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting Local subdirectory")
 endif(${verbose_traversal})

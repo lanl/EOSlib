@@ -35,6 +35,9 @@ endforeach(test)
 #    RESULT_VARIABLE CompareResult
 #)
 
+list(APPEND INSTALL_TARGETS LinkList)
+set(INSTALL_TARGETS PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting LinkList subdirectory")
 endif(${verbose_traversal})
