@@ -54,8 +54,13 @@ foreach(test ${testsWithArgs})
   set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)#
 
+install(TARGETS GenHayes
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS GenHayes)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting GenHayes subdirectory")

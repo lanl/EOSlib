@@ -37,8 +37,13 @@ foreach(test ${tests})
  set_tests_properties(TestRiemann PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+install(TARGETS Materials
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS Materials)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting EOStypes subdirectory")

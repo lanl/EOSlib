@@ -11,6 +11,8 @@ include_directories(Local/String)
 include_directories(Local/Math)
 add_subdirectory(Local)
 
+message(STATUS "CONTENTS OF INSTALL_TARGETS:  ${INSTALL_TARGETS}") 
+
 include_directories(LinkList)
 add_subdirectory(LinkList)
 
@@ -63,7 +65,7 @@ include_directories(ExtEOStypes/ElasticPlastic)
 include_directories(ExtEOStypes/HEburn)
 add_subdirectory(ExtEOStypes)
 
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting src subdirectory")

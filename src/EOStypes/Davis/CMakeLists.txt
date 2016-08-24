@@ -31,8 +31,13 @@ foreach(test ${tests})
   set_tests_properties(${test}Davis PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+install(TARGETS Davis
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS Davis)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
   
 if(${verbose_traversal})
   message(STATUS "Exiting Davis subdirectory")

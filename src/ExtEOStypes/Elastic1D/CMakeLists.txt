@@ -34,8 +34,13 @@ foreach(test ${tests})
   set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+install(TARGETS Elastic1D
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS Elastic1D)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Elastic1D subdirectory")

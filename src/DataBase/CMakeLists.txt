@@ -191,8 +191,13 @@ set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 target_link_libraries(Testdl shared_obj)
 
+install(TARGETS DataBase shared_obj
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS DataBase shared_obj)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting DataBase subdirectory")

@@ -43,7 +43,14 @@ target_link_libraries(teststrlen String)
 add_test(teststrlen teststrlen)
 
 list(APPEND INSTALL_TARGETS ${subs})
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+message(STATUS "CONTENTS OF INSTALL_TARGETS:  ${INSTALL_TARGETS}")
+
+install(TARGETS ${subs}
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 
 if(${verbose_traversal})
   message(STATUS "Exiting Local subdirectory")

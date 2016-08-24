@@ -35,8 +35,13 @@ add_test(NAME TestSpline
   )
 set_tests_properties(TestSpline PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
+install(TARGETS Spline
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS Spline)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Spline subdirectory")

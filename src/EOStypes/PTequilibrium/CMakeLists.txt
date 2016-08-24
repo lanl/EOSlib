@@ -52,8 +52,13 @@ foreach(test ${testsWithArgs} )
   set_tests_properties(${test}PTequilibrium PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)
 
+install(TARGETS PTequilibrium
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS PTequilibrium)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting PTequilibrium subdirectory")

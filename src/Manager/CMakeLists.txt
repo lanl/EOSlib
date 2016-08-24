@@ -48,6 +48,14 @@ target_link_libraries( Manager Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 #   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 # endforeach(test)
 
+install(TARGETS Manager
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
+list(APPEND INSTALL_TARGETS Manager)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+
 if(${verbose_traversal})
   message(STATUS "Exiting Manager subdirectory")
 endif(${verbose_traversal})

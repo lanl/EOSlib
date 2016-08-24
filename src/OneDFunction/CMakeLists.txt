@@ -61,8 +61,13 @@ add_test(NAME TestI
   )
 set_tests_properties(TestI PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
+install(TARGETS OneDFunction
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS OneDFunction)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting OneDFunction subdirectory")

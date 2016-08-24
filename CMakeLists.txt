@@ -482,11 +482,11 @@ list(APPEND HEADER_FILES
   include/backward/ostream.h
   include/backward/fstream.h
   include/backward/iomanip.h)
-# install(FILES HEADER_FILES DESTINATION include)
-# install(DIRECTORY DATA DESTINATION DATA)
-# install(DIRECTORY TEST DESTINATION TEST)
+install(FILES ${HEADER_FILES} DESTINATION include)
+install(DIRECTORY DATA DESTINATION .)
+install(DIRECTORY TEST DESTINATION .)
 
-# install(TARGETS ${INSTALL_TARGETS}
-#   RUNTIME DESTINATION bin
-#   LIBRARY DESTINATION lib
-#   ARCHIVE DESTINATION lib/static)
+#install(TARGETS 
+#  RUNTIME DESTINATION ./bin
+#  LIBRARY DESTINATION ./lib
+#  ARCHIVE DESTINATION ./lib/static)

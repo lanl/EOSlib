@@ -35,8 +35,13 @@ endforeach(test)
 #    RESULT_VARIABLE CompareResult
 #)
 
+install(TARGETS LinkList
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
 list(APPEND INSTALL_TARGETS LinkList)
-set(INSTALL_TARGETS PARENT_SCOPE)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting LinkList subdirectory")
