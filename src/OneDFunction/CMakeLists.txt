@@ -7,7 +7,7 @@ set(EOSLIB_DATABASE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/OneDFunction)
 
 set(OneDFunction_src)
 
-add_subdirectory(subs)
+add_subdirectory(Subs)
 #add_subdirectory(blessed_output)
 
 add_library( OneDFunction ${${projectName}_policy} ${OneDFunction_src} )

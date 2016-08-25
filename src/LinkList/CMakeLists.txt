@@ -5,7 +5,7 @@ endif(${verbose_traversal})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(LinkList_src)
-add_subdirectory(subs) 
+add_subdirectory(Subs) 
 add_library( LinkList ${${projectName}_policy} ${LinkList_src} )
 target_link_libraries(LinkList Io)
 set_property(TARGET Io PROPERTY CXX_STANDARD 11)

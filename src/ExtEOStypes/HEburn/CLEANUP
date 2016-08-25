@@ -1,5 +1,0 @@
-#!/bin/sh
-
-rm -rf Plots
-find . -name \*~ -print -exec rm -f {} \;
-

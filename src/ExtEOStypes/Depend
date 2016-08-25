@@ -1,2 +1,0 @@
-TestHE:  $(CC_LIB)/ExtEOS.so -lEOSmanager $(CC_LIB)/EOS.so -ldl
-

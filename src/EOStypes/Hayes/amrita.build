@@ -1,8 +1,0 @@
-utilize Amrita::Build
-
-CopyHeader
-NewLib {
-  lib=Hayes
-  dirs=SubsVe,SubsVT
-  so=yes
-}

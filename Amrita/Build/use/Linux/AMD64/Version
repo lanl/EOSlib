@@ -1,7 +1,0 @@
-set version #= `gcc -dumpversion`
-if( "$version" =~ /^3\./ ) then
-    set version = gcc3
-else
-    echo use/Linux/x86/Version: version=$version
-    error "EOSlib on $amrita::SYSTEM requires gcc version 3";
-end if

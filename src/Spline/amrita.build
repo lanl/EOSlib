@@ -1,5 +1,0 @@
-utilize Amrita::Build
-
-CopyHeader
-NewLib lib=Spline, dirs=Subs
-

@@ -1,3 +1,0 @@
-TestRiemann:    -lIdealGas  -leos -lDataBase -lODE -lOneDFunction -lList \
-                            -lCalc -lLocalIo -lLocalMath -lString -ldl
-

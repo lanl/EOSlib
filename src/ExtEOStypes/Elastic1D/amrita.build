@@ -1,5 +1,0 @@
-utilize Amrita::Build
-
-CopyHeader
-NewLib lib=Elastic1D, dirs=SubsElastic, so=yes
-NewLib lib=Plastic1D, dirs=SubsPlastic, so=yes

@@ -1,8 +1,0 @@
-utilize Amrita::Build
-
-CopyHeader
-NewLib {
-  lib=EOS
-  dirs=SubsBase,SubsVe,SubsVT
-  so=yes
-}

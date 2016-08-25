@@ -1,8 +1,0 @@
-utilize Amrita::Build
-
-CopyHeader
-NewLib {
-       lib=JWL
-       dirs=Subs
-       so=yes
-}

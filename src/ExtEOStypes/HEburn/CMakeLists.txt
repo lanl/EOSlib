@@ -8,7 +8,6 @@ set(EOSLIB_HEBURN_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/HEburn)
 set(HEburn_src)
 
 add_subdirectory(Subs)
-add_subdirectory(sh)
 
 add_library( HEburn ${${projectName}_policy} ${HEburn_src} )
 set_property(TARGET HEburn PROPERTY CXX_STANDARD 11)

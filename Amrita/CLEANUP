@@ -1,6 +1,0 @@
-#!/bin/sh
-
-rm -rf bin include lib
-
-find . -name \*~ -print -exec rm -f {} \;
-find . -name ".*.swp" -print -exec rm -f {} \;

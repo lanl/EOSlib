@@ -1,4 +1,0 @@
-utilize Amrita::Build
-
-CopyHeader
-NewLib lib=HEburn, dirs=Subs, so=yes

@@ -1,8 +1,0 @@
-proc CopyHeader {
-  in  = $amrita::CWD
-  out = $Build::inc
-} -> perl::
-perl on
-  &Build::CopyHeader($in,$out);
-perl off
-end proc
