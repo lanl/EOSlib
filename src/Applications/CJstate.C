@@ -10,7 +10,7 @@ int main(int, char **argv)
 
     std::string file_;
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsEOS.data";
+    file_ += "/EOS.data";
     const char * files = file_.c_str();
     // const char *files    = "EOS.data";    
     const char *reactant = "BirchMurnaghan::HMX";

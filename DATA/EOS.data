@@ -5,43 +5,37 @@
 .include Units.data
 
 :DataBase.=Environment
-{ # circumvent kdbg messing up environment variables (mx:t14rm only)
-  # EOSLIB_SHARED_LIBRARY_PATH = /home/rsm/AMRITA/EP/EOSlib/src/lib/Linux
-  #SharedLibDirEOS = $EOSLIB_SHARED_LIBRARY_PATH
+{ 
+  # SharedLibDirEOS = 
 }
 :SharedLibs=EOS
 {
-    # $EOSLIB_SHARED_LIBRARY_PATH is environment variable
-    # other options
-    #       set LD_LIBRARY_PATH
-    #       ld with option
-    #               -rpath EOSLIB_SHARED_LIBRARY_PATH with g++
-    #               -R EOSLIB_SHARED_LIBRARY_PATH     with SUN
-    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libEos
+    # $SharedLibDirEOS is environment variable
+    EOS            = $SharedLibDirEOS/libEos.so
     #                   void *EOS_Duplicate(void*)
     #                   void  EOS_Destructor()
     #                    int  EOS_Initialize(void*)
-    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    IdealGas       = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_IdealGas_Constructor()
-    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    StiffenedGas   = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_StiffenedGas_Constructor()
-    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    Hayes          = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_Hayes_Constructor()
-    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    HayesBM        = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_HayesBM_Constructor()
-    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    BirchMurnaghan = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_BirchMurnaghan_Constructor()
-    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    Keane          = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_Keane_Constructor()
-    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    UsUp           = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_UsUp_Constructor()
-    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    UsUpSpline     = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_UsUpSpline_Constructor()
-    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    PeSpline       = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_PeSpline_Constructor()
-    PTequilibrium  = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    PTequilibrium  = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_PTequilibrium_Constructor()
-    StiffIdeal     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    StiffIdeal     = $SharedLibDirEOS/MaterialLib.so
     #                   void *EOS_StiffIdeal_Constructor()
 }
 .base  = EOS
@@ -95,29 +89,6 @@ StiffenedGas=PMMA; units=hydro::std
 *       Solids                  *
 ********************************/
 
-BirchMurnaghan=HMX; units=hydro::std
-{
-    P_ref = 1.e-4
-    T_ref = 300.
-    V0  = 0.515573          # cm^3/g (V0 at T=0)
-    e0  = 0
-    K0  = 16.5              # GPa
-    Kp0 =  8.7              # dimensionless
-    # Gamma = a + b*(V/V0)
-    a   =  1.1              # dimensionless
-    b   =  -0.20            # dimensionless
-    # Cv = T^3/(cv_1+T*cv_2+T^2*cv_3+T^3*cv_4) # MJ/kg/K
-    #cv(1) = 5.2653675003188e-1, 3.0733581008896e2    
-    #cv(3) = 1.8318931090834e5,  4.1941409666532e2    
-    cv(1) = 5.265e-1, 3.073e2    
-    cv(3) = 1.831e5,  4.194e2    
-# sensitivity
-  #  Kp0 = 8
-    b = 0.9
-    a = 0
-}
-# Additional HMX EOS
-.include HMX.data
 
 # Lithium Floride, single-crystal [100]
 # Marsh p 296-297
@@ -266,15 +237,12 @@ Hayes=Quartz.x-cut; units=hydro::std
 ********************************/
 .include EOS_VT.data
 
-/********************************
-*        SESAME                 *
-********************************/
-.include Sesame.data
 
 /********************************
 *       Explosives              *
 ********************************/
-.include Explosives.data
+.include HMX.data
+.include HEburn.data
 
 /********************************
 *       ElasticPlastic1D        *
@@ -282,12 +250,3 @@ Hayes=Quartz.x-cut; units=hydro::std
 .include ElasticPlastic1D.data
 
 
-/********************************
-*       Uniaxial                * (depricated)
-********************************/
-#.include Uniaxial.data
-
-/********************************
-*       ElasticPlastic          * (depricated)
-********************************/
-.include ElasticPlastic.data

@@ -13,7 +13,7 @@ int main(int, char **argv)
     file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
     file_ += "/EOS.data";
     const char * files = file_.c_str();
-    const char *reactant = "BirchMurnaghan::HMXfit";
+    const char *reactant = "BirchMurnaghan::HMX";
     const char *products = "HEfit::PBX9501";
 
     double P1 = 0;

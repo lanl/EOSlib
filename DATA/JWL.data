@@ -1,60 +1,158 @@
-.include DataBaseUnits.data
-
-:SharedLibs=EOS
-{
-    EOS     = NULL
-    JWL     = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
-    HEfit   = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
-    HEprods = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
-    BKW     = $EOSLIB_DATA_PATH/../src/EOStypes/JWL/libJWL
-}
-.base =EOS
-.units=hydro::std
-
-/********************************
-*       Solids                  *
-********************************/
-
-JWL=HMX; units=hydro::std
+EOS:JWL=HMX3500; units=hydro::std
 {
 # Detonation EOS at LLNL, 1993
 # P. C. Souers and L. C. Haselman Jr.
 # page 5-19
-    V0    = 1/1.894      # cm^3/g
-    e0    = 0
-    A     = 858.0805     # GPa
-    B     =   7.546531   # GPa
-    R1    =   4.306      # -
-    R2    =   0.80       # -
-    omega =   0.3        # -
-    Edet  = 11.0*V0      # MJ/kg
+    V0    =   0.525976      # cm^3/g
+    e0    =   0.174655      # MJ/kg
+    A     = 858.0805        # GPa
+    B     =   7.546531      # GPa
+    C     =   0.781274      # GPa
+    R1    =   4.306         # -
+    R2    =   0.80          # -
+    omega =   0.3           # -
+    Edet  =  11.0*V0        # MJ/kg
 #
-    #C     =   0.781274   # GPa
-    Cv    = 1.e-3        # (MJ/kg)/K
-    Tcj   = 3000         # K
+    Cv    = 1.5e-3          # (MJ/kg)/K
+    Tcj   = 3500            # K
+    Scj   = 0.00126474 + 0.00164566 # (MJ/kg)/K
 }
-
-JWL=PBX9404; units=hydro::std
+#
+#
+#
+EOS:ArrheniusHE=HMX; units=hydro::std
 {
-# Detonation EOS at LLNL, 1993
-# P. C. Souers and L. C. Haselman Jr.
-# page 5-19
-    V0    = 1/1.843      # cm^3/g
-    e0    = 0
-    A     = 740.349      # GPa
-    B     =  11.7009     # GPa
-    C     =   0.725292   # GPa
-    R1    =   4.317      # -
-    R2    =   1.05       # -
-    omega =   0.25       # -
-    Edet    = 10.5*V0    # MJ/kg
+    P_vac = 1.e-6
+    # tol used by RiemannSolver
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    tol = 1.e-6 # tolerance for PT iteration
+    #
+    lambda = 0  # all reactants
+    reactants = "Hayes::HMX"
+    products  = "JWL::HMX3500"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
 }
-EOS:JWL=LX-17.reactants; units=hydro::std
+#
+EOS:ArrheniusHE!=HMX.products; units=hydro::std
+{
+    :use=HMX
+    lambda = 1  # all products    
+}
+#
+#  LX-14 = 95 % HMX + 5 % Estane
+#
+EOS:HEburn=LX14.IG; units=hydro::std
+{
+# LX-14 = 95 % HMX + 5 % Estane
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::LX14.reactants"
+    products  = "JWL::LX14.products"
+    HErate    = "IgnitionGrowth::LX14";
+}
+EOS:JWL=LX14.reactants; units=hydro::HiP
+{
+# LX-14 = 95 % HMX + 5 % Estane
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+#   Table 2
+    P_vac = 1.e-8
+    rho0  =    1.835     # g/cm^3
+    A     = 9522.        # Mb
+    B     =   -0.05944   # Mb
+    R1    =   14.1       # -
+    R2    =    1.41      # -
+    omega =    0.8867    # -
+    Edet  =   -0.001     # Mb*cc/g
+    # Ref isentrope thru (V0,P0) for T
+    P0   = 1.e-6         # Mb
+    #S0   = 0.0
+    Cv    = 2.7806e-5*V0 # (Mb*cc/g)/K
+    e0    = 0.0          # e_ref = 0 for ambient state
+    T0    = 298.
+    P_vac  = 1e-7
+}
+EOS:JWL=LX14.products; units=hydro::HiP
+{
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+# LX-14 = 95 % HMX + 5 % Estane
+#   Table 2
+    P_vac = 1.e-8
+    rho0  =    1.835     # g/cm^3
+    A     =   16.689     # Mb
+    B     =    0.5969    # Mb
+    R1    =    5.9       # -
+    R2    =    2.1       # -
+    omega =    0.45      # -
+    Edet  =    0.102*V0  # Mb*cc/g
+    Scj   =    0.01
+    Cv    =    1.0e-5*V0 # (Mb*cc/g)/K
+    #Tcj   = 3000         # K
+    P_vac  = 1e-7
+}
+HErate:IgnitionGrowth=LX14; units=hydro::std
+{
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+# LX-14 = 95 % HMX + 5 % Estane
+#   Table 2
+    tol  = 1.e-5
+    rho0 = 1.835            # g/cm^3
+    lambda_igmax = 0.02
+    I =  7.43e11            # 1/microsec
+    a =  0
+    b =  0.667
+    x = 20.0
+    lambda_G1max = 0.80
+    y  =   2.0
+    G1 = 175./100^y         # 1/microsec for G1*P^y
+    c  =   0.667
+    d  =   0.111
+    lambda_G2min = 0.80
+    z  =  1.0
+    G2 = 10./100^z          # 1/microsec for G2*P^z
+    e  =  0.667
+    g  =  0.667
+}
+#
+#  LX-17 = 92.5 % TATB + 7.5 % KelF 800
+#
+EOS:HEburn=LX17.IG; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::LX17.reactants"
+    products  = "JWL::LX17.products"
+    HErate    = "IgnitionGrowth::LX17";
+}
+EOS:JWL=LX17.reactants; units=hydro::std
 {
 # LX-17 = 92.5 % TATB + 7.5 % KelF 800
-# Detonation waves in triaminotrinitrobenzene
-# C M Tarver, J. W. Kury and R. D. Breithaupt
-# J. Appl. Phys. 82 (1997) pp. 3771-3782
+# Ref. Detonation waves in triaminotrinitrobenzene
+#   C M Tarver, J. W. Kury and R. D. Breithaupt
+#   J. Appl. Phys. 82 (1997) pp. 3771-3782
     rho0  = 1.905        # g/cm^3
     A     = 778.1e2      # GPa
     B     =  -5.031      # GPa
@@ -68,12 +166,12 @@ EOS:JWL=LX-17.reactants; units=hydro::std
     Cv    = 2.487e-3*V0  # (MJ/kg)/K
     e0    = 0.32112819517131481     # e_ref = 0 for ambient state
 }
-EOS:JWL=LX-17.products; units=hydro::std
+EOS:JWL=LX17.products; units=hydro::std
 {
 # LX-17 = 92.5 % TATB + 7.5 % KelF 800
-# Detonation waves in triaminotrinitrobenzene
-# C M Tarver, J. W. Kury and R. D. Breithaupt
-# J. Appl. Phys. 82 (1997) pp. 3771-3782
+# Ref. Detonation waves in triaminotrinitrobenzene
+#   C M Tarver, J. W. Kury and R. D. Breithaupt
+#   J. Appl. Phys. 82 (1997) pp. 3771-3782
     rho0  =    1.905     # g/cm^3
     A     = 1345.4       # GPa
     B     =   67.27      # GPa
@@ -84,116 +182,100 @@ EOS:JWL=LX-17.products; units=hydro::std
     Scj   = 0.01
     Cv    = 1.0e-3*V0    # (MJ/kg)/K
 }
-
-# fit to release isentrope for HE products
-
-HEfit=PBX9501; units=hydro::std
+HErate:IgnitionGrowth=LX17; units=hydro::std
 {
-# Release isentrope of overdrive plastic-bonded explosive PBX-9501
-# R. S. Hixon, M. S. Shaw, J. N. Fritz, J. E. Vorthman, W. W. Anderson
-# J. Appl. Phys. 88 (2000) pp 6287--6293
-    V0      = 1/1.835
-    rho_CJ  = 2.4403; P_CJ    = 35.3
-    rho_min = 1.9;    rho_max = 3.2
-    Pmin    = 18;     Pmax    = 80
-    # fit to PCJ
-    Gamma0  = 3
-       nfCJ = 6
-     fCJ(1) = 2.4287, 0.0378, 0.1005, -0.7166, 0.4537, 0.8062, -0.8473
-    # fit to rho*Gamma
-       ngCJ = 3
-     gCJ(1) = 1.1520, -1.1490, 4.2382, -2.2234
+# Ref. Detonation waves in triamino-trinitrobenzene
+#  C. M. Tarver, J. W. Kury, R. D. Breithaupt 
+#  J. Appl. Phys 82 (1997) pp 3771--3782, Table III
+    tol  = 1.e-5
+    rho0 = 1.905            # g/cm^3
+    lambda_igmax = 0.02
+    I = 4.0e6               # 1/microsec
+    a = 0.22
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.70
+    y  =   2.0
+    G1 = 550/100^y          # 1/microsec G1*P^y
+    c  =   0.667
+    d  =   1.0
+    lambda_G2min = 0.70
+    z  =  1.0
+    G2 = 15.0/100^z           # 1/microsec G2*P^z
+    e  =  0.667
+    g  =  0.667
 }
 #
+#  PBX9502 = 95 % TATB + 5 % KelF 800
+#  ref: C. M. Tarver and E. M. McGuire
+#       Reactive Flow Modeling of the Interaction of TATB Detonation Waves
+#          with Inert Materials
+#       Twelve Detonation Symposium, 2002, pp. 641-649
+#       Table 1, B. at 25C
 #
-#
-BKW=PBX9404; units=hydro::HiP
+EOS:HEburn=PBX9502.IG; units=hydro::std
 {
-    # From Mader
-    V0 = 1/1.84
-    e0 = 0
-    de = 0.1
-    Pn(1)= -3.539063E+00,-2.577376E+00, 2.600754E-01, 1.390836E-02,-1.139630E-02
-    en(1)= -1.619130E+00, 5.215185E-01, 6.775066E-02, 4.265243E-03, 1.046800E-04
-    Tn(1)=  7.364229E+00,-4.936582E-01, 2.923531E-02, 3.302774E-02,-1.145325E-02
-    Cv = 0.5/23.89e3
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::PBX9502.reactants"
+    products  = "JWL::PBX9502.products"
+    HErate    = "IgnitionGrowthRT::PBX9502";
 }
-#
-#
-#
-HEprods=PBX9502; units=hydro::std
+EOS:JWL=PBX9502.reactants; units=hydro::HiP
 {
-# Sam's parameters for 9502 Sesame table
-  # ambient reactant state
-    V0 = 1/1.895
-    P0 = 0
-    e0 = 0
-  # CJ state
-    rho_cj = 2.525
-      T_cj = 3000
-      S_cj = 0.1
-  # CJ isentrope
-    rho_sw = 2.35
-    # Pcj(rho) fit
-    # rho < rho_sw, low density
-    rho_min = 0.5
-    gamma1 = 3          
-       na1 = 9
-    a1(1)  = 10.83704608, -36.32216903, 56.27562748, -48.17245147
-    a1(5)  = 25.61832525, -8.72113200,   1.85556000,  -0.22560000
-    a1(9)  =  0.01200000
-    # rho > rho_sw, hi density
-    rho_max = 3.5
-    gamma2 = 3
-    na2    = 11
-    a2(1)  =   388.070201241e3, -1437.89384925e3,  2387.29576665e3
-    a2(4)  = -2339.13878913e3,   1498.12504563e3,  -655.404454928e3
-    a2(7)  = 198.372908562e3,     -41.0219603323e3,   5.54724756054e3
-    a2(10) =  -0.442985133947e3,    0.0158650338808e3
-  # Gamma(rho) fit
-      nb1 = 2
-    b1(1) = 0, 0.5
-      nb2 = 2
-    b2(1) = 0, 0.5
-  # thermal
-    Cv = 2.09e-3
+    rho0  =   1.895      # g/cm^3
+    A     = 632.07       # Mb
+    B     =  -0.04472    # Mb
+    R1    =  11.3        # -
+    R2    =   1.13       # -
+    omega =   0.8938     # -
+    Edet  =   0.0        # Mb*cc/g
+    # Ref isentrope thru (V0,P0) for T
+    P0   = 1.e-6         # Mb
+    #S0   = 0.0
+    Cv    = 2.487e-5*V0  # (Mb*cc/g)/K
+    e0    = 0.0024687    # e_ref = 0 for ambient state
+    #
+    # test: enable PT at 1 bar and low T
+    #
+    P_vac = -0.2
 }
-
-HEprods=PBX9501; units=hydro::std
+EOS:JWL=PBX9502.products; units=hydro::HiP
 {
-# Sam's parameters for 9501 Sesame table
-  # ambient reactant state
-    V0 = 1/1.836
-    P0 = 0
-    e0 = 0
-  # CJ state
-    rho_cj = 2.44034
-      T_cj = 3000
-      S_cj = 0.1
-  # CJ isentrope
-    rho_sw = 2.10
-    # Pcj(rho) fit
-    # rho < rho_sw, low density
-    rho_min = 0.3
-    gamma1 = 1.4          
-       na1 = 10
-       a1(1)  =  0.6728985375E+00,  0.7874226637E+01, -0.4042313566E+02
-       a1(4)  =  0.6604682011E+02, -0.1205555487E+01, -0.1046827535E+03
-       a1(7)  =  0.1243984562E+03, -0.6566713800E+02,  0.1683269500E+02
-       a1(10) = -0.1702550000E+01
-    # rho > rho_sw, hi density
-    rho_max = 3.2
-    gamma2 = 3
-       na2 = 7
-       a2(1) = -219.2657856, 543.2739202, -546.3149119
-       a2(4) =  289.1261639, -85.06903635,  13.21219714
-       a2(7) =   -0.8473
-  # Gamma(rho) fit
-      nb1 = 2
-    b1(1) = 0, 0.43901
-      nb2 = 2
-    b2(1) = 0, 0.43901
-  # thermal
-    Cv = 2.09e-3
+    P_vac =  1.e-6       # 1 bar
+    #
+    rho0  =  1.895       # g/cm^3
+    A     = 13.6177      # Mb
+    B     =  0.7199      # Mb
+    R1    =  6.2         # -
+    R2    =  2.2         # -
+    omega =  0.5         # -
+    Edet  =  0.069*V0    # Mb*cc/g
+    Scj   =  0.01
+    Cv    =  1.0e-5*V0   # (Mb*cc/g)/K
+    Tcj   = 3000
 }
-
+HErate:IgnitionGrowthRT=PBX9502; units=hydro::HiP
+{
+    tol  = 1.e-5
+    rho0 = 1.895         # g/cm^3
+    lambda_igmax = 0.025
+    I = 4.0e6            # 1/microsec
+    a = 0.214
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.80
+    y  =    2.0
+    G1 = 1100.           # 1/microsec G1*P^y
+    c  =    0.667
+    d  =    1.0
+    lambda_G2min = 0.80
+    z  =  1.0
+    G2 = 30.             # 1/microsec G2*P^z
+    e  =  0.667
+    g  =  0.667
+}

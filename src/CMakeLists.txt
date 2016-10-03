@@ -65,6 +65,8 @@ include_directories(ExtEOStypes/ElasticPlastic)
 include_directories(ExtEOStypes/HEburn)
 add_subdirectory(ExtEOStypes)
 
+configure_file("Run" ${CMAKE_BINARY_DIR}/bin/runEOS COPYONLY)
+
 set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
