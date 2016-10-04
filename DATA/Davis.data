@@ -1,0 +1,221 @@
+#
+#  PBX 9501 = 94.9% HMX + 2.5% nitroplasticizer + 2.5% Estane + 0.1% stabilizer
+#
+EOS:HEburn=PBX9501.davis; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+    PTtol = 1.e-12
+    #
+    lambda = 0  # all reactants
+    reactants = "DavisReactants::PBX9501"
+    products  = "DavisProducts::PBX9501"
+    HErate    = "PnRate::PBX9501";
+}
+#
+#
+#
+EOS:DavisProducts=PBX9501;  units=hydro::std
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics
+#       in Condensed Explosives"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       J. Fluid Mech. 546 (2006) pp. 227-253
+    rho0 = 1.844    # g/cm^3
+    e0   = 5.85     # MJ/kg
+    a    = 0.7965
+    n    = 1.758
+    Vc   = 0.8314   # cm^3/g
+    pc   = 3.738    # GPa
+    b    = 0.7
+    k    = 1.3
+    Cv   = 0.945e-3 # (MJ/kg)/K
+    Tc   = 2407.34
+    #
+    /************
+    Cv   = 2e-3
+    Tc  -= 227
+    #
+    Cv = 2.5e-3
+    *************/
+}
+EOS:DavisReactants=PBX9501;  units=hydro::std
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics
+#       in Condensed Explosives"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       J. Fluid Mech. 546 (2006) pp. 227-253
+    rho0 = 1.844    # g/cm^3
+    e0   = 0.       # MJ/kg
+    P0   = 1.e-4    # GPa
+    T0   = 293.     # K
+    S0   = 0.       # (MJ/kg)/K
+    A    = 2.339    # km/s
+    B    = 2.737
+    C    = 1.45
+    G0   = 0.7989
+    Z    = -0.03076
+    Cv   = 1.088e-3 # (MJ/kg)/K
+    alpha = 0.9644
+}
+HErate:PnRate=PBX9501; units=hydro::std
+{
+# ref: "Experimental Validation of Detonation Shock Dynamics
+#       in Condensed Explosives"
+#       D. E. Lambert, D. S. Stewart, S. Yoo and B. L. Wescott
+#       J. Fluid Mech. 546 (2006) pp. 227-253
+    tol = 1.e-5
+    nu = 0.93
+    k  = 110                        # 1/microsec
+    Pcj = 36.3                      # GPa
+    N   = 3.5
+    #
+    source_type = 2
+    integrate   = 0    
+    dlambda     = 0.02
+    lambda_burn = 0.98
+}
+#
+#  PBX 9502 = 95% TATB + 5% Kel-F 800
+#
+EOS:HEburn=PBX9502.davis; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+    PTtol = 1.e-12
+    #
+    lambda = 0  # all reactants
+    reactants = "DavisReactants::PBX9502"
+    products  = "DavisProducts::PBX9502"
+    HErate    = "IgnitionGrowth::PBX9502"
+}
+EOS:DavisReactants=PBX9502;  units=hydro::std
+{
+    P_vac = -0.1     # enable PT to initialize
+# ref: "Equation of state and reaction rate for condensed-phase explosives
+#       B. L. Wescott, D. S. Stewart and  W. C. Davis
+#       J. Appl. Phys. 98 (2005) 053514
+    rho0 = 1.895    # g/cm^3
+    e0   = 0.       # MJ/kg
+    P0   = 1.e-4    # GPa
+    T0   = 296.16   # K
+    S0   = 0.       # (MJ/kg)/K
+    A    = 1.75     # km/s
+    B    = 5.2  
+    C    = 0.1 
+    G0   = 0.8168
+    Z    = 0.3093  
+    Cv   = 0.979e-3 # (MJ/kg)/K
+    #alpha = 0.7331
+    alpha = 1.150
+    alpha = 0.7331
+    P0 = 0.0
+}
+EOS:DavisProducts=PBX9502;  units=hydro::std
+{
+# ref: "Equation of state and reaction rate for condensed-phase explosives
+#       B. L. Wescott, D. S. Stewart and  W. C. Davis
+#       J. Appl. Phys. 98 (2005) 053514
+    rho0 = 1.895    # g/cm^3
+    e0   = 3.731    # MJ/kg
+    e0   = 3.7320373169   # MJ/kg, matches xrage corresponding to reactant e0=0
+    a    = 0.8592
+    n    = 2.521
+    Vc   = 0.9884   # cm^3/g
+    pc   = 1.307    # GPa
+    b    = 0.58
+    k    = 1.3
+    Cv   = 0.725e-3 # (MJ/kg)/K
+    Tc   = 2^(-a*b/n)/(k-1+a)+pc*Vc/Cv
+    # test
+    Tc   = 0.0      # reset to default 
+    P0 = 0.0
+}
+HErate:IgnitionGrowth=PBX9502; units=hydro::HiP
+{
+    tol  = 1.e-5
+    rho0 = 1.895         # g/cm^3
+    lambda_igmax = 0.025
+    I = 4.0e6            # 1/microsec
+    a = 0.214
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.80
+    y  =    2.0
+    G1 = 1100.           # 1/microsec G1*P^y
+    c  =    0.667
+    d  =    1.0
+    lambda_G2min = 0.80
+    z  =  1.0
+    G2 = 30.             # 1/microsec G2*P^z
+    e  =  0.667
+    g  =  0.667
+}
+#
+# SURF/SURFplus rate
+#
+EOS:HEburn2=PBX9502.HotSpotCC.davis_SURFplus; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+    PTtol = 1.e-12
+    P_ref = 1e-4
+    T_ref = 296.13
+    #
+    reactants = "DavisReactants::PBX9502"
+    products  = "DavisProducts::PBX9502"
+    HErate2   = "HotSpotRateCC::PBX9502.davis_SURFplus"
+}
+HErate2:HotSpotRateCC=PBX9502.davis_SURFplus; units=hydro::std
+{
+# ds/dt = f(Ps)*(P/Ps)**n
+# new fitting form
+#        =  0,                              for Ps < P0
+#  f(Ps) = f0(Ps) - f0(P0)*(1+B*(Ps-P0)),   for P0 < Ps < P1
+#        = f1*(1+df1*[1-exp(-B2*(Ps-P1))],  for      P1 < Ps
+#  where
+#     f1 = f(P1) = f0(P1) - f0(P0)*(1+B*(P1-P0))
+#     B2 = B/abs(df1) * (df/dPs)(P1) / f1
+#  f and df/dPs continuous at P0 and P1
+    A  = -3.1
+    B  =  0.28
+    P0 =  2.5
+    P1 = 21.5
+    df1 = 3.
+    n  =  0.    
+    sc =  2.        # cutoff for lambda(s)
+# second, slow CC rate
+# lambda2 = s2^2
+# ds2/dt = 0.5*lambda^2 * hinv(s2)
+# ecc = [(1+lambda2*(Nratio-1))^(-1/3) -Nratio^(-1/3)]*Q
+    Q  = 1
+    Nratio = 250
+    # parameters for lambda2 = h(t)
+    t1 = 0.15
+    t2 = 0.35
+    h1 = 0.2
+    h2 = 0.8
+# use rate constraint on time step
+    source_type = 3
+}
+#
+#
+#
+EOS:HEburn2=PBX9502.HotSpotCC.davis_SURF; units=hydro::std
+{
+    :use=PBX9502.HotSpotCC.davis_SURFplus
+    HErate2   = "HotSpotRateCC::PBX9502.davis_SURF"
+}
+
+HErate2:HotSpotRateCC=PBX9502.davis_SURF; units=hydro::std
+{
+    :use=PBX9502.davis_SURFplus
+    Q=0 
+}
+

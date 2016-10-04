@@ -1,0 +1,70 @@
+
+:SharedLibs.=EOS
+{
+    Keane          = $SharedLibDirEOS/MaterialLib.so
+    JWL            = $SharedLibDirEOS/MaterialLib.so
+    HEfit          = $SharedLibDirEOS/MaterialLib.so
+    HEprods        = $SharedLibDirEOS/MaterialLib.so
+    DavisReactants = $SharedLibDirEOS/MaterialLib.so
+    DavisProducts  = $SharedLibDirEOS/MaterialLib.so
+    BKW            = $SharedLibDirEOS/MaterialLib.so
+
+    ArrheniusHE      = $SharedLibDirEOS/ExtHE.so
+    IdealHE          = $SharedLibDirEOS/ExtHE.so
+    StiffIdealHE     = $SharedLibDirEOS/ExtHE.so
+    StiffIdealHEav   = $SharedLibDirEOS/ExtHE.so
+    HEburn           = $SharedLibDirEOS/ExtHE.so
+    HEburn2          = $SharedLibDirEOS/ExtHE.so
+
+}
+
+:SharedLibs=HErate
+{
+    HErate           = $SharedLibDirEOS/ExtHE.so
+    Arrhenius        = $SharedLibDirEOS/ExtHE.so
+    PnRate           = $SharedLibDirEOS/ExtHE.so
+    IgnitionGrowth   = $SharedLibDirEOS/ExtHE.so
+    HotSpotRate      = $SharedLibDirEOS/ExtHE.so
+    HotSpotRate2     = $SharedLibDirEOS/ExtHE.so
+    HotSpotRateExp   = $SharedLibDirEOS/ExtHE.so
+    HotSpotCC_Rate   = $SharedLibDirEOS/ExtHE.so
+    ArrheniusRT      = $SharedLibDirEOS/ExtHE.so
+    IgnitionGrowthRT = $SharedLibDirEOS/ExtHE.so
+    FFrate           = $SharedLibDirEOS/ExtHE.so
+    FFQrate          = $SharedLibDirEOS/ExtHE.so
+}
+:SharedLibs=HErate2
+{
+    HErate2          = $SharedLibDirEOS/ExtHE.so
+    HotSpotRateCC    = $SharedLibDirEOS/ExtHE.so
+}
+
+.units = hydro::std
+.base  = EOS
+#
+#
+#
+HErate:Arrhenius=HMX.BM; units=hydro::std
+{
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499
+    tol   = 1.e-6
+    n   =  1                        # reaction order
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+#   Rate adjusted to 25 micron reaction zone width at 90% burnt
+    k  *= 0.1
+    k  *= 0.5
+}
+#
+#
+#
+# HOM/ForestFire
+.include HOM.data
+
+# Davis
+.include Davis.data
+
+# JWL
+.include JWL.data
