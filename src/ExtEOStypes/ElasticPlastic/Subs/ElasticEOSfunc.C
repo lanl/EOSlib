@@ -13,7 +13,7 @@ double ElasticEOS::T(double V, double e, const double *z)
 
     double Tmax = hydro->T(V, e);
     double eshear = elastic->eshear(V,Tmax, z[0]);
-    if( std::abs(eshear) <= 1e-6*abs(e) )
+    if( std::abs(eshear) <= 1e-6*std::abs(e) )
         return Tmax;
     double de_max = eshear;                                     // emax - e
     double Tmin = hydro->T(V, e-eshear);

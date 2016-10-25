@@ -2,7 +2,7 @@
 #define EOSLIB_EOS_VT_H
 
 #include <EOSbase.h>
-#include <String.h>
+#include <String1.h>
 
 //
 #define EOS_VT_vers "EOS_VTv2.0.1"

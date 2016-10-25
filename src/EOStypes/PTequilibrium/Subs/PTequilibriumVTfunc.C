@@ -72,7 +72,7 @@ double PTequilibrium_VT::P(double V, double T)
           P2=eos2->P(V2,T);
           K2=eos2->cT2(V2,T);         
       }
-      if( std::abs(P1-P2) < tol*abs(P1+P2) && abs(dV) < tol*V )
+      if( std::abs(P1-P2) < tol*std::abs(P1+P2) && std::abs(dV) < tol*V )
           return 0.5*(P1+P2);
     }
     // V1 = V2 = 0.0;

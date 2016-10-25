@@ -8,7 +8,7 @@ class SplineParams : public UsUpSplineParams
 {
 public:
     SplineParams() {}
-    UsUpSplineParams::init;    
+    using UsUpSplineParams::init;    
 };
 
 //

@@ -147,7 +147,7 @@ int AvArrheniusRate::Integrate(double V, double e, double *z, double dt)
         dt1 = min(dt,dt1);
         if( step1(z,dt1) )
             return 1;
-        double eps = std::abs(z2[0]-z3[0])/1.e-4 + abs(z2[1]-z3[1])/(1.e-3*z2[1]);       
+        double eps = std::abs(z2[0]-z3[0])/1.e-4 + std::abs(z2[1]-z3[1])/(1.e-3*z2[1]);       
         if( eps > 1. )
         {
             dt1 *= 0.5;

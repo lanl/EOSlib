@@ -261,7 +261,7 @@ double DefProfile::MaxNorm(const double *y0, const double *y1,
     for(int i=Dimension(); i--; y0++, y1++)
     {
         eps[i] *= epsilon;
-        Norm = max(Norm, std::abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + 1.)*eps[i]));
+        Norm = max(Norm, std::abs(*y0 - *y1)/((std::abs(*y0)+std::abs(*y1) + 1.)*eps[i]));
     }
     return Norm;
 }

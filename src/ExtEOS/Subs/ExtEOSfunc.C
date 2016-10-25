@@ -224,7 +224,7 @@ double ExtEOS::FD(double V, double e, const double *z)
             double rc2_2 = c2(V2,e2, z)/sqr(V2);
             double drc2 = 0.5*(rc2_2-rc2_0);
             double d2rc2 = (rc2_2-2*rc2_1+rc2_0);
-            if( std::abs(d2rc2) < FD_tol*abs(drc2) )
+            if( std::abs(d2rc2) < FD_tol*std::abs(drc2) )
                 return 0.5*(drc2 + d2rc2)/dV *(V/rc2_0);
         }
     }

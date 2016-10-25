@@ -31,8 +31,8 @@ class PhiEq_spline : public PhiEq,              // Extended abstract base class
 // SplineFunction is for Phi, virtual function f
 // ODE is for energy, function F
 public:
-    SplineFunction::abs_tol;
-    SplineFunction::rel_tol;
+    using SplineFunction::abs_tol;
+    using SplineFunction::rel_tol;
 private:
     void operator=(const PhiEq_spline&);        // disallowed
     PhiEq_spline(const PhiEq_spline&);          // disallowed

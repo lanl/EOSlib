@@ -5,7 +5,7 @@
 #include "States.h"
 #include "IO.h"
 #include "Wave.h"
-#include <String.h>
+#include <String1.h>
 //
 #define EOS_vers "EOSv2.0.1"
 #define EOS_date "Jan. 5, 2013"

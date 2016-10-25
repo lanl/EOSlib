@@ -176,12 +176,12 @@ void OneDFunction::ZERO()
     /**************************************
 	// check abs_tolerance if bracket contains 0, otherwise rel_tolerance	
 		if( ( (x0 > 0 && x1 > 0) || (x0 < 0 && x1 < 0) ) ?
-		    std::abs(dx) < rel_tolerance * abs(x) : abs(dx) < abs_tolerance )
+		    std::abs(dx) < rel_tolerance * std::abs(x) : std::abs(dx) < abs_tolerance )
 		{
 			return;
 		}
     ***************************************/
-        if( std::abs(dx) < max(abs_tolerance,rel_tolerance*abs(x)) )
+        if( std::abs(dx) < max(abs_tolerance,rel_tolerance*std::abs(x)) )
             return;
 
 	// Compute function at center point of bracket
