@@ -1,0 +1,115 @@
+#!/bin/sh
+
+# usage: runEOS EOSprog args
+#        Sets EOSlib environment variables
+#           EOSLIB_SHARED_LIBRARY_PATH
+#           EOSLIB_DATA_PATH=$BUILD/DATA
+#        Then execs to EOSprog
+#  Note:
+#        Can use symbolic link to this script
+#        and run from any directory
+#
+prog=$0
+#
+#
+if [ "$1" = "help" ] ; then
+   prog=`basename $prog`
+cat << EOF
+usage: $prog EOSprog [+file FILE_LIST] [ARGS]
+  EOSprog is an EOSlib utility in '.' or 'build/bin'
+  +file option adds colon separted list of EOS data files to default list
+  ARGS are arguments specific to EOSprog
+purpose:
+  Sets EOSlib environment variables and default EOS data files
+  then runs EOSprog
+  Common EOSlib utilitities are:
+    Wave            - calculate Hugoniot locus or isentrope
+    Detonation      - calculate detonation locus or CJ release isentrope
+    Isotherm        - calculate points on isotherm
+    EOSdata         - prints EOS material parameters for specified material
+    ImpedanceMatch  - solve Riemann problem for specified left and right states
+Examples:
+  $prog Wave help
+  $prog Wave       material HEburn::PBX9502.davis Ps 10
+  $prog Detonation material HEburn::PBX9502.davis P2 10
+  $prog Isotherm   material HEburn::PBX9502.davis Ps 10 P2 1
+  $prog EOSdata    material HEburn::PBX9502.davis all
+  $prog Data base EOS type HEburn name PBX9502.davis parameters
+  $prog ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis
+See also:
+  listEOS to find material in EOS data file list
+EOF
+   exit 1
+fi
+#
+#  Follow symbolic links for absolute path to build (root) directory
+while [ -L $prog ] ; do
+    link=`ls -l $prog | sed -e 's/.*->[ 	]*//'`
+    case $link in
+    /*)
+        prog=$link;;
+     *)
+        prog="`dirname $prog`/$link";;
+    esac
+done
+case $prog in
+/*)
+    ;;
+ *)
+    cwd=`pwd`
+    while [ -L $cwd ] ; do
+        link=`ls -l $cwd | sed -e 's/.*->[ 	]*//'`
+        case $link in
+        /*)
+            cwd=$link;;
+         *)
+            cwd="`dirname $cwd`/$link";;
+        esac
+    done
+    prog=$cwd/$prog;;
+esac
+#
+# set shell variables and export environment variables
+BIN=`(cd \`dirname $prog\` ; pwd)`
+BUILD=`(cd $BIN/..; pwd)`
+export EOSLIB_SHARED_LIBRARY_PATH=$BUILD/lib
+export EOSLIB_DATA_PATH=$BUILD/DATA
+EOSdata=$EOSLIB_DATA_PATH/EOS.data
+#
+# need first argument to be EOSprog
+if [ $# -lt 1 ] ; then
+   prog=`basename $prog`
+   echo "$prog: ERROR" 1>&2
+   echo "    usage:" $prog "EOSprog args" 1>&2
+   echo "        or" $prog "help"         1>&2
+   exit 1
+fi
+EOSprog=$1
+shift
+#
+# check EOSprog in executable directory path
+#
+# temporary path until EOSlib utilites are installed in build/bin
+exec_path=". $BUILD/src/Applications $BUILD/src/DataBase"
+#exec_path=". $BIN"
+EOS_prog=""
+for dir in $exec_path ; do
+    if [ -e $dir/$EOSprog ] ; then
+        EOS_prog=$dir/$EOSprog
+        break
+    fi
+done
+if [ -z "$EOS_prog" ] ; then
+   prog=`basename $prog`
+   echo "$prog: ERROR, $EOSprog not in BIN directories" 1>&2
+   exit 1;
+fi
+#
+# second argument optional for addition data files
+if [ "$1" = "+file" ] ; then
+    EOSdata=$EOSdata:$2
+    shift 2
+fi
+#
+# run program
+exec $EOS_prog file $EOSdata "$@"

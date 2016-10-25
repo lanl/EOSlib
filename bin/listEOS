@@ -1,0 +1,88 @@
+eval 'exec perl $0 ${1+"$@"}'
+  if 0;
+
+use FindBin;
+$runEOS = "$FindBin::Bin/runEOS";
+
+use File::Basename;
+$prog  = basename($0);
+$ERROR = "$prog: Error,";
+#
+#
+my $type = '.*';
+my $name = '.*';
+$help = <<EOF;
+  usage: $prog  [options]
+options:
+    +files=FILES        : separated list of EOS data files
+                        in addition to default data files
+     files=FILES        : separated list of EOS data files
+      type=REG_EXPR     regular expression for EOS type [$type]
+      name=REG_EXPR     regular expression for EOS name [$name]
+purpose: 
+    Lists selected EOS in data files
+Examples:
+    $prog                             # lists all EOS in default EOS data file
+    $prog type=HEburn                 # lists all EOS of type HEburn
+    $prog type=HEburn name=PBX9501.*  # lists all PBX9501 EOS of type HEburn
+See also:
+    runEOS to set EOSlib environment and run EOSlib utility
+EOF
+#
+my $files;
+while( $arg=shift(@ARGV) )
+{
+    if( $arg =~ /^files?=/ )
+    {
+        $files=$';
+    }
+	elsif( $arg =~ /^\+files?=/ )
+	{
+	    $pfiles = $';
+	}
+	elsif( $arg =~ /^type=/ )
+	{
+	    $type = $';
+	}
+	elsif( $arg =~ /^name=/ )
+	{
+	    $name = $';
+	}
+    elsif( $arg =~ /^(-h|-{0,2}help)/ )
+    {
+        print $help;
+        exit 1;
+    }
+	else
+	{
+	    die "unknown argument `$arg'";
+	}
+}
+# input check
+die "$ERROR ':' not allowed in EOS type" if $type =~ /:/;
+die "$ERROR ':' not allowed in EOS name" if $name =~ /:/;
+#
+$command = "$runEOS Data";
+if( $files )
+{
+    $command .= " files $files";
+    $command .= ":$pfiles" if $pfiles;
+}
+elsif( $pfiles )
+{
+    $command .= " +file $pfiles";
+}
+$command .= ' base EOS type \* name \*';
+open(EOS, "$command |") || die "$ERROR open failed for\n  $command";
+
+$mat = qr/^$type\:\:$name$/;
+while( $line = <EOS> )
+{
+    $line =~ /^EOS:(.*) Units:(.*)/;
+    $eos = $1;
+    $units = $2;
+    print "$eos\n" if $eos =~ $mat;
+}
+
+close EOS;
+die "ERROR command terminated abnormally\n" if $? != 0;
