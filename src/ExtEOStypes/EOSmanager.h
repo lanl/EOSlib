@@ -2,7 +2,7 @@
 #define EOSLIB_EOS_MANAGER_H
 
 #include "EOS.h"
-#include "String.h"
+#include "String1.h"
 #include "EOSstate.h"
 #include "PointerArray.h"
 

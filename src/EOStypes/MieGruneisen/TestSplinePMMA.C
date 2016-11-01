@@ -7,7 +7,7 @@ class SplineParams : public UsUpSplineParams
 {
 public:
     SplineParams() {}
-    UsUpSplineParams::init;    
+    using UsUpSplineParams::init;    
 };
 
 // The dynamic mechanical behavior of polymethyl methacrylate

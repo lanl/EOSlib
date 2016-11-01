@@ -1,5 +1,5 @@
 #include <Arg.h>
-#include <String.h>
+#include <String1.h>
 
 #include "ExtEOSmanager.h"
 #include "Riemann_genX.h"

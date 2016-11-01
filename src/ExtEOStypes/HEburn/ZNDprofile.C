@@ -1,5 +1,5 @@
 #include <Arg.h>
-#include <String.h>
+#include <String1.h>
 #include <LocalMath.h>
 #include <ODE.h>
 #include <ExtEOS.h>

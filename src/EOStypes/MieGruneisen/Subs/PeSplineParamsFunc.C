@@ -99,15 +99,15 @@ int PeSplineParams::F(double *yp, const double *y, double V)
 double PeSplineParams::MaxNorm(const double *y0, const double *y1,
 						       const double*, const double*)
 {
-// ToDo: upgrade ODE::MaxNorm for relative and absolute error
+// ToDo: upgrade ODE::MaxNorm for relative and std::absolute error
 	double Norm = 0;
-    double abserr = epsilon;
+    double std::abserr = epsilon;
     double relerr = epsilon;
 	
 	for(int i=Dimension(); i--; y0++, y1++)
     {
-        double e1 = std::abs(*y0 - *y1)/((abs(*y0)+abs(*y1) + relerr)*relerr);
-        double e2 = std::abs(*y0 - *y1)/abserr;
+        double e1 = std::abs(*y0 - *y1)/((std::abs(*y0)+std::abs(*y1) + relerr)*relerr);
+        double e2 = std::abs(*y0 - *y1)/std::abserr;
 		Norm = max(Norm, min(e1,e2) );
     }		
 	return Norm;

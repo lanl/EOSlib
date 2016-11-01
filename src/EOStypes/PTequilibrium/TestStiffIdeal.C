@@ -138,7 +138,7 @@ int main(int, char **argv)
         {
             if( std::abs(V-PT.V) > 0.001*V )
                 cout << "PT.V error"  << V << ", " << PT.V << "\n";
-            if( std::abs(e-PT.e) > 0.001*abs(e) )
+            if( std::abs(e-PT.e) > 0.001*std::abs(e) )
                 cout << "PT.e error"  << e << ", " << PT.e << "\n";                
         }
         // check Gamma and CV
@@ -162,9 +162,9 @@ int main(int, char **argv)
         double Tm = eosSI->Teq;
         double dPfd = (Pp-Pm)/(lambdap-lambdam);
         double dTfd = (Tp-Tm)/(lambdap-lambdam);
-        if( std::abs(dP-dPfd) > 0.001*(abs(dP)+abs(dPfd)) )
+        if( std::abs(dP-dPfd) > 0.001*(std::abs(dP)+std::abs(dPfd)) )
             cout << "dP error: " << dP << " " << dPfd << "\n";
-        if( std::abs(dT-dTfd) > 0.001*(abs(dT)+abs(dTfd)) )
+        if( std::abs(dT-dTfd) > 0.001*(std::abs(dT)+std::abs(dTfd)) )
             cout << "dT error: " << dT << " " << dTfd << "\n";
         //
         // end of check

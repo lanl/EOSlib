@@ -46,7 +46,7 @@ public:
     int Lambda2(double &lambda, double &xi, double &V, double &e,
                                             double &P, double &u);
     void   Last(     double &xi, double &V, double &e, double &P, double &u);
-    ODE::epsilon;
+    using ODE::epsilon;
     double abs_tol;     // for ODEfunc
     double rel_tol;     // for ODEfunc
 private:
@@ -173,8 +173,8 @@ class lambda1_ODE : public ODEfunc
 {
     HotSpotRateCC *Rate;
 public:
-    ODEfunc::abs_tol;
-    ODEfunc::rel_tol;
+    using ODEfunc::abs_tol;
+    using ODEfunc::rel_tol;
     lambda1_ODE(HotSpotRateCC *rate) { Rate=rate;}
     double f(double V, const double *y, const double *yp);
 };
@@ -214,8 +214,8 @@ int ZNDprofile::Lambda1(double &lambda, double &xi,
 class lambda2_ODE : public ODEfunc
 {
 public:
-    ODEfunc::abs_tol;
-    ODEfunc::rel_tol;
+    using ODEfunc::abs_tol;
+    using ODEfunc::rel_tol;
     lambda2_ODE() { }
     double f(double V, const double *y, const double *yp);
 };

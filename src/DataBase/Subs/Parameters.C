@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <sstream>
 #include <cstring>
-#include <String.h> // SplitString
+#include <String1.h> // SplitString
 
 #include "DataBase.h"
 

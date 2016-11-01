@@ -2,6 +2,7 @@
 #define EOSLIB_SPLIT_WORD_H
 
 #include <cstdlib>
+#include <String1.h>
 
 class SplitWord
 {
