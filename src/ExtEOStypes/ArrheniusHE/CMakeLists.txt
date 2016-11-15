@@ -16,24 +16,24 @@ set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( ArrheniusHE Io Math ODE DataBase Eos ExtEOS Materials ${CMAKE_DL_LIBS} )
 
-#tests excluded for Sesame dependency - Hug 
-list( APPEND tests AvStiffIdealOverdriven CJprofile IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE )#Tinduction )
-#ZNDprofile - ZNDprofile is designed to take file, material, etc as input, not be hardcoded to a test.data file
-
-foreach(test ${tests})
-  add_executable(${test}ArrheniusHE ${test}.C)
-  target_link_libraries(${test}ArrheniusHE ArrheniusHE)
-  add_test(NAME ${test}ArrheniusHE
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE)
-  set_tests_properties(${test}ArrheniusHE PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
+# #tests excluded for Sesame dependency - Hug 
+# list( APPEND tests AvStiffIdealOverdriven CJprofile IdealOverdriven Match Overdriven TestArrhenius TestCopy TestIdealHE TestIdealHE_Def TestIdealHE_Det TestIdealHug TestIntegrate TestIntegrateStiffIdeal TestProfile TestRate TestRiemann TestStiffIdealHEav TestStiffIdealHE )#Tinduction )
+# #ZNDprofile - ZNDprofile is designed to take file, material, etc as input, not be hardcoded to a test.data file
+# 
+# foreach(test ${tests})
+#   add_executable(${test}ArrheniusHE ${test}.C)
+#   target_link_libraries(${test}ArrheniusHE ArrheniusHE)
+#   add_test(NAME ${test}ArrheniusHE
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE)
+#   set_tests_properties(${test}ArrheniusHE PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)
 
 install(TARGETS ArrheniusHE
   RUNTIME DESTINATION ./bin

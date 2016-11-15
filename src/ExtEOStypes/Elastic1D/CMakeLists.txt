@@ -17,22 +17,22 @@ set_property(TARGET Elastic1D PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( Elastic1D Io Math Eos ExtEOS Materials ${CMAKE_DL_LIBS})
 
-list( APPEND tests PMMAhug TestElastic1D TestElasticPMMA TestEP TestEPshock TestRiemann TestVMrate TestXmanager TwoShockEP )
-
-foreach(test ${tests})
-  add_executable(${test}Elastic1D ${test}.C)
-  target_link_libraries(${test}Elastic1D Elastic1D)
-  add_test(NAME ${test}Elastic1D
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D)
-  set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
+# list( APPEND tests PMMAhug TestElastic1D TestElasticPMMA TestEP TestEPshock TestRiemann TestVMrate TestXmanager TwoShockEP )
+# 
+# foreach(test ${tests})
+#   add_executable(${test}Elastic1D ${test}.C)
+#   target_link_libraries(${test}Elastic1D Elastic1D)
+#   add_test(NAME ${test}Elastic1D
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D)
+#   set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)
 
 install(TARGETS Elastic1D
   RUNTIME DESTINATION ./bin

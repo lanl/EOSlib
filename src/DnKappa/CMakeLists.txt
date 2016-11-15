@@ -17,22 +17,22 @@ set_property(TARGET DnKappa PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( DnKappa Io Math Eos Materials ${CMAKE_DL_LIBS} )
 
-list( APPEND tests DnKappa TestDnKappa )
-
-foreach(test ${tests})
-  add_executable(${test}DnKappa ${test}.C)
-  target_link_libraries(${test}DnKappa DnKappa)
-  add_test(NAME ${test}DnKappa
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}DnKappa
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_DNKAPPA_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_DNKAPPA_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
-  set_tests_properties(${test}DnKappa PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
+# list( APPEND tests DnKappa TestDnKappa )
+# 
+# foreach(test ${tests})
+#   add_executable(${test}DnKappa ${test}.C)
+#   target_link_libraries(${test}DnKappa DnKappa)
+#   add_test(NAME ${test}DnKappa
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}DnKappa
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_DNKAPPA_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_DNKAPPA_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
+#   set_tests_properties(${test}DnKappa PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)
 
 install(TARGETS DnKappa
   RUNTIME DESTINATION ./bin

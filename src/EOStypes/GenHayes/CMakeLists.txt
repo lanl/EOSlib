@@ -15,44 +15,44 @@ set_property(TARGET GenHayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries( GenHayes Eos DataBase ODE Calc ${CMAKE_DL_LIBS} )
 
-list( APPEND tests Test1  MinP)
-list( APPEND testsWithArgs HotSpot Isobar Test2 Test2K Test2VT Test3)
-
-foreach(test ${tests})
-  add_executable(${test}GenHayes ${test}.C)
-  target_link_libraries(${test}GenHayes GenHayes)
- # add_test(${test}IdealGas ${test}IdealGas)
- # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-  add_test(NAME ${test}GenHayes
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes)
-  set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
-
-#### use this if test(s) require file specification####
-
-foreach(test ${testsWithArgs})
-  add_executable(${test}GenHayes ${test}.C)
-  target_link_libraries(${test}GenHayes GenHayes)
- # add_test(${test}IdealGas ${test}IdealGas)
-  set(args "file ${EOSLIB_DATA_PATH}/test_data/GenHayesTest.data")
-  add_test(NAME ${test}GenHayes
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes)
-  set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)#
+# list( APPEND tests Test1  MinP)
+# list( APPEND testsWithArgs HotSpot Isobar Test2 Test2K Test2VT Test3)
+# 
+# foreach(test ${tests})
+#   add_executable(${test}GenHayes ${test}.C)
+#   target_link_libraries(${test}GenHayes GenHayes)
+#  # add_test(${test}IdealGas ${test}IdealGas)
+#  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
+#   add_test(NAME ${test}GenHayes
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes)
+#   set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)
+# 
+# #### use this if test(s) require file specification####
+# 
+# foreach(test ${testsWithArgs})
+#   add_executable(${test}GenHayes ${test}.C)
+#   target_link_libraries(${test}GenHayes GenHayes)
+#  # add_test(${test}IdealGas ${test}IdealGas)
+#   set(args "file ${EOSLIB_DATA_PATH}/test_data/GenHayesTest.data")
+#   add_test(NAME ${test}GenHayes
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes)
+#   set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)#
 
 install(TARGETS GenHayes
   RUNTIME DESTINATION ./bin

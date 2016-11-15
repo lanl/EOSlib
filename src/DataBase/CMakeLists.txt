@@ -19,7 +19,7 @@ target_link_libraries( shared_obj Math )
 target_link_libraries( DataBase Calc)
 target_link_libraries( DataBase ${CMAKE_DL_LIBS})
 
-list( APPEND tests Data Convert TestDB Testdl )
+list( APPEND tests Data Convert Testdl )  # TestDB )
 
 #configure_file(Test.data ${CMAKE_CURRENT_BINARY_DIR}/Test.data COPYONLY)
 #configure_file(Units.data ${CMAKE_CURRENT_BINARY_DIR}/Units.data COPYONLY)
@@ -30,16 +30,16 @@ foreach(test ${tests})
 #  add_test(${test} ${test})
 endforeach(test)
 
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
-add_test(NAME TestDB
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestDB
-  -D test_args:string=${args}
-  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBOut.blessed
-  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBErr.blessed 
-  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-  )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
+# add_test(NAME TestDB
+#   COMMAND ${CMAKE_COMMAND}
+#   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestDB
+#   -D test_args:string=${args}
+#   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBOut.blessed
+#   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBErr.blessed 
+#   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#   )
+# set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 message(STATUS "out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestDBOut.blessed\n")
 
@@ -108,7 +108,6 @@ add_test(NAME Data6
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data6err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type UnitsNames name std use")
 add_test(NAME Data7
@@ -119,7 +118,6 @@ add_test(NAME Data7
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data7err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base Units type hydro name std use")
 add_test(NAME Data8
@@ -130,7 +128,6 @@ add_test(NAME Data8
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data8err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS type Hayes name HMX")
 add_test(NAME Data9
@@ -141,7 +138,6 @@ add_test(NAME Data9
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data9err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std parameters")
 add_test(NAME Data10
@@ -152,7 +148,6 @@ add_test(NAME Data10
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data10err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use")
 add_test(NAME Data11
@@ -163,7 +158,6 @@ add_test(NAME Data11
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data11err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS type Hayes name HMX-YC parameters")
 add_test(NAME Data12
@@ -174,7 +168,6 @@ add_test(NAME Data12
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/data12err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 #ctest command parsing problem
 set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro from std to HiP e u u^2 P V P*V")
@@ -187,7 +180,6 @@ add_test(NAME Convert0
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/convert0err.blessed 
   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
   )
-set_tests_properties(TestDB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 target_link_libraries(Testdl shared_obj)
 

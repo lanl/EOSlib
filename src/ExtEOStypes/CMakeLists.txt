@@ -29,22 +29,22 @@ set_property(TARGET ExtHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( ExtHE ExtEOStypes ArrheniusHE HEburn PTequilibrium Manager )
 
 
-list( APPEND tests TestHE )
-
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} ExtEOStypes)
-  add_test(NAME ${test}
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
-  set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
+# list( APPEND tests TestHE )
+# 
+# foreach(test ${tests})
+#   add_executable(${test} ${test}.C)
+#   target_link_libraries(${test} ExtEOStypes)
+#   add_test(NAME ${test}
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
+#   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)
 
 install(TARGETS ExtEOStypes ExtHE
   RUNTIME DESTINATION ./bin
