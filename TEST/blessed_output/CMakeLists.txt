@@ -8,6 +8,11 @@ list(APPEND subdirectories Applications Calc DataBase
   DnKappa EOStypes Eos ExtEOS ExtEOStypes LinkList Local
   ODE OneDFunction Spline)
 
+file(GLOB blessed_files ./*.blessed)
+foreach(blessed_file ${blessed_files})
+  configure_file(${blessed_file} ${CMAKE_CURRENT_BINARY_DIR}/ COPYONLY)
+endforeach(blessed_file)
+
 foreach( subdirectory ${subdirectories})
   add_subdirectory(${subdirectory})
   set( blessed_files )

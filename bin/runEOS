@@ -39,7 +39,7 @@ Examples:
 See also:
   listEOS to find material in EOS data file list
 EOF
-   exit 1
+   exit 0
 fi
 #
 #  Follow symbolic links for absolute path to build (root) directory

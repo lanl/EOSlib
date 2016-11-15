@@ -259,9 +259,6 @@ if(NOT DEFINED EOSLIB_DATA_PATH)
   set(EOSLIB_DATA_PATH "${EOSLIB_DATA_TEST_PATH}")
 endif(NOT DEFINED EOSLIB_DATA_PATH)
 
-configure_file("SetEnv" ${CMAKE_CURRENT_BINARY_DIR}/SetEnv COPYONLY)
-configure_file("listEOS" ${CMAKE_BINARY_DIR}/bin/listEOS COPYONLY)
-
 set(CTEST_ENVIRONMENT
   "EOSLIB_DATA_PATH=${EOSLIB_DATA_TEST_PATH}"
   "EOSLIB_BLESSED_OUTPUT_PATH=${CMAKE_BINARY_DIR}/test/blessed_output"
@@ -274,6 +271,35 @@ add_subdirectory(DATA)
 add_subdirectory(lib)
 add_subdirectory(TEST)
 add_subdirectory(src)
+add_subdirectory(bin)
+
+# Testing
+
+find_program(BASH_PROGRAM bash)
+set(runEOS ${CMAKE_BINARY_DIR}/bin/runEOS)
+set(listEOS ${CMAKE_BINARY_DIR}/bin/listEOS)
+
+function(TEST_BASH test_name test_args)
+  add_test(NAME ${test_name} 
+    COMMAND ${CMAKE_COMMAND}
+    -D test_cmd=${BASH_PROGRAM}
+    -D test_args:string=${test_args}
+    -D out_blessed=${EOSLIB_BLESSED_OUTPUT}/${test_name}Out.blessed
+    -D err_blessed=${EOSLIB_BLESSED_OUTPUT}/${test_name}Err.blessed
+    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+    )
+endfunction(TEST_BASH)
+
+if(BASH_PROGRAM)
+  TEST_BASH(runEOShelp       "${runEOS} help")
+  TEST_BASH(runEOSWavehelp   "${runEOS} Wave help")
+  TEST_BASH(runEOSWave       "${runEOS} Wave       material HEburn::PBX9502.davis Ps 10")
+  TEST_BASH(runEOSDetonation "${runEOS} Detonation material HEburn::PBX9502.davis P2 10")
+  TEST_BASH(runEOSIsotherm   "${runEOS} Isotherm   material HEburn::PBX9502.davis Ps 10 P2 1")
+  TEST_BASH(runEOSEOSdata    "${runEOS} EOSdata    material HEburn::PBX9502.davis all")
+  TEST_BASH(runEOSData       "${runEOS} Data base EOS type HEburn name PBX9502.davis parameters")
+  TEST_BASH(runEOSImpedanceMatch "${runEOS} ImpedanceMatch mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis")
+endif(BASH_PROGRAM)
 
 # Install stuff
 

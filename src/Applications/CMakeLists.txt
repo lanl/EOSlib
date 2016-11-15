@@ -2,7 +2,6 @@ if(${verbose_traversal})
   message(STATUS "Entered Applications subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in Applications: ${EOSLIB_BLESSED_OUTPUT}\n")
 set(EOSLIB_APPLICATIONS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Applications)
 set(Applications_src dummy.cpp )
 
@@ -24,20 +23,20 @@ list( APPEND tests  CJ_plot CJstate CriticalPoint CV-rotation Deflagration Defla
 #tests that do not compile - DetonationProfile FFprofile HEburnRate HEburnReactionTime HEburnEvolution HotSpotDeflagration ImpedanceMatch IntegrateDeflagrationODEs Plastic PopPlotTrajectory ReactiveShockLoci ViscousProfile   
 #tests that depend on Sesame - SesameVT 
 
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} Applications)
-  add_test(NAME ${test}
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_APPLICATIONS_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_APPLICATIONS_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
-    )
-  message(STATUS Applications ${CMAKE_CURRENT_BINARY_DIR}/${test})
-  set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
+ foreach(test ${tests})
+   add_executable(${test} ${test}.C)
+   target_link_libraries(${test} Applications)
+#   add_test(NAME ${test}
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_APPLICATIONS_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_APPLICATIONS_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     )
+#   message(STATUS Applications ${CMAKE_CURRENT_BINARY_DIR}/${test})
+#   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+ endforeach(test)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Applications subdirectory")

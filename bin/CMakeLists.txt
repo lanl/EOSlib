@@ -1,0 +1,3 @@
+configure_file(runEOS ${CMAKE_CURRENT_BINARY_DIR}/runEOS COPYONLY)
+configure_file(listEOS ${CMAKE_CURRENT_BINARY_DIR}listEOS COPYONLY)
+

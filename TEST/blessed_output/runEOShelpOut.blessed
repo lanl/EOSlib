@@ -1,0 +1,23 @@
+usage: runEOS EOSprog [+file FILE_LIST] [ARGS]
+  EOSprog is an EOSlib utility in '.' or 'build/bin'
+  +file option adds colon separted list of EOS data files to default list
+  ARGS are arguments specific to EOSprog
+purpose:
+  Sets EOSlib environment variables and default EOS data files
+  then runs EOSprog
+  Common EOSlib utilitities are:
+    Wave            - calculate Hugoniot locus or isentrope
+    Detonation      - calculate detonation locus or CJ release isentrope
+    Isotherm        - calculate points on isotherm
+    EOSdata         - prints EOS material parameters for specified material
+    ImpedanceMatch  - solve Riemann problem for specified left and right states
+Examples:
+  runEOS Wave help
+  runEOS Wave       material HEburn::PBX9502.davis Ps 10
+  runEOS Detonation material HEburn::PBX9502.davis P2 10
+  runEOS Isotherm   material HEburn::PBX9502.davis Ps 10 P2 1
+  runEOS EOSdata    material HEburn::PBX9502.davis all
+  runEOS Data base EOS type HEburn name PBX9502.davis parameters
+  runEOS ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis
+See also:
+  listEOS to find material in EOS data file list
