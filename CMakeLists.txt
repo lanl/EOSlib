@@ -185,7 +185,8 @@ else(DEFINED ${projectName}_compiler_flags)
   # base flags used by every project
   set( ${projectName}_flags
   #  "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} " )
-    "-std=c++11 -w ${CMAKE_CXX_FLAGS} " )
+  #  "-std=c++11 -w ${CMAKE_CXX_FLAGS} " )
+    "-w ${CMAKE_CXX_FLAGS} ")
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)
     set( ${projectName}_flags

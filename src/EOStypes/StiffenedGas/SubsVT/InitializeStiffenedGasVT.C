@@ -35,7 +35,7 @@ int StiffenedGas_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
     
 	if( !std::isnan(c0) )
 	{ // assume V_0 = V_ref and e_0 = 0
-	    if( std::isnan(P0) || isnan(V_ref)  )
+	    if( std::isnan(P0) || std::isnan(V_ref)  )
 	    {
 	        EOSerror->Log(FUNC,"must specify P0 and V_ref with c0\n");
 	    	return 1;

@@ -23,7 +23,7 @@ int Hayes_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     if( !std::isnan(c0) )
     {
-        if( std::isnan(Gamma0) || isnan(V0) || isnan(Cv) || isnan(T0) )
+        if( std::isnan(Gamma0) || std::isnan(V0) || std::isnan(Cv) || std::isnan(T0) )
         {
             EOSerror->Log(FUNC,"must specify Gamma0, V0, Cv, T0 with c0\n");
             return 1;
@@ -32,7 +32,7 @@ int Hayes_VT::InitParams(Parameters &p, Calc &calc, DataBase *)
     }
     if( !std::isnan(s) )
     {
-        if( std::isnan(Gamma0) || isnan(V0) || isnan(K0) || isnan(Cv) || isnan(T0) )
+        if( std::isnan(Gamma0) || std::isnan(V0) || std::isnan(K0) || std::isnan(Cv) || std::isnan(T0) )
         {
             EOSerror->Log(FUNC,"must specify Gamma0, V0, K0, Cv, T0 with s\n");
             return 1;

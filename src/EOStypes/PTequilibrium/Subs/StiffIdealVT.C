@@ -125,7 +125,7 @@ int StiffIdeal_VT::InitParams(Parameters &p, Calc &calc, DataBase *db)
         return 1;
     }
     lambda2 = 1. - lambda1;
-    if( std::isnan(V_ref) || isnan(T_ref) )
+    if( std::isnan(V_ref) || std::isnan(T_ref) )
     {
         EOSerror->Log(FUNC, "V_ref and T_ref not specified\n" );
         return 1;            

@@ -3,7 +3,7 @@
 
 int EOS::NotInDomain(double V, double e)
 {
-    if( std::isnan(V) || isnan(e) || V <= 0 )
+    if( std::isnan(V) || std::isnan(e) || V <= 0 )
         return 1;
     double csq = c2(V,e);
     return (std::isnan(csq) || csq <= 0.0) ? 1 : 0;

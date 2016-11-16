@@ -81,7 +81,7 @@ int EOS_VT::InitBase(Parameters &p, Calc &calc, DataBase *db)
     }
 
     EOSstatus = EOSlib::good;
-    if( std::isnan(V_ref) || isnan(T_ref) )
+    if( std::isnan(V_ref) || std::isnan(T_ref) )
     {
         EOSstatus = EOSlib::bad;
         EOSerror->Log(FUNC,"ref state undefined: V_ref=%lf, T_ref=%lf\n",V_ref,T_ref);

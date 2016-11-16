@@ -27,7 +27,7 @@ int Phi0::InitParams(Parameters &p, Calc &calc, DataBase *db)
         return 1;
     }
            
-    if( std::isnan(V0) || isnan(P0) || isnan(phi0) || isnan(Pc) )
+    if( std::isnan(V0) || std::isnan(P0) || std::isnan(phi0) || std::isnan(Pc) )
     {
         EOSerror->Log(FUNC, "variable not set: V0=%lf, P0=%lf, phi0=%lf, Pc=%lf\n",
                V0, P0, phi0, Pc );

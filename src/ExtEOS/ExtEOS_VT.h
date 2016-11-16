@@ -100,24 +100,24 @@ inline std::ostream & operator<<(std::ostream &out, ExtEOS_VT &eos)
 inline double ExtEOS_VT::c(double V, double T, const double *z)
 {
     double csq = c2(V, T, z);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 
 inline double ExtEOS_VT::cT(double V, double T, const double *z)
 {
     double csq = cT2(V, T, z);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 
 inline double ExtEOS_VT::c(double V, double T)
 {
     double csq = c2(V,T);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 inline double ExtEOS_VT::cT(double V, double T)
 {
     double csq = cT2(V,T);
-    return (isnan(csq) || csq < 0) ? NaN : sqrt(csq);
+    return (std::isnan(csq) || csq < 0) ? NaN : sqrt(csq);
 }
 
 

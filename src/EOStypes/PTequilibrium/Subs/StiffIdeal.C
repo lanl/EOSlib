@@ -144,7 +144,7 @@ int StiffIdeal::InitParams(Parameters &p, Calc &calc, DataBase *db)
     lambda2 = 1. - lambda1;
     if( c0 > 0. && s > 1. )
     {
-        if( std::isnan(V_ref) || isnan(P_ref) )
+        if( std::isnan(V_ref) || std::isnan(P_ref) )
         {
             EOSerror->Log(FUNC, "V_ref and P_ref needed to use c0 and s\n" );
             return 1;            

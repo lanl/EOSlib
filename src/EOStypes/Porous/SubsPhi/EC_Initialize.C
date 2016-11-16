@@ -117,7 +117,7 @@ static ECfit HMX9(A_9, 0.559, 0.947);
     }
 
  // Assume inital state is reference state
-    if( std::isnan(eos->V_ref) || isnan(eos->e_ref) )
+    if( std::isnan(eos->V_ref) || std::isnan(eos->e_ref) )
     {
         EOSerror->Log(FUNC, "ref state not defined for hmx = %s\n", hmx );
         return 1;    
