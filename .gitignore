@@ -4,3 +4,4 @@ include
 logs
 linux-build
 *#
+*.swp
