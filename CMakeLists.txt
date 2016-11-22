@@ -501,15 +501,7 @@ list(APPEND HEADER_FILES
   src/ExtEOStypes/ArrheniusHE/AvArrheniusRate.h
   src/ExtEOStypes/ArrheniusHE/ArrheniusIDOF.h
   src/Spline/Spline.h
-  include/backward/streambuf.h
-  include/backward/stream.h
-  include/backward/strstream.h
-  include/backward/iostream.h
-  include/backward/istream.h
-  include/backward/backward_warning.h
-  include/backward/ostream.h
-  include/backward/fstream.h
-  include/backward/iomanip.h)
+  )
 install(FILES ${HEADER_FILES} DESTINATION include)
 install(DIRECTORY DATA DESTINATION .)
 install(DIRECTORY TEST DESTINATION .)

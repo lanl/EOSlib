@@ -5,4 +5,4 @@ Ref.pdf:
 	pdflatex Ref
 
 cleanup:
-	rm -f *.{aux,bbl,blg,brf,log,out}
+	rm -f *.{aux,bbl,blg,brf,log,out,pdf}
