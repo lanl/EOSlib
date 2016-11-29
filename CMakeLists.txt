@@ -268,6 +268,8 @@ set(CTEST_ENVIRONMENT
   "EOSLIB_SHARED_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 add_subdirectory(DATA)
 add_subdirectory(lib)
 add_subdirectory(TEST)
