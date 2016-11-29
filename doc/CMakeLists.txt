@@ -2,8 +2,8 @@ if(${verbose_traversal})
   message(STATUS "Entered doc subdirectory")
 endif(${verbose_traversal})
 
-file(GLOB foo . *)
-list(APPEND doc_files ${foo})
+file(GLOB foo . *.tex *.bib)
+list(APPEND doc_files README.txt makefile ${foo})
 
 
 foreach(doc_file ${doc_files})
