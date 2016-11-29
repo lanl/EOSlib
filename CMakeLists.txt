@@ -273,6 +273,7 @@ add_subdirectory(lib)
 add_subdirectory(TEST)
 add_subdirectory(src)
 add_subdirectory(bin)
+add_subdirectory(doc)
 
 # Testing
 
@@ -321,15 +322,6 @@ list(APPEND HEADER_FILES
   src/DataBase/DataBaseParameters.h
   src/Table/Table.h
   src/Table/MatToSesame.h
-  src/include/backward/fstream.h
-  src/include/backward/iomanip.h
-  src/include/backward/stream.h
-  src/include/backward/ostream.h
-  src/include/backward/strstream.h
-  src/include/backward/istream.h
-  src/include/backward/streambuf.h
-  src/include/backward/backward_warning.h
-  src/include/backward/iostream.h
   src/Eos/Wave.h
   src/Eos/Riemann_gen.h
   src/Eos/ShockPolar_gen.h
