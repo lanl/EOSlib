@@ -27,7 +27,7 @@ foreach(test ${tests})
 
   add_test(NAME ${test}
     COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
+    -D test_cmd=${CMAKE_BINARY_DIR}/bin/${test}
     -D test_args:string=${args}
     -D out_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Out.blessed
     -D err_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Err.blessed 

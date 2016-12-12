@@ -16,31 +16,31 @@ endforeach(sub)
 
 add_executable(TestIo Test.C)
 target_link_libraries(TestIo Io)
-add_test(TestIo TestIo)
+add_test(NAME TestIo COMMAND TestIo)
 
 add_executable(TestError TestError.C)
 target_link_libraries(TestError Io)
-add_test(TestError TestError)
+add_test(NAME TestError COMMAND TestError)
  
 add_executable(TestManip TestManip.C)
 target_link_libraries(TestManip Io) 
-add_test(TestManip TestManip)
+add_test(NAME TestManip COMMAND TestManip)
 
 add_executable(TestFunc TestFunc.C)
 target_link_libraries(TestFunc Math )
-add_test(TestFunc TestFunc )
+add_test(NAME TestFunc COMMAND TestFunc )
 
 add_executable(TestCat TestCat.C)
 target_link_libraries(TestCat String Io) 
-add_test(TestCat TestCat )
+add_test(NAME TestCat COMMAND TestCat )
 
 add_executable(TestSplit TestSplit.C)
 target_link_libraries(TestSplit String Io) 
-add_test(TestSplit TestSplit)
+add_test(NAME TestSplit COMMAND TestSplit)
 
 add_executable(teststrlen teststrlen.C)
 target_link_libraries(teststrlen String) 
-add_test(teststrlen teststrlen)
+add_test(NAME teststrlen COMMAND teststrlen)
 
 list(APPEND INSTALL_TARGETS ${subs})
 set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)

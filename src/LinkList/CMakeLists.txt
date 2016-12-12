@@ -27,7 +27,7 @@ ReferenceListTest
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
   target_link_libraries(${test} LinkList)
-  add_test(${test} ${test})
+  add_test(NAME ${test} COMMAND ${test})
 endforeach(test)
 
 #ctest( ArrayTest COMMAND ${CMAKE_COMMAND} -E compare_files ArrayTest.out

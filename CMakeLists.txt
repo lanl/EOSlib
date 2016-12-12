@@ -8,8 +8,8 @@ set(projectVersion "2.0.0")
 # Enable unit testing with the Boost framework.
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 #find_package(Boost REQUIRED)
-Include_directories(${Boost_INCLUDE_DIRS})
-
+include_directories(${Boost_INCLUDE_DIRS})
+#add_definitions(-DBOOST_ALL_NO_LIB)
 # verbose traversal is disabled by default. in general, a trace of the
 # source tree traversal just adds noise to the configuration output and
 # may obscure other more important messages indiciating errors or warnings
@@ -224,7 +224,7 @@ function(setupTest TEST_NAME)
   file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.C")
   add_executable(${EXE_NAME} ${SRC} )
   target_link_libraries( ${EXE_NAME} ${Boost_LIBRARIES} ${TEST_NAME})
-  add_test( ${TEST_NAME} ${EXE_NAME} "--log_level=message")
+  add_test( NAME ${TEST_NAME} COMMAND ${EXE_NAME} "--log_level=message")
   set_property( TEST ${TEST_NAME} PROPERTY PROCESSORS 1 )
   set_property( TEST ${TEST_NAME} APPEND PROPERTY LABELS ${testLabels} )
   if(${verbose_traversal})

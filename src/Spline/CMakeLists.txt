@@ -27,7 +27,7 @@ endforeach(test)
 #set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME TestSpline
   COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestSpline
+  -D test_cmd=${CMAKE_BINARY_DIR}/bin/TestSpline
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_SPLINE_BLESSED_OUTPUT}/TestSplineOut.blessed
   -D err_blessed=${EOSLIB_SPLINE_BLESSED_OUTPUT}/TestSplineErr.blessed 

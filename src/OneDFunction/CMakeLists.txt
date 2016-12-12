@@ -31,7 +31,7 @@ endforeach(test)
 #set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME Test
   COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Test
+  -D test_cmd=${CMAKE_BINARY_DIR}/bin/Test
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestOut.blessed
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestErr.blessed 
@@ -42,7 +42,7 @@ set_tests_properties(Test PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 #set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME Xtest
   COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/Xtest
+  -D test_cmd=${CMAKE_BINARY_DIR}/bin/Xtest
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/XtestOut.blessed
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/XtestErr.blessed 
@@ -53,7 +53,7 @@ set_tests_properties(Xtest PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 #set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
 add_test(NAME TestI
   COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestI
+  -D test_cmd=${CMAKE_BINARY_DIR}/bin/TestI
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestIOut.blessed
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestIErr.blessed 

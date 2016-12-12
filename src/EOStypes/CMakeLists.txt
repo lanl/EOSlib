@@ -28,7 +28,7 @@ foreach(test ${tests})
   # add_test(TestRiemann TestRiemann)
   add_test(NAME TestRiemann
     COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestRiemann
+    -D test_cmd=${CMAKE_BINARY_DIR}/bin/TestRiemann
     -D test_args:string=${args}
     -D out_blessed=${EOSLIB_EOSTYPES_BLESSED_OUTPUT}/TestRiemannOut.blessed
     -D err_blessed=${EOSLIB_SESAME_BLESSED_OUTPUT}/TestRiemannErr.blessed 

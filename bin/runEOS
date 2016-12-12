@@ -90,8 +90,8 @@ shift
 # check EOSprog in executable directory path
 #
 # temporary path until EOSlib utilites are installed in build/bin
-exec_path=". $BUILD/src/Applications $BUILD/src/DataBase"
-#exec_path=". $BIN"
+#exec_path=". $BUILD/src/Applications $BUILD/src/DataBase"
+exec_path=". $BIN"
 EOS_prog=""
 for dir in $exec_path ; do
     if [ -e $dir/$EOSprog ] ; then
