@@ -10,58 +10,64 @@ void test_str_ofunc (std::ostream& os, const char* str)
   os << str;
 }
 
-void test_str_ifunc (std::istream& is, const char* str)
-{
-  char* a = new char[6];
-  is.read(a, 5);
-  delete[] a;
-}
-
 BOOST_AUTO_TEST_CASE(TestStrIoManip0){
   char* teststr = "Hi!";
   std::ostringstream testostream;
   str_iomanip test1 = str_iomanip(test_str_ofunc);
 
-  test1(teststr);
-  testostream<<test1;
+  testostream << test1(teststr);
   BOOST_CHECK(testostream.str() == teststr);
 }
 
+void test_str_ifunc (std::istream& is, const char* str)
+{
+// discards 5 characters from is
+  char* a = new char[6];
+  is.read(a, 5);
+  delete[] a;
+}
+
+
 BOOST_AUTO_TEST_CASE(TestStrIoManip1){
-  std::string teststr2("Lorem Ipsum.");
-  std::istringstream testistream(teststr2);
+  std::string teststr("Lorem Ipsum.");
+  std::istringstream testistream(teststr);
   str_iomanip test2(test_str_ifunc);
   std::string foo;
 
-  testistream>>test2;
+  testistream >> test2;
   std::getline(testistream, foo);
   BOOST_CHECK(foo == " Ipsum.");
 }
 
 BOOST_AUTO_TEST_CASE(TestStrIoManip2){
-  std::string teststr("Lorem Ipsum.");
+  std::string teststr1("Lorem Ipsum.");
   std::string teststr2("Hi!");
   char* teststr3("Hello World!");
-  std::istringstream testistream(teststr);
+
+  std::istringstream testistream(teststr1);
   std::ostringstream testostream(teststr2);
-  str_iomanip testiomanip(test_str_ifunc, test_str_ofunc, teststr3);
-  std::string foo;
+
+  str_iomanip testiomanip(test_str_ifunc, test_str_ofunc, 0);
   
-  testistream>>testiomanip;
+  std::string foo;
+  testistream >> testiomanip;
   std::getline(testistream, foo);
   BOOST_CHECK(foo == " Ipsum.");
-  testostream<<testiomanip;
+
+  testostream << testiomanip(teststr3);
   BOOST_CHECK(testostream.str() == "Hello World!");
-  testiomanip(teststr.c_str());
-  testostream<<testiomanip;
-  BOOST_CHECK(testostream.str() == std::string(teststr3)+teststr);
+
+  testostream << testiomanip(teststr1.c_str());
+  BOOST_CHECK(testostream.str() == std::string(teststr3)+teststr1);
 }
 
 void test_int_ifunc(std::istream& inp, int n){
+// discards n characters from is
   char* a = new char[n + 1];
   inp.read(a, n);
   delete[] a;
 }
+
 
 void test_int_ofunc(std::ostream& out, int n){
   out << std::to_string(n);
@@ -70,36 +76,36 @@ void test_int_ofunc(std::ostream& out, int n){
 BOOST_AUTO_TEST_CASE(TestIntIoManip){
   std::ostringstream testostream;
   std::istringstream testistream("Lorem Ipsum.");
-  int_iomanip test_iomanip(test_int_ifunc, test_int_ofunc, 5);
+
+  int_iomanip test_iomanip(test_int_ifunc, test_int_ofunc, 0);
+
+  testistream >> test_iomanip(5);
   std::string outstring;
-  testistream >> test_iomanip;
   std::getline(testistream, outstring);
   BOOST_CHECK(outstring == std::string(" Ipsum."));
-  testostream << test_iomanip;
-  BOOST_CHECK(testostream.str() == std::to_string(5));
-  test_iomanip(6);
-  testostream << test_iomanip;
-  BOOST_CHECK(testostream.str() == std::to_string(56));
+
+  testostream << test_iomanip(3);
+  BOOST_CHECK(testostream.str() == std::to_string(3));
+
+  testostream << test_iomanip(6);
+  BOOST_CHECK(testostream.str() == std::to_string(36));
 }
 
+
 void test_str_istream_func(std::istream& inp, const char* str, std::ostream& stream){
-  char* intermediate = new char[6];
-  inp.read(intermediate, 5);
-  stream << std::string(intermediate);
-  stream << std::string(str);
-  delete[] intermediate;
+  // read string from inp, prefix with str and write to stream
+  stream << str;
+  std::string tmp;
+  inp >> tmp;
+  stream << tmp;
 }
 
 BOOST_AUTO_TEST_CASE(TestStrOstreamIoManip){
   std::ostringstream testostream;
   char* str = "Hello World!";
-  str_ostream_iomanip test_str_ostream_iomanip(test_str_istream_func, str, testostream);
-  std::istringstream testistream("Lorem Ipsum.");
+  str_ostream_iomanip test_str_ostream_iomanip(test_str_istream_func, 0, std::cerr);
+  std::istringstream testistream("Lorem Ipsum");
 
-  testistream >> test_str_ostream_iomanip;
-  BOOST_CHECK(testostream.str() == std::string("LoremHello World!"));
-  test_str_ostream_iomanip(str, testostream);
-  testistream >> test_str_ostream_iomanip;
-  BOOST_CHECK(testostream.str() == std::string("LoremHello World! IpsuHello World!"));
+  testistream >> test_str_ostream_iomanip(str,testostream);
+  BOOST_CHECK(testostream.str() == std::string("Hello World!Lorem"));
 }
-
