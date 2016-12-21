@@ -81,39 +81,11 @@ str_ostream_iomanip::str_ostream_iomanip(void (*F)(istream&, const char *, ostre
 						const char *str, ostream& s)
 {
 	ifunc = F;
-	//	ofunc = 0;
 	value =  str ? new char[strlen(str)+1] : 0;
 	if(value)
 		strcpy(value, str);
 	stream = &s;
 }
-
-
-
-// str_ostream_iomanip::str_ostream_iomanip(void (*F)(ostream&, const char *, ostream&),
-// 						const char *str, ostream& s)
-// {
-// 	ofunc = F;
-// 	ifunc = 0;
-// 	value =  str ? new char[strlen(str)+1] : 0;
-// 	if(value)
-// 		strcpy(value, str);
-// 	stream = &s;
-// }
-
-
-
-// str_ostream_iomanip::str_ostream_iomanip(void (*Fin)(istream&, const char*, ostream&),
-// 		void (*Fout)(ostream&, const char *, ostream&), const char *str, ostream& s)
-// {
-// 	ifunc = Fin;
-// 	ofunc = Fout;
-// 	value =  str ? new char[strlen(str)+1] : 0;
-// 	if(value)
-// 		strcpy(value, str);
-// 	stream = &s;
-// }
-
 
 str_ostream_iomanip& str_ostream_iomanip::operator()(const char *str, ostream& s)
 {
