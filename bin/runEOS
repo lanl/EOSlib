@@ -94,7 +94,7 @@ shift
 exec_path=". $BIN"
 EOS_prog=""
 for dir in $exec_path ; do
-    if [ -e $dir/$EOSprog ] ; then
+    if [ -x $dir/$EOSprog -a ! -d $dir/$EOSprog ] ; then
         EOS_prog=$dir/$EOSprog
         break
     fi
