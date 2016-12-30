@@ -1,8 +1,7 @@
-
 #include <LocalIo.h>
 #include <iostream>
 #include <cstring>
-#include <exception>
+
 using namespace std;
 
 void ErrorMess(ostream& out, const char *name)
@@ -16,15 +15,15 @@ void ErrorMess(ostream& out, const char *name)
 		out << name;
 }
 
-
-
 void ErrorExit(ostream& out, int status)
 {
 	if(status)
 	{
-	        throw std::runtime_error("\n\t(Exiting with error status "
-				   + to_string(status) + ")\n\n");
+		out << "\n\t(Exiting with error status "
+						<< status <<")\n\n" << flush;
+		exit(status);
 	}
+	out << "\n";
 }
 
 void skipto(istream& inp, const char *string)

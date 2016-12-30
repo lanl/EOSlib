@@ -232,8 +232,6 @@ function(setupTest TEST_NAME)
   endif(${verbose_traversal})
 endfunction(setupTest)
 
-message(STATUS "\n\n\n\nHEY YOU STUPID CMAKE PRINT THIS VARIABLE \n${Boost_LIBRARIES}\n\n")
-
 # setup include directory
 include_directories( "${HEADER_DIR}" )
 include_directories( "${CMAKE_CURRENT_BINARY_DIR}" )
@@ -270,12 +268,20 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(DATA)
-add_subdirectory(lib)
+#add_subdirectory(DATA)
+#add_subdirectory(lib)
+#add_subdirectory(bin)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/DATA
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lib
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/bin
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 add_subdirectory(TEST)
 add_subdirectory(src)
-add_subdirectory(bin)
 add_subdirectory(doc)
+
+file(COPY SetEnv DESTINATION ${CMAKE_BINARY_DIR})
 
 # Testing
 
@@ -290,7 +296,7 @@ function(TEST_BASH test_name test_args)
     -D test_args:string=${test_args}
     -D out_blessed=${EOSLIB_BLESSED_OUTPUT}/${test_name}Out.blessed
     -D err_blessed=${EOSLIB_BLESSED_OUTPUT}/${test_name}Err.blessed
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+    -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
     )
 endfunction(TEST_BASH)
 
@@ -346,15 +352,6 @@ list(APPEND HEADER_FILES
   src/LinkList/ListAccess.h
   src/LinkList/NameArray.h
   src/LinkList/ReferenceList.h
-  src/backward/istream.h
-  src/backward/streambuf.h
-  src/backward/strstream.h
-  src/backward/backward_warning.h
-  src/backward/iomanip.h
-  src/backward/fstream.h
-  src/backward/stream.h
-  src/backward/ostream.h
-  src/backward/iostream.h
   src/Local/String.h
   src/Local/LocalIo.h
   src/Local/LocalMath.h

@@ -31,7 +31,7 @@ target_link_libraries( ODE Io Math OneDFunction LinkList)
 #   -D test_args:string=${args}
 #   -D out_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/HarmonicOut.blessed
 #   -D err_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/HarmonicErr.blessed 
-#   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #   )
 # set_tests_properties(Harmonic PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 # 
@@ -42,7 +42,7 @@ target_link_libraries( ODE Io Math OneDFunction LinkList)
 #   -D test_args:string=${args}
 #   -D out_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/HarmonicFOut.blessed
 #   -D err_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/HarmonicFErr.blessed 
-#   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #   )
 # set_tests_properties(HarmonicF PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 # 
@@ -53,7 +53,7 @@ target_link_libraries( ODE Io Math OneDFunction LinkList)
 #   -D test_args:string=${args}
 #   -D out_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/HarmonicBOut.blessed
 #   -D err_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/HarmonicBErr.blessed 
-#   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #   )
 # set_tests_properties(HarmonicB PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 # 
@@ -64,7 +64,7 @@ target_link_libraries( ODE Io Math OneDFunction LinkList)
 #   -D test_args:string=${args}
 #   -D out_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/RandomHarmonicOut.blessed
 #   -D err_blessed=${EOSLIB_ODE_BLESSED_OUTPUT}/RandomHarmonicErr.blessed 
-#   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #   )
 # set_tests_properties(RandomHarmonic PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 

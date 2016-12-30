@@ -32,40 +32,52 @@ int main(int, char **argv)
     ProgName(*argv);
     EOS::Init();
     InitFormat();
-    // material
-    std::string file_;
-    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsEOS.data";
-    const char * files = file_.c_str();
-    //const char *files    = "EOS.data";    
+
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = "ArrheniusHE::PBX9501";//NULL;
+    const char *material = NULL;
     const char *units    = "hydro::std";
+    const char *EOSlog   = "EOSlog";      // EOS error log file
+
     int nsteps = 10;
     int dir = RIGHT;
     double Pmax = 0.0;
-// process command line arguments
-//    if( argv[1] == NULL )
-//        Help(-1);
+
     while(*++argv)
     {
-        // material
         GetVar(file,files);
         GetVar(files,files);
+        GetVar(lib,lib);
+
         GetVar(type,type);
         GetVar(name,name);
         GetVar(material,material);
         GetVar(units,units);
+
         GetVar(nsteps,nsteps);
         GetVar(Pmax,Pmax);
-        // help
+
         if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
             Help(0);
         ArgError;
     }
     cout.setf(ios::showpoint);
     cout.setf(ios::scientific, ios::floatfield);
+    // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
     Format M_form;
     if( material )
     {

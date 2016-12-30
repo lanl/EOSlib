@@ -61,9 +61,10 @@ const char *help[] = {    // list of commands printed out by help option
     "name        name    # material name",
     "type        name    # EOS type",
     "material    name    # type::name",
+    "units       name    # units for Deflagation",
     "file[s]     file    # : separated list of data files [EOS.data]",
-    "units       name    # units from data base [hydro.std]",
-    "",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
     "ref state: (default, material ref state)",
     "V0     value   # specific volume of reference state",
     "e0     value   # specific energy of reference state",
@@ -130,15 +131,14 @@ int main(int, char **argv)
     EOS::Init();          // sets EOS::NaN
     InitFormat();
 
-    std::string file_;
-    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsEOS.data";
-    const char * files = file_.c_str(); 
-    //const char *files    = "EOS.data";    	
-    const char *type     = "ArrheniusHE";//NULL;
-    const char *name     = "PBX9501";//NULL;
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
+    const char *type     = NULL;
+    const char *name     = NULL;
     const char *material = NULL;
     const char *units    = "hydro::std";
+    const char *EOSlog   = "EOSlog";      // EOS error log file
 
     int nsteps = 10;
 
@@ -165,6 +165,8 @@ int main(int, char **argv)
     {
         GetVar(file,files);
         GetVar(files,files);
+        GetVar(lib,lib);
+
         GetVar(type,type);
         GetVar(name,name);
         GetVar(material,material);
@@ -292,6 +294,18 @@ int main(int, char **argv)
     }
     cout.setf(ios::showpoint);
     cout.setf(ios::scientific, ios::floatfield);		
+    // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
     lambda =min(1.,max(0.,lambda));  
     if( material )
     {

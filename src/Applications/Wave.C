@@ -87,11 +87,13 @@ void PrintState(WaveState &state)
 }
 
 const char *help[] = {    // list of commands printed out by help option
-    "name        name    # material name [HMX]",
-    "type        name    # EOS type [Hayes]",
+    "name        name    # material name",
+    "type        name    # EOS type",
     "material    name    # type::name",
-    "file[s]     file    # : separated list of data files",
-    "units       name    # default units from data base",
+    "units       name    # units for Wave",
+    "file[s]     file    # colon separated list of data files",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
     "",
     "isentrope      # compute isentrope",
     "shock          # compute shock locus",
@@ -166,17 +168,12 @@ int main(int, char **argv)
     EOS::Init();
     InitFormat();
 
-    std::string file_;
-    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsEOS.data";
-    const char * files = file_.c_str();
-    std::string libPath;
-    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
-    const char * lib     = libPath.c_str();
-    //const char *files    = "EOS.data";    
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = "BirchMurnaghan::HMX";// NULL;
+    const char *material = NULL;
     const char *units    = "hydro::std";
     const char *EOSlog   = "EOSlog";      // EOS error log file
 
@@ -208,10 +205,13 @@ int main(int, char **argv)
     {
         GetVar(file,files);
         GetVar(files,files);
+        GetVar(lib,lib);
+
         GetVar(type,type);
         GetVar(name,name);
         GetVar(material,material);
         GetVar(units,units);
+
         GetVar(EOSlog,EOSlog);
         if( !strcmp(*argv,"-EOSlog") )
         {
@@ -372,7 +372,7 @@ int main(int, char **argv)
                     << Exit;          
             continue;
         }
-        // help
+
         if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
             Help(0);
         ArgError;
@@ -380,6 +380,17 @@ int main(int, char **argv)
     cout.setf(ios::showpoint);
     cout.setf(ios::scientific, ios::floatfield);
     // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
     if( u_esc != ESCAPE::off )
         locus = WAVE::isentrope;
     if( loop!=VAR::none && std::isnan(var2) )
@@ -395,7 +406,7 @@ int main(int, char **argv)
     }
     else if( type==NULL || name==NULL )
     {
-        cerr << Error("Specify either material or name and type")
+        cerr << Error("must specify either material or name and type")
              << Exit;
     }
 // fetch eos

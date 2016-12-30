@@ -58,7 +58,38 @@ void PrintState(EOS *eos, HydroState &state, EqPorous *phi_eq = NULL)
 	PrintWave("", eos, wave, phi_eq);
 }
 
-//
+const char *help[] = {    // list of commands printed out by help option
+    "file[s]     file    # colon separated list of data files",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
+    "units       name    # default units from data base",
+    "",
+    "mat1        name    # left material",
+    "state1  num num     # V,e of left state",
+    "V1          num     # V of left state",
+    "e1          num     # e of left state",
+    "u1          num     # u of left state",
+    "",
+    "mat2        name    # right material",
+    "state2  num num     # V,e of right state",
+    "V2          num     # V of right state",
+    "e2          num     # e of right state",
+    "u2          num     # u of right state",
+    "",
+    "u_p         num     # particle velocity for left state shock",
+    "Ps          num     # pressure for left state shock",
+    0
+};
+
+void Help(int status)
+{
+    const char **list;
+    for(list=help ;*list; list++)
+    {
+        cerr << *list << "\n";
+    }
+    exit(status);
+}
 
 #define NaN EOS::NaN
 int main(int, char **argv)
@@ -70,11 +101,9 @@ int main(int, char **argv)
 	double Ps   = NaN;	// or shock pressure
 	double u0   = 0.0;	// or flyer velocity
 	
-	std::string file_;
-        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-	file_ += "/EOS.data";
-        const char * files = file_.c_str();
-	//const char *files = "EOS.data";
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
 	const char *units = "hydro::std";
 
 	const char *mat1 = NULL;
@@ -91,6 +120,8 @@ int main(int, char **argv)
 	{
 		GetVar(file,files);
 		GetVar(files,files);
+        GetVar(lib,lib);
+
 		GetVar(units,units);
 		
 		GetVar(mat1,mat1);
@@ -125,12 +156,25 @@ int main(int, char **argv)
 			Ps = NaN;
 		}
 		GetVar(u0,u0);
+        // help
+        if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
+            Help(0);
 		ArgError;
 	}
 	cout.setf(ios::showpoint);
-
-
-// Material data base
+    // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
+    // Material data base
 	DataBase db;
 	if( db.Read(files) )
 	    cerr << Error("failed reading files: ") << files << Exit;
@@ -139,7 +183,7 @@ int main(int, char **argv)
 	if( Cunits == NULL )
 		cerr << Error("Could not FetchUnits, ") << units << Exit;
 
-// eos1 and state1	
+    // eos1 and state1	
 	const char *type = NULL;
 	const char *name = NULL;
 	if( mat1 == NULL )
@@ -155,7 +199,7 @@ int main(int, char **argv)
 	state1.V = std::isnan(V1) ? eos1->V_ref : V1;
 	state1.e = std::isnan(e1) ? eos1->e_ref : e1;
 
-// eos2 and state2	
+    // eos2 and state2	
 	if( mat2 == NULL )
 		mat2 = "Hayes::TPX";
 	TypeName(mat2, type, name);
@@ -169,11 +213,11 @@ int main(int, char **argv)
 	state2.V = std::isnan(V2) ? eos2->V_ref : V2;
 	state2.e = std::isnan(e2) ? eos2->e_ref : e2;
 
-// phi_eq
+    // phi_eq
 	EqPorous *phi_eq1 = dynamic_cast<EqPorous *>(eos1);
 	EqPorous *phi_eq2 = dynamic_cast<EqPorous *>(eos2);
 
-// header
+    // header
 	cout << "Material 1: " << mat1 << "\n";
 	PrintState(eos1,state1,phi_eq1);
 
@@ -182,7 +226,7 @@ int main(int, char **argv)
 
 	Header(phi_eq1 != NULL || phi_eq2 != NULL, Cunits);
 	                     
-// incident shock	
+    // incident shock	
 	Hugoniot *H_in = eos1->shock(state1);	
 	WaveState incident;
 	if( !std::isnan(Ps) )
@@ -203,7 +247,7 @@ int main(int, char **argv)
 
 	PrintWave("incident: ", eos1, incident, phi_eq1);
 	
-// Riemann problem		
+    // Riemann problem		
 	RiemannSolver_generic RP(*eos1, *eos2);	
 	WaveState reflect, transmit;
 	

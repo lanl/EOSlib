@@ -8,12 +8,13 @@ using namespace std;
 
 const char *help[] = {    // list of commands printed out by help option
     "locus of shock polar / Prandtl-Meyer fan",
-    "material:",
     "  name        name    # material name",
     "  type        name    # EOS type",
     "  material    name    # type::name",
+    "  units       name    # units for output",
     "  file[s]     file    # : separated list of data files [EOS.data]",
-    "  units       name    # default units from data base [hydro::std]",
+    "  lib         name    # directory for EOSlib shared libraries",
+    "                      # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
     "initial polar state:",
     "  V0          value   # specific volume of reference state [V_ref]",
     "  e0          value   # specific energy of reference state [e_ref]",
@@ -55,16 +56,16 @@ int main(int, char **argv)
     ProgName(*argv);
     EOS::Init();
     InitFormat();
-    // material
-    std::string file_;
-    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsEOS.data";
-    const char * files = file_.c_str();
-    //const char *files    = "EOS.data";    
+
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
     const char *type     = NULL;
     const char *name     = NULL;
-    const char *material = "JWL::HMX";//NULL;
+    const char *material = NULL;
     const char *units    = "hydro::std";
+    const char *EOSlog   = "EOSlog";      // EOS error log file
+
     // initial polar state
     double     V0 = NaN;    // default: eos->V_ref
     double     e0 = NaN;    // default: eos->e_ref
@@ -72,8 +73,8 @@ int main(int, char **argv)
     //
     //default test conditions added for testing: theta0 and M0
     //
-    double     M0 = 3;//NaN;    // q0 = M0*c0
-    double theta0 = 0;//0.0;
+    double     M0 = NaN;    // q0 = M0*c0
+    double theta0 = 0.0;
     double Ps = NaN;        // shock pressure for q0
     double P0 = NaN;        // point on incident polar
     int dir0 = RIGHT;       // direction for incident polar
@@ -81,20 +82,22 @@ int main(int, char **argv)
     int dir1 = RIGHT;       // polar direction
     double P1 = NaN;        // default: Polar.P0
     double P2 = NaN;        // default: Polar.Pmax
-    int nsteps = 10;
+    int nsteps = 20;
     int output = PRINT::loop;   // flag for type of output
 // process command line arguments
 //    if( argv[1] == NULL )
 //        Help(-1);
     while(*++argv)
     {
-        // material
         GetVar(file,files);
         GetVar(files,files);
+        GetVar(lib,lib);
+
         GetVar(type,type);
         GetVar(name,name);
         GetVar(material,material);
         GetVar(units,units);
+
         // initial state        
         GetVar(V0,V0);
         GetVar(e0,e0);
@@ -121,6 +124,20 @@ int main(int, char **argv)
     cout.setf(ios::showpoint);
     cout.setf(ios::scientific, ios::floatfield);
     Format M_form;
+
+    // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
+
     if( material )
     {
         if( type || name )

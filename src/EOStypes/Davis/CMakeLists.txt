@@ -25,7 +25,7 @@ target_link_libraries( Davis Eos DataBase ODE)
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_DAVIS_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_DAVIS_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Davis)
 #   set_tests_properties(${test}Davis PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

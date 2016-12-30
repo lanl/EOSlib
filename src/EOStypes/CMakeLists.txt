@@ -32,7 +32,7 @@ foreach(test ${tests})
     -D test_args:string=${args}
     -D out_blessed=${EOSLIB_EOSTYPES_BLESSED_OUTPUT}/TestRiemannOut.blessed
     -D err_blessed=${EOSLIB_SESAME_BLESSED_OUTPUT}/TestRiemannErr.blessed 
-    -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+    -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
    )
  set_tests_properties(TestRiemann PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 endforeach(test)

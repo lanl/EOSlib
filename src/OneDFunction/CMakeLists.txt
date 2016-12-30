@@ -35,7 +35,7 @@ add_test(NAME Test
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestOut.blessed
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestErr.blessed 
-  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
   )
 set_tests_properties(Test PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
@@ -46,7 +46,7 @@ add_test(NAME Xtest
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/XtestOut.blessed
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/XtestErr.blessed 
-  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
   )
 set_tests_properties(Xtest PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
@@ -57,7 +57,7 @@ add_test(NAME TestI
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestIOut.blessed
   -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestIErr.blessed 
-  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
   )
 set_tests_properties(TestI PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 

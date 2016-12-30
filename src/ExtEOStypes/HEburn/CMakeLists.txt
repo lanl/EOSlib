@@ -27,7 +27,7 @@ target_link_libraries( HEburn Io Math Eos ExtEOS ODE Materials ${CMAKE_DL_LIBS})
 #   #   -D test_args:string=${args}
 #   #   -D out_blessed=${EOSLIB_HEBURN_BLESSED_OUTPUT}/${test}Out.blessed
 #   #   -D err_blessed=${EOSLIB_HEBURN_BLESSED_OUTPUT}/${test}Err.blessed 
-#   #   -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#   #   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #   #   )
 #   # message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}HEburn)
 #   # set_tests_properties(${test}HEburn PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

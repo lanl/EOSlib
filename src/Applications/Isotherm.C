@@ -50,8 +50,8 @@ void PrintLine()
 }
 
 const char *help[] = {    // list of commands printed out by help option
-	"name        name    # material name [HMX]",
-	"type        name    # EOS type [Hayes]",
+	"name        name    # material name",
+	"type        name    # EOS type",
 	"material    name    # type::name",
 	"file[s]     file    # : separated list of data files",
 	"units       name    # default units from data base",
@@ -113,14 +113,12 @@ int main(int, char **argv)
 	double P0 = NaN;
 	double T0 = NaN;
 	
-	std::string file_;
-        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-	file_ += "/test_data/ApplicationsEOS.data";
-        const char * files = file_.c_str();
-	//const char *files = "EOS.data";    
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
 	const char *type     = NULL;
 	const char *name     = NULL;
-	const char *material = "BirchMurnaghan::HMX";//NULL;
+	const char *material = NULL;
 	const char *units    = "hydro::std";
 	
 	double var1 = NaN;
@@ -146,6 +144,8 @@ int main(int, char **argv)
 	    
 	    GetVar(file,files);
 	    GetVar(files,files);
+        GetVar(lib,lib);
+
 	    GetVar(type,type);
 	    GetVar(name,name);
 	    GetVar(material,material);
@@ -242,6 +242,18 @@ int main(int, char **argv)
 	}
 	cout.setf(ios::showpoint);
 	cout.setf(ios::scientific, ios::floatfield);
+    // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }    
 	
 	if( (loop_P || loop_V) && std::isnan(var2) )
 	    cerr << Error("var2 not set") << Exit;

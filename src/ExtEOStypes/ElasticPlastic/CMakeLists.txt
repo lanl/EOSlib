@@ -26,7 +26,7 @@ target_link_libraries( ElasticPlastic Io Math Eos Materials ExtEOS ${CMAKE_DL_LI
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_ELASTICPLASTIC_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_ELASTICPLASTIC_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}ElasticPlastic)
 #   set_tests_properties(${test}ElasticPlastic PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

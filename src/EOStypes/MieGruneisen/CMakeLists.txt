@@ -27,7 +27,7 @@ target_link_libraries( MieGruneisen Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen)
 #   set_tests_properties(${test}MieGruneisen PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -45,7 +45,7 @@ target_link_libraries( MieGruneisen Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen)
 #   set_tests_properties(${test}MieGruneisen PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

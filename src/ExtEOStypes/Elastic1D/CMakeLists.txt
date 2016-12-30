@@ -28,7 +28,7 @@ target_link_libraries( Elastic1D Io Math Eos ExtEOS Materials ${CMAKE_DL_LIBS})
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D)
 #   set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

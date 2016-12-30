@@ -29,7 +29,7 @@ target_link_libraries( GenHayes Eos DataBase ODE Calc ${CMAKE_DL_LIBS} )
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes)
 #   set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -48,7 +48,7 @@ target_link_libraries( GenHayes Eos DataBase ODE Calc ${CMAKE_DL_LIBS} )
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_GENHAYES_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}GenHayes)
 #   set_tests_properties(${test}GenHayes PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

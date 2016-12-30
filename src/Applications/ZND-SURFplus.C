@@ -267,25 +267,49 @@ void ZNDprofile::Last(double &xi, double &V, double &e, double &P, double &u)
     HE.set_eos(lambda1, lambda2);
     LocusState(V,e,P,u);
 }
+
+const char *help[] = {    // list of commands printed out by help option
+    "name        name    # material name",
+    "material    name    # HEburn2::name",
+    "file[s]     file    # colon separated list of data files",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
+    "units       name    # default units from data base",
+    "",
+    "upiston     num     # particle velocity of detonation wave",
+    "umin        num     # particle velocity at end of Taylor wave",
+    "len         num     # length of Taylor wave",
+    "nsteps      int     # number of points in each stage of profile",
+    "epsilon     num     # ODE tolerance",
+    "abs_tol     num     # ODEfunc tolerance",
+    "rel_tol     num     # ODEfunc tolerance",  
+    0
+    };
+
+void Help(int status)
+{
+    const char **list;
+    for(list=help ;*list; list++)
+    {
+        cerr << *list << "\n";
+    }
+    exit(status);
+}
 //
 //  ZNDprofile with Taylor wave
 //
 int main(int, char **argv)
 {
     ProgName(*argv);
-    std::string file_;
-    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsHE.data";
-    const char * file = file_.c_str();
-    //const char *file     = "HE.data";;
+
+    const char *files    = NULL;
+    const char *lib      = NULL;
+
     const char *type     = "HEburn2";
-    const char *name     = "PBX9502.HotSpotCC.test";
-      const char *material = NULL;
+    const char *name     = NULL;
+    const char *material = NULL;
+
     const char *units    = NULL;
-    std::string libPath;
-    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
-    const char * lib     = libPath.c_str();
-    //const char *lib      = NULL;
 
     double upiston =  0.;
     double umin    =  0.;       // velocity at end of Taylor Wave
@@ -302,8 +326,10 @@ int main(int, char **argv)
 
     while(*++argv)
     {
-        GetVar(file,file);
-        GetVar(files,file);
+        GetVar(file,files);
+        GetVar(files,files);
+        GetVar(lib,lib);
+
         GetVar(name,name);
         //GetVar(type,type);
         GetVar(material,material);
@@ -321,10 +347,22 @@ int main(int, char **argv)
         GetVarValue(checkCJ,checkCJ,1);
         GetVarValue(checkVN,checkVN,1);
 
+        if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
+            Help(0);
         ArgError;
     }
-    if( file == NULL )
-        cerr << Error("Must specify data file") << Exit;
+    // input check
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
 	if( material )
 	{
 	    if( TypeName(material,type,name) )
@@ -335,15 +373,9 @@ int main(int, char **argv)
 	}
     if( name==NULL )
         cerr << Error("must specify (HEburn2::)name") << Exit;
-    if( lib )
-#ifdef LINUX
-    setenv("SharedLibDirEOS",lib,1);
-#else
-    putenv(Cat("SharedLibDirEOS=",lib));
-#endif
     //
     DataBase db;
-    if( db.Read(file) )
+    if( db.Read(files) )
         cerr << Error("Read failed" ) << Exit;
     EOS *eos = FetchEOS(type,name,db);
     if( eos == NULL )

@@ -83,39 +83,52 @@ void PrintState(ExtEOS &eos, HydroState &state,double *z)
 }
 
 
+const char *help[] = {    // list of commands printed out by help option
+    "material    name    # type::name",
+    "file[s]     file    # colon separated list of data files",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
+    "uname       name    # units",
+    "",
+    "mat1        name    # left material type::name",
+    "state1      string  # left state 'V=NUM; e=NUM; . . .'",
+    "mat2        name    # right material type::name",
+    "state2      string  # right state 'V=NUM; e=NUM; . . .'",
+    "EOSlog      file    # name of file with eos errors",
+    0
+};
+
+void Help(int status)
+{
+    const char **list;
+    for(list=help ;*list; list++)
+    {
+        cerr << *list << "\n";
+    }
+    exit(status);
+}
+
 int main(int, char **argv)
 {
     ProgName(*argv);
     EOS::Init();
     //
-    const char *uname  = "std";
-    //const char *file   = "HE.data";
-    //const char *lib    = "../lib/Linux";
-    std::string file_;
-    file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-    file_ += "/test_data/ApplicationsHE.data";
-    const char * file = file_.c_str();
-    std::string libPath;
-    libPath  = (getenv("EOSLIB_SHARED_LIBRARY_PATH") != NULL) ? getenv("EOSLIB_SHARED_LIBRARY_PATH") : "PATH ENV NOT SET!";
-    const char * lib     = libPath.c_str();
+    const char *files    = NULL;
+    const char *lib      = NULL;
 
-    ExtEOSmanager *pt_Xmanager = NULL;
+    const char *uname  = "std";
+
+    const char *mat1   = NULL;
+    const char *state1 = NULL;
+    const char *mat2   = NULL;
+    const char *state2 = NULL;
+
     const char *EOSlog = "EOSlog";
-    // parameters for debugging
-    const char *mat1   = "Keane::TATB";
-    const char *state1 = "V=4.580806519045897E-01;"
-                         "e=5.324190201457957E-01;"
-                         "u=1.994705557677465E+00;";
-                       //"lambda=1.17374301793383e-02";
-    const char *mat2   = "Keane::TATB";
-    const char *state2 = "V=4.580806519045897E-01;"
-                         "e=5.324190201457957E-01;"
-                         "u=4.590453427252382E-01;";
-                       //"lambda=4.85607647843223e-14";
+
     while(*++argv)
     {
-        GetVar(file,file);
-        GetVar(files,file);
+        GetVar(file,files);
+        GetVar(files,files);
         GetVar(uname,uname);
         GetVar(lib,lib);
         GetVar(EOSlog,EOSlog);
@@ -127,13 +140,33 @@ int main(int, char **argv)
         //
         ArgError;
     }
-    ofstream *EOS_log = new ofstream(EOSlog);
-    ExtEOSmanager Xmanager(*EOS_log);
-    char *SharedLibDir = Cat( "SharedLibDirEOS=",lib );
-    Xmanager.SetEnv(SharedLibDir);
-    delete [] SharedLibDir;
-    if( Xmanager.Read(file) )
-        cerr << Error("error reading file ") << file << Exit;
+    if( files==NULL )
+        cerr << Error("must specify data file") << Exit;    
+    if( lib==NULL && !(lib=getenv("EOSLIB_SHARED_LIBRARY_PATH")) )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
+
+    ExtEOSmanager *pt_Xmanager = NULL;
+    ofstream *EOS_log = NULL;
+    if( EOSlog )
+    {
+        EOS_log = new ofstream(EOSlog);
+        pt_Xmanager = new ExtEOSmanager(*EOS_log);
+    }
+    else
+    {
+        pt_Xmanager = new ExtEOSmanager(cout);
+    }
+    ExtEOSmanager &Xmanager = *pt_Xmanager;
+    string lib_str("EOSLIB_SHARED_LIBRARY_PATH=");
+    lib_str += lib;
+    Xmanager.SetEnv(lib_str.c_str());
+
+    if( Xmanager.Read(files) )
+        cerr << Error("error reading file(s) ") << files
+             << ", see EOSlog" << Exit;
     int iunits = Xmanager.index_units(uname);
     if( iunits < 0 )
         cerr << Error("Failed fetching units ")

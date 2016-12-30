@@ -29,7 +29,7 @@ target_link_libraries( ArrheniusHE Io Math ODE DataBase Eos ExtEOS Materials ${C
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_ARRHENIUSHE_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}ArrheniusHE)
 #   set_tests_properties(${test}ArrheniusHE PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

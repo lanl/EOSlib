@@ -2,10 +2,10 @@
 #include <LocalMath.h>
 #include <ODE.h>
 #include "HEburn.h"
-#include "Arrhenius.h"
 #include "EOS_VT.h"
 //
-// Calculates Adiabatic induction time at constant volume
+// Calculates Adiabatic induction time at constant volume and energy
+// (energy release from offset in origin of reactants and products EOS
 // Reaction from 0 to lambda1 for HEburn type material
 //
 class IntegrateRate : public ODE
@@ -84,19 +84,45 @@ double lambda_ODE::f(double, const double *y, const double *yp)
 {
     return y[0];   // lambda
 }
-
-
 //
-#define NaN EOS::NaN
+//
+const char *help[] = {    // list of commands printed out by help option
+    "name        name    # material name",
+    "material    name    # HEburn::name",
+    "file[s]     file    # colon separated list of data files",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
+    "units       name    # default units from data base",
+    "V0          num     # initial state (V0,T0) with T0 from T1 to T2",
+    "T1          num     # initial state (V0,T0) with T0 from T1 to T2",
+    "T2          num     # initial state (V0,T0) with T0 from T1 to T2",
+    "lambda1     num     # reaction form lambda=0 to lambda1",
+    "nsteps      int     # number of T0 points",
+    "abserr      num     # tolerance for IntegrateRate",
+    "relerr      num     # tolerance for IntegrateRate",
+    0
+};
+
+void Help(int status)
+{
+    const char **list;
+    for(list=help ;*list; list++)
+    {
+        cerr << *list << "\n";
+    }
+    exit(status);
+}
+//
 int main(int, char **argv)
 {
     ProgName(*argv);
     const char *file     = NULL;
+    const char *lib      = NULL;
+
     const char *type     = "HEburn";
     const char *name     = NULL;
 	const char *material = NULL;
     const char *units    = NULL;
-    const char *lib      = NULL;
     //
     double V0 = 0.0;
     double T1 = 1000.;
@@ -124,6 +150,9 @@ int main(int, char **argv)
         GetVar(nsteps,nsteps);
         GetVar(abserr,abserr);
         GetVar(relerr,relerr);
+
+        if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
+            Help(0);
         ArgError;
     }
     if( file == NULL )
@@ -139,11 +168,14 @@ int main(int, char **argv)
     if( name==NULL )
         cerr << Error("must specify (HEburn::)name") << Exit;
     if( lib )
-#ifdef LINUX
-    setenv("SharedLibDirEOS",lib,1);
-#else
-    putenv(Cat("SharedLibDirEOS=",lib));
-#endif
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
     //
     DataBase db;
     if( db.Read(file) )
@@ -165,9 +197,6 @@ int main(int, char **argv)
     const int N = HE->N();
     if( V0 <= 0.0 )
         V0 = eos->V_ref;
-    double e0 = eos->e_ref;
-    double Cv0 = eos->CV(V0,e0);
-    double T0 = eos->T(V0,e0);
     double e1 = VTreactants->e(V0,T1);
     double e2 = VTreactants->e(V0,T2);
     deleteEOS(Reactants);

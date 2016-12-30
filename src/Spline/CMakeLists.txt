@@ -31,7 +31,7 @@ add_test(NAME TestSpline
   -D test_args:string=${args}
   -D out_blessed=${EOSLIB_SPLINE_BLESSED_OUTPUT}/TestSplineOut.blessed
   -D err_blessed=${EOSLIB_SPLINE_BLESSED_OUTPUT}/TestSplineErr.blessed 
-  -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
   )
 set_tests_properties(TestSpline PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 

@@ -24,7 +24,7 @@ target_link_libraries( HayesBM Eos DataBase ODE)
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_HAYESBM_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_HAYESBM_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}HayesBM)
 #   set_tests_properties(${test}HayesBM PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
@@ -42,7 +42,7 @@ target_link_libraries( HayesBM Eos DataBase ODE)
 #     -D test_args:string=${args}
 #     -D out_blessed=${EOSLIB_HAYESBM_BLESSED_OUTPUT}/${test}Out.blessed
 #     -D err_blessed=${EOSLIB_HAYESBM_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_SOURCE_DIR}/compare_outputs.cmake
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}HayesBM)
 #   set_tests_properties(${test}HayesBM PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")

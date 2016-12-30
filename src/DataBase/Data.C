@@ -4,6 +4,28 @@
 #include "DataBase.h"
 using namespace std;
 
+const char *help[] = {    // list of commands printed out by help option
+    "file[s]     file    # colon separated list of data files",
+    "base        name    # base class ['']",
+    "type        name    # derived class type ['*']",
+    "name        name    # property name ['*']",
+    
+    "plain               # print only base:type::name",
+    "parameters          # print parameters",
+    "use                 # substitute use directives",
+    0
+};
+
+void Help(int status)
+{
+    const char **list;
+    for(list=help ;*list; list++)
+    {
+        cerr << *list << "\n";
+    }
+    exit(status);
+}
+
 int main(int, char **argv)
 {
 	ProgName(*argv);
@@ -25,6 +47,8 @@ int main(int, char **argv)
 		GetVarValue(parameters, print, 1);
 		GetVarValue(use, print, 2);
 			
+        if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
+            Help(0);
 		ArgError;
 	}
 
