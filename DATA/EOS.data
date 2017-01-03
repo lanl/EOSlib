@@ -91,7 +91,7 @@ StiffenedGas=PMMA; units=hydro::std
 
 
 # Lithium Floride, single-crystal [100]
-# Marsh p 296-297
+# LASL Shock Hugoniot Data, p 296-297
 Hayes=LiF; units=hydro::std
 {
     rho0 = 2.638            # g/cm^3
@@ -105,6 +105,7 @@ Hayes=LiF; units=hydro::std
 }
 
 # PMMA = polymethylmethacrylate = plexiglas = lucite
+# LASL Shock Hugoniot Data, p 446-451
 Hayes=PMMA; units=hydro::std
 {
     rho0 = 1.186            # g/cm^3
@@ -116,6 +117,7 @@ Hayes=PMMA; units=hydro::std
     c0 = 2.57               # sound speed, km/s
     s  = 1.54               # d(u_s)/d(u_p)
 }
+
 UsUpSpline=PMMA; units=hydro::std
 {
 # The dynamic mechanical behavior of polymethyl methacrylate
@@ -134,7 +136,8 @@ UsUpSpline=PMMA; units=hydro::std
     us_data(6) = 3.22678,  3.28500,  3.38133,  3.53556,  3.74279   
 }
 
-# polymethylpentene
+# Poly 4-methyl-1-pentene (TPX)
+# LASL Shock Hugoniot Data, p 479-480
 Hayes=TPX; units=hydro::std
 {
     V0 = 1.20482            # cm^3/g
@@ -145,13 +148,13 @@ Hayes=TPX; units=hydro::std
     e0 = T0*Cv
     K0 = 3.6                # GPa
     N  = 5.5
-    #c0 = 2.17 s  = 1.52    # from Ric Gustavsen
+    #c0 = 2.17 s  = 1.52    # from Ric Gustavsen (see also LASL Shock Hugoniot Data)
 }
 
-# polyethylene, CH2
+# Polyethylene, CH2
+# LASL Shock Hugoniot Data, p 439-440
 Hayes=polyethylene; units=hydro::std
 {
-# Marsh, p 439
     rho0 = 0.916            # g/cm^3
     P0 = 1.0e-4             # GPa
     T0 = 300                # degrees K
@@ -162,20 +165,16 @@ Hayes=polyethylene; units=hydro::std
     s  = 1.53
 }
 
-# Kel-F = polychlorotrifluroethylene
+# Polychlorotrifouroethylene (Kel-F)
+# LANL Shock Hugoniot Data, p 434-435
+# In-Situ Magnetic Gauge Measurements in Kel-F
+# S. A. Sheffield and R. R. Alcon
+# Shock Compression of Condensed Matter - 1991
+# p 909 - 912
+# u_s = 1.989 + 1.763 u_p for P < 15 GPa
+# plus slightly visco-elastic
 Hayes=Kel-F; units=hydro::std
 {
-/************************
-Refs:
-    LANL Shock Hugoniot Date, pp. 434-435
-    
-    In-Situ Magnetic Gauge Measurements in Kel-F
-    S A. Sheffield and R. R. Alcon
-    Shock Compression of condensed matter - 1991
-    pp 909 - 912
-    u_s = 1.989 + 1.763 u_p for P < 15 GPa
-    plus slightly visco-elastic
-***********************/
     rho0 = 2.122            # g/cm^3
     P0 = 1.0e-4             # GPa
     T0 = 300                # degrees K
