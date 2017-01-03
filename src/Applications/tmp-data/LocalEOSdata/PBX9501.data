@@ -1,0 +1,224 @@
+#
+# HMX/PBX9501
+#
+# Test for DeflagrationProfile
+EOS:HEburn!=PBX9501.BM; units=hydro::std
+{
+    P_vac = 1.e-6
+    #OneDFunc_abs_tol = 1e-5
+    #OneDFunc_rel_tol = 1e-5
+    #ODE_epsilon = 1.e-4
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-5
+    ODE_epsilon = 1.e-5
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "BirchMurnaghan::PBX9501.reactant"
+    products  = "Sesame::PBX9501"
+    HErate    = "Arrhenius::HMX.BM";
+    # Need accuracy for DeflagrationProfile
+    PTtol = 1.e-8
+    ODE_epsilon = 1.e-6
+    #
+    #PTtol            = 1.e-8
+    #ODE_epsilon      = 1.e-8
+    #OneDFunc_abs_tol = 1e-8
+    #OneDFunc_rel_tol = 1e-8
+}
+EOS:BirchMurnaghan!=PBX9501.reactant; units=hydro::std
+{
+    :use=HMX
+    V0 *= 1.9/1.833         # cm^3/g
+    Kp0 = 9.8               # dimensionless
+    K0  = 14.0              # GPa
+    e0  = 5.89
+    # Gamma = a + b*(V/V0)
+    a    = 0               # dimensionless
+    b    = 0.9             # dimensionless
+    eps1 = 0.2
+    #
+    #P_vac = 1.e-6
+    #OneDFunc_abs_tol = 1e-8
+    #OneDFunc_rel_tol = 1e-8
+    #ODE_epsilon = 1.e-5
+}
+EOS:BirchMurnaghan!=HMX; units=hydro::std
+{
+    P_ref = 1.e-4
+    T_ref = 296.15          # 23 C =  73.4 F
+    V0  = 0.516219          # cm^3/g (V0 at T=0)
+                            # rho0 = 1.900 @ T_ref
+    e0  = 0
+    K0  = 16.5              # GPa
+    Kp0 =  8.7              # dimensionless
+    # Gamma = a + b*(V/V0)
+    a   =  0                # dimensionless
+    b   =  0.9              # dimensionless
+    cv(1) = 5.265e-1, 3.073e2    
+    cv(3) = 1.831e5,  4.194e2    
+    eps1 = 0.2
+    P_vac = -1              # overwritten with Pmin
+}
+EOS:BirchMurnaghan!=HMX.reactant; units=hydro::std
+{
+    :use=HMX
+    e0  = 5.89 + 0.4
+}
+#
+HErate:Arrhenius!=HMX.BM; units=hydro::std
+{
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499
+    tol   = 1.e-6
+    n   =  1                        # reaction order
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+#   Rate adjusted to 25 micron reaction zone width at 90% burnt
+    k  *= 0.1
+    k  *= 0.5
+# test for DeflagrationProfile
+#    k *= 10
+}
+#
+#  Porous PBX 9501
+#
+EOS:HEburn=PBX9501.HMX; units=hydro::std
+{
+    P_vac = 1.e-6
+    #OneDFunc_abs_tol = 1e-5
+    #OneDFunc_rel_tol = 1e-5
+    #ODE_epsilon = 1.e-4
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-5
+    ODE_epsilon = 1.e-5
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "EqPorous::PBX9501"
+    products  = "Sesame::PBX9501"
+    HErate    = "Arrhenius::HMX.BM";
+}
+EOS:EqPorous=PBX9501; units=hydro::std
+{
+    P_ref = 0.0001
+    T_ref = 296.15          # 23 C =  73.4 F
+    #V_ref = 1/1.84
+    #e_ref = 6.46073
+    EOS   = "BirchMurnaghan::HMX.reactant"
+    PhiEq = "Phi0::PBX9501"
+}
+PhiEq:Phi0=PBX9501; units=hydro::std
+{
+  V_pbx = 1/1.84
+  V_hmx = 1/1.90
+    Pc      = 0.4           # crushup pressure (GPa)
+    V0      = V_hmx         # 1/TMD (cm^3/g)
+    P0      = 1.0e-4        # P0 (GPa)
+    phi0    = V_hmx/V_pbx   # initial porosity
+    PV_0    = V0*P0;
+    PV_1    = 1.2
+    abs_tol = 0.0001;
+    rel_tol = 0.0001
+}
+#
+# Ideal HE
+#
+EOS:IdealHE!=PBX9501; units=hydro::std
+{
+    lambda = 0  # all reactants
+    gamma = 3.1
+    Q = 4.5
+    Cv = 1.5e-3
+    V_ref = 1/1.9
+    e_ref = 1.e-3*V_ref/(gamma-1)
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 1.e-3*k 
+    # deflagration test
+    V_ref = 5.4699e-01
+    e_ref = 1.e-4*V_ref/(gamma-1)
+    Cv = 2e-3
+}
+#
+#
+#
+EOS:HEburn!=PBX9501.BM.mod; units=hydro::std
+{
+    :use=PBX9501.BM
+    HErate    = "Arrhenius::HMX.BM.mod";
+    PTtol = 1.e-8
+    #
+    OneDFunc_abs_tol = 1e-10
+    OneDFunc_rel_tol = 1e-10
+    ODE_epsilon = 1e-10
+    PTtol = 1.e-10
+}
+
+EOS:HEburn=PBX9404.test; units=hydro::std
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon = 1e-12
+    PTtol = 1.e-12
+    #
+    lambda = 0  # all reactants
+    reactants = "UsUp::PBX9404"
+    products  = "BKW::PBX9404"
+    #HErate    = "FFrate::PBX9404";
+    HErate    = "Arrhenius::HMX.BM.mod";
+}
+EOS:JWL=PBX9501.products; units=hydro::HiP
+{
+    rho0  = 1.840         # g/cm^3
+    A     = 6.639895      # Mb
+    B     = 0.3766498     # Mb
+    R1    = 4.40325       # -
+    R2    = 1.90          # -
+    omega = 0.38          # -
+    Edet  = 0.05570652 #*V0 # MJ/kg
+    Scj   = 0.01
+    Cv    = 1.0e-5*V0     # (MJ/kg)/K
+}
+EOS:JWL=PBX9501.reactants; units=hydro::std
+{
+    :use=LX-17.reactants
+    rho0  =    1.840     # g/cm^3
+}
+
+EOS:HEburn=PBX9501.test; units=hydro::HiP
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-4
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::PBX9501.reactants"
+    products  = "JWL::PBX9501.products"
+    HErate    = "IgnitionGrowth::LX-14";
+}
+
+HErate:PnRate!=PBX9501; units=hydro::std
+{
+              nu     = 0.93
+              k      = 110
+              Pcj    = 36.3
+              N      = 3.5
+         P_cutoff    = 0.0131677
+         lambda_burn = 0.98
+         dlambda     = 0.02
+         dlambda_dt  = 0.1
+                tol  = 1e-05
+             dt_min  = 0
+         source_type = 3
+           integrate = 0
+}
+
