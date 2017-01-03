@@ -2,48 +2,51 @@ if(${verbose_traversal})
   message(STATUS "Entered Calc subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in Calc: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_CALC_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Calc)
-set(Calc_src)
+file(GLOB Calc_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+file(COPY ${Calc_h} DESTINATION ${HEADER_DIR})
+#list(APPEND HEADER_FILES ${Calc_h})
+#set(HEADER_FILES "${HEADER_FILES}" PARENT_SCOPE)
+#
+# To Do: src/CMakeList.txt
+#    remove include_directories(Calc)
+#    add include_directories(${HEADER_DIR})
+#
+# To Do: eoslib/CMakeList.txt
+#    delete list(APPEND HEADER_FILES . . .
+#    delete install(FILES ${HEADER_FILES} DESTINATION include)
+#    add install for all header files in ${CMAKE_CURRENT_BINARY_DIR}/include
+#        install for all executables  in ${CMAKE_CURRENT_BINARY_DIR}/bin
+#        install for all libs         in ${CMAKE_CURRENT_BINARY_DIR}/lib
+#        install for all DATA files   in ${CMAKE_CURRENT_BINARY_DIR}/DATA
+#    Note:
+#      runEOS and listEOS scripts assume directories eoslib/{bin,lib,DATA}
+#      typically headers     in /usr/local/include
+#                executables in /usr/local/bin
+#                libs        in /usr/local/lib64
+#                data        in /usr/share
+#      would need to modify runEOS and listEOS to find libs and data directories
+#      Alternatively install in /opt/eoslib with subdirs {bin,lib,DATA,include}
+#      then user would need to add /opt/eoslib/bin to PATH
+#      or skip install and add to PATH .../eoslib/build/bin
 
-add_subdirectory(Subs)
+
+#file(GLOB Calc_src  "Subs/*.C")
+file(GLOB Calc_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs/*.C")
+#message( STATUS "Subs ${Calc_src}")
 
 add_library( Calc ${${projectName}_policy} ${Calc_src} )
 set_property(TARGET Calc PROPERTY CXX_STANDARD 11)
 set_property(TARGET Calc PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Calc PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Calc LinkList Io Math String)
+target_link_libraries(Calc LinkList Io Math String)
+target_include_directories(Calc BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-list( APPEND tests TestCalc)
+add_subdirectory(Tests)
 
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} Calc)
-  # TestCalc requires interactive input.
-  
-  set(args "echo -e 'm(2,2)\nrho\nabc'")##this line provides correct output from terminal
-  set(args "rho abc m(2,2)")
-
-  add_test(NAME ${test}
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${CMAKE_BINARY_DIR}/bin/${test}
-    -D test_args:string=${args}
-    -D out_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Out.blessed
-    -D err_blessed=${EOSLIB_CALC_BLESSED_OUTPUT}/${test}Err.blessed 
-    -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-    )
-  message(STATUS Applications ${CMAKE_CURRENT_BINARY_DIR}/${test})
-  set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
-
-install(TARGETS Calc
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS Calc)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Calc subdirectory")

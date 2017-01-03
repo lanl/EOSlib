@@ -103,7 +103,6 @@ if(NOT(EXISTS "${build_tree}/include"))
 endif(NOT(EXISTS "${build_tree}/include"))
 
 set(HEADER_DIR "${build_tree}/include")
-
 # --------------------
 # Begin project scopes
 # --------------------
@@ -250,6 +249,22 @@ message(STATUS "")
 message(STATUS "-----------------------------------------------------------")
 message(STATUS "")
 
+
+
+file(COPY SetEnv DESTINATION ${CMAKE_BINARY_DIR})
+
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/DATA
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lib
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/bin
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+# Test
+
 if(NOT DEFINED EOSLIB_DATA_TEST_PATH)
   set(EOSLIB_DATA_TEST_PATH "${CMAKE_CURRENT_BINARY_DIR}/DATA")
 endif(NOT DEFINED EOSLIB_DATA_TEST_PATH)
@@ -264,240 +279,65 @@ set(CTEST_ENVIRONMENT
   "CTEST_OUTPUT_ON_FAILURE=1"
   "BOOST_TEST_LOG_LEVEL='message'"
   "EOSLIB_SHARED_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-#add_subdirectory(DATA)
-#add_subdirectory(lib)
-#add_subdirectory(bin)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/DATA
-          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lib
-          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/bin
-          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-add_subdirectory(TEST)
-add_subdirectory(src)
-add_subdirectory(doc)
-
-file(COPY SetEnv DESTINATION ${CMAKE_BINARY_DIR})
-
-# Testing
 
 find_program(BASH_PROGRAM bash)
 set(runEOS ${CMAKE_BINARY_DIR}/bin/runEOS)
 set(listEOS ${CMAKE_BINARY_DIR}/bin/listEOS)
+add_subdirectory(TEST)
 
-function(TEST_BASH test_name test_args)
-  add_test(NAME ${test_name} 
-    COMMAND ${CMAKE_COMMAND}
-    -D test_cmd=${BASH_PROGRAM}
-    -D test_args:string=${test_args}
-    -D out_blessed=${EOSLIB_BLESSED_OUTPUT}/${test_name}Out.blessed
-    -D err_blessed=${EOSLIB_BLESSED_OUTPUT}/${test_name}Err.blessed
-    -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
+# source code
+add_subdirectory(src)
+
+# documentation
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/doc
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+
+# Install
+
+set(CMAKE_INSTALL_PREFIX "/opt/${projectName}")
+
+INSTALL(
+    DIRECTORY ${CMAKE_BINARY_DIR}/include/
+    DESTINATION include
+    FILE_PERMISSIONS OWNER_READ
+    FILE_PERMISSIONS GROUP_READ
+    FILE_PERMISSIONS WORLD_READ
+    DIRECTORY_PERMISSIONS OWNER_READ OWNER_EXECUTE
+    DIRECTORY_PERMISSIONS GROUP_READ GROUP_EXECUTE
+    DIRECTORY_PERMISSIONS WORLD_READ WORLD_EXECUTE
+    FILES_MATCHING PATTERN "*.h"
     )
-endfunction(TEST_BASH)
 
-if(BASH_PROGRAM)
-  TEST_BASH(runEOShelp       "${runEOS} help")
-  TEST_BASH(runEOSWavehelp   "${runEOS} Wave help")
-  TEST_BASH(runEOSWave       "${runEOS} Wave       material HEburn::PBX9502.davis Ps 10")
-  TEST_BASH(runEOSDetonation "${runEOS} Detonation material HEburn::PBX9502.davis P2 10")
-  TEST_BASH(runEOSIsotherm   "${runEOS} Isotherm   material HEburn::PBX9502.davis Ps 10 P2 1")
-  TEST_BASH(runEOSEOSdata    "${runEOS} EOSdata    material HEburn::PBX9502.davis all")
-  TEST_BASH(runEOSData       "${runEOS} Data base EOS type HEburn name PBX9502.davis parameters")
-  TEST_BASH(runEOSImpedanceMatch "${runEOS} ImpedanceMatch mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis")
-endif(BASH_PROGRAM)
+INSTALL(
+    DIRECTORY ${CMAKE_BINARY_DIR}/bin/
+    DESTINATION bin
+    FILE_PERMISSIONS OWNER_READ OWNER_EXECUTE
+    FILE_PERMISSIONS GROUP_READ GROUP_EXECUTE
+    FILE_PERMISSIONS WORLD_READ WORLD_EXECUTE
+    DIRECTORY_PERMISSIONS OWNER_READ OWNER_EXECUTE
+    DIRECTORY_PERMISSIONS GROUP_READ GROUP_EXECUTE
+    DIRECTORY_PERMISSIONS WORLD_READ WORLD_EXECUTE
+    )
 
-# Install stuff
+INSTALL(
+    DIRECTORY ${CMAKE_BINARY_DIR}/lib/
+    DESTINATION lib
+    FILE_PERMISSIONS OWNER_READ OWNER_EXECUTE
+    FILE_PERMISSIONS GROUP_READ GROUP_EXECUTE
+    FILE_PERMISSIONS WORLD_READ WORLD_EXECUTE
+    DIRECTORY_PERMISSIONS OWNER_READ OWNER_EXECUTE
+    DIRECTORY_PERMISSIONS GROUP_READ GROUP_EXECUTE
+    DIRECTORY_PERMISSIONS WORLD_READ WORLD_EXECUTE
+    )
 
-list(APPEND HEADER_FILES
-  src/Calc/Token.h
-  src/Calc/Calc.h
-  src/Calc/Scanner.h
-  src/Calc/CalcArrays.h
-  src/Calc/CalcVars.h
-  src/Calc/CalcArrayTypes.h
-  src/Calc/CalcVarTypes.h
-  src/DataBase/DataBaseError.h
-  src/DataBase/DataFile.h
-  src/DataBase/Handle.h
-  src/DataBase/DataBaseIterators.h
-  src/DataBase/Units.h
-  src/DataBase/DataBase.h
-  src/DataBase/DataBaseParameters.h
-  src/Table/Table.h
-  src/Table/MatToSesame.h
-  src/Eos/Wave.h
-  src/Eos/Riemann_gen.h
-  src/Eos/ShockPolar_gen.h
-  src/Eos/Isotherm_ODE.h
-  src/Eos/Riemann.h
-  src/Eos/Deflagration_gen.h
-  src/Eos/ShockPolar.h
-  src/Eos/Detonation_gen.h
-  src/Eos/PrandtlMeyer_ODE.h
-  src/Eos/Isentrope_ODE.h
-  src/Eos/EOS.h
-  src/Eos/EOSbase.h
-  src/Eos/States.h
-  src/Eos/IO.h
-  src/Eos/Hugoniot_gen.h
-  src/Eos/EOS_VT.h
-  src/ODE/ODE.h
-  src/LinkList/List.h
-  src/LinkList/Array.h
-  src/LinkList/ListAccess.h
-  src/LinkList/NameArray.h
-  src/LinkList/ReferenceList.h
-  src/Local/String.h
-  src/Local/LocalIo.h
-  src/Local/LocalMath.h
-  src/Local/ErrorHandler.h
-  src/Local/Arg.h
-  src/Manager/EOSmanager.h
-  src/Manager/EOSstate.h
-  src/Manager/PointerArray.h
-  src/Manager/SplitWord.h
-  src/ExtEOS/ExtEOSstate.h
-  src/ExtEOS/ExtEOSmanager.h
-  src/ExtEOS/Riemann_genX.h
-  src/ExtEOS/Hydro.h
-  src/ExtEOS/ExtEOS_VT.h
-  src/ExtEOS/EqExtEOS.h
-  src/ExtEOS/ExtEOS.h
-  src/ExtEOS/IDOF.h
-  src/DnKappa/ScaledDn.h
-  src/DnKappa/States.h
-  src/DnKappa/Wave.h
-  src/DnKappa/DnKappa.h
-  src/DnKappa/IO.h
-  src/DnKappa/EOSbase.h
-  src/DnKappa/EOS.h
-  src/EOStypes/JWL/BKW_VT.h
-  src/EOStypes/JWL/HEprods.h
-  src/EOStypes/JWL/HEfit.h
-  src/EOStypes/JWL/BKWwave.h
-  src/EOStypes/JWL/BKW.h
-  src/EOStypes/JWL/JWL_VT.h
-  src/EOStypes/JWL/JWL.h
-  src/EOStypes/Hayes/HayesParams.h
-  src/EOStypes/Hayes/Hayes_VT.h
-  src/EOStypes/Hayes/Hayes.h
-  src/EOStypes/PTequilibrium/StiffIdeal.h
-  src/EOStypes/PTequilibrium/PTequilibrium.h
-  src/EOStypes/PTequilibrium/PTequilibrium_VT.h
-  src/EOStypes/PTequilibrium/StiffIdeal_VT.h
-  src/EOStypes/StiffenedGas/StiffGasParams.h
-  src/EOStypes/StiffenedGas/StiffenedGas_VT.h
-  src/EOStypes/StiffenedGas/StiffenedGas.h
-  src/EOStypes/HayesBM/HayesBMparams.h
-  src/EOStypes/HayesBM/HayesBM.h
-  src/EOStypes/HayesBM/HayesBM_VT.h
-  src/EOStypes/GenHayes/Keane_VT.h
-  src/EOStypes/GenHayes/Keane.h
-  src/EOStypes/GenHayes/KeaneParams.h
-  src/EOStypes/GenHayes/BirchMurnaghan_VT.h
-  src/EOStypes/GenHayes/GenHayes.h
-  src/EOStypes/GenHayes/IntSCv_ODE.h
-  src/EOStypes/GenHayes/BirchMurnaghanParams.h
-  src/EOStypes/GenHayes/GenHayesFunc.h
-  src/EOStypes/GenHayes/GenHayes_VT.h
-  src/EOStypes/GenHayes/BirchMurnaghan.h
-  src/EOStypes/IdealGas/IdealGas_Deflagration.h
-  src/EOStypes/IdealGas/IdealGas_Riemann.h
-  src/EOStypes/IdealGas/IdealGas_Isentrope.h
-  src/EOStypes/IdealGas/IdealGas_VT.h
-  src/EOStypes/IdealGas/IdealGas_Detonation.h
-  src/EOStypes/IdealGas/IdealGas_Isotherm.h
-  src/EOStypes/IdealGas/IdealGas_Hugoniot.h
-  src/EOStypes/IdealGas/IdealGas.h
-  src/EOStypes/Davis/DavisReactants.h
-  src/EOStypes/Davis/DavisProducts.h
-  src/EOStypes/Porous/Porous.h
-  src/EOStypes/Porous/ECfit.h
-  src/EOStypes/Porous/PhiTypes.h
-  src/EOStypes/Porous/PhiEq.h
-  src/EOStypes/Porous/PhiEqSpline.h
-  src/EOStypes/Sesame/Sesame.h
-  src/EOStypes/Sesame/Sesame_VT.h
-  src/EOStypes/Sesame/SesSubs.h
-  src/EOStypes/MieGruneisen/PeSplineParams.h
-  src/EOStypes/MieGruneisen/UsUpSpline_VT.h
-  src/EOStypes/MieGruneisen/UsUp.h
-  src/EOStypes/MieGruneisen/PeSpline.h
-  src/EOStypes/MieGruneisen/UsUpParams.h
-  src/EOStypes/MieGruneisen/UsUpSplineParams.h
-  src/EOStypes/MieGruneisen/UsUp_VT.h
-  src/EOStypes/MieGruneisen/PeSpline_VT.h
-  src/EOStypes/MieGruneisen/UsUpSpline.h
-  src/OneDFunction/OneDFunction.h
-  src/ExtEOStypes/HEburn/HEQ.h
-  src/ExtEOStypes/HEburn/HEburn2.h
-  src/ExtEOStypes/HEburn/ArrheniusRT.h
-  src/ExtEOStypes/HEburn/HErate.h
-  src/ExtEOStypes/HEburn/HEburn.h
-  src/ExtEOStypes/HEburn/IgnitionGrowthRT.h
-  src/ExtEOStypes/HEburn/ReactiveHugoniot.h
-  src/ExtEOStypes/HEburn/HE1.h
-  src/ExtEOStypes/HEburn/HErate2.h
-  src/ExtEOStypes/HEburn/HotSpotRateCC.h
-  src/ExtEOStypes/HEburn/HotSpotHE_CC.h
-  src/ExtEOStypes/HEburn/HotSpotCC_Rate.h
-  src/ExtEOStypes/HEburn/HotSpotRate2.h
-  src/ExtEOStypes/HEburn/ViscousProfile.h
-  src/ExtEOStypes/HEburn/FFQrate.h
-  src/ExtEOStypes/HEburn/HotSpotRateExp.h
-  src/ExtEOStypes/HEburn/FFrate.h
-  src/ExtEOStypes/HEburn/HotSpotHE2.h
-  src/ExtEOStypes/HEburn/IgnitionGrowth.h
-  src/ExtEOStypes/HEburn/Arrhenius.h
-  src/ExtEOStypes/HEburn/HotSpotRate.h
-  src/ExtEOStypes/HEburn/PnRate.h
-  src/ExtEOStypes/HEburn/HotSpotHE.h
-  src/ExtEOStypes/HEburn/HotSpotCC_HE.h
-  src/ExtEOStypes/ElasticPlastic/ElasticPlastic.h
-  src/ExtEOStypes/ElasticPlastic/ElasticTypes.h
-  src/ExtEOStypes/ElasticPlastic/Elastic.h
-  src/ExtEOStypes/ElasticPlastic/ElasticPlasticTypes.h
-  src/ExtEOStypes/Elastic1D/ElasticPolyG_VT.h
-  src/ExtEOStypes/Elastic1D/ElasticPlastic1D.h
-  src/ExtEOStypes/Elastic1D/ElasticPolyG.h
-  src/ExtEOStypes/Elastic1D/Polynomial.h
-  src/ExtEOStypes/Elastic1D/PlasticIDOF.h
-  src/ExtEOStypes/Elastic1D/PlasticIDOF2.h
-  src/ExtEOStypes/Elastic1D/PolyG.h
-  src/ExtEOStypes/Elastic1D/VonMises1D.h
-  src/ExtEOStypes/Elastic1D/VMrate.h
-  src/ExtEOStypes/Elastic1D/VonMisesConstGV.h
-  src/ExtEOStypes/Elastic1D/Elastic1D.h
-  src/ExtEOStypes/Elastic1D/ElasticConstGV.h
-  src/ExtEOStypes/Elastic1D/Polymer.h
-  src/ExtEOStypes/Elastic1D/ConstGV.h
-  src/ExtEOStypes/Elastic1D/Shear1D.h
-  src/ExtEOStypes/Elastic1D/ElasticConstGV_VT.h
-  src/ExtEOStypes/Elastic1D/Elastic1D_VT.h
-  src/ExtEOStypes/EOSmanager.h
-  src/ExtEOStypes/ArrheniusHE/AvArrheniusIDOF.h
-  src/ExtEOStypes/ArrheniusHE/ArrheniusRate.h
-  src/ExtEOStypes/ArrheniusHE/ArrheniusHE.h
-  src/ExtEOStypes/ArrheniusHE/IdealHE_Isentrope.h
-  src/ExtEOStypes/ArrheniusHE/StiffIdealHE.h
-  src/ExtEOStypes/ArrheniusHE/IdealHE_Isotherm.h
-  src/ExtEOStypes/ArrheniusHE/StiffIdealHEav.h
-  src/ExtEOStypes/ArrheniusHE/IdealHE_Hugoniot.h
-  src/ExtEOStypes/ArrheniusHE/IdealHE.h
-  src/ExtEOStypes/ArrheniusHE/AvArrheniusRate.h
-  src/ExtEOStypes/ArrheniusHE/ArrheniusIDOF.h
-  src/Spline/Spline.h
-  )
-install(FILES ${HEADER_FILES} DESTINATION include)
-install(DIRECTORY DATA DESTINATION .)
-install(DIRECTORY TEST DESTINATION .)
-
-#install(TARGETS 
-#  RUNTIME DESTINATION ./bin
-#  LIBRARY DESTINATION ./lib
-#  ARCHIVE DESTINATION ./lib/static)
+INSTALL(
+    DIRECTORY ${CMAKE_BINARY_DIR}/DATA/
+    DESTINATION DATA
+    FILE_PERMISSIONS OWNER_READ
+    FILE_PERMISSIONS GROUP_READ
+    FILE_PERMISSIONS WORLD_READ
+    DIRECTORY_PERMISSIONS OWNER_READ OWNER_EXECUTE
+    DIRECTORY_PERMISSIONS GROUP_READ GROUP_EXECUTE
+    DIRECTORY_PERMISSIONS WORLD_READ WORLD_EXECUTE
+    )
