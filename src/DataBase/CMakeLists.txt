@@ -29,6 +29,7 @@ set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
 set_property(TARGET DataBase PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET DataBase PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( DataBase CClib ${CMAKE_DL_LIBS})
+#target_link_libraries( DataBase Io Math String Calc Spline ODE OneDfunction LinkList ${CMAKE_DL_LIBS})
 #
 # Utilities
 #
