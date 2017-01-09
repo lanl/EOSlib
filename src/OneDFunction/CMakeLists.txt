@@ -2,72 +2,45 @@ if(${verbose_traversal})
   message(STATUS "Entered OneDFunction subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in database: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_DATABASE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/OneDFunction)
 
-set(OneDFunction_src)
+message(STATUS "OneDFunction\n")
+#
+# headers
+#
+file(GLOB OneDfunction_h "*.h")
+list( APPEND HEADER_FILES ${OneDfunction_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-add_subdirectory(Subs)
-#add_subdirectory(blessed_output)
+file(GLOB OneDfunction_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${OneDfunction_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
 
-add_library( OneDFunction ${${projectName}_policy} ${OneDFunction_src} )
-set_property(TARGET OneDFunction PROPERTY CXX_STANDARD 11)
-set_property(TARGET OneDFunction PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET OneDFunction PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB OneDfunction_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs/*.C")
 
-target_link_libraries( OneDFunction Io Math)
+add_library( OneDfunction-obj OBJECT  ${OneDfunction_src} )
+set_property(TARGET OneDfunction-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+set_property(TARGET OneDfunction-obj PROPERTY CXX_STANDARD 11)
+set_property(TARGET OneDfunction-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET OneDfunction-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-list( APPEND tests Test Xtest TestI)
+add_library( OneDfunction ${${projectName}_policy} $<TARGET_OBJECTS:OneDfunction-obj> )
+set_property(TARGET OneDfunction PROPERTY CXX_STANDARD 11)
+set_property(TARGET OneDfunction PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET OneDfunction PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+#
+# test
+#
+add_subdirectory(Tests)
 
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} OneDFunction)
-#  add_test(${test} ${test})
-endforeach(test)
-
-#What is this line doing?
-#message(STATUS "database blessed output ${EOSLIB_DATABASE_BLESSED_OUTPUT}/testdbout.blessed\n")
-
-#set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
-add_test(NAME Test
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_BINARY_DIR}/bin/Test
-  -D test_args:string=${args}
-  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestOut.blessed
-  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestErr.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(Test PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-#set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
-add_test(NAME Xtest
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_BINARY_DIR}/bin/Xtest
-  -D test_args:string=${args}
-  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/XtestOut.blessed
-  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/XtestErr.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(Xtest PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-#set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
-add_test(NAME TestI
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_BINARY_DIR}/bin/TestI
-  -D test_args:string=${args}
-  -D out_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestIOut.blessed
-  -D err_blessed=${EOSLIB_DATABASE_BLESSED_OUTPUT}/TestIErr.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(TestI PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-install(TARGETS OneDFunction
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS OneDFunction)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting OneDFunction subdirectory")

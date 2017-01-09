@@ -2,46 +2,46 @@ if(${verbose_traversal})
   message(STATUS "Entered Spline subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in Spline: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_SPLINE_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Spline)
 
-set(Spline_src)
+message(STATUS "Spline\n")
+#
+# headers
+#
+file(GLOB Spline_h "*.h")
+list( APPEND HEADER_FILES ${Spline_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-add_subdirectory(Subs)
+file(GLOB Spline_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${Spline_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
 
-add_library( Spline ${${projectName}_policy} ${Spline_src} )
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB Spline_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs/*.C")
+
+add_library( Spline-obj OBJECT  ${Spline_src} )
+set_property(TARGET Spline-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+set_property(TARGET Spline-obj PROPERTY CXX_STANDARD 11)
+set_property(TARGET Spline-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET Spline-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( Spline ${${projectName}_policy} $<TARGET_OBJECTS:Spline-obj> )
 set_property(TARGET Spline PROPERTY CXX_STANDARD 11)
 set_property(TARGET Spline PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Spline PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
 target_link_libraries( Spline Io Math )
+#
+# test
+#
+add_subdirectory(Tests)
 
-list( APPEND tests TestSpline )
-
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} Spline)
-#  add_test(${test} ${test})
-endforeach(test)
-
-#set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro name std")
-add_test(NAME TestSpline
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_BINARY_DIR}/bin/TestSpline
-  -D test_args:string=${args}
-  -D out_blessed=${EOSLIB_SPLINE_BLESSED_OUTPUT}/TestSplineOut.blessed
-  -D err_blessed=${EOSLIB_SPLINE_BLESSED_OUTPUT}/TestSplineErr.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(TestSpline PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-install(TARGETS Spline
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS Spline)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Spline subdirectory")

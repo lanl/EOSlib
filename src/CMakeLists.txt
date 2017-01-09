@@ -3,37 +3,30 @@ if(${verbose_traversal})
 endif(${verbose_traversal})
 
 
-include_directories(${CMAKE_BINARY_DIR}/include)
-
-
-include_directories(Local)
-#include_directories(Local/Io)
-#include_directories(Local/String)
-#include_directories(Local/Math)
 add_subdirectory(Local)
-
-message(STATUS "CONTENTS OF INSTALL_TARGETS:  ${INSTALL_TARGETS}") 
-
-include_directories(LinkList)
 add_subdirectory(LinkList)
-
-#include_directories(Calc)
+add_subdirectory(OneDFunction)
+add_subdirectory(ODE)
+add_subdirectory(Spline)
 add_subdirectory(Calc)
 
-include_directories(DataBase)
+add_library( CClib ${${projectName}_policy}
+                   $<TARGET_OBJECTS:Io-obj> 
+                   $<TARGET_OBJECTS:Math-obj> 
+                   $<TARGET_OBJECTS:String-obj> 
+                   $<TARGET_OBJECTS:LinkList-obj> 
+                   $<TARGET_OBJECTS:OneDfunction-obj> 
+                   $<TARGET_OBJECTS:Spline-obj> 
+                   $<TARGET_OBJECTS:ODE-obj> 
+                   $<TARGET_OBJECTS:Calc-obj> )
+set_property(TARGET CClib PROPERTY CXX_STANDARD 11)
+set_property(TARGET CClib PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET CClib PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+
 add_subdirectory(DataBase)
 
-include_directories(DnKappa)
-add_subdirectory(DnKappa)
 
-include_directories(OneDFunction)
-add_subdirectory(OneDFunction)
-
-include_directories(ODE)
-add_subdirectory(ODE)
-
-include_directories(Spline)
-add_subdirectory(Spline)
 
 include_directories(Eos)
 add_subdirectory(Eos)
@@ -68,8 +61,12 @@ add_subdirectory(ExtEOStypes)
 
 add_subdirectory(Applications)
 
+include_directories(DnKappa)
+add_subdirectory(DnKappa)
 
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
+
 
 if(${verbose_traversal})
   message(STATUS "Exiting src subdirectory")
