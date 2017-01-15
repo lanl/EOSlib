@@ -2,11 +2,11 @@ if(${verbose_traversal})
   message(STATUS "Entered DnKappa subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in DnKappa: ${EOSLIB_BLESSED_OUTPUT}\n")
+message(STATUS "DnKappa\n")
+
 set(EOSLIB_DNKAPPA_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/DnKappa)
 
 set(DnKappa_src dummy.cpp)
-
 add_subdirectory(Subs)
 
 
@@ -34,14 +34,8 @@ target_link_libraries( DnKappa Io Math Eos Materials ${CMAKE_DL_LIBS} )
 #   set_tests_properties(${test}DnKappa PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 # endforeach(test)
 
-install(TARGETS DnKappa
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
 
 
-list(APPEND INSTALL_TARGETS DnKappa)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 if(${verbose_traversal})
   message(STATUS "Exiting DnKappa subdirectory")
 endif(${verbose_traversal})

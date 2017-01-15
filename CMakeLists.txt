@@ -5,11 +5,6 @@ cmake_minimum_required( VERSION 3.0 )
 set(projectName "EOSlib")
 set(projectVersion "2.0.0")
 
-# Enable unit testing with the Boost framework.
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-#find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
-#add_definitions(-DBOOST_ALL_NO_LIB)
 # verbose traversal is disabled by default. in general, a trace of the
 # source tree traversal just adds noise to the configuration output and
 # may obscure other more important messages indiciating errors or warnings
@@ -50,7 +45,6 @@ if(NOT DEFINED ${projectName}_build_type)
 endif(NOT DEFINED ${projectName}_build_type)
 
 set(local_testing TRUE)
-set(build_tree "${CMAKE_BINARY_DIR}")
 
 # by default, libraries are generated as dynamic libraries which are
 # linked at run time. This reduces the linking step overhead during
@@ -95,14 +89,6 @@ if (NOT DEFINED ${projectName}_appended_flags)
   set(${projectName}_appended_flags "${appended_flags}" )
 endif (NOT DEFINED ${projectName}_appended_flags)
 
-# if this is the first project directory traversed and the build
-# tree is clean, it will be necessary to create the header directory
-# shared amongst components 
-if(NOT(EXISTS "${build_tree}/include"))
-  file(MAKE_DIRECTORY "${build_tree}/include")
-endif(NOT(EXISTS "${build_tree}/include"))
-
-set(HEADER_DIR "${build_tree}/include")
 # --------------------
 # Begin project scopes
 # --------------------
@@ -127,13 +113,6 @@ if(${verbose_traversal})
   message(STATUS "Entered ${projectName} directory")
 endif(${verbose_traversal})
 
-# Set up paths for the flattened header tree
-if(NOT(EXISTS "${HEADER_DIR}/${projectName}"))
-  file(MAKE_DIRECTORY "${HEADER_DIR}/${projectName}")
-
-endif(NOT(EXISTS "${HEADER_DIR}/${projectName}"))
-
-set(${projectName}_HEADER_DIR "${HEADER_DIR}/${projectName}")
 
 # Initialize a variable for collecting utility implementation components
 list(APPEND ${projectName}_src) # (empty list)
@@ -214,26 +193,6 @@ else(DEFINED ${projectName}_compiler_flags)
   
 endif(DEFINED ${projectName}_compiler_flags)
 
-# A short function for CTest setup used in subdirectories
-function(setupTest TEST_NAME)
-  if(${verbose_traversal})
-    message(STATUS "Entered test subdirectory")
-  endif(${verbose_traversal})
-  set(EXE_NAME ${TEST_NAME}.test)
-  file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.C")
-  add_executable(${EXE_NAME} ${SRC} )
-  target_link_libraries( ${EXE_NAME} ${Boost_LIBRARIES} ${TEST_NAME})
-  add_test( NAME ${TEST_NAME} COMMAND ${EXE_NAME} "--log_level=message")
-  set_property( TEST ${TEST_NAME} PROPERTY PROCESSORS 1 )
-  set_property( TEST ${TEST_NAME} APPEND PROPERTY LABELS ${testLabels} )
-  if(${verbose_traversal})
-    message(STATUS "Exiting test subdirectory")
-  endif(${verbose_traversal})
-endfunction(setupTest)
-
-# setup include directory
-include_directories( "${HEADER_DIR}" )
-include_directories( "${CMAKE_CURRENT_BINARY_DIR}" )
 
 message(STATUS "")
 message(STATUS "-----------------------------------------------------------")
@@ -250,11 +209,17 @@ message(STATUS "-----------------------------------------------------------")
 message(STATUS "")
 
 
-
-file(COPY SetEnv DESTINATION ${CMAKE_BINARY_DIR})
+list( APPEND HEADER_FILES )
+set(HEADER_DIR "${CMAKE_BINARY_DIR}/include")
+if(NOT(EXISTS "${HEADER_DIR}"))
+  file(MAKE_DIRECTORY "${HEADER_DIR}")
+endif(NOT(EXISTS "${HEADER_DIR}"))
 
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+
+file(COPY SetEnv DESTINATION ${CMAKE_BINARY_DIR})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/DATA
           DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -263,16 +228,43 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lib
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/bin
           DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
+find_program(BASH_PROGRAM bash)
+set(runEOS ${CMAKE_BINARY_DIR}/bin/runEOS)
+set(listEOS ${CMAKE_BINARY_DIR}/bin/listEOS)
+set(EOSLIB_DATA_PATH "${CMAKE_CURRENT_BINARY_DIR}/DATA")
+
+
 # Test
+#
+# unit testing with the Boost framework.
+# cmake -D Boost=TRUE <eoslib>
+set( BOOST_ROOT "$ENV{BOOST_ROOT}" )
+if( BOOST_ROOT OR DEFINED Boost )
+  set( BoostTest TRUE )
+  find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+else( BOOST_ROOT OR DEFINED Boost )
+  set( BoostTest FALSE )
+endif( BOOST_ROOT OR DEFINED Boost )
+#
+# A short function for CTest setup used in subdirectories
+function(setupTest TEST_NAME)
+  if(${verbose_traversal})
+    message(STATUS "Entered test subdirectory")
+  endif(${verbose_traversal})
+  set(EXE_NAME ${TEST_NAME}.test)
+  file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.C")
+  include_directories(${Boost_INCLUDE_DIRS})
+  add_executable(${EXE_NAME} ${SRC} )
+  target_link_libraries( ${EXE_NAME} ${Boost_LIBRARIES} ${TEST_NAME})
+  add_test( NAME ${TEST_NAME} COMMAND ${EXE_NAME} "--log_level=message")
+  set_property( TEST ${TEST_NAME} PROPERTY PROCESSORS 1 )
+  set_property( TEST ${TEST_NAME} APPEND PROPERTY LABELS ${testLabels} )
+  if(${verbose_traversal})
+    message(STATUS "Exiting test subdirectory")
+  endif(${verbose_traversal})
+endfunction(setupTest)
 
-if(NOT DEFINED EOSLIB_DATA_TEST_PATH)
-  set(EOSLIB_DATA_TEST_PATH "${CMAKE_CURRENT_BINARY_DIR}/DATA")
-endif(NOT DEFINED EOSLIB_DATA_TEST_PATH)
-
-if(NOT DEFINED EOSLIB_DATA_PATH)
-  set(EOSLIB_DATA_PATH "${EOSLIB_DATA_TEST_PATH}")
-endif(NOT DEFINED EOSLIB_DATA_PATH)
-
+set(EOSLIB_DATA_TEST_PATH "${EOSLIB_DATA_PATH}")
 set(CTEST_ENVIRONMENT
   "EOSLIB_DATA_PATH=${EOSLIB_DATA_TEST_PATH}"
   "EOSLIB_BLESSED_OUTPUT_PATH=${CMAKE_BINARY_DIR}/test/blessed_output"
@@ -280,12 +272,10 @@ set(CTEST_ENVIRONMENT
   "BOOST_TEST_LOG_LEVEL='message'"
   "EOSLIB_SHARED_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
 
-find_program(BASH_PROGRAM bash)
-set(runEOS ${CMAKE_BINARY_DIR}/bin/runEOS)
-set(listEOS ${CMAKE_BINARY_DIR}/bin/listEOS)
 add_subdirectory(TEST)
 
 # source code
+include_directories(${HEADER_DIR})
 add_subdirectory(src)
 
 # documentation
@@ -298,15 +288,9 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/doc
 set(CMAKE_INSTALL_PREFIX "/opt/${projectName}")
 
 INSTALL(
-    DIRECTORY ${CMAKE_BINARY_DIR}/include/
+    FILES ${HEADER_FILES}
     DESTINATION include
-    FILE_PERMISSIONS OWNER_READ
-    FILE_PERMISSIONS GROUP_READ
-    FILE_PERMISSIONS WORLD_READ
-    DIRECTORY_PERMISSIONS OWNER_READ OWNER_EXECUTE
-    DIRECTORY_PERMISSIONS GROUP_READ GROUP_EXECUTE
-    DIRECTORY_PERMISSIONS WORLD_READ WORLD_EXECUTE
-    FILES_MATCHING PATTERN "*.h"
+    PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
     )
 
 INSTALL(

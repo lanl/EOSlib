@@ -1,60 +1,39 @@
 if(${verbose_traversal})
   message(STATUS "Entered IdealGas subdirectory")
 endif(${verbose_traversal})
+#
+# headers
+#
+file(GLOB IdealGas_h "*.h")
+list( APPEND HEADER_FILES ${IdealGas_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-set(EOSLIB_IDEALGAS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/IdealGas)
-set(IdealGas_src)
-
-add_subdirectory(SubsVT)
-add_subdirectory(SubsVe)
+file(GLOB IdealGas_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${IdealGas_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+#
+# SOURCE
+#
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB IdealGas_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
 add_library( IdealGas ${${projectName}_policy} ${IdealGas_src} )
 set_property(TARGET IdealGas PROPERTY CXX_STANDARD 11)
 set_property(TARGET IdealGas PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET IdealGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
-target_link_libraries( IdealGas Eos DataBase ODE)
-
-# foreach(test IdealGas Test1 TestDetonation TestDeflagration TestPolar)
-#   add_executable(${test}IdealGas ${test}.C)
-#   target_link_libraries(${test}IdealGas  IdealGas)
-#   #  add_test(${test}IdealGas ${test}IdealGas)
-#  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-#   add_test(NAME ${test}IdealGas
-#     COMMAND ${CMAKE_COMMAND}
-#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}IdealGas
-#     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_IDEALGAS_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_IDEALGAS_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#     )
-#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}IdealGas)
-#   set_tests_properties(${test}IdealGas PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-# 
-# foreach(test Test2 Test2VT)
-#   add_executable(${test}IdealGas ${test}.C)
-#   target_link_libraries(${test}IdealGas IdealGas)
-#   set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-#   add_test(NAME ${test}IdealGas
-#     COMMAND ${CMAKE_COMMAND}
-#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}IdealGas
-#     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_IDEALGAS_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_IDEALGAS_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#     )
-#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}IdealGas)
-#   set_tests_properties(${test}IdealGas PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-
-install(TARGETS IdealGas
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS IdealGas)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+target_link_libraries(IdealGas Eos)
+#
+# Tests
+#
+add_subdirectory(Tests)
 
 if(${verbose_traversal})
   message(STATUS "Exiting IdealGas subdirectory")

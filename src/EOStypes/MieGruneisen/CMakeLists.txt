@@ -1,65 +1,40 @@
 if(${verbose_traversal})
   message(STATUS "Entered MieGruneisen subdirectory")
 endif(${verbose_traversal})
+#
+# headers
+#
+file(GLOB MieGruneisen_h "*.h")
+list( APPEND HEADER_FILES ${MieGruneisen_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-set(EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/MieGruneisen)
-set(MieGruneisen_src)
-
-add_subdirectory(Subs)
+file(GLOB MieGruneisen_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${MieGruneisen_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+#
+# SOURCE
+#
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB MieGruneisen_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
 add_library( MieGruneisen ${${projectName}_policy} ${MieGruneisen_src} )
 set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD 11)
 set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET MieGruneisen PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
-target_link_libraries( MieGruneisen Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
-
-# list( APPEND tests Test1 TestSpline1 TestSplineParams TestSplinePMMA )
-# list( APPEND testsWithArgs Test2 Test2VT TestApproxT TestSpline2 TestSpline2VT TestSplinePe1 TestSplinePe2 )
-# 
-# foreach(test ${tests})
-#   add_executable(${test}MieGruneisen ${test}.C)
-#   target_link_libraries(${test}MieGruneisen MieGruneisen)
-#  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
-#   add_test(NAME ${test}MieGruneisen
-#     COMMAND ${CMAKE_COMMAND}
-#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen
-#     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#     )
-#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen)
-#   set_tests_properties(${test}MieGruneisen PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-# 
-# #### use this if test(s) require file specification####
-# 
-# foreach(test ${testsWithArgs} )
-#   add_executable(${test}MieGruneisen ${test}.C)
-#   target_link_libraries(${test}MieGruneisen MieGruneisen)
-#   set(args "file ${EOSLIB_DATA_PATH}/test_data/MieGruneisenTest.data")
-#   add_test(NAME ${test}MieGruneisen
-#     COMMAND ${CMAKE_COMMAND}
-#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen
-#     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_MIEGRUNEISEN_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#     )
-#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}MieGruneisen)
-#   set_tests_properties(${test}MieGruneisen PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-
-install(TARGETS MieGruneisen
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS MieGruneisen)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+target_link_libraries(MieGruneisen Eos)
+#
+# Tests
+#
+add_subdirectory(Tests)
 
 if(${verbose_traversal})
   message(STATUS "Exiting MieGruneisen subdirectory")
 endif(${verbose_traversal})
-

@@ -2,32 +2,29 @@ if(${verbose_traversal})
   message(STATUS "Entered ExtEOStypes subdirectory")
 endif(${verbose_traversal})
 
-#message(STATUS "blessed output in ExtEOStypes: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes)
-set(ExtEOStypes_src dummy.cpp)
+message(STATUS "ExtEOStypes\n")
 
-list(APPEND ExtEOStypes_libs ArrheniusHE Elastic1D ElasticPlastic HEburn ) #HEburn tests - excluded ->contains numerous Sesame references
+list(APPEND ExtEOStypes_libs ArrheniusHE Elastic1D ElasticPlastic HEburn )
 foreach(ExtEOStype ${ExtEOStypes_libs})
   add_subdirectory(${ExtEOStype})
 endforeach(ExtEOStype)
-#add_subdirectory(ArrheniusHE)
-#add_subdirectory(Elastic1D)
-#add_subdirectory(ElasticPlastic)
-#add_subdirectory(HEburn)
 
 
-add_library( ExtEOStypes ${${projectName}_policy} ${ExtEOStypes_src} )
+add_library( ExtEOStypes ${${projectName}_policy} "" )
 set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD 11)
 set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtEOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( ExtEOStypes ODE Manager Materials Eos DataBase ExtEOS ${ExtEOStypes_libs} )
+set_property(TARGET ExtEOStypes PROPERTY LINKER_LANGUAGE CXX)
+target_link_libraries( ExtEOStypes ${ExtEOStypes_libs} )
 
-add_library( ExtHE ${${projectName}_policy} dummy.cpp)
+add_library( ExtHE ${${projectName}_policy} "" )
 set_property(TARGET ExtHE PROPERTY CXX_STANDARD 11)
 set_property(TARGET ExtHE PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( ExtHE ExtEOStypes ArrheniusHE HEburn PTequilibrium Manager )
+set_property(TARGET ExtHE PROPERTY LINKER_LANGUAGE CXX)
+target_link_libraries( ExtHE ExtEOStypes ArrheniusHE HEburn PTequilibrium )
 
+set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes)
 
 # list( APPEND tests TestHE )
 # 
@@ -38,21 +35,14 @@ target_link_libraries( ExtHE ExtEOStypes ArrheniusHE HEburn PTequilibrium Manage
 #     COMMAND ${CMAKE_COMMAND}
 #     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
 #     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_EXTEOSTYPES_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -D out_blessed=${BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${BLESSED_OUTPUT}/${test}Err.blessed 
 #     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
 #     )
 #   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
 #   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 # endforeach(test)
 
-install(TARGETS ExtEOStypes ExtHE
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS ExtEOStypes ExtHE)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting ExtEOStypes subdirectory")

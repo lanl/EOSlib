@@ -1,3 +1,4 @@
+#include "LocalMath.h"
 #include "EOSbase.h"
 #include <iostream>
 using namespace std;
@@ -14,11 +15,9 @@ EOSbase::Error *EOSbase::ErrorDefault = NULL;    // EOS_cerr;
 // note: global variables set if linked with lib.a
 //       but not with lib.so;
 //       instead set by EOS::Init(), called from EOS::EOS()
-inline double Div(double x, double y)
-{
-    return x/y;
-}
-double EOSbase::NaN = Div(0.0,0.0);
+//
+
+double EOSbase::NaN = ::NaN;
 //
 void EOSbase::Initbase()
 {
@@ -26,7 +25,7 @@ void EOSbase::Initbase()
         return;
     EOScerr = new Error(cerr);
     
-    NaN = Div(0.0,0.0);
+    NaN = ::NaN;
     ErrorDefault = EOScerr;
     initbase = 1;
 }

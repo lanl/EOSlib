@@ -2,46 +2,40 @@ if(${verbose_traversal})
   message(STATUS "Entered Eos subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in Eos: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_EOS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Eos)
+message(STATUS "Eos")
+#
+# headers
+#
+file(GLOB Eos_h "*.h")
+list( APPEND HEADER_FILES ${Eos_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-set(Eos_src)
-
-add_subdirectory(SubsBase)
-add_subdirectory(SubsVT)
-add_subdirectory(SubsVe)
-
+file(GLOB Eos_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${Eos_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+#
+# Source
+#
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB Eos_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 add_library( Eos ${${projectName}_policy} ${Eos_src} )
 set_property(TARGET Eos PROPERTY CXX_STANDARD 11)
 set_property(TARGET Eos PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Eos PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+target_link_libraries( Eos DataBase)
+#
+# test
+#
+add_subdirectory(Tests)
 
-target_link_libraries( Eos Spline ODE Calc DataBase ${CMAKE_DL_LIBS} )
-
-list( APPEND tests Test1 Test2 )#Test3 )
-##Test 3 appears to be an accepted failure from Moonlight, no idea how to fix
-
-foreach(test ${tests})
-  add_executable(${test} ${test}.C)
-  target_link_libraries(${test} Eos)
-  add_test(NAME ${test}
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_BINARY_DIR}/bin/${test}
-  -D test_args:string=${args}
-  -D out_blessed=${EOSLIB_EOS_BLESSED_OUTPUT}/${test}Out.blessed
-  -D err_blessed=${EOSLIB_EOS_BLESSED_OUTPUT}/${test}Err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-  set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-endforeach(test)
-
-install(TARGETS Eos
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS Eos)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Eos subdirectory")

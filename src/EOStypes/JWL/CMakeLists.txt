@@ -1,63 +1,40 @@
 if(${verbose_traversal})
   message(STATUS "Entered JWL subdirectory")
 endif(${verbose_traversal})
+#
+# headers
+#
+file(GLOB JWL_h "*.h")
+list( APPEND HEADER_FILES ${JWL_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-set(EOSLIB_JWL_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/JWL)
-set(JWL_src)
-
-add_subdirectory(Subs)
+file(GLOB JWL_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${JWL_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+#
+# SOURCE
+#
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB JWL_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
 add_library( JWL ${${projectName}_policy} ${JWL_src} )
 set_property(TARGET JWL PROPERTY CXX_STANDARD 11)
 set_property(TARGET JWL PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
-target_link_libraries( JWL Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
-
-# list (APPEND testsWithArgs Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestJWL TestJWLPT TestHEprods )
-# list (APPEND tests Test1JWL_VT )
-# 
-# foreach(test ${tests} )
-#   add_executable(${test} ${test}.C)
-#   target_link_libraries(${test} JWL)
-#   #set(args "file ${EOSLIB_DATA_PATH}/test_data/JWLTest.data")
-#   add_test(NAME ${test}
-#   COMMAND ${CMAKE_COMMAND}
-#   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
-#   -D test_args:string=${args}
-#   -D out_blessed=${EOSLIB_JWL_BLESSED_OUTPUT}/${test}Out.blessed
-#   -D err_blessed=${EOSLIB_JWL_BLESSED_OUTPUT}/${test}Err.blessed 
-#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#   )
-#   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-# 
-# foreach(test ${testsWithArgs} )
-#   add_executable(${test} ${test}.C)
-#   target_link_libraries(${test} JWL)
-#   set(args "file ${EOSLIB_DATA_PATH}/test_data/JWLTest.data")
-#   add_test(NAME ${test}
-#   COMMAND ${CMAKE_COMMAND}
-#   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}
-#   -D test_args:string=${args}
-#   -D out_blessed=${EOSLIB_JWL_BLESSED_OUTPUT}/${test}Out.blessed
-#   -D err_blessed=${EOSLIB_JWL_BLESSED_OUTPUT}/${test}Err.blessed 
-#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#   )
-#   set_tests_properties(${test} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-
-install(TARGETS JWL
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS JWL)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+target_link_libraries(JWL Eos)
+#
+# Tests
+#
+add_subdirectory(Tests)
 
 if(${verbose_traversal})
   message(STATUS "Exiting JWL subdirectory")
 endif(${verbose_traversal})
-
-
-

@@ -2,43 +2,39 @@ if(${verbose_traversal})
   message(STATUS "Entered ExtEOS subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "blessed output in ExtEOS: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_EXTEOS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOS)
-set(ExtEOS_src)
+message(STATUS "ExtEOS")
+#
+# headers
+#
+file(GLOB ExtEOS_h "*.h")
+list( APPEND HEADER_FILES ${ExtEOS_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-add_subdirectory(Subs)
-
+file(GLOB ExtEOS_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${ExtEOS_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+#
+# Source
+#
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB ExtEOS_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 add_library( ExtEOS ${${projectName}_policy} ${ExtEOS_src} )
 set_property(TARGET ExtEOS PROPERTY CXX_STANDARD 11)
 set_property(TARGET ExtEOS PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtEOS PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
-target_link_libraries( ExtEOS Io Math Eos DataBase ODE Calc Manager ${CMAKE_DL_LIBS})
-
-# list( APPEND tests TestHydro TestXmanager )
-# 
-# foreach(test ${tests})
-#   add_executable(${test}ExtEOS ${test}.C)
-#   target_link_libraries(${test}ExtEOS ExtEOS)
-#   add_test(NAME ${test}ExtEOS
-#     COMMAND ${CMAKE_COMMAND}
-#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}ExtEOS
-#     -D test_args:string=${args}
-#     -D out_blessed=${EOSLIB_EXTEOS_BLESSED_OUTPUT}/${test}Out.blessed
-#     -D err_blessed=${EOSLIB_EXTEOS_BLESSED_OUTPUT}/${test}Err.blessed 
-#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#     )
-#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test})
-#   set_tests_properties(${test}ExtEOS PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-
-install(TARGETS ExtEOS
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS ExtEOS)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+target_link_libraries( ExtEOS  Eos )
+#
+# test
+#
+add_subdirectory(Tests)
 
 if(${verbose_traversal})
   message(STATUS "Exiting ExtEOS subdirectory")
