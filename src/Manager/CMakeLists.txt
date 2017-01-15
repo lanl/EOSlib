@@ -13,7 +13,7 @@ set_property(TARGET Manager PROPERTY CXX_STANDARD 11)
 set_property(TARGET Manager PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Manager PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
-target_link_libraries( Manager Eos DataBase ODE Calc ${CMAKE_DL_LIBS})
+target_link_libraries( Manager ExtEOS )
 
 #list (APPEND testsWithArgs Test2JWL_VT TestBKW TestDeflagration TestDetonation TestHEfit TestHEprods TestJWL TestJWLPT )
 #list (APPEND tests Test1JWL_VT  )
