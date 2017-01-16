@@ -1,4 +1,3 @@
-#include <LocalIo.h>
 #include <Arg.h>
 
 #include "ExtEOSmanager.h"

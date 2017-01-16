@@ -1,6 +1,7 @@
 #include <Arg.h>
 
 #include "EOSmanager.h"
+using namespace std;
 
 int main(int, char **argv)
 {

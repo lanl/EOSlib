@@ -1,12 +1,12 @@
 #ifndef EOSLIB_EOS_MANAGER_H
 #define EOSLIB_EOS_MANAGER_H
 
+#include <iostream>
 #include "EOS.h"
 #include "String1.h"
 #include "EOSstate.h"
 #include "PointerArray.h"
 
-#include <iostream>
 
 
 // ename = type::name       (database_name = EOS:type::name)

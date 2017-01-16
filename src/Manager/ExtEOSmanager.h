@@ -1,8 +1,7 @@
 #ifndef EOSLIB_EXT_EOS_MANAGER_H
 #define EOSLIB_EXT_EOS_MANAGER_H
 
-#include <iostream>
-#include "../Manager/EOSmanager.h"
+#include "EOSmanager.h"
 #include "ExtEOSstate.h"
 
 class ExtEOS_Array : public PointerArray<ExtEOS>

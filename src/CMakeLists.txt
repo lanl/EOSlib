@@ -35,12 +35,10 @@ include_directories(ExtEOStypes/HEburn)
 add_subdirectory(ExtEOS)
 add_subdirectory(ExtEOStypes)
 
-include_directories(Manager)
 add_subdirectory(Manager)
 
 add_subdirectory(Applications)
 
-include_directories(DnKappa)
 add_subdirectory(DnKappa)
 
 
