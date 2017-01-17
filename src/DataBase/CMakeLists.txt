@@ -16,9 +16,13 @@ foreach( file_h ${DataBase_h})
                                 ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
                                 ${HEADER_DIR}/${file_h})
 endforeach( file_h)
+<<<<<<< HEAD
 #
 # Source
 #
+=======
+
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
                                 ${CMAKE_CURRENT_SOURCE_DIR}
                                 ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
@@ -31,6 +35,10 @@ set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
 set_property(TARGET DataBase PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET DataBase PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( DataBase CClib ${CMAKE_DL_LIBS})
+<<<<<<< HEAD
+=======
+#target_link_libraries( DataBase Io Math String Calc Spline ODE OneDfunction LinkList ${CMAKE_DL_LIBS})
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 #
 # Utilities
 #

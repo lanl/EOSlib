@@ -17,9 +17,13 @@ foreach( file_h ${OneDfunction_h})
                                 ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
                                 ${HEADER_DIR}/${file_h})
 endforeach( file_h)
+<<<<<<< HEAD
 #
 # SOURCE
 #
+=======
+
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
                                 ${CMAKE_CURRENT_SOURCE_DIR}
                                 ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)

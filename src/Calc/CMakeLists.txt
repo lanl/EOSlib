@@ -9,6 +9,7 @@ message(STATUS "Calc\n")
 file(GLOB Calc_h "*.h")
 list( APPEND HEADER_FILES ${Calc_h} )
 set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
+<<<<<<< HEAD
 
 file(GLOB Calc_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
 foreach( file_h ${Calc_h})
@@ -19,6 +20,16 @@ endforeach( file_h)
 #
 # SOURCE
 #
+=======
+
+file(GLOB Calc_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${Calc_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
                                 ${CMAKE_CURRENT_SOURCE_DIR}
                                 ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)

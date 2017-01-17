@@ -9,6 +9,16 @@ message(STATUS "Applications")
 execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
                                 ${CMAKE_CURRENT_SOURCE_DIR}
                                 ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+<<<<<<< HEAD
+=======
+
+set(EOSLIB_APPLICATIONS_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Applications)
+list( APPEND dirs Local ExtEOS Eos DataBase LinkList Calc OneDFunction ODE )
+list( APPEND dirs ExtEOStypes/HEburn EOStypes/PTequilibrium EOStypes/Porous)
+foreach(dir ${dirs})
+  include_directories(${CMAKE_SOURCE_DIR}/src/${dir})
+endforeach(dir)
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 #
 # link libraries
 #
@@ -18,7 +28,12 @@ set_property(TARGET Applications PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 set_property(TARGET Applications PROPERTY LINKER_LANGUAGE CXX)
 
+<<<<<<< HEAD
 target_link_libraries( Applications ExtEOS HEburn Materials )
+=======
+target_link_libraries( Applications Eos DataBase Materials )
+target_link_libraries( Applications ExtEOS Manager HEburn  )
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 #
 # Utilities
 #
@@ -52,7 +67,14 @@ set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Applications)
 #     )
 #   message(STATUS Applications ${CMAKE_CURRENT_BINARY_DIR}/${util})
 #   set_utils_properties(${util} PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+<<<<<<< HEAD
 
+=======
+endforeach(util)
+#
+# tests in build/TEST using runEOS
+#
+>>>>>>> c30ac671e07def170a16c86a2343d793370d798c
 
 if(${verbose_traversal})
   message(STATUS "Exiting Applications subdirectory")
