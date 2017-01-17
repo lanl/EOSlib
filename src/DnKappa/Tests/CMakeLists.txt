@@ -6,7 +6,7 @@ set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/DnKappa)
 set( bin ${CMAKE_CURRENT_BINARY_DIR} )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${bin}")
 
-list( APPEND tests TestDnKappa )
+list( APPEND tests TestDnKappa Test2DnKappa )
 
 
 foreach(test ${tests})

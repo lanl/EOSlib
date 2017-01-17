@@ -33,6 +33,11 @@ set_property(TARGET DnKappa PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 set_property(TARGET DnKappa PROPERTY LINKER_LANGUAGE CXX)
 target_link_libraries( DnKappa Eos)
 #
+# Utility
+#
+add_executable(Dn_kappa Dn_kappa.C)
+target_link_libraries(Dn_kappa DnKappa)
+#
 # test
 #
 add_subdirectory(Tests)
