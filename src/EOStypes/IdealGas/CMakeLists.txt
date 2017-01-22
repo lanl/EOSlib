@@ -29,7 +29,7 @@ add_library( IdealGas ${${projectName}_policy} ${IdealGas_src} )
 set_property(TARGET IdealGas PROPERTY CXX_STANDARD 11)
 set_property(TARGET IdealGas PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET IdealGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(IdealGas Eos)
+target_link_libraries(IdealGas EOS)
 #
 # Tests
 #

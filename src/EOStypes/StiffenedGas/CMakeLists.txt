@@ -29,7 +29,7 @@ add_library( StiffenedGas ${${projectName}_policy} ${StiffenedGas_src} )
 set_property(TARGET StiffenedGas PROPERTY CXX_STANDARD 11)
 set_property(TARGET StiffenedGas PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET StiffenedGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(StiffenedGas Eos)
+target_link_libraries(StiffenedGas EOS)
 #
 # Tests
 #

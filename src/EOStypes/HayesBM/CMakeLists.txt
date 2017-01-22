@@ -29,7 +29,7 @@ add_library( HayesBM ${${projectName}_policy} ${HayesBM_src} )
 set_property(TARGET HayesBM PROPERTY CXX_STANDARD 11)
 set_property(TARGET HayesBM PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET HayesBM PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(HayesBM Eos)
+target_link_libraries(HayesBM EOS)
 #
 # Tests
 #

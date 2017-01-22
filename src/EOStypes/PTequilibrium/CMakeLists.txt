@@ -29,7 +29,7 @@ add_library( PTequilibrium ${${projectName}_policy} ${PTequilibrium_src} )
 set_property(TARGET PTequilibrium PROPERTY CXX_STANDARD 11)
 set_property(TARGET PTequilibrium PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET PTequilibrium PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(PTequilibrium Eos)
+target_link_libraries(PTequilibrium EOS)
 #
 # Tests
 #

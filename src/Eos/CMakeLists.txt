@@ -1,17 +1,17 @@
 if(${verbose_traversal})
-  message(STATUS "Entered Eos subdirectory")
+  message(STATUS "Entered EOS subdirectory")
 endif(${verbose_traversal})
 
-message(STATUS "Eos")
+message(STATUS "EOS")
 #
 # headers
 #
-file(GLOB Eos_h "*.h")
-list( APPEND HEADER_FILES ${Eos_h} )
+file(GLOB EOS_h "*.h")
+list( APPEND HEADER_FILES ${EOS_h} )
 set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-file(GLOB Eos_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
-foreach( file_h ${Eos_h})
+file(GLOB EOS_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${EOS_h})
     execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
                                 ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
                                 ${HEADER_DIR}/${file_h})
@@ -25,12 +25,12 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 # library
 #
-file(GLOB Eos_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
-add_library( Eos ${${projectName}_policy} ${Eos_src} )
-set_property(TARGET Eos PROPERTY CXX_STANDARD 11)
-set_property(TARGET Eos PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Eos PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( Eos DataBase)
+file(GLOB EOS_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
+add_library( EOS ${${projectName}_policy} ${EOS_src} )
+set_property(TARGET EOS PROPERTY CXX_STANDARD 11)
+set_property(TARGET EOS PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET EOS PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+target_link_libraries( EOS DataBase)
 #
 # test
 #
@@ -38,5 +38,5 @@ add_subdirectory(Tests)
 
 
 if(${verbose_traversal})
-  message(STATUS "Exiting Eos subdirectory")
+  message(STATUS "Exiting EOS subdirectory")
 endif(${verbose_traversal})

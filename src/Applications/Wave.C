@@ -95,20 +95,26 @@ const char *help[] = {    // list of commands printed out by help option
     "lib         name    # directory for EOSlib shared libraries",
     "                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH",
     "",
+    "Type of locus, default prints ref state only",
     "isentrope      # compute isentrope",
     "shock          # compute shock locus",
     "detonation     # compute detonation locus",
     "left           # left facing wave",
     "right          # right facing wave",
+    "u_escape       # expansion to escape velocity (cavitation) state",
+    "valid_u        # limits u2 to escape velocity on isentrope",
+    "weak           # weak detonation branch for us",
     "",
-    "V0     value   # specific volume [V_ref] of reference state",
-    "e0     value   # specific energy [e_ref] of reference state",
+    "Reference state, default V_ref, e_ref, u=0 from database",
+    "V0     value   # specific volume",
+    "e0     value   # specific energy",
     "state  V0 e0   # reference state",
     "P0     value   # pressure of reference state",
     "T0     value   # Temperature of reference state",
     "PT     P0 T0   # reference state",
     "u0     value   # velocity of reference state",
     "",
+    "Initial state for locus, default is reference state",
     "InitShock      # Initial state on shock locus based on ref state",
     "InitIsentrope  # Initial state on isentrope from ref state",
     "init_left      # left  facing wave for initial state",
@@ -118,6 +124,7 @@ const char *help[] = {    // list of commands printed out by help option
     "Ps    value    # shock pressure",
     "Vs    value    # shock specific volume",
     "",
+    "Wave curve by variable",
     "P              # wave curve by P",
     "u              # wave curve by u",
     "us             # wave curve by us",
@@ -133,8 +140,6 @@ const char *help[] = {    // list of commands printed out by help option
     "V2    value    # V  & var2=value",
     "",
     "nsteps    value    # number of points on wave curve",
-    "u_escape           # expansion to escape (cavitation) state",
-    "valid_u            # limits u2 to escape velocity",
     0
 };
 
@@ -150,7 +155,7 @@ void Help(int status)
 
 namespace VAR
 {
-    enum type { none, P, Up, Us, V };
+    enum type { none, P, Up, Us, V, CJ };
 }
 namespace WAVE
 {
@@ -199,8 +204,6 @@ int main(int, char **argv)
     double var2          = NaN;
         
 // process command line arguments
-//    if( argv[1] == NULL )
-//        Help(-1);    
     while(*++argv)
     {
         GetVar(file,files);
@@ -250,9 +253,11 @@ int main(int, char **argv)
         if( !strcmp(*argv,"Vs") )
             InitVar = VAR::V;
         GetVar(Vs,var0);
-        // wave directions
+        // wave directions       
         GetVarValue(init_left,InitDir,LEFT);
+        GetVarValue(InitLeft,InitDir,LEFT);
         GetVarValue(init_right,InitDir,RIGHT);
+        GetVarValue(InitRight,InitDir,RIGHT);
         GetVarValue(left,dir,LEFT);
         GetVarValue(right,dir,RIGHT);
         // locus
@@ -278,10 +283,15 @@ int main(int, char **argv)
         }
         if( !strcmp(*argv,"detonation") || !strcmp(*argv,"Detonation") )
         {
+            InitVar = VAR::CJ;
+            continue;
+        }
+        if( !strcmp(*argv,"weak") || !strcmp(*argv,"Weak") )
+        {
+            InitVar = VAR::CJ;
             locus = WAVE::detonation;
             continue;
         }
-        GetVarValue(weak, weak, 1);
         // locus: variable and range     
         GetVar2(range,var1,var2);
         GetVar(var1,var1);
@@ -409,6 +419,11 @@ int main(int, char **argv)
         cerr << Error("must specify either material or name and type")
              << Exit;
     }
+    if( u_esc != ESCAPE::off )
+        locus = WAVE::isentrope;
+    if( loop!=VAR::none && std::isnan(var2) )
+        cerr << Error("var2 not set") << Exit;    
+//
 // fetch eos
     DataBase db;
     if( db.Read(files) )
@@ -431,11 +446,8 @@ int main(int, char **argv)
     state0.u = std::isnan(u0) ? 0 : u0;
     state0.V = std::isnan(V0) ? eos->V_ref : V0;
     state0.e = std::isnan(e0) ? eos->e_ref : e0;
-    if( locus == WAVE::detonation )
+    if( InitVar == VAR::CJ )
     {
-        if( InitVar != VAR::none )
-            cerr << Error("InitVar not allowed with detonation locus") << Exit;
-        InitLocus = WAVE::state;
         u_esc = ESCAPE::off;
         if( std::isnan(P0) )
             P0 = 0.;
@@ -455,7 +467,7 @@ int main(int, char **argv)
 // init state
     WaveState InitState;
     Wave *wave = NULL;
-    if( locus == WAVE::detonation )
+    if( InitVar == VAR::CJ )
     {
         Detonation *det = eos->detonation(state0,P0);
         if( det == NULL )
@@ -482,7 +494,7 @@ int main(int, char **argv)
             InitWave = eos->isentrope(state0);
         if( InitWave == NULL )
             cerr << Error("Wave *InitWave = NULL\n") << Exit;
-        int status;
+        int status = 0;
         if( InitVar == VAR::P )
             status = InitWave->P(var0,InitDir,InitState);
         else if( InitVar == VAR::V )
@@ -492,6 +504,16 @@ int main(int, char **argv)
         else if( InitVar == VAR::Us )
             status = InitWave->u_s(var0,InitDir,InitState);
         delete InitWave;
+        if( status )
+            cerr << Error("InitWave failed\n"
+                    "check InitValue compatible with InitState, InitLocus & InitDir\n"
+                    "    shock in compression\n"
+                    "    isentrope above P vacuum\n")
+                 << Exit;
+        /***
+         *      ToDo: set default similar to locus
+         *            ie use shock in compression or else isentrope
+        ***/
     }
 // select Locus (P, V, u or u_s) and branch (isentrope or shock)    
     typedef int (Wave::*WaveLocus) (double, int, WaveState &);
@@ -570,10 +592,31 @@ int main(int, char **argv)
                 var1 = InitState.us;        
             branch = (dir*(var2-InitState.us) > 0.) ? WAVE::shock : WAVE::isentrope;
         }
+
         if( locus == WAVE::state )
             locus = branch;
+
     // set wave (shock, isentrope or detonation)
-        if( locus == WAVE::isentrope )
+        if( InitVar==VAR::CJ )
+        {
+            if( branch == WAVE::state )
+                lname = "CJ Detonation";
+            else if( locus==WAVE::detonation )
+            {
+                lname = "Detonation";
+            }
+            else if( branch==WAVE::isentrope || locus==WAVE::isentrope )
+            {
+                delete wave;
+                if( (wave = eos->isentrope(InitState)) == NULL )
+                    cerr << Error("failed to initialize CJ isentrope\n") << Exit;
+                lname = "CJ isentrope";
+            }
+            else
+                lname = "Detonation";
+            locus = WAVE::detonation;
+        }
+        else if( locus == WAVE::isentrope )
         {
             if( (wave=eos->isentrope(InitState)) == NULL )
                     cerr << Error("failed to initialize isentrope\n") << Exit;
@@ -585,31 +628,34 @@ int main(int, char **argv)
                 cerr << Error("failed to initialize Hugoniot\n") << Exit;
             lname = "Hugoniot";
         }
-        else if( locus == WAVE::detonation )
-        {
-            if( branch == WAVE::state || weak )
-                lname = "CJ Detonation";
-            else if( branch == WAVE::isentrope )
-            {
-                delete wave;
-                if( (wave = eos->isentrope(InitState)) == NULL )
-                    cerr << Error("failed to initialize CJ isentrope\n") << Exit;
-                lname = "CJ isentrope";
-            }
-            else
-                lname = "Detonation";
-        }
     }
+    else if( InitVar==VAR::CJ )
+        locus = WAVE::detonation;
+
+
     if( lname )
         cout << lname << " (" << (dir == RIGHT ? "right" : "left") << ") for ";
 // print header
     cout << type << "::" << name << "\n";         
     WaveState wstate;    
-    if( InitState.u != state0.u )
+    if( InitVar==VAR::CJ )
     {
         eos->Evaluate(state0, wstate);
+        wstate.P = P0;
+        PrintState(wstate);
+        PrintLine();    
+    }
+    else if( loop!=VAR::none )
+    {
+        eos->Evaluate(InitState, wstate);
         if( locus == WAVE::detonation )
             wstate.P = P0;
+        PrintState(wstate);
+        PrintLine();    
+    }
+    else if( InitVar!=VAR::none )
+    {
+        eos->Evaluate(state0, wstate);
         PrintState(wstate);
         PrintLine();    
     }

@@ -1,45 +1,39 @@
 if(${verbose_traversal})
   message(STATUS "Entered HEburn subdirectory")
 endif(${verbose_traversal})
+#
+# headers
+#
+file(GLOB HEburn_h "*.h")
+list( APPEND HEADER_FILES ${HEburn_h} )
+set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-message(STATUS "blessed output in HEburn: ${EOSLIB_BLESSED_OUTPUT}\n")
-set(EOSLIB_HEBURN_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/HEburn)
-
-set(HEburn_src)
-
-add_subdirectory(Subs)
+file(GLOB HEburn_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
+foreach( file_h ${HEburn_h})
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
+                                ${HEADER_DIR}/${file_h})
+endforeach( file_h)
+#
+# SOURCE
+#
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                                ${CMAKE_CURRENT_SOURCE_DIR}
+                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
+#
+# library
+#
+file(GLOB HEburn_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
 add_library( HEburn ${${projectName}_policy} ${HEburn_src} )
 set_property(TARGET HEburn PROPERTY CXX_STANDARD 11)
 set_property(TARGET HEburn PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET HEburn PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-
-target_link_libraries( HEburn Io Math Eos ExtEOS ODE Materials ${CMAKE_DL_LIBS})
-
-# list( APPEND tests CJtest FFprofile HE_Cv HE_Gamma PopPlotTrajectory ReactionTime TestAllocation TestHEburn2CC TestHEburn TestHEburnCC TestHEeos TestHErate TestIntegrate TestTimeStep ViscousProfile ZNDprofile)
-# 
-# foreach(test ${tests})
-#   add_executable(${test}HEburn ${test}.C)
-#   target_link_libraries(${test}HEburn HEburn)
-#   # add_test(NAME ${test}HEburn
-#   #   COMMAND ${CMAKE_COMMAND}
-#   #   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}HEburn
-#   #   -D test_args:string=${args}
-#   #   -D out_blessed=${EOSLIB_HEBURN_BLESSED_OUTPUT}/${test}Out.blessed
-#   #   -D err_blessed=${EOSLIB_HEBURN_BLESSED_OUTPUT}/${test}Err.blessed 
-#   #   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#   #   )
-#   # message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}HEburn)
-#   # set_tests_properties(${test}HEburn PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-# endforeach(test)
-
-install(TARGETS HEburn
-  RUNTIME DESTINATION ./bin
-  LIBRARY DESTINATION ./lib
-  ARCHIVE DESTINATION ./lib/static)
-
-list(APPEND INSTALL_TARGETS HEburn)
-set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
+target_link_libraries(HEburn ExtEOS PTequilibrium)
+#
+# Tests
+#
+add_subdirectory(Tests)
 
 if(${verbose_traversal})
   message(STATUS "Exiting HEburn subdirectory")
