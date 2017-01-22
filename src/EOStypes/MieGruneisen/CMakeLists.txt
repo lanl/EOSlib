@@ -29,7 +29,7 @@ add_library( MieGruneisen ${${projectName}_policy} ${MieGruneisen_src} )
 set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD 11)
 set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET MieGruneisen PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(MieGruneisen Eos)
+target_link_libraries(MieGruneisen EOS)
 #
 # Tests
 #

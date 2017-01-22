@@ -29,7 +29,7 @@ add_library( GenHayes ${${projectName}_policy} ${GenHayes_src} )
 set_property(TARGET GenHayes PROPERTY CXX_STANDARD 11)
 set_property(TARGET GenHayes PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET GenHayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(GenHayes Eos)
+target_link_libraries(GenHayes EOS)
 #
 # Tests
 #

@@ -24,19 +24,12 @@ target_link_libraries( Applications ExtEOS HEburn Materials )
 #
 list(APPEND utils EOSdata Wave Detonation Isotherm ImpedanceMatch)
 list(APPEND utils Polar Deflagration DetPolar)
-list(APPEND utils ZND-SURFplus HEburnReactionTime)
+list(APPEND utils ZND-SURFplus ZND-SURFplus-dx HEburnReactionTime)
 
 foreach(util ${utils})
    add_executable(${util} ${util}.C)
    target_link_libraries(${util} Applications)
 endforeach(util)
-
-set( utils TestXmanager TestXRiemann TestXisentrope )
-foreach(util ${utils})
-   add_executable(${util} ${util}.C)
-   target_link_libraries(${util} Manager)
-endforeach(util)
-
 #
 # tests in build/TEST using runEOS
 #
@@ -57,4 +50,3 @@ set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Applications)
 if(${verbose_traversal})
   message(STATUS "Exiting Applications subdirectory")
 endif(${verbose_traversal})
-

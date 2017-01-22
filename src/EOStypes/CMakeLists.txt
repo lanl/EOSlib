@@ -27,7 +27,7 @@ list( APPEND tests TestRiemann )
 
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
-  target_link_libraries(${test} Materials Eos)
+  target_link_libraries(${test} Materials EOS)
   add_test(NAME ${test}
     COMMAND ${CMAKE_COMMAND}
     -D test_cmd=${BIN}/${test}

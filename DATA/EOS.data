@@ -11,7 +11,7 @@
 :SharedLibs=EOS
 {
     # $EOSLIB_SHARED_LIBRARY_PATH is environment variable
-    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libEos.so
+    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libEOS.so
     #                   void *EOS_Duplicate(void*)
     #                   void  EOS_Destructor()
     #                    int  EOS_Initialize(void*)

@@ -6,7 +6,7 @@ set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Manager)
 set( bin ${CMAKE_CURRENT_BINARY_DIR} )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${bin}")
 
-list( APPEND tests TestManager TestXManager )
+list( APPEND tests TestManager TestXManager  TestHE )
 
 
 foreach(test ${tests})
