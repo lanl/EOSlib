@@ -1,0 +1,53 @@
+name        name    # material name
+type        name    # EOS type
+material    name    # type::name
+units       name    # units for Wave
+file[s]     file    # colon separated list of data files
+lib         name    # directory for EOSlib shared libraries
+                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH
+
+Type of locus, default prints ref state only
+isentrope      # compute isentrope
+shock          # compute shock locus
+detonation     # compute detonation locus
+left           # left facing wave
+right          # right facing wave
+u_escape       # expansion to escape velocity (cavitation) state
+valid_u        # limits u2 to escape velocity on isentrope
+weak           # weak detonation branch for us
+
+Reference state, default V_ref, e_ref, u=0 from database
+V0     value   # specific volume
+e0     value   # specific energy
+state  V0 e0   # reference state
+P0     value   # pressure of reference state
+T0     value   # Temperature of reference state
+PT     P0 T0   # reference state
+u0     value   # velocity of reference state
+
+Initial state for locus, default is reference state
+InitShock      # Initial state on shock locus based on ref state
+InitIsentrope  # Initial state on isentrope from ref state
+init_left      # left  facing wave for initial state
+init_right     # right facing wave for initial state
+u_p   value    # shock particle velocity
+u_s   value    # shock velocity
+Ps    value    # shock pressure
+Vs    value    # shock specific volume
+
+Wave curve by variable
+P              # wave curve by P
+u              # wave curve by u
+us             # wave curve by us
+V              # wave curve by V
+
+range   var1 var2    # range of wave curve
+var1    value,       # default is shock state
+var2    value
+
+P2    value    # P  & var2=value
+u2    value    # u  & var2=value
+us2   value    # us & var2=value
+V2    value    # V  & var2=value
+
+nsteps    value    # number of points on wave curve
