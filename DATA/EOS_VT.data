@@ -8,7 +8,7 @@
 
 :SharedLibs=EOS_VT
 {
-    EOS_VT         = $EOSLIB_SHARED_LIBRARY_PATH/libEOS
+    EOS_VT         = $EOSLIB_SHARED_LIBRARY_PATH/libEos
     IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
     Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials

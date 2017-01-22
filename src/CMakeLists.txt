@@ -25,15 +25,19 @@ set_property(TARGET CClib PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 
 add_subdirectory(DataBase)
 
-add_subdirectory(EOS)
+add_subdirectory(Eos)
 add_subdirectory(EOStypes)
 
+include_directories(ExtEOStypes/ArrheniusHE)
+include_directories(ExtEOStypes/Elastic1D)
+include_directories(ExtEOStypes/ElasticPlastic)
+include_directories(ExtEOStypes/HEburn)
 add_subdirectory(ExtEOS)
 add_subdirectory(ExtEOStypes)
 
-add_subdirectory(Applications)
-
 add_subdirectory(Manager)
+
+add_subdirectory(Applications)
 
 add_subdirectory(DnKappa)
 

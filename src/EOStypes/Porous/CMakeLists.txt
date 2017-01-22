@@ -29,7 +29,7 @@ add_library( Porous ${${projectName}_policy} ${Porous_src} )
 set_property(TARGET Porous PROPERTY CXX_STANDARD 11)
 set_property(TARGET Porous PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Porous PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Porous EOS)
+target_link_libraries(Porous Eos)
 #
 # Tests
 #

@@ -3,166 +3,6 @@
 #include "EOS.h"
 #include "Detonation_gen.h"
 
-
-
-class CJstate
-{
-public:
-    WaveState CJ;       // CJ state
-
-    double V0;          // V0 of reactants
-    double e0;          // e0 of reactants
-    double P0;          // P0 of reactants
-
-    // constant volume state
-    double Pcv;         // eos.P(V0,e0) > P0
-    double Kcv;         // eos.K(V0,e0)
-
-    EOS &eos;           // products HE
-
-    double tol_iter;    // relative tolerance for iteration
-    int    max_iter;    // maximum number of iterations
-
-    CJstate(EOS &prod, double V0, double e0, double P0);
-    ~CJstate();
-
-    // sonic point on Hugoniot
-    int sonic();
-    // point on Hugoniot for given V
-    int HugV( double  V, double &e, double &P, double &u );
-
-    int status;
-    const char *ErrorStatus();
-};
-
-const char *CJstate::ErrorStatus()
-{
-	const char *string;
-	
-	switch(status)
-	{
-	case 0:
-		string = "OK (no error)";
-		break;
-	case 1:
-		string = "Pcv failed";
-		break;
-	case 2:
-		string = "Pcv <= P0";
-		break;
-	case 3:
-		string = "Kcv failed";
-		break;
-    case 4:
-		string = "sonic, bounds failed";
-		break;
-    case 5:
-		string = "sonic, failed to meet tolerance";
-		break;
-    case 6:
-		string = "HugV, failed to meet tolerance";
-		break;
-
-	default:
-		string = "unknown error status";
-	}
-	return string;
-}
-
-CJstate::CJstate(EOS &prod, double V_0, double e_0, double P_0)
-                : eos(prod), tol_iter(1.e-14), max_iter(100)
-{
-    V0 = V_0;
-    e0 = e_0;
-    P0 = P_0;
-    Pcv = eos.P(V0,e0);
-    if( std::isnan(Pcv) )
-    {
-        status = 1;
-        return;
-    }
-    if( Pcv <= P0 )
-    {
-        status = 2;
-        return;
-    }
-    Kcv = eos.KS(V0,e0); // isentropic bulk modulus
-    if( std::isnan(Kcv) )
-    {
-        status = 3;
-        return;
-    }
-    status = 0;
-}
-
-CJstate::~CJstate()
-{
-}
-
-int CJstate::sonic()
-{
-    double V,e,P,u;
-    //
-    // initial bounds (V2 < V1)
-    double V1 = V0;
-    double V2;
-    int count = max_iter;
-    while( count-- )
-    {
-       V2 = 0.9*V1;
-       if( HugV(V2, e, P, u) ) return status;
-       double m_2 = (P-P0)/(V0-V2);
-       double c2  = eos.c2(V2,e);
-       double sonic = V2*V2*m_2 - c2;
-       if( sonic >= 0.0 ) { V1 = V2; }
-       else { break; }
-    }
-    if( count <= 0 )
-    {
-       status = 4;
-       return 1;
-    }
-    //
-    // bisection
-    while( count-- )
-    {
-       V = 0.5*(V1+V2);
-       (void) HugV(V, e, P, u);
-       double m_2 = (P-P0)/(V0-V);
-       double c2  = eos.c2(V,e);
-       double sonic = V*V*m_2 - c2;
-       if( std::abs(sonic) < tol_iter*c2 ) break;
-       if( sonic < 0. ) V2 = V;
-       else V1 = V;
-    }
-    CJ.V = V;
-    CJ.e = e;
-    CJ.u = u;
-    CJ.P = P;
-    CJ.us = V0*sqrt( (P-P0)/(V0-V) );
-    status = (count>=0) ? 0 : 5;
-    return status;
-}
-int CJstate::HugV(double V, double &e, double &P, double &u)
-{
-    e = e0 + (V0-V)*(P0+Kcv*(1.-V/V0)); // initial guess for Newton iteration
-    int count = max_iter;
-    while( count-- )
-    {
-       P = eos.P(V,e);
-       double h = e-e0 - 0.5*(P+P0)*(V0-V);
-       if( std::abs(h) < tol_iter*(e-e0) ) break;
-       double Gamma =  eos.Gamma(V,e);
-       double de    = h/(1.-0.5*Gamma*(V0-V)/V);
-       e -= de;
-    }
-    u = sqrt( (P-P0)*(V0-V) );
-    status = (count>=0) ? 0 : 6;
-    return status;
-}
-//
-//
-//
 Detonation_gen::Detonation_gen(EOS &e, double pvac)
     : Detonation(e,pvac), ODE(1,128)
 {
@@ -204,32 +44,30 @@ double Detonation_gen_CJ::f(double V, const double *y, const double *yp)
 }
 int Detonation_gen::InitCJ()
 {
-    CJstate CJ(*eos,V0,e0,P0);
-    if( CJ.status || CJ.sonic() )
-    {
-        eos->ErrorHandler()->Log("Detonation_gen::InitCJ", __FILE__, __LINE__,
-                eos, "CJstate failed with status %s\n", CJ.ErrorStatus() );
+    Pw = eos->P(V0,e0);
+    if( std::isnan(Pw) || Pw <= P0 )
         return 1;
-    }
-    Vcj = CJ.CJ.V;
-    ecj = CJ.CJ.e;
-    ucj = CJ.CJ.u;
-    Pcj = CJ.CJ.P;
-    Dcj = CJ.CJ.us;
-    //
-    // ToDo: solve jump conditions instead of using ODE solver
-    // initialize ODE solver
-    //
-    e[0] = ecj;
-    double dV = -0.01*Vcj;
+    e[0] = e0;
+    double dV = -0.01*V0;
     int status;
-    if( (status=ODE::Initialize(Vcj,e,dV)) )
+    if( (status=ODE::Initialize(V0,e,dV)) )
     {
         eos->ErrorHandler()->Log("Detonation_gen::InitCJ", __FILE__, __LINE__,
                 eos, "Initialize failed with status %s\n", ErrorStatus(status) );
         return 1;
     }
-
+    Detonation_gen_CJ CJ(this);
+    double val=0.0;
+    if( (status=Integrate(CJ, val, Vcj, e)) )
+    {
+        eos->ErrorHandler()->Log("Detonation_gen::InitCJ", __FILE__, __LINE__,
+                eos, "CJ failed with status %s\n", ErrorStatus(status) );
+        return 1;
+    }
+    ecj = e[0];
+    Pcj = eos->P(Vcj,ecj);
+    Dcj = V0*sqrt((Pcj-P0)/(V0-Vcj));
+    ucj = (1.-Vcj/V0)*Dcj;
     return 0;
 }
 

@@ -1,8 +1,8 @@
 if(${verbose_traversal})
-  message(STATUS "Entered EOS/Tests subdirectory")
+  message(STATUS "Entered Eos/Tests subdirectory")
 endif(${verbose_traversal})
 
-set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOS)
+set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Eos)
 set( bin ${CMAKE_CURRENT_BINARY_DIR} )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${bin}")
 
@@ -13,7 +13,7 @@ list( APPEND tests Test1 )
 
 foreach(test ${tests})
   add_executable(${test} ${test}.C)
-  target_link_libraries(${test} EOS)
+  target_link_libraries(${test} Eos)
   add_test(NAME ${test}
   COMMAND ${CMAKE_COMMAND}
   -D test_cmd=${bin}/${test}
@@ -27,5 +27,5 @@ endforeach(test)
 
 
 if(${verbose_traversal})
-  message(STATUS "Exiting EOS/Tests subdirectory")
+  message(STATUS "Exiting Eos/Tests subdirectory")
 endif(${verbose_traversal})

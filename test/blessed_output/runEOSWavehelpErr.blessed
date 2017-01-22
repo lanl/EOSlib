@@ -1,31 +1,23 @@
-name        name    # material name
-type        name    # EOS type
+name        name    # material name [HMX]
+type        name    # EOS type [Hayes]
 material    name    # type::name
-units       name    # units for Wave
-file[s]     file    # colon separated list of data files
-lib         name    # directory for EOSlib shared libraries
-                    # default environ variable EOSLIB_SHARED_LIBRARY_PATH
+file[s]     file    # : separated list of data files
+units       name    # default units from data base
 
-Type of locus, default prints ref state only
 isentrope      # compute isentrope
 shock          # compute shock locus
 detonation     # compute detonation locus
 left           # left facing wave
 right          # right facing wave
-u_escape       # expansion to escape velocity (cavitation) state
-valid_u        # limits u2 to escape velocity on isentrope
-weak           # weak detonation branch for us
 
-Reference state, default V_ref, e_ref, u=0 from database
-V0     value   # specific volume
-e0     value   # specific energy
+V0     value   # specific volume [V_ref] of reference state
+e0     value   # specific energy [e_ref] of reference state
 state  V0 e0   # reference state
 P0     value   # pressure of reference state
 T0     value   # Temperature of reference state
 PT     P0 T0   # reference state
 u0     value   # velocity of reference state
 
-Initial state for locus, default is reference state
 InitShock      # Initial state on shock locus based on ref state
 InitIsentrope  # Initial state on isentrope from ref state
 init_left      # left  facing wave for initial state
@@ -35,7 +27,6 @@ u_s   value    # shock velocity
 Ps    value    # shock pressure
 Vs    value    # shock specific volume
 
-Wave curve by variable
 P              # wave curve by P
 u              # wave curve by u
 us             # wave curve by us
@@ -51,3 +42,5 @@ us2   value    # us & var2=value
 V2    value    # V  & var2=value
 
 nsteps    value    # number of points on wave curve
+u_escape           # expansion to escape (cavitation) state
+valid_u            # limits u2 to escape velocity

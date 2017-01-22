@@ -1,39 +1,46 @@
 if(${verbose_traversal})
   message(STATUS "Entered Elastic1D subdirectory")
 endif(${verbose_traversal})
-#
-# headers
-#
-file(GLOB Elastic1D_h "*.h")
-list( APPEND HEADER_FILES ${Elastic1D_h} )
-set( HEADER_FILES ${HEADER_FILES} PARENT_SCOPE )
 
-file(GLOB Elastic1D_h  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
-foreach( file_h ${Elastic1D_h})
-    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
-                                ${CMAKE_CURRENT_SOURCE_DIR}/${file_h}
-                                ${HEADER_DIR}/${file_h})
-endforeach( file_h)
-#
-# SOURCE
-#
-execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
-                                ${CMAKE_CURRENT_SOURCE_DIR}
-                                ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
-#
-# library
-#
-file(GLOB Elastic1D_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
+message(STATUS "blessed output in Elastic1D: ${EOSLIB_BLESSED_OUTPUT}\n")
+set(EOSLIB_ELASTIC1D_BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes/Elastic1D)
+
+set(Elastic1D_src)
+
+add_subdirectory(SubsElastic)
+add_subdirectory(SubsPlastic)
 
 add_library( Elastic1D ${${projectName}_policy} ${Elastic1D_src} )
 set_property(TARGET Elastic1D PROPERTY CXX_STANDARD 11)
 set_property(TARGET Elastic1D PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Elastic1D PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Elastic1D ExtEOS)
-#
-# Tests
-#
-add_subdirectory(Tests)
+
+target_link_libraries( Elastic1D Io Math Eos ExtEOS Materials ${CMAKE_DL_LIBS})
+
+# list( APPEND tests PMMAhug TestElastic1D TestElasticPMMA TestEP TestEPshock TestRiemann TestVMrate TestXmanager TwoShockEP )
+# 
+# foreach(test ${tests})
+#   add_executable(${test}Elastic1D ${test}.C)
+#   target_link_libraries(${test}Elastic1D Elastic1D)
+#   add_test(NAME ${test}Elastic1D
+#     COMMAND ${CMAKE_COMMAND}
+#     -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D
+#     -D test_args:string=${args}
+#     -D out_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Out.blessed
+#     -D err_blessed=${EOSLIB_ELASTIC1D_BLESSED_OUTPUT}/${test}Err.blessed 
+#     -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
+#     )
+#   message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/${test}Elastic1D)
+#   set_tests_properties(${test}Elastic1D PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# endforeach(test)
+
+install(TARGETS Elastic1D
+  RUNTIME DESTINATION ./bin
+  LIBRARY DESTINATION ./lib
+  ARCHIVE DESTINATION ./lib/static)
+
+list(APPEND INSTALL_TARGETS Elastic1D)
+set(INSTALL_TARGETS ${INSTALL_TARGETS} PARENT_SCOPE)
 
 if(${verbose_traversal})
   message(STATUS "Exiting Elastic1D subdirectory")

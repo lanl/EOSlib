@@ -29,7 +29,7 @@ add_library( JWL ${${projectName}_policy} ${JWL_src} )
 set_property(TARGET JWL PROPERTY CXX_STANDARD 11)
 set_property(TARGET JWL PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(JWL EOS)
+target_link_libraries(JWL Eos)
 #
 # Tests
 #

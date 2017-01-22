@@ -29,7 +29,7 @@ add_library( Davis ${${projectName}_policy} ${Davis_src} )
 set_property(TARGET Davis PROPERTY CXX_STANDARD 11)
 set_property(TARGET Davis PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Davis PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Davis EOS)
+target_link_libraries(Davis Eos)
 #
 # Tests
 #

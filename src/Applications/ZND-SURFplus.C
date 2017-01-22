@@ -308,6 +308,7 @@ int main(int, char **argv)
     const char *type     = "HEburn2";
     const char *name     = NULL;
     const char *material = NULL;
+
     const char *units    = NULL;
 
     double upiston =  0.;
@@ -479,44 +480,26 @@ int main(int, char **argv)
     int N     = profile.N;
     double xi,t,M, lambda1,lambda2;
     double V, e,de, u, c, P, T, S;
-    int i;
+    int i,j;
 	cout.setf(ios::left, ios::adjustfield);
-    cout        << setw(15) << "# t"
-         << " " << setw(15) << "   xi"
-         << " " << setw(15) << "   M"
-         << " " << setw(15) << "   V"
-         << " " << setw(15) << "   e"
-         << " " << setw(15) << "   u"
-         << " " << setw(15) << "   c"
-         << " " << setw(15) << "   P"
-         << " " << setw(15) << "   T"
-         << " " << setw(15) << "   S"
-         << " " << setw(15) << "   lambda1";
+    cout        << setw(13) << "# t"
+         << " " << setw(13) << "   xi"
+         << " " << setw(13) << "   M"
+         << " " << setw(13) << "   V"
+         << " " << setw(13) << "   e"
+         << " " << setw(13) << "   u"
+         << " " << setw(13) << "   c"
+         << " " << setw(13) << "   P"
+         << " " << setw(13) << "   T"
+         << " " << setw(13) << "   S"
+         << " " << setw(13) << "   lambda1";
     if( profile.Rate->Q > 0.0 )
     {
-        cout << " " << setw(15) << "   lambda2"
-             << " " << setw(15) << "   de";
+        cout << " " << setw(13) << "   lambda2"
+             << " " << setw(13) << "   de";
     }
     cout << "\n";
-    const Units *U = eos->UseUnits();
-    cout << "# " << setw(15) << U->Unit("t")
-         << "  " << setw(15) << U->Unit("L")
-         << " "  << setw(15) << "rho*len"
-         << " "  << setw(15) << U->Unit("V")
-         << " "  << setw(15) << U->Unit("e")
-         << " "  << setw(15) << U->Unit("u")
-         << " "  << setw(15) << U->Unit("u")
-         << " "  << setw(15) << U->Unit("P")
-         << " "  << setw(15) << U->Unit("T")
-         << " "  << setw(15) << U->Unit("S")
-         << " "  << setw(15) << " ";
-    if( profile.Rate->Q > 0.0 )
-    {
-        cout << " " << setw(15) << "  "
-             << " " << setw(15) << U->Unit("e");
-    }
-    cout << "\n";
-    cout.setf(ios::showpoint);
+	cout.setf(ios::showpoint);
 	cout.setf(ios::right, ios::adjustfield);
 	cout.setf(ios::scientific, ios::floatfield);
     //
@@ -537,21 +520,21 @@ int main(int, char **argv)
     de      = 0.0;
     for( i=2; i; i-- )
     {
-        cout        << setw(15) << setprecision(8) << t
-             << " " << setw(15) << setprecision(8) << xi
-             << " " << setw(15) << setprecision(8) << M
-             << " " << setw(15) << setprecision(8) << V
-             << " " << setw(15) << setprecision(8) << e
-             << " " << setw(15) << setprecision(8) << u
-             << " " << setw(15) << setprecision(8) << c
-             << " " << setw(15) << setprecision(8) << P
-             << " " << setw(15) << setprecision(8) << T
-             << " " << setw(15) << setprecision(8) << S
-             << " " << setw(15) << setprecision(8) << lambda1;
+        cout        << setw(13) << setprecision(6) << t
+             << " " << setw(13) << setprecision(6) << xi
+             << " " << setw(13) << setprecision(6) << M
+             << " " << setw(13) << setprecision(6) << V
+             << " " << setw(13) << setprecision(6) << e
+             << " " << setw(13) << setprecision(6) << u
+             << " " << setw(13) << setprecision(6) << c
+             << " " << setw(13) << setprecision(6) << P
+             << " " << setw(13) << setprecision(6) << T
+             << " " << setw(13) << setprecision(6) << S
+             << " " << setw(13) << setprecision(6) << lambda1;
         if( profile.Rate->Q > 0.0 )
         {
-             cout << " " << setw(15) << setprecision(8) << lambda2
-                  << " " << setw(15) << setprecision(8) << de;
+             cout << " " << setw(13) << setprecision(6) << lambda2
+                  << " " << setw(13) << setprecision(6) << de;
         }
         cout << "\n";
         t  = 0.0;
@@ -587,23 +570,23 @@ int main(int, char **argv)
         T = HE->T(V,e,z);
         c = HE->c(V,e,z);
         S = HE->S(V,e,z);
-        cout        << setw(15) << setprecision(8) << t
-             << " " << setw(15) << setprecision(8) << xi
-             << " " << setw(15) << setprecision(8) << M
-             << " " << setw(15) << setprecision(8) << V
-             << " " << setw(15) << setprecision(8) << e
-             << " " << setw(15) << setprecision(8) << u
-             << " " << setw(15) << setprecision(8) << c
-             << " " << setw(15) << setprecision(8) << P
-             << " " << setw(15) << setprecision(8) << T
-             << " " << setw(15) << setprecision(8) << S
-             << " " << setw(15) << setprecision(8) << lambda1;
+        cout        << setw(13) << setprecision(6) << t
+             << " " << setw(13) << setprecision(6) << xi
+             << " " << setw(13) << setprecision(6) << M
+             << " " << setw(13) << setprecision(6) << V
+             << " " << setw(13) << setprecision(6) << e
+             << " " << setw(13) << setprecision(6) << u
+             << " " << setw(13) << setprecision(6) << c
+             << " " << setw(13) << setprecision(6) << P
+             << " " << setw(13) << setprecision(6) << T
+             << " " << setw(13) << setprecision(6) << S
+             << " " << setw(13) << setprecision(6) << lambda1;
         if( profile.Rate->Q > 0.0 )
         {
             lambda2 = z[3]*z[3];
             de = profile.Rate->q(lambda1,lambda2);
-            cout << " " << setw(15) << setprecision(8) << lambda2
-                 << " " << setw(15) << setprecision(8) << -de;
+            cout << " " << setw(13) << setprecision(6) << lambda2
+                 << " " << setw(13) << setprecision(6) << -de;
         }
         cout << "\n";
         if( status )
@@ -648,26 +631,26 @@ int main(int, char **argv)
             S = HE->S(V,e,z);
             lambda2 = z[3]*z[3];
             de = profile.Rate->q(lambda1,lambda2);
-            cout        << setw(15) << setprecision(8) << t
-                 << " " << setw(15) << setprecision(8) << xi
-                 << " " << setw(15) << setprecision(8) << M
-                 << " " << setw(15) << setprecision(8) << V
-                 << " " << setw(15) << setprecision(8) << e
-                 << " " << setw(15) << setprecision(8) << u
-                 << " " << setw(15) << setprecision(8) << c
-                 << " " << setw(15) << setprecision(8) << P
-                 << " " << setw(15) << setprecision(8) << T
-                 << " " << setw(15) << setprecision(8) << S
-                 << " " << setw(15) << setprecision(8) << lambda1
-                 << " " << setw(15) << setprecision(8) << lambda2
-                 << " " << setw(15) << setprecision(8) << -de
+            cout        << setw(13) << setprecision(6) << t
+                 << " " << setw(13) << setprecision(6) << xi
+                 << " " << setw(13) << setprecision(6) << M
+                 << " " << setw(13) << setprecision(6) << V
+                 << " " << setw(13) << setprecision(6) << e
+                 << " " << setw(13) << setprecision(6) << u
+                 << " " << setw(13) << setprecision(6) << c
+                 << " " << setw(13) << setprecision(6) << P
+                 << " " << setw(13) << setprecision(6) << T
+                 << " " << setw(13) << setprecision(6) << S
+                 << " " << setw(13) << setprecision(6) << lambda1
+                 << " " << setw(13) << setprecision(6) << lambda2
+                 << " " << setw(13) << setprecision(6) << -de
                  << "\n";
              if( status )
              {
                 cerr << Error("profile.lambda2 failed with status ")
                      << profile.ErrorStatus(status)
-                     << "\nD "  <<  setprecision(8) << D
-                     << " u+c " << setprecision(8) << u+c
+                     << "\nD "  <<  setprecision(6) << D
+                     << " u+c " << setprecision(6) << u+c
                      << Exit;
              }
         }
@@ -704,16 +687,16 @@ int main(int, char **argv)
           S = products->S(wave.V,wave.e);
           M  = ZND_M  - (ZND_rhoc - c/wave.V)*t_TW;
           xi = ZND_xi - (ZND_upc-(u+c))*t_TW;
-          cout        << setw(15) << setprecision(8) << t
-               << " " << setw(15) << setprecision(8) << xi
-               << " " << setw(15) << setprecision(8) << M
-               << " " << setw(15) << setprecision(8) << wave.V
-               << " " << setw(15) << setprecision(8) << wave.e
-               << " " << setw(15) << setprecision(8) << u
-               << " " << setw(15) << setprecision(8) << c
-               << " " << setw(15) << setprecision(8) << wave.P
-               << " " << setw(15) << setprecision(8) << T
-               << " " << setw(15) << setprecision(8) << S
+          cout        << setw(13) << setprecision(6) << t
+               << " " << setw(13) << setprecision(6) << xi
+               << " " << setw(13) << setprecision(6) << M
+               << " " << setw(13) << setprecision(6) << wave.V
+               << " " << setw(13) << setprecision(6) << wave.e
+               << " " << setw(13) << setprecision(6) << u
+               << " " << setw(13) << setprecision(6) << c
+               << " " << setw(13) << setprecision(6) << wave.P
+               << " " << setw(13) << setprecision(6) << T
+               << " " << setw(13) << setprecision(6) << S
                << "\n";
       }
       delete I;

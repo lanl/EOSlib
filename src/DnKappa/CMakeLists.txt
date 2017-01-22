@@ -31,7 +31,7 @@ set_property(TARGET DnKappa PROPERTY CXX_STANDARD 11)
 set_property(TARGET DnKappa PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET DnKappa PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 set_property(TARGET DnKappa PROPERTY LINKER_LANGUAGE CXX)
-target_link_libraries( DnKappa EOS)
+target_link_libraries( DnKappa Eos)
 #
 # Utility
 #

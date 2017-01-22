@@ -32,14 +32,6 @@ set_property(TARGET Manager PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Manager PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 target_link_libraries( Manager ExtEOS )
 #
-# Utilities
-#
-set( utils TestXmanager TestXRiemann TestXisentrope )
-foreach(util ${utils})
-   add_executable(${util} ${util}.C)
-   target_link_libraries(${util} Manager)
-endforeach(util)
-#
 # test
 #
 add_subdirectory(Tests)
@@ -47,3 +39,6 @@ add_subdirectory(Tests)
 if(${verbose_traversal})
   message(STATUS "Exiting Manager subdirectory")
 endif(${verbose_traversal})
+
+
+

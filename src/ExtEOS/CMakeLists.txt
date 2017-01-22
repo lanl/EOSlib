@@ -30,7 +30,7 @@ add_library( ExtEOS ${${projectName}_policy} ${ExtEOS_src} )
 set_property(TARGET ExtEOS PROPERTY CXX_STANDARD 11)
 set_property(TARGET ExtEOS PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET ExtEOS PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( ExtEOS  EOS )
+target_link_libraries( ExtEOS  Eos )
 #
 # test
 #

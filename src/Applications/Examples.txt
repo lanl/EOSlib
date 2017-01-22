@@ -21,7 +21,6 @@ runEOS ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis
 
 # ZND profile + Taylor Wave for HE with SURFplus rate
 runEOS ZND-SURFplus material HEburn2::PBX9502.HotSpotCC.davis_SURF
-runEOS ZND-SURFplus-dx material HEburn2::PBX9502.HotSpotCC.davis_SURF dx 0.01
 
 # Adibatic induction time for HE 
 runEOS HEburnReactionTime name LX14.Arrhenius

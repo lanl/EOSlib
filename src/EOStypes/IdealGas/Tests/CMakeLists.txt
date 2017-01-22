@@ -9,13 +9,13 @@ file(GLOB Test_c  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.C")
 foreach( test_c ${Test_c} )
   get_filename_component( test ${test_c} NAME_WE )
   add_executable(${test} ${test_c})
-  target_link_libraries( ${test} IdealGas EOS )
+  target_link_libraries( ${test} IdealGas Eos )
 endforeach( test_c )
 
 set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/IdealGas)
 # foreach(test IdealGas Test1 TestDetonation TestDeflagration TestPolar)
 #   add_executable(${test}IdealGas ${test}.C)
-#   target_link_libraries(${test}IdealGas  IdealGas EOS)
+#   target_link_libraries(${test}IdealGas  IdealGas Eos)
 #   #  add_test(${test}IdealGas ${test}IdealGas)
 #  # set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
 #   add_test(NAME ${test}IdealGas
@@ -32,7 +32,7 @@ set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/EOStypes/IdealGas)
 # 
 # foreach(test Test2 Test2VT)
 #   add_executable(${test}IdealGas ${test}.C)
-#   target_link_libraries(${test}IdealGas IdealGas EOS)
+#   target_link_libraries(${test}IdealGas IdealGas Eos)
 #   set(args "file ${EOSLIB_DATA_PATH}/test_data/IdealGasTest.data")
 #   add_test(NAME ${test}IdealGas
 #     COMMAND ${CMAKE_COMMAND}

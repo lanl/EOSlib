@@ -27,7 +27,7 @@ set_tests_properties(Test PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 add_test(NAME Xtest
   COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/TestOneD
+  -D test_cmd=${bin}/Xtest
   -D test_args:string=${args}
   -D out_blessed=${BLESSED_OUTPUT}/XtestOut.blessed
   -D err_blessed=${BLESSED_OUTPUT}/XtestErr.blessed 
