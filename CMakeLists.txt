@@ -247,6 +247,8 @@ else( BOOST_ROOT OR DEFINED Boost )
 endif( BOOST_ROOT OR DEFINED Boost )
 #
 # A short function for CTest setup used in subdirectories
+# ToDo: change function name from 'setupTest' to 'BoostTest'
+#       currently only used in src/Local/{LocalIo,LocalMath,String}
 function(setupTest TEST_NAME)
   if(${verbose_traversal})
     message(STATUS "Entered test subdirectory")
@@ -264,10 +266,11 @@ function(setupTest TEST_NAME)
   endif(${verbose_traversal})
 endfunction(setupTest)
 
+set(EOSLIB_BLESSED_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/blessed_output)
 set(EOSLIB_DATA_TEST_PATH "${EOSLIB_DATA_PATH}")
 set(CTEST_ENVIRONMENT
   "EOSLIB_DATA_PATH=${EOSLIB_DATA_TEST_PATH}"
-  "EOSLIB_BLESSED_OUTPUT_PATH=${CMAKE_BINARY_DIR}/test/blessed_output"
+  "EOSLIB_BLESSED_OUTPUT_PATH=${CMAKE_BINARY_DIR}/TEST/blessed_output"
   "CTEST_OUTPUT_ON_FAILURE=1"
   "BOOST_TEST_LOG_LEVEL='message'"
   "EOSLIB_SHARED_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
