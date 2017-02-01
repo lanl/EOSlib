@@ -1,0 +1,34 @@
+For high resolution monitor
+
+1. set font size
+MaterialData.pl
+$mw->fontCreate('fixed',
+        -family=>'mono',
+        -size=>12);
+$mw->optionAdd('*font' => 'fixed');
+#$mw->scaling(2);
+
+2. set canvas size
+GUI/lib/DataBase.pm
+	my $MframeWidth = 910;
+	my $MframeHeight= 500;
+	my $RframeWidth = 900;
+	my $RframeHeight= 350;
+GUI/lib/Data/NewMaterialWindow.pl
+	my $width = 910;
+	my $height= 500;	
+
+3. fine tune
+GUI/lib/Material/WavePlot.pl
+	my $line2 = $frame->Frame()->pack( -side=>'top', -anchor=>'w');
+	$line2->Frame( )->pack(-side=>'left', -padx=>38);
+	$mat->{y_var} = 'P';
+	my $y_varEntry = $mat->{y_varEntry}
+	   = $line2->BrowseEntry(
+		-label => "y-variable", -labelWidth => 10,
+		-width => 5, -listwidth=>20,
+	  	-textvariable => \$mat->{y_var},
+		-state => 'readonly',
+		#-browsecmd => sub{ $data->UnitsReset;},
+		) ->pack(-side=>'left');
+
