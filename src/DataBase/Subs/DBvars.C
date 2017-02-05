@@ -1,6 +1,6 @@
 #include "DataBase.h"
 #include <cstring>
-inline char* Strdup(const char* str)
+inline char *Strdup(const char *str)
 {
     return (str==NULL) ?  NULL : strdup(str);
 }
@@ -32,8 +32,9 @@ DBvars::DBvars(const char *f, DBvars *p) : prev(p)
         data = NULL;
         return;
     }
-    file = Strdup(f);
     dir  = dirname(f);
+    file = Strdup(f);
+
     data = new DataFile(*in);
     base  = Strdup("");
     units = Strdup("");   

@@ -1,5 +1,12 @@
 #!/bin/sh
 
-PWD=`dirname $0`
+CWD=`pwd`
+GUI=$CWD/`dirname $0`
 
-exec perl $PWD/MaterialData.pl "$@" &
+cd $GUI/../../build;
+pwd
+echo DEBUG
+source SetEnv
+
+cd $CWD
+exec perl $GUI/MaterialData.pl "$EOSLIB_DATA_PATH/EOS.data" &

@@ -38,6 +38,16 @@ int DataBase::DotCommands()
             }
             else if( file[0] == '/' )
                 status = read(file);
+            else if(  file[0] == '$' )
+            {
+            	const char *name = EnvironmentVar(file+1);
+                if( name == NULL )
+                {
+                    error->Log(FUNC, ".include failed for file '%s'\n",file);
+                    return 1;
+                }
+                status  = read(name);
+            }
             else
             {
                 string str(vars->dir);
@@ -73,4 +83,28 @@ int DataBase::DotCommands()
         }
     }
     return 0;
+}
+const char *DataBase::EnvironmentVar(const char *file)
+{
+// file = "env_var/path_name"
+// returns string with value of env_var substituted
+//         or NULL for error
+//  Also adds env_var and its value to :DataBase::Environment
+    string str(file);
+    size_t n1 = str.find("/");
+    if( n1==string::npos || n1==0 || n1==str.size()-1 )
+        return NULL;
+    string var = str.substr(0,n1);
+    Parameters &params = *GetProp(*database,"Environment").params;
+    const char* name = var.c_str();
+    const char *val = params.Value(name);
+    if( val == NULL )
+    {
+    	if( (val=getenv(name)) )
+            params.Append(name,val);
+        else
+            return NULL;           
+    }
+    str.replace(0,n1,val);
+    return str.c_str();
 }

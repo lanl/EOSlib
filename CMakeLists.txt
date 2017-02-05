@@ -284,6 +284,9 @@ add_subdirectory(src)
 # documentation
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/doc
           DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# GUI
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/GUI
+          DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 # Install
