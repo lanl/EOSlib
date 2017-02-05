@@ -32,7 +32,7 @@ DBvars::DBvars(const char *f, DBvars *p) : prev(p)
         data = NULL;
         return;
     }
-    dir  = dirname(f);
+    dir  = Strdup(dirname(f));
     file = Strdup(f);
 
     data = new DataFile(*in);
