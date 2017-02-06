@@ -136,6 +136,7 @@ public:
 private:
     DataBase(const DataBase&);                      // disallowed
     void operator=(const DataBase&);                // disallowed
+    const char *EnvironmentVar(const char *file);
 protected:
     DataBase_Error *error;
     NAMEARRAY<Handle> handles;

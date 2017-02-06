@@ -292,37 +292,11 @@ char *DataBase::FullPath(const char *lib)
         str = str + "/" + lib;
         return strdup(str.c_str());
     }
-	int n;
-	for( n=1; lib[n] != '\0'; n++ )
-	{
-	    if( lib[n] == '/' )
-	    {
-            if( n == 1 )
-                break;
-	        char *name = new char[n];
-	        memcpy(name,lib+1,n-1);
-	        name[n-1]='\0';
-            const char *val = params.Value(name);
-            if( val == NULL )
-            {
-	            if( (val=getenv(name)) )
-                    params.Append(name,val);
-                else
-                    error->Log(FUNC, "no environment variable %s, "
-                               "needed for lib = %s\n", name, lib);
-   
-            }
-            delete [] name;
-            if( val )
-            {
-                string str(val);
-                str = str + "/" + &lib[n+1];
-                return strdup(str.c_str());
-            }
-            else
-                return NULL;
-	    }
-	}
-	DB_error->Log(FUNC, "syntax error in lib name `%s'\n", lib);
-	return NULL;	
+    const char *libname = EnvironmentVar(lib+1);
+    if( libname == NULL )
+    {
+        error->Log(FUNC, "lib environment variable, lib = %s\n",lib);
+        return NULL;
+    }
+    return strdup(libname);
 }

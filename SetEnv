@@ -1,5 +1,11 @@
-export EOSLIB_DATA_PATH=`pwd`/DATA
-export EOSLIB_SHARED_LIBRARY_PATH=`pwd`/lib
-export PATH=`pwd`/bin:$PATH
+# Source this file to set eoslib environment variables
+
+EOSLIB_BUILD=`pwd`/$BASH_SOURCE
+EOSLIB_BUILD=`dirname $EOSLIB_BUILD`
+
+export EOSLIB_DATA_PATH=$EOSLIB_BUILD/DATA
+export EOSLIB_SHARED_LIBRARY_PATH=$EOSLIB_BUILD/lib
+export PATH=$EOSLIB_BUILD/bin:$PATH
+
 export EOSdata=$EOSLIB_DATA_PATH/EOS.data
 export LD_LIBRARY_PATH=$EOSLIB_SHARED_LIBRARY_PATH:$LD_LIBRARY_PATH
