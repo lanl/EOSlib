@@ -9,4 +9,4 @@ echo DEBUG
 source SetEnv
 
 cd $CWD
-exec perl $GUI/MaterialData.pl "$EOSLIB_DATA_PATH/EOS.data" &
+exec perl $GUI/MaterialData.pl "DataFile=$EOSLIB_DATA_PATH/EOS.data" &
