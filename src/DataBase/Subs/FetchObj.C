@@ -258,7 +258,7 @@ Handle *DataBase::GetHandle(const char *base, const char *type)
         h->copy(*main);
         return h;  
     }
-    char *shared_obj = FullPath(lib);
+    const char *shared_obj = FullPath(lib);
     if( shared_obj == NULL )
     {
         error->Log(FUNC, "FullPath failed for %s\n", lib);
@@ -279,7 +279,7 @@ Handle *DataBase::GetHandle(const char *base, const char *type)
 
 #undef FUNC
 #define FUNC "DataBase::FullPath", __FILE__, __LINE__, this
-char *DataBase::FullPath(const char *lib)
+const char *DataBase::FullPath(const char *lib)
 {
     if( lib == NULL)
         return NULL;
@@ -298,5 +298,5 @@ char *DataBase::FullPath(const char *lib)
         error->Log(FUNC, "lib environment variable, lib = %s\n",lib);
         return NULL;
     }
-    return strdup(libname);
+    return libname;
 }

@@ -47,6 +47,7 @@ int DataBase::DotCommands()
                     return 1;
                 }
                 status  = read(name);
+                delete [] name;
             }
             else
             {
@@ -90,6 +91,7 @@ const char *DataBase::EnvironmentVar(const char *file)
 // returns string with value of env_var substituted
 //         or NULL for error
 //  Also adds env_var and its value to :DataBase::Environment
+    if( file==NULL ) return NULL;
     string str(file);
     size_t n1 = str.find("/");
     if( n1==string::npos || n1==0 || n1==str.size()-1 )
@@ -106,5 +108,5 @@ const char *DataBase::EnvironmentVar(const char *file)
             return NULL;           
     }
     str.replace(0,n1,val);
-    return str.c_str();
+    return strdup(str.c_str());
 }
