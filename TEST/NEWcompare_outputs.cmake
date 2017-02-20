@@ -18,6 +18,14 @@
 if(NOT test_cmd)
   message(FATAL_ERROR "Variable test_cmd not defined")
 endif(NOT test_cmd)
+
+
+## DEBUG
+  message(STATUS "test_cmd ${test_cmd}")
+
+
+
+
 #
 #  if runEOS UTILITY then test_name not test_cmd
 #

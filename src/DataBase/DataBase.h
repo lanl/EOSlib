@@ -177,7 +177,7 @@ protected:
     Property   *FetchProp(const char *base, const char *type, const char *name);
     Parameters *FetchParams(Type &tc, const char *name);
 
-    char *FullPath(const char *lib);
+    const char *FullPath(const char *lib);
     Handle *GetHandle(const char *base, const char *type);
     void *GetFunction(Handle &h, const char *b, const char *t, const char *n);
     void *NewObject(Property &);

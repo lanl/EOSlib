@@ -1,150 +1,6 @@
 if(${verbose_traversal})
   message(STATUS "Entered DataBase/Tests subdirectory")
 endif(${verbose_traversal})
-
-set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/DataBase)
-#
-#   Test Utilities
-#
-set( bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} )
-#
-#
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use")
-add_test(NAME Data0
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data0out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data0err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(Data0 PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data")
-add_test(NAME Data1
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data1out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data1err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(Data1 PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS")
-add_test(NAME Data2
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data2out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data2err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(Data2 PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-# prints absolute path
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data type DataBase name Environment parameters")
-# add_test(NAME Data3
-#   COMMAND ${CMAKE_COMMAND}
-#   -D test_cmd=${bin}/Data
-#   -D test_args:string=${args}
-#   -D out_blessed=${BLESSED_OUTPUT}/data3out.blessed
-#   -D err_blessed=${BLESSED_OUTPUT}/data3err.blessed 
-#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-#   )
-# set_tests_properties(Data3 PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data type SharedLibs parameters")
-add_test(NAME Data4
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data4out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data4err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(Data4 PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type UnitsNames name std parameters")
-add_test(NAME Data6
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data6out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data6err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type UnitsNames name std use")
-add_test(NAME Data7
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data7out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data7err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base Units type hydro name std use")
-add_test(NAME Data8
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data8out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data8err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS type Hayes name HMX")
-add_test(NAME Data9
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data9out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data9err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std parameters")
-add_test(NAME Data10
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data10out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data10err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data base Units type hydro name std use")
-add_test(NAME Data11
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data11out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data11err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseTest.data base EOS type Hayes name HMX-YC parameters")
-add_test(NAME Data12
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Data
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/data12out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/data12err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-
-set(args "file ${EOSLIB_DATA_PATH}/test_data/DataBaseUnits.data type hydro from std to HiP e u u^2 P V P*V")
-add_test(NAME Convert0
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${bin}/Convert
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/convert0out.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/convert0err.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
 #
 # test of dynamic linking
 #
@@ -163,11 +19,79 @@ endforeach( test_c )
 add_library( shared_obj ${${projectName}_policy} shared_obj.C)
 target_link_libraries( shared_obj Math )
 #
-# add tests
-set( bin "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" )
+# sym link to blessed_output directory
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                         ${CMAKE_CURRENT_SOURCE_DIR}/blessed_output
+                         ${CMAKE_CURRENT_BINARY_DIR}/blessed_output)
 
+# sym link to DATA directory
+execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
+                         ${CMAKE_CURRENT_SOURCE_DIR}/DATA
+                         ${CMAKE_CURRENT_BINARY_DIR}/DATA)
+
+
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Testing)
+file(GLOB DIR  RELATIVE "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
+
+set(BLESSED_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/blessed_output)
+set(DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/DATA)
+#
+# To Do: add tests of TestDB Testdl TestEnvironmentVar
+#
+
+#
+#  test utilities (Data, Convert) in ..
+#
+set( bin "${CMAKE_BINARY_DIR}/bin" )
+set(FILE "file ${DATA_DIR}/DataBaseTest.data")
+#
+#  test of ../Convert
+#
+set( tname Convert )
+set( Convert_arg "${FILE} type hydro from std to HiP e u u^2 P V P*V" )
+  add_test(NAME "${DIR}/${tname}" 
+    COMMAND ${CMAKE_COMMAND}
+      -D test_name=${tname}
+      -D test_cmd=${bin}/Convert
+      -D test_args:string=${${tname}_arg}
+      -D blessed_dir=${BLESSED_OUTPUT_DIR}/${tname}
+      -D run_dir=${CMAKE_CURRENT_BINARY_DIR}/Testing
+      -P ${CMAKE_BINARY_DIR}/TEST/NEWcompare_outputs.cmake
+    )
+    set_tests_properties("${DIR}/${tname}" PROPERTIES ENVIRONMENT
+                         "${CTEST_ENVIRONMENT}")
+#
+#  tests of ../Data
+#
+list( APPEND tlist Data0  Data1  Data2  Data4 Data6 Data7 Data8 Data9 )
+list( APPEND tlist Data10 Data11 Data12 )
+
+set(Data0_arg  "${FILE} base Units type hydro name std use")
+set(Data1_arg  "${FILE}")
+set(Data2_arg  "${FILE} base EOS")
+set(Data4_arg  "${FILE} type SharedLibs parameters")
+set(Data6_arg  "${FILE} type UnitsNames name std parameters")
+set(Data7_arg  "${FILE} type UnitsNames name std use")
+set(Data8_arg  "${FILE} base Units type hydro name std use")
+set(Data9_arg  "${FILE} base EOS type Hayes name HMX")
+set(Data10_arg "${FILE} base Units type hydro name std parameters")
+set(Data11_arg "${FILE} base Units type hydro name std use")
+set(Data12_arg "${FILE} base EOS type Hayes name HMX-YC parameters")
+
+foreach( tname ${tlist} )
+  add_test(NAME "${DIR}/${tname}" 
+    COMMAND ${CMAKE_COMMAND}
+      -D test_name=${tname}
+      -D test_cmd=${bin}/Data
+      -D test_args:string=${${tname}_arg}
+      -D blessed_dir=${BLESSED_OUTPUT_DIR}/${tname}
+      -D run_dir=${CMAKE_CURRENT_BINARY_DIR}/Testing
+      -P ${CMAKE_BINARY_DIR}/TEST/NEWcompare_outputs.cmake
+    )
+    set_tests_properties("${DIR}/${tname}" PROPERTIES ENVIRONMENT
+                         "${CTEST_ENVIRONMENT}")
+endforeach( tname )
 
 if(${verbose_traversal})
   message(STATUS "Exiting DataBase/Tests subdirectory")
 endif(${verbose_traversal})
-

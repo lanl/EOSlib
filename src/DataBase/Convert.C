@@ -6,10 +6,37 @@
 #include <iostream>
 using namespace std;
 
+const char *help[] = {    // list of commands printed out by help option
+    "file[s]     file    # colon separated list of data files",
+    "                    #      default: $EOSLIB_DATA_PATH/Units.data",
+    "lib         name    # directory for EOSlib shared libraries",
+    "                    #      default: $EOSLIB_SHARED_LIBRARY_PATH",
+    "type        name    # units type [hydro]",
+    "",
+    "from        name    # from units",
+    "to          name    # to units",
+    "",
+    "list of units to convert",
+    0
+};
+
+void Help(int status)
+{
+    const char **list;
+    for(list=help ;*list; list++)
+    {
+        cerr << *list << "\n";
+    }
+    exit(status);
+}
+
 int main(int, char **argv)
 {
     ProgName(*argv);
+
     const char *files = NULL;
+    const char *lib   = NULL;
+
     const char *type = "hydro";
     const char *from = NULL;
     const char *to = NULL;
@@ -21,29 +48,45 @@ int main(int, char **argv)
         GetVar(type,type);
         GetVar(from,from);
         GetVar(to,to);
+
+        if( !strcmp(*argv, "?") || !strcmp(*argv,"help") )
+            Help(0);
             
         break;
     }
     
-    int status = 0;
+    // input check
     if( files == NULL )
     {
-        status = 1;
-        std::cerr << Error("must specify database file\n");
+        char *DATA_dir = getenv("EOSLIB_DATA_PATH");
+        if( DATA_dir==NULL )
+        {
+            std::cerr << Error("must specify database file\n");
+        }
+        string str(DATA_dir);
+        str += "/Units.data";
+        files = strdup(str.c_str());
     }
+
+    if( lib )
+    {
+        setenv("EOSLIB_SHARED_LIBRARY_PATH",lib,1);
+    }
+    else if( !getenv("EOSLIB_SHARED_LIBRARY_PATH") )
+    {
+        cerr << Error("must specify lib or export EOSLIB_SHARED_LIBRARY_PATH")
+             << Exit;  
+    }
+    
     if( from == NULL )
     {
-        status = 1;
         std::cerr << Error("must specify from\n");
     }
     DataBase db;
     if( db.Read(files) )
     {
-        status = 1;
         std::cerr << Error("db.Read failed\n");    
     }
-    if( status )
-        std::cerr << Error("initialization failed") << Exit;
     
     Units *From = db.FetchUnits(type,from);
     if( From == NULL )
