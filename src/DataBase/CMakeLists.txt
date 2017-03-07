@@ -26,11 +26,19 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 # library
 #
 file(GLOB DataBase_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs/*.C")
-add_library( DataBase ${${projectName}_policy} ${DataBase_src} )
-set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
-set_property(TARGET DataBase PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET DataBase PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( DataBase CClib ${CMAKE_DL_LIBS})
+add_library( DataBase-obj OBJECT ${DataBase_src} )
+  set_property(TARGET DataBase-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET DataBase-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET DataBase-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET DataBase-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( DataBase ${${projectName}_policy}
+                   $<TARGET_OBJECTS:DataBase-obj>
+                   $<TARGET_OBJECTS:CClib-obj> )                   
+  set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
+  set_property(TARGET DataBase PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET DataBase PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries( DataBase ${CMAKE_DL_LIBS})
 #
 # Utilities
 #
