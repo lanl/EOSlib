@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB Elastic1D_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( Elastic1D ${${projectName}_policy} ${Elastic1D_src} )
-set_property(TARGET Elastic1D PROPERTY CXX_STANDARD 11)
-set_property(TARGET Elastic1D PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Elastic1D PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Elastic1D ExtEOS)
+add_library( Elastic1D-obj OBJECT ${Elastic1D_src} )
+  set_property(TARGET Elastic1D-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET Elastic1D-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Elastic1D-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Elastic1D-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( Elastic1D ${${projectName}_policy}
+                 $<TARGET_OBJECTS:Elastic1D-obj> )
+  set_property(TARGET Elastic1D PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Elastic1D PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Elastic1D PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(Elastic1D ExtEOS)
 #
 # Tests
 #

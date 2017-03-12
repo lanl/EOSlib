@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB ElasticPlastic_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( ElasticPlastic ${${projectName}_policy} ${ElasticPlastic_src} )
-set_property(TARGET ElasticPlastic PROPERTY CXX_STANDARD 11)
-set_property(TARGET ElasticPlastic PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET ElasticPlastic PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(ElasticPlastic ExtEOS)
+add_library( ElasticPlastic-obj OBJECT ${ElasticPlastic_src} )
+  set_property(TARGET ElasticPlastic-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET ElasticPlastic-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ElasticPlastic-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ElasticPlastic-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( ElasticPlastic ${${projectName}_policy}
+                 $<TARGET_OBJECTS:ElasticPlastic-obj> )
+  set_property(TARGET ElasticPlastic PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ElasticPlastic PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ElasticPlastic PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(ElasticPlastic ExtEOS)
 #
 # Tests
 #

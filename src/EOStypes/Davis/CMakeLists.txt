@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB Davis_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( Davis ${${projectName}_policy} ${Davis_src} )
-set_property(TARGET Davis PROPERTY CXX_STANDARD 11)
-set_property(TARGET Davis PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Davis PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Davis EOS)
+add_library( Davis-obj OBJECT ${Davis_src} )
+  set_property(TARGET Davis-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET Davis-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Davis-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Davis-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( Davis ${${projectName}_policy}
+                   $<TARGET_OBJECTS:Davis-obj> )
+  set_property(TARGET Davis PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Davis PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Davis PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(Davis EOS)
 #
 # Tests
 #

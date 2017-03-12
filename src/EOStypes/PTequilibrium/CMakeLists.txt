@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB PTequilibrium_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( PTequilibrium ${${projectName}_policy} ${PTequilibrium_src} )
-set_property(TARGET PTequilibrium PROPERTY CXX_STANDARD 11)
-set_property(TARGET PTequilibrium PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET PTequilibrium PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(PTequilibrium EOS)
+add_library( PTequilibrium-obj OBJECT ${PTequilibrium_src} )
+  set_property(TARGET PTequilibrium-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET PTequilibrium-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET PTequilibrium-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET PTequilibrium-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( PTequilibrium ${${projectName}_policy}
+                           $<TARGET_OBJECTS:PTequilibrium-obj> )
+  set_property(TARGET PTequilibrium PROPERTY CXX_STANDARD 11)
+  set_property(TARGET PTequilibrium PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET PTequilibrium PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(PTequilibrium EOS)
 #
 # Tests
 #

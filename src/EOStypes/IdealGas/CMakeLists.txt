@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB IdealGas_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( IdealGas ${${projectName}_policy} ${IdealGas_src} )
-set_property(TARGET IdealGas PROPERTY CXX_STANDARD 11)
-set_property(TARGET IdealGas PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET IdealGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(IdealGas EOS)
+add_library( IdealGas-obj OBJECT ${IdealGas_src} )
+  set_property(TARGET IdealGas-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET IdealGas-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET IdealGas-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET IdealGas-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( IdealGas ${${projectName}_policy}
+                   $<TARGET_OBJECTS:IdealGas-obj> )
+  set_property(TARGET IdealGas PROPERTY CXX_STANDARD 11)
+  set_property(TARGET IdealGas PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET IdealGas PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(IdealGas EOS)
 #
 # Tests
 #

@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB ArrheniusHE_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( ArrheniusHE ${${projectName}_policy} ${ArrheniusHE_src} )
-set_property(TARGET ArrheniusHE PROPERTY CXX_STANDARD 11)
-set_property(TARGET ArrheniusHE PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(ArrheniusHE ExtEOS PTequilibrium StiffenedGas)
+add_library( ArrheniusHE-obj OBJECT ${ArrheniusHE_src} )
+  set_property(TARGET ArrheniusHE-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET ArrheniusHE-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ArrheniusHE-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ArrheniusHE-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( ArrheniusHE ${${projectName}_policy}
+                 $<TARGET_OBJECTS:ArrheniusHE-obj> )
+  set_property(TARGET ArrheniusHE PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ArrheniusHE PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ArrheniusHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(ArrheniusHE ExtEOS PTequilibrium StiffenedGas)
 #
 # Tests
 #

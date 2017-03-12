@@ -280,6 +280,10 @@ add_subdirectory(TEST)
 # source code
 include_directories(${HEADER_DIR})
 add_subdirectory(src)
+add_subdirectory(Examples)
+
+
+message( STATUS "CXX compiler: ${CMAKE_CXX_COMPILER}")
 
 # documentation
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/doc

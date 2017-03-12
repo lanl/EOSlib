@@ -26,11 +26,22 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 # library
 #
 file(GLOB Manager_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
-add_library( Manager ${${projectName}_policy} ${Manager_src} )
-set_property(TARGET Manager PROPERTY CXX_STANDARD 11)
-set_property(TARGET Manager PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Manager PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( Manager ExtEOS )
+add_library( Manager-obj OBJECT ${Manager_src} )
+  set_property(TARGET Manager-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET Manager-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Manager-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Manager-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( Manager ${${projectName}_policy}
+                   $<TARGET_OBJECTS:Manager-obj>
+                   $<TARGET_OBJECTS:ExtEOS-obj>
+                   $<TARGET_OBJECTS:EOS-obj>
+                   $<TARGET_OBJECTS:DataBase-obj>
+                   $<TARGET_OBJECTS:CClib-obj> )                   
+  set_property(TARGET Manager PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Manager PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Manager PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries( Manager ExtEOS )
 #
 # Utilities
 #

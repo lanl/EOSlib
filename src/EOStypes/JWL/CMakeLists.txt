@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB JWL_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( JWL ${${projectName}_policy} ${JWL_src} )
-set_property(TARGET JWL PROPERTY CXX_STANDARD 11)
-set_property(TARGET JWL PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(JWL EOS)
+add_library( JWL-obj OBJECT ${JWL_src} )
+  set_property(TARGET JWL-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET JWL-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET JWL-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET JWL-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( JWL ${${projectName}_policy}
+                 $<TARGET_OBJECTS:JWL-obj> )
+  set_property(TARGET JWL PROPERTY CXX_STANDARD 11)
+  set_property(TARGET JWL PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET JWL PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(JWL EOS)
 #
 # Tests
 #

@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB HEburn_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( HEburn ${${projectName}_policy} ${HEburn_src} )
-set_property(TARGET HEburn PROPERTY CXX_STANDARD 11)
-set_property(TARGET HEburn PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET HEburn PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(HEburn ExtEOS PTequilibrium)
+add_library( HEburn-obj OBJECT ${HEburn_src} )
+  set_property(TARGET HEburn-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET HEburn-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET HEburn-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET HEburn-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( HEburn ${${projectName}_policy}
+                 $<TARGET_OBJECTS:HEburn-obj> )
+  set_property(TARGET HEburn PROPERTY CXX_STANDARD 11)
+  set_property(TARGET HEburn PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET HEburn PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(HEburn ExtEOS PTequilibrium)
 #
 # Tests
 #

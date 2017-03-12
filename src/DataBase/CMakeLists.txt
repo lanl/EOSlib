@@ -38,7 +38,7 @@ add_library( DataBase ${${projectName}_policy}
   set_property(TARGET DataBase PROPERTY CXX_STANDARD 11)
   set_property(TARGET DataBase PROPERTY CXX_STANDARD_REQUIRED ON)
   set_property(TARGET DataBase PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-  target_link_libraries( DataBase ${CMAKE_DL_LIBS})
+  target_link_libraries( DataBase ${CMAKE_DL_LIBS} )
 #
 # Utilities
 #

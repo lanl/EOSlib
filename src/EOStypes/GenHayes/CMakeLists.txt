@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB GenHayes_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( GenHayes ${${projectName}_policy} ${GenHayes_src} )
-set_property(TARGET GenHayes PROPERTY CXX_STANDARD 11)
-set_property(TARGET GenHayes PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET GenHayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(GenHayes EOS)
+add_library( GenHayes-obj OBJECT ${GenHayes_src} )
+  set_property(TARGET GenHayes-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET GenHayes-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET GenHayes-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET GenHayes-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( GenHayes ${${projectName}_policy}
+                   $<TARGET_OBJECTS:GenHayes-obj> )
+  set_property(TARGET GenHayes PROPERTY CXX_STANDARD 11)
+  set_property(TARGET GenHayes PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET GenHayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(GenHayes EOS)
 #
 # Tests
 #

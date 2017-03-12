@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB Porous_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( Porous ${${projectName}_policy} ${Porous_src} )
-set_property(TARGET Porous PROPERTY CXX_STANDARD 11)
-set_property(TARGET Porous PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Porous PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Porous EOS)
+add_library( Porous-obj OBJECT ${Porous_src} )
+  set_property(TARGET Porous-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET Porous-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Porous-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Porous-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( Porous ${${projectName}_policy}
+                     $<TARGET_OBJECTS:Porous-obj> )
+  set_property(TARGET Porous PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Porous PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Porous PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(Porous EOS)
 #
 # Tests
 #

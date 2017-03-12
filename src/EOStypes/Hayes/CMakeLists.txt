@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB Hayes_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( Hayes ${${projectName}_policy} ${Hayes_src} )
-set_property(TARGET Hayes PROPERTY CXX_STANDARD 11)
-set_property(TARGET Hayes PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Hayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(Hayes EOS)
+add_library( Hayes-obj OBJECT ${Hayes_src} )
+  set_property(TARGET Hayes-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET Hayes-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Hayes-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Hayes-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( Hayes ${${projectName}_policy}
+                   $<TARGET_OBJECTS:Hayes-obj> )
+  set_property(TARGET Hayes PROPERTY CXX_STANDARD 11)
+  set_property(TARGET Hayes PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET Hayes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(Hayes EOS)
 #
 # Tests
 #

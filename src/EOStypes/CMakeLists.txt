@@ -6,16 +6,30 @@ message(STATUS "EOStypes\n")
 
 list(APPEND EOStypes_libs IdealGas StiffenedGas Hayes HayesBM GenHayes
                           MieGruneisen Davis JWL Porous PTequilibrium )
+
+set( tmpfile "${CMAKE_CURRENT_BINARY_DIR}/Materials.cmake" )
+file(WRITE ${tmpfile} "add_library( Materials ${${projectName}_policy}\n")
 foreach(EOStype ${EOStypes_libs})
   add_subdirectory(${EOStype})
+  #set(EOStypes-obj "${EOStypes-obj} $<TARGET_OBJECTS:${EOStype}>")
+  file(APPEND ${tmpfile} "    $<TARGET_OBJECTS:${EOStype}-obj>\n")
 endforeach(EOStype)
 
-add_library( Materials ${${projectName}_policy} "")
-set_property(TARGET Materials PROPERTY CXX_STANDARD 11)
-set_property(TARGET Materials PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Materials PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-set_property(TARGET Materials PROPERTY LINKER_LANGUAGE CXX)
-target_link_libraries( Materials ${EOStypes_libs})
+file(APPEND ${tmpfile}
+  "    )\n"
+  "  set_property(TARGET Materials PROPERTY CXX_STANDARD_REQUIRED ON)\n"
+  "  set_property(TARGET Materials PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)\n"
+  "  set_property(TARGET Materials PROPERTY LINKER_LANGUAGE CXX)\n"
+  "  target_link_libraries(Materials EOS)\n" )
+include(${tmpfile})
+
+#add_library( Materials ${${projectName}_policy}
+#                          ${EOStypes-obj}
+#                          $<TARGET_OBJECTS:EOS-obj> )
+#  set_property(TARGET Materials PROPERTY CXX_STANDARD 11)
+#  set_property(TARGET Materials PROPERTY CXX_STANDARD_REQUIRED ON)
+#  set_property(TARGET Materials PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+#  set_property(TARGET Materials PROPERTY LINKER_LANGUAGE CXX)
 #
 # Tests
 #

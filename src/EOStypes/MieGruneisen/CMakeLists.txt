@@ -25,11 +25,18 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(GLOB MieGruneisen_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
 
-add_library( MieGruneisen ${${projectName}_policy} ${MieGruneisen_src} )
-set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD 11)
-set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET MieGruneisen PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries(MieGruneisen EOS)
+add_library( MieGruneisen-obj OBJECT ${MieGruneisen_src} )
+  set_property(TARGET MieGruneisen-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET MieGruneisen-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET MieGruneisen-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET MieGruneisen-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( MieGruneisen ${${projectName}_policy}
+                          $<TARGET_OBJECTS:MieGruneisen-obj> )
+  set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD 11)
+  set_property(TARGET MieGruneisen PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET MieGruneisen PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries(MieGruneisen EOS)
 #
 # Tests
 #

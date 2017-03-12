@@ -26,11 +26,21 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 # library
 #
 file(GLOB ExtEOS_src  RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Subs*/*.C")
-add_library( ExtEOS ${${projectName}_policy} ${ExtEOS_src} )
-set_property(TARGET ExtEOS PROPERTY CXX_STANDARD 11)
-set_property(TARGET ExtEOS PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET ExtEOS PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-target_link_libraries( ExtEOS  EOS )
+add_library( ExtEOS-obj OBJECT ${ExtEOS_src} )
+  set_property(TARGET ExtEOS-obj PROPERTY POSITION_INDEPENDENT_CODE ON )
+  set_property(TARGET ExtEOS-obj PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ExtEOS-obj PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ExtEOS-obj PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+
+add_library( ExtEOS ${${projectName}_policy}
+                   $<TARGET_OBJECTS:ExtEOS-obj>
+                   $<TARGET_OBJECTS:EOS-obj>
+                   $<TARGET_OBJECTS:DataBase-obj>
+                   $<TARGET_OBJECTS:CClib-obj> )                   
+  set_property(TARGET ExtEOS PROPERTY CXX_STANDARD 11)
+  set_property(TARGET ExtEOS PROPERTY CXX_STANDARD_REQUIRED ON)
+  set_property(TARGET ExtEOS PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
+  target_link_libraries( ExtEOS ${CMAKE_DL_LIBS} )
 #
 # test
 #
