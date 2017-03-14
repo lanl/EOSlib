@@ -10,7 +10,7 @@ int main()
     HydroState state(1.0,1.0,0.0);  // V1 = 1, e1 = 1, u1 = 0
     // Print initial state
     std::cout << "Ahead state: V, e, u\n";
-    std::cout << state << "\n";
+    std::cout << state << eos->P(state) << "\n";
 
     // Initialize Hugoniot
     Hugoniot *hugoniot = eos->shock(state);
