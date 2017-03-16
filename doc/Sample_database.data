@@ -1,0 +1,30 @@
+# EOSlib Data Base Template
+
+.include Units.data
+
+:DataBase.=Environment
+{
+}
+
+:SharedLibs=<???>
+{
+    # $EOSLIB_SHARED_LIBRARY_PATH is an environment variable
+    <type> = <path to dynamic library implementation>
+    
+.base = <???>
+.units = <unit system> # Is this one setting a default for the file?
+
+/********************************
+*     <Comment Label>           *
+********************************/
+
+<type>=<name>; units=<unit system> # Where are these defined?
+{
+    <parameter for type> = <value of parameter, may be a list or arithmetic expression>
+    <other parameters> = ...
+    .
+    .
+    .
+}
+
+.include <other data files>
