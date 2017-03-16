@@ -28,3 +28,13 @@
 }
 
 .include <other data files>
+
+Questions:
+
+What do the different special characters mean? (".", ":", "::")
+ - I can make some guesses:
+   - {} delimits scope, like in C/C++.
+   - ; allows multiple statements per line.
+   - # is a comment
+ 
+Is this a general data file format, or something you came up with for EOSlib?
