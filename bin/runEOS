@@ -42,7 +42,11 @@ EOF
    exit 0
 fi
 #
-#  Follow symbolic links for absolute path to build (root) directory
+# Follow symbolic links for absolute path to build (root) directory
+# on linux  (mac does not have -f option)
+#    prog=`readlink -nf $prog`
+#    BIN=`dirname $prog`
+# would replace next 27 lines (til BUILD=...)
 while [ -L $prog ] ; do
     link=`ls -l $prog | sed -e 's/.*->[ 	]*//'`
     case $link in
@@ -56,22 +60,25 @@ case $prog in
 /*)
     ;;
  *)
-    cwd=`pwd`
-    while [ -L $cwd ] ; do
-        link=`ls -l $cwd | sed -e 's/.*->[ 	]*//'`
-        case $link in
-        /*)
-            cwd=$link;;
-         *)
-            cwd="`dirname $cwd`/$link";;
-        esac
-    done
-    prog=$cwd/$prog;;
+    prog=`pwd`/$prog;;
 esac
 #
-# set shell variables and export environment variables
 BIN=`(cd \`dirname $prog\` ; pwd)`
+while [ -L $BIN ] ; do
+    link=`ls -l $BIN | sed -e 's/.*->[ 	]*//'`
+    case $link in
+    /*)
+        BIN=$link;;
+     *)
+        BIN="`dirname $BIN`/$link";;
+    esac
+done
+BIN=`(cd $BIN ; pwd)`
+#
+#
 BUILD=`(cd $BIN/..; pwd)`
+#
+# set shell variables and export environment variables
 export EOSLIB_SHARED_LIBRARY_PATH=$BUILD/lib
 export LD_LIBRARY_PATH=$EOSLIB_SHARED_LIBRARY_PATH:$LD_LIBRARY_PATH
 export EOSLIB_DATA_PATH=$BUILD/DATA

@@ -1,0 +1,43 @@
+To Do (March, 2017)
+
+---------------------------------------------------------------------
+Near term
+
+1. DataBase::OpenFile in src/DataBase/Subs/read.C
+    if file does not exist try env(EOSLIB_DATA_PATH)/basename(file)
+1.a Handle::dlopen in src/DataBase/Subs/Handle.C
+    dlopen does not process strings with . or ..
+    Add realpath(name) to get absolute path
+1.b change Material.so to EOStypes.so
+
+2. promote src/Applications/Xtra-Utilities/ZNDprofile.C
+
+3. DATA/*.data
+    check all material parameter sets have references
+
+---------------------------------------------------------------------
+Intermediate term
+
+4. unit tests
+   move DATA/test_data/* to approriate Tests subdirectory
+   move blessed_output/* to approriate Tests subdirectory
+   In Tests/CMakeLists.txt change to use TEST/NEWcompare_output.cmake
+   src/DataBase/Tests/ can be used as template
+
+5. When done with all unit tests
+   remove DATA/test_data and eoslib/blessed_output
+
+6. check make install works properly
+
+---------------------------------------------------------------------
+longer term
+
+7. src/ExtEOStypes/HEburn
+    add class for WSD model and modify ZNDprofile to set rho_s
+
+8. Revise src/EOStypes/JWL/HEfit.h
+   to match Sam Shaw's fit for product Sesame tables
+
+9. Plotting scripts using xmgrace
+   Reactants and detonation loci
+   ZND profile (any 2 variables)
