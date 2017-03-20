@@ -1,40 +1,91 @@
+The format for a data file block is:
+  base:type::name; units=<unit>
+base - base class, such as EOS
+type - a particular derived class, such as IdealGas or HEburn
+name - a choice of parameters used to instantiate a derived class
+
+For classes which do not have an associated "base" class, such as 
+DataBase and SharedLibs, the block is written: ":<type>::<name>". 
+These types provide information used internally by the database.
+
+The most commonly used base classes are:
+ - EOS
+ - EOS_VT
+ - Units
+
+Others include:
+ - PhiEq (used for porosity models, used in Porous)
+ - HErate (HE reaction rate, used in HEburn)
+
+DataBase supports special "dot" commands, such as ".base" and ".units".
+These set defaults for base class and units class. 
+
+For Example:
+
+.base=EOS
+.units=hydro::std
+IdealGas=5/3
+{
+}
+
+is the same things as 
+
+EOS:IdealGas=5/3; units=hydro::std
+{
+}
+
+Another dot command is ".include", which is analogous to #include in C.
+
+Another special database directive is ":use".
+
+For example, 
+HErate2:HotSpotRateCC=PBX9502.davis_SURF; units=hydro::std
+{
+  :use=PBX9502.davis_SURFplus
+  Q=0
+}
+
+This defines HErate2:HotSpotRateCC=PBX9502.davis_SURF to be the same as
+PBX9502.davis_SURFplus with the single changed parameter Q=0.
+That is, you can define a new name as a minor adjustment on a previously
+existing name.
+
+"#" denotes a comment through the end of a line.
+
+Block comments can be written:
+
+"/*
+...
+*/" 
+
+Example:
+
 # EOSlib Data Base Template
 
 .include Units.data
 
 :DataBase.=Environment
 {
+    EOSLIB_SHARED_LIBRARY_PATH = "/path/to/somewhere"
 }
 
-:SharedLibs=<???>
+:SharedLibs=<???> # What can these be? Do they map to anything in particular?
 {
-    # $EOSLIB_SHARED_LIBRARY_PATH is an environment variable
-    <type> = <path to dynamic library implementation>
-    
-.base = <???>
-.units = <unit system> # Is this one setting a default for the file?
+    EOS = $EOSLIB_SHARED_LIBRARY_PATH/libEOS
+}    
+
+.base = EOS
+.units = hydro::std 
 
 /********************************
-*     <Comment Label>           *
+*          <IdealGas>           *
 ********************************/
-
-<type>=<name>; units=<unit system> # Where are these defined?
+# Is V_ref defined consistently with its comment?
+IdealGas=7/5; units=hydro::MKS
 {
-    <parameter for type> = <value of parameter, may be a list or arithmetic expression>
-    <other parameters> = ...
-    .
-    .
-    .
+    gamma = 7/5
+    V_ref = 1/1.275                       #  rho = 0.01 g/cm^3
+    e_ref = 1.013e5 * V_ref / (gamma - 1) #    P = 1.013e5
+    Cv    = e_ref/300                     # Tref = 300 K
 }
 
-.include <other data files>
-
-Questions:
-
-What do the different special characters mean? (".", ":", "::")
- - I can make some guesses:
-   - {} delimits scope, like in C/C++.
-   - ; allows multiple statements per line.
-   - # is a comment
- 
-Is this a general data file format, or something you came up with for EOSlib?
