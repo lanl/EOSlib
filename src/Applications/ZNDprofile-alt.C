@@ -57,7 +57,7 @@ ZNDprofile::ZNDprofile(ExtEOS &he, WaveState &w)
     if( status < 1 )
         cerr << Error("TimeStep failed") << Exit;
     //
-    double dxi = ws.us*dt;
+    double dxi = 0.1*ws.us*dt;
     double xi0 = 0.0;
     if( (status=Initialize(xi0, y, -dxi)) )
         cerr << Error("ZNDprofile, Initialize failed with status ")
