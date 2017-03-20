@@ -8,9 +8,9 @@
 
 :SharedLibs=Shear1D
 {
-   Shear1D    = $SharedLibDirEOS/ExtPlastic1D.so
-   ConstGV    = $SharedLibDirEOS/ExtPlastic1D.so
-   PolyG      = $SharedLibDirEOS/ExtPlastic1D.so
+   Shear1D    = $SharedLibDirEOS/ExtPlastic1D
+   ConstGV    = $SharedLibDirEOS/ExtPlastic1D
+   PolyG      = $SharedLibDirEOS/ExtPlastic1D
 }
 .base  = Shear1D
 .units = hydro::std
@@ -34,9 +34,9 @@ Shear1D:PolyG=PMMA; units=hydro::std
 
 :SharedLibs.=EOS
 {
-    Elastic1D      = $SharedLibDirEOS/ExtPlastic1D.so
-    ElasticConstGV = $SharedLibDirEOS/ExtPlastic1D.so
-    ElasticPolyG   = $SharedLibDirEOS/ExtPlastic1D.so
+    Elastic1D      = $SharedLibDirEOS/ExtPlastic1D
+    ElasticConstGV = $SharedLibDirEOS/ExtPlastic1D
+    ElasticPolyG   = $SharedLibDirEOS/ExtPlastic1D
 }
 .base  = EOS
 .units = hydro::std

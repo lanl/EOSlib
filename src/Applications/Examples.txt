@@ -19,6 +19,13 @@ runEOS Isotherm   material HEburn::PBX9502.davis Ps 10 P2 1
 # Riemann problem
 runEOS ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis
 
+# ZND profile
+#    Note: HEburn::PBX9502.davis uses Ignition & Growth rate model
+#          rate has very large discontinuity at lambda=0.025
+#          (switch between ignition term and growth term
+#          requires very small ODE step or tolerance epsilon > 1e-7
+runEOS ZNDprofile material HEburn::PBX9502.davis
+
 # ZND profile + Taylor Wave for HE with SURFplus rate
 runEOS ZND-SURFplus material HEburn2::PBX9502.HotSpotCC.davis_SURF
 runEOS ZND-SURFplus-dx material HEburn2::PBX9502.HotSpotCC.davis_SURF dx 0.01

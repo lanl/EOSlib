@@ -1,6 +1,8 @@
 #include <string>
 using namespace std;
 #include "DataBase.h"
+//#include <cstdlib>
+
 
 void *DataBase::FetchObj(Base &b, const char *type_name)
 {
@@ -277,26 +279,52 @@ Handle *DataBase::GetHandle(const char *base, const char *type)
     return h;
 }
 
+#ifdef __APPLE__
+#define SHARED_LIB_EXT ".dylib"
+#elif __unix__
+#define SHARED_LIB_EXT ".so"
+#elif _WIN32
+#define SHARED_LIB_EXT ".dll"
+#endif
+
 #undef FUNC
 #define FUNC "DataBase::FullPath", __FILE__, __LINE__, this
 const char *DataBase::FullPath(const char *lib)
 {
     if( lib == NULL)
         return NULL;
-    if( lib[0] == '/' )
-        return strdup(lib);
-    Parameters &params = *GetProp(*database,"Environment").params;
-    if( lib[0] != '$' )
+
+    const char *libname = lib;
+    if( libname[0] == '$' )
     {
-        string str(params.Value("PWD"));
-        str = str + "/" + lib;
-        return strdup(str.c_str());
+        libname = EnvironmentVar(lib+1);
+        if( libname == NULL )
+        {
+            error->Log(FUNC, "lib environment variable, lib = %s\n",lib);
+            return NULL;
+        }
     }
-    const char *libname = EnvironmentVar(lib+1);
-    if( libname == NULL )
+
+    std::string str(libname);
+    if( libname != lib ) delete [] libname;
+
+    // check and remove extension
+    std::size_t pos = str.rfind("/");
+    pos = str.find(".",pos);
+    if( pos < std::string::npos)
+      str.erase(pos, std::string::npos);
+    // add new extension
+    str += SHARED_LIB_EXT;
+
+/*******************
+    // if needed prepend $PWD and take out '.' and '..'
+    char *abs_path = realpath(str.c_str(), NULL);
+    if( abs_path == NULL )
     {
-        error->Log(FUNC, "lib environment variable, lib = %s\n",lib);
+        error->Log(FUNC, "realpath failed for = %s\n",str.c_str());
         return NULL;
     }
-    return libname;
+    return abs_path;
+**************/
+    return strdup(str.c_str());
 }

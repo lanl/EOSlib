@@ -1,19 +1,9 @@
 #include <String1.h>     // SplitString
+#include <string>
 #include "DataBase.h"
 
-static char *dirname(const char *file)
-{
-    int len = strlen(file)-1;
-    for( ; len>=0; len-- )
-    {
-        if( file[len] == '/' )
-            break;
-    }
-    len++;
-    char *dir = new char[len+1];
-    dir[len]='\0';
-    return (char *)memcpy(dir,file,len);
-}
+
+#include <iostream>
 
 int DataBase::OpenFile(const char *file)
 {
@@ -26,10 +16,39 @@ int DataBase::OpenFile(const char *file)
     DBvars *v = new DBvars(file,vars);
     if( v->data == NULL )
     {
-        error->Log("DataBase::OpenFile", __FILE__, __LINE__, this,
-                   "could not open file `%s'\n", file );
+        Parameters &params = *GetProp(*database,"Environment").params;
+        const char* name = "EOSLIB_DATA_PATH";
+        const char *path = params.Value(name);
+        if( path == NULL )
+        {
+    	    if( (path=getenv(name)) )
+                params.Append(name,path);
+            else
+            {
+                error->Log("DataBase::OpenFile", __FILE__, __LINE__, this,
+                       "could not open file `%s'\n", file );
+                delete v;
+                return 1;
+            }
+        }
+        std::string str(file);
+        std::size_t pos = str.rfind("/");
+        if( pos < std::string::npos)
+            str.erase(0,pos);
+        else
+            str.insert(0,"/");
+        str.insert(0,path);
+
         delete v;
-        return 1;
+        v = new DBvars(str.c_str(),vars);
+        if( v->data == NULL )
+        {
+            error->Log("DataBase::OpenFile", __FILE__, __LINE__, this,
+                   "could open neither `%s' nor `%s'\n",
+                   file, str.c_str() );
+            delete v;
+            return 1;
+        }
     }
 	Files[file];
     vars = v;

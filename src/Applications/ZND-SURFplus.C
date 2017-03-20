@@ -9,7 +9,7 @@ class ZNDprofile : public ODE
 // xi = x - D*t <= 0, right facing wave
 // m = (D-u)*rho                    // mass flux = D*rho0, for u0=0
 // D-u = m*V
-// (d/dxi) M =  1/V                 // mass coordinate
+// (d/dxi) M = -1/V                 // mass coordinate
 // (d/dxi) t = -1/(D-u)             // Lagrangian time
 // (D-u) * (d/dxi) s1 = -Rate_s1
 // (D-u) * (d/dxi) s2 = -Rate_s2
@@ -194,7 +194,7 @@ int ZNDprofile::Lambda1(double &lambda, double &xi,
     lambda = -lambda;
     if( status )
         return status;
-    double du = ws.us-y[1];
+    double du = -1./yp[1];
     V = du/m;
 
     // Correct shock state
@@ -235,7 +235,7 @@ int ZNDprofile::Lambda2(double &lambda, double &xi,
     lambda = -lambda;
     if( status )
         return status;
-    double du = ws.us-y[1];
+    double du = -1./yp[1];
     V = du/m;
 
     // Correct shock state
@@ -255,7 +255,7 @@ int ZNDprofile::Lambda2(double &lambda, double &xi,
 void ZNDprofile::Last(double &xi, double &V, double &e, double &P, double &u)
 {
     LastState(xi,y,yp);
-    double du = ws.us-y[1];
+    double du = -1./yp[1];
     V = du/m;
     double lambda1, lambda2;
     HE.get_lambda(z,lambda1, lambda2);
@@ -267,9 +267,10 @@ void ZNDprofile::Last(double &xi, double &V, double &e, double &P, double &u)
     HE.set_eos(lambda1, lambda2);
     LocusState(V,e,P,u);
 }
-
+//
+//
 const char *help[] = {    // list of commands printed out by help option
-    "name        name    # material name",
+    "name        name    # EOS name",
     "material    name    # HEburn2::name",
     "file[s]     file    # colon separated list of data files",
     "lib         name    # directory for EOSlib shared libraries",
@@ -280,6 +281,7 @@ const char *help[] = {    // list of commands printed out by help option
     "umin        num     # particle velocity at end of Taylor wave",
     "len         num     # length of Taylor wave",
     "nsteps      int     # number of points in each stage of profile",
+    "",
     "epsilon     num     # ODE tolerance",
     "abs_tol     num     # ODEfunc tolerance",
     "rel_tol     num     # ODEfunc tolerance",  
@@ -325,19 +327,20 @@ int main(int, char **argv)
 
     while(*++argv)
     {
-        GetVar(file,files);
+        GetVar(file, files);
         GetVar(files,files);
         GetVar(lib,lib);
 
         GetVar(name,name);
         //GetVar(type,type);
         GetVar(material,material);
-	    GetVar(lib,lib);
         GetVar(units,units);
+
         GetVar(upiston,upiston);
         GetVar(umin,umin);
         GetVar(len,len);
         GetVar(nsteps,nsteps);
+
         GetVar(epsilon,epsilon);
         GetVar(abs_tol,abs_tol);
         GetVar(rel_tol,rel_tol);

@@ -33,10 +33,13 @@ int main()
     HydroState state(eos->V_ref,eos->e_ref,0.0);
     // Print initial state
     std::cout << "\nAhead hydro state\n";
-    HydroStateLabel(std::cout)   << "\n";
+    HydroStateLabel(std::cout) << " " << Center(P_form, "P")
+                               << " " << Center(c_form, "c")
+                               << "\n";    
     HydroStateLabel(std::cout,u) << "\n";
-    std::cout << state << "\n";
-
+    std::cout << state << " " << P_form << eos->P(state)
+                       << " " << c_form << eos->c(state)
+                       << "\n";
     // Initialize Hugoniot
     Hugoniot *hugoniot = eos->shock(state);
     

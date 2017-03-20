@@ -9,16 +9,16 @@
 :SharedLibs=EOS_VT
 {
     EOS_VT         = $EOSLIB_SHARED_LIBRARY_PATH/libEOS
-    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
-    JWL            = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials
+    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    JWL            = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
 }
 .base  = EOS_VT
 .units = hydro::std

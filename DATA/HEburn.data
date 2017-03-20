@@ -1,42 +1,42 @@
 
 :SharedLibs.=EOS
 {
-    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
-    JWL            = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
-    HEfit          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
-    HEprods        = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
-    DavisReactants = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
-    DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
-    BKW            = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    JWL            = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    HEfit          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    HEprods        = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    DavisReactants = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    BKW            = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
 
-    ArrheniusHE      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    IdealHE          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    StiffIdealHE     = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    StiffIdealHEav   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HEburn           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HEburn2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
+    ArrheniusHE      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    IdealHE          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    StiffIdealHE     = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    StiffIdealHEav   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HEburn           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HEburn2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
 
 }
 
 :SharedLibs=HErate
 {
-    HErate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    Arrhenius        = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    PnRate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    IgnitionGrowth   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HotSpotRate      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HotSpotRate2     = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HotSpotRateExp   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HotSpotCC_Rate   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    ArrheniusRT      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    IgnitionGrowthRT = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    FFrate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    FFQrate          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
+    HErate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    Arrhenius        = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    PnRate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    IgnitionGrowth   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HotSpotRate      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HotSpotRate2     = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HotSpotRateExp   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HotSpotCC_Rate   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    ArrheniusRT      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    IgnitionGrowthRT = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    FFrate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    FFQrate          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
 }
 :SharedLibs=HErate2
 {
-    HErate2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
-    HotSpotRateCC    = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE.so
+    HErate2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HotSpotRateCC    = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
 }
 
 .units = hydro::std

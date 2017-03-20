@@ -2,13 +2,25 @@ Obtaining the source code:
 
 Clone the repository from git:
 - git clone git@github.com:lanl/EOSlib.git
+- source directory <eoslib>
 
 Building the library:
 
-Create a build directory and cd to it
-cmake $PATH_TO_SOURCE_DIRECTORY
+mkdir <build_dir>
+cd <build_dir>
+cmake <eoslib>
 make
-ctest
+make test
+
+Usage:
+  Add to path <build_dir>/bin
+      or run: source <build_dir>/SetEnv
+      or add to shell initialization file alias
+         for runEOS  -> <build_dir>/bin/runEOS
+         and listEOS -> <build_dir>/bin/listEOS
+  runEOS help   # for examples
+                # runEOS can run any utility in build/bin
+  listEOS       # for all EOS in default database (<build_dir>/DATA)
 
 Environment variables:
 - EOSLIB_DATA_PATH
@@ -17,7 +29,7 @@ Environment variables:
   - Directory where EOSlib shared libraries are located
 
 Accessing library examples:
-- Coming soon
+- Examples/README.txt
 
 Required packages:
 - cmake 3.0+

@@ -9,9 +9,13 @@ int main()
     // Define initial hydro state
     HydroState state(1.0,1.0,0.0);  // V1 = 1, e1 = 1, u1 = 0
     // Print initial state
-    std::cout << "Ahead state: V, e, u\n";
-    std::cout << state << eos->P(state) << "\n";
-
+    std::cout << "Ahead state\n";
+    HydroStateLabel(std::cout) << " " << Center(P_form, "P")
+                               << " " << Center(c_form, "c")
+                               << "\n";    
+    std::cout << state << " " << P_form << eos->P(state)
+                       << " " << c_form << eos->c(state)
+                       << "\n";
     // Initialize Hugoniot
     Hugoniot *hugoniot = eos->shock(state);
     
@@ -26,7 +30,8 @@ int main()
         return 1;
     }
     // Print shock state
-    std::cout << "Shock wave state: V, e, u, P, us\n";
+    std::cout << "Shock wave state\n";
+    WaveStateLabel(std::cout) << "\n";    
     std::cout << wave << "\n";
 
     // Deallocate storage

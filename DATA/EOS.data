@@ -11,31 +11,31 @@
 :SharedLibs=EOS
 {
     # $EOSLIB_SHARED_LIBRARY_PATH is environment variable
-    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libEOS.so
+    EOS            = $EOSLIB_SHARED_LIBRARY_PATH/libEOS
     #                   void *EOS_Duplicate(void*)
     #                   void  EOS_Destructor()
     #                    int  EOS_Initialize(void*)
-    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    IdealGas       = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_IdealGas_Constructor()
-    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    StiffenedGas   = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_StiffenedGas_Constructor()
-    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    Hayes          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_Hayes_Constructor()
-    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    HayesBM        = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_HayesBM_Constructor()
-    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    BirchMurnaghan = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_BirchMurnaghan_Constructor()
-    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_Keane_Constructor()
-    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    UsUp           = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_UsUp_Constructor()
-    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    UsUpSpline     = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_UsUpSpline_Constructor()
-    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    PeSpline       = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_PeSpline_Constructor()
-    PTequilibrium  = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    PTequilibrium  = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_PTequilibrium_Constructor()
-    StiffIdeal     = $EOSLIB_SHARED_LIBRARY_PATH/libMaterials.so
+    StiffIdeal     = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     #                   void *EOS_StiffIdeal_Constructor()
 }
 .base  = EOS

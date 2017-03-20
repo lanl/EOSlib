@@ -10,6 +10,10 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
                                 ${CMAKE_CURRENT_SOURCE_DIR}
                                 ${CMAKE_CURRENT_BINARY_DIR}/SOURCE)
 #
+# Copy files
+#
+file(COPY Examples.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+#
 # link libraries
 #
 add_library( Applications ${${projectName}_policy} "" )
@@ -18,13 +22,14 @@ set_property(TARGET Applications PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 set_property(TARGET Applications PROPERTY LINKER_LANGUAGE CXX)
 
-target_link_libraries( Applications ExtEOS HEburn Materials )
+target_link_libraries( Applications ExtEOS HEburn EOStypes )
 #
 # Utilities
 #
 list(APPEND utils EOSdata Wave Detonation Isotherm ImpedanceMatch)
 list(APPEND utils Polar Deflagration DetPolar)
-list(APPEND utils ZND-SURFplus ZND-SURFplus-dx HEburnReactionTime)
+list(APPEND utils ZNDprofile   ZNDprofile-alt
+                  ZND-SURFplus ZND-SURFplus-dx HEburnReactionTime)
 
 foreach(util ${utils})
    add_executable(${util} ${util}.C)

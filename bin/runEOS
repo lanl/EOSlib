@@ -94,6 +94,14 @@ if [ $# -lt 1 ] ; then
 fi
 EOSprog=$1
 shift
+case  $EOSprog in
+runEOS)
+    echo "runEOS runEOS not allowed"
+    exit 1;;
+listEOS)
+    echo "runEOS listEOS is not allowed"
+    exit 1;;
+esac
 #
 # check EOSprog in executable directory path
 #

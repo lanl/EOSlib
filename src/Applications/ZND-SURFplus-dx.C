@@ -258,7 +258,7 @@ int ZNDprofile::Lambda1(double &lambda, double &xi,
     lambda = -lambda;
     if( status )
         return status;
-    double du = VN.us-y[1];
+    double du = -1./yp[1];
     V = du/m;
 
     // Correct shock state
@@ -299,7 +299,7 @@ int ZNDprofile::Lambda2(double &lambda, double &xi,
     lambda = -lambda;
     if( status )
         return status;
-    double du = VN.us-y[1];
+    double du = -1./yp[1];
     V = du/m;
 
     // Correct shock state
@@ -319,7 +319,7 @@ int ZNDprofile::Lambda2(double &lambda, double &xi,
 void ZNDprofile::Last(double &xi, double &V, double &e, double &P, double &u)
 {
     LastState(xi,y,yp);
-    double du = VN.us-y[1];
+    double du = -1./yp[1];
     V = du/m;
     double lambda1, lambda2;
     HE.get_lambda(z,lambda1, lambda2);

@@ -8,9 +8,9 @@
 
 :SharedLibs.=EOS
 {
-    EqPorous          = $SharedLibDirEOS/Porous.so
-    DissipativePorous = $SharedLibDirEOS/Porous.so
-    FrozenPorous      = $SharedLibDirEOS/Porous.so
+    EqPorous          = $SharedLibDirEOS/Porous
+    DissipativePorous = $SharedLibDirEOS/Porous
+    FrozenPorous      = $SharedLibDirEOS/Porous
 }
 .base=EOS
 .units=hydro::std
@@ -113,11 +113,11 @@ Hayes=foam; units=hydro::std
 
 :SharedLibs=PhiEq
 {
-    PhiEq = $SharedLibDirEOS/Porous.so
+    PhiEq = $SharedLibDirEOS/Porous
     #
-    Phi0  = $SharedLibDirEOS/Porous.so
-    Phi1  = $SharedLibDirEOS/Porous.so
-    EC    = $SharedLibDirEOS/Porous.so
+    Phi0  = $SharedLibDirEOS/Porous
+    Phi1  = $SharedLibDirEOS/Porous
+    EC    = $SharedLibDirEOS/Porous
 }
 .base=PhiEq
 .units=hydro::std
