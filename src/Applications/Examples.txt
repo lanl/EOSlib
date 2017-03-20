@@ -24,7 +24,11 @@ runEOS ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis
 #          rate has very large discontinuity at lambda=0.025
 #          (switch between ignition term and growth term
 #          requires very small ODE step or tolerance epsilon > 1e-7
-runEOS ZNDprofile material HEburn::PBX9502.davis
+runEOS ZNDprofile     material HEburn::PBX9502.davis
+runEOS ZNDprofile-alt material HEburn::PBX9502.davis
+runEOS ZNDprofile material HEburn::LX14.Arrhenius
+runEOS ZNDprofile +file ArrheniusHE.data material IdealHE::HMX
+runEOS ZNDprofile +file ArrheniusHE.data material IdealHE::Ex1
 
 # ZND profile + Taylor Wave for HE with SURFplus rate
 runEOS ZND-SURFplus material HEburn2::PBX9502.HotSpotCC.davis_SURF

@@ -88,7 +88,7 @@ ZNDprofile::ZNDprofile(ExtEOS &he, const WaveState &w0, const WaveState &wvn)
     if( status < 1 )
         cerr << Error("TimeStep failed") << Exit;
     //
-    double dxi = ws.us*dt;
+    double dxi = 0.1*ws.us*dt;
     double xi0 = 0.0;
     if( (status=Initialize(xi0, y, -dxi)) )
         cerr << Error("ZNDprofile, Initialize failed with status ")
@@ -142,12 +142,6 @@ int ZNDprofile::F(double *y_prime, const double *y_xi, double xi)
     {
         zp[i] *= -1./du;
     }
-/****
-cout << "lambda,V,e,P,u " << z_xi[0]
-     << " " << V << " " << e << " " << P << " " << u << "\n";
-cout << "yp " << y_prime[0] << " " << y_prime[1]
-       << " " << y_prime[2] << "\n";
-****/
     return 0;
 }
 class lambda_ODE : public ODEfunc
