@@ -63,22 +63,17 @@ EOS* stiffened_gas()
     param.type = Strdup("StiffenedGas");
     param.name = Strdup("HMX");
     param.Append("c0","2.6778");
-    param.Append("s","2.68946");
+    param.Append("s",2.68946);
     param.Append("P0=0.0001");
     param.Append("Cv=1.05e-3");
     param.Append("e_ref=0.0");
     param.Append("V_ref=0.52");
 
-    std::cout << "Got this far\n";
-    std::cout.flush();
-
-    StiffenedGas *eos;
+    StiffenedGas *eos = new StiffenedGas();
     if( eos->EOS::Initialize(param) ) 
     {
 	    std::cout << "Error, Initialize failed\n"; 
     }
-    std::cout << "Got this far\n";
-    std::cout.flush();
     return eos;
 }
     
