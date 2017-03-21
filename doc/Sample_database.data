@@ -26,6 +26,7 @@ For Example:
 .units=hydro::std
 IdealGas=5/3
 {
+  variable = value  # value may be expression
 }
 
 is the same things as 
@@ -69,9 +70,12 @@ Example:
     EOSLIB_SHARED_LIBRARY_PATH = "/path/to/somewhere"
 }
 
-:SharedLibs=<???> # What can these be? Do they map to anything in particular?
+:SharedLibs=<base> # What can these be? Do they map to anything in particular?
 {
-    EOS = $EOSLIB_SHARED_LIBRARY_PATH/libEOS
+    <base>     = $environment_variable/<lib>
+    <derived>  = $environment_variable/<lib>
+    . . .
+
 }    
 
 .base = EOS
@@ -84,7 +88,7 @@ Example:
 IdealGas=7/5; units=hydro::MKS
 {
     gamma = 7/5
-    V_ref = 1/1.275                       #  rho = 0.01 g/cm^3
+    V_ref = 1/1.275                       #  rho = 1.275 g/cm^3
     e_ref = 1.013e5 * V_ref / (gamma - 1) #    P = 1.013e5
     Cv    = e_ref/300                     # Tref = 300 K
 }

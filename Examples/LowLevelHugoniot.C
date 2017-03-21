@@ -6,7 +6,9 @@
 int common(EOS *eos)
 {
     // Define initial hydro state
-    HydroState state(1.0,1.0,0.0);  // V1 = 1, e1 = 1, u1 = 0
+    double V0 = eos->V_ref;
+    double e0 = eos->e_ref;
+    HydroState state(V0,e0,0.0);
 
     // Print initial state
     std::cout << "Ahead state\n";
@@ -38,7 +40,6 @@ int common(EOS *eos)
 
     // Deallocate storage
     delete hugoniot;
-    deleteEOS(eos);
 
     return 0;
 }
@@ -80,12 +81,12 @@ EOS* stiffened_gas()
 int main()
 { 
     std::cout << "Ideal Gas: \n";
-    EOS* eos = ideal_gas();
+    EOS *eos = ideal_gas();
     common(eos);
+    deleteEOS(eos);
+
     std::cout << "Stiffened Gas: \n";
-    EOS* eos2 = stiffened_gas();
+    eos = stiffened_gas();
     common(eos);
-
+    deleteEOS(eos);
 }
-
-
