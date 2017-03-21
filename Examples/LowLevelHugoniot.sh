@@ -23,7 +23,7 @@ $CXX -I$EOSLIB_INCLUDE -c LowLevelHugoniot.C
 # load
 $CXX -o LowLevelHugoniot LowLevelHugoniot.o \
     -L$EOSLIB_SHARED_LIBRARY_PATH \
-    -lEOS -lIdealGas \
+    -lEOS -lEOStypes \
     -Wl,-rpath,$EOSLIB_SHARED_LIBRARY_PATH
 #
 # Notes:
