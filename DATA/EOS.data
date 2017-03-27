@@ -68,6 +68,9 @@ IdealGas=7/5; units=hydro::MKS
 
 StiffenedGas=HMX; units=hydro::std
 {
+# c0 & s from  hydrostatic data
+# The linear and volume compression of beta-HMX and RDX
+# Proc. Int. Symp on High Dynamic Pressures (1978) pp 3-8
     c0=2.6778; s = 2.68946
     P0    = 0.0001
     Cv    = 1e-3
@@ -77,6 +80,9 @@ StiffenedGas=HMX; units=hydro::std
 
 StiffenedGas=PMMA; units=hydro::std
 {
+# c0, s fit to data in
+# LANL Shock Hugoniot Data, Ed. S. P. Marsh
+# PolyMethylMethAcrylate p446
     V_ref = 0.84317         # cm^3/g
     e_ref = 0.315
     P0 = 1.0e-4             # GPa
@@ -187,6 +193,11 @@ Hayes=Kel-F; units=hydro::std
 
 Hayes=estane; units=hydro::std
 {
+# ref: Equation of State and Hugoniot Locus for Porous Materials:
+#      P-alpha model revisited
+#      R. Menikoff and E. Kober
+#      Shock Compression of Condensed Matter, 1999
+#      table 1
     rho0 = 1.2              # g/cm^3
     P0 = 1.0e-4             # GPa
     T0 = 300                # degrees K

@@ -28,7 +28,7 @@ EOS:IdealHE=Ex1; units=hydro::std
     k   =  0.354e3      # lambda = 0.5 at t = 1 for CJ profile
 }
 
-EOS:IdealHE!=HMX; units=hydro::std
+EOS:IdealHE=HMX; units=hydro::std
 {
     lambda = 0  # all reactants
     gamma = 3.1
@@ -47,124 +47,8 @@ EOS:IdealHE!=HMX; units=hydro::std
 #
 #   HMX
 #
-EOS:ArrheniusHE!=HMX; units=hydro::std
-{
-    P_vac = 1.e-6
-    OneDFunc_abs_tol = 1e-5
-    OneDFunc_rel_tol = 1e-4
-    tol = 1.e-6
-    #
-    lambda = 0  # all reactants
-    reactants = "Hayes::HMX-YC"
-    products  = "JWL::HMX4000"
-    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
-    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
-    #      LA-UR-01-3499    
-    n = 1.0                         # reaction order
-    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
-    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
-    k   = 0.1*k                     # correct rate for induction time
-    k   = 0.1*k                     # normalize to Criag's wedge experiment
-}
 #
-#
-EOS:ArrheniusHE!=HMX.3000BM; units=hydro::std
-{
-    :use=HMX
-    products  = "JWL::HMX3000"
-    reactants = "BirchMurnaghan::HMX"
-}
-EOS:ArrheniusHE!=HMX.3500BM; units=hydro::std
-{
-    :use=HMX
-    products  = "JWL::HMX3500"
-    reactants = "BirchMurnaghan::HMX"
-}
-EOS:ArrheniusHE!=HMX.4000BM; units=hydro::std
-{
-    :use=HMX
-    products  = "JWL::HMX4000"
-    reactants = "BirchMurnaghan::HMX"
-}
-#
-Hayes!=HMX; units=hydro::std
-{
-    rho0 = 1.9              # g/cm^3
-    P0 = 1.0e-4             # GPa
-    T0 = 300                # degrees K
-    K0 = 12.9               # GPa
-    K0 = 13.5               # Olingers hydrostatic data
-    N  =  9.3
-    #K0 = 12.4              # Yoo-Cynn hydrostatic data
-    #Cv = 1.05e-3           # (MJ/kg)/K
-    Cv = 1.5e-3             # (MJ/kg)/K
-    Gamma0 = 1.1
-    e0 = T0*Cv
-    #c0=2.6778 s = 2.68946
-}
-Hayes!=HMX-YC; units=hydro::std
-{
-    rho0 = 1.9              # g/cm^3
-    P0 = 1.0e-4             # GPa
-    T0 = 300                # degrees K
-    Cv = 1.6e-3             # (MJ/kg)/K
-    Gamma0 = 1.1
-    e0 = T0*Cv
-    # linear veloctiy fit to Yoo-Cynn data
-    c0= 3.04
-    s = 1.65
-    #K0=16.52; N=5.94
-}
-
-EOS:BirchMurnaghan!=HMX; units=hydro::std
-{
-    P_ref = 1.e-4
-    T_ref = 300.
-    V0  = 0.515573          # cm^3/g (V0 at T=0)
-    e0  = 0
-    K0  = 16.5              # GPa
-    Kp0 =  8.7              # dimensionless
-    # Gamma = a + b*(V/V0)
-    a   =  0                # dimensionless
-    b   =  0.9              # dimensionless
-    cv(1) = 5.265e-1, 3.073e2    
-    cv(3) = 1.831e5,  4.194e2    
-}
-
-EOS:JWL!=HMX4000; units=hydro::std
-{
-# Detonation EOS at LLNL, 1993
-# P. C. Souers and L. C. Haselman Jr.
-# page 5-19
-    V0    =   0.525976      # cm^3/g
-    e0    =   0.174655      # MJ/kg
-    A     = 858.0805        # GPa
-    B     =   7.546531      # GPa
-    C     =   0.781274      # GPa
-    R1    =   4.306         # -
-    R2    =   0.80          # -
-    omega =   0.3           # -
-    Edet  =  11.0*V0        # MJ/kg
-#
-    Cv    = 1.5e-3          # (MJ/kg)/K
-    Tcj   = 4000            # K
-    Scj   = 0.00126474 + 0.00164566 # (MJ/kg)/K
-}
-
-EOS:JWL!=HMX3000; units=hydro::std
-{
-    :use=HMX4000
-    Tcj = 3000
-}
-EOS:JWL!=HMX3500; units=hydro::std
-{
-    :use=HMX4000
-    Tcj = 3500
-}
-#
-#  PBX-9501
-#
-EOS:ArrheniusHE!=PBX9501; units=hydro::std
+EOS:ArrheniusHE=PBX9501; units=hydro::std
 {
     P_vac = 1.e-6
     OneDFunc_abs_tol = 1e-5
@@ -181,16 +65,9 @@ EOS:ArrheniusHE!=PBX9501; units=hydro::std
     k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
     k   = 0.1*k                     # correct rate for induction time
     k   = 0.1*k                     # normalize to Criag's wedge experiment
-    #
-    #k  *= 10
-}
-EOS:ArrheniusHE!=PBX9501_0.8; units=hydro::std
-{
-    :use=PBX9501
-    lambda = 0.8  # partly burnt
 }
 #
-EOS:JWL!=PBX9404; units=hydro::std
+EOS:JWL=PBX9404; units=hydro::std
 {
 # Detonation EOS at LLNL, 1993
 # P. C. Souers and L. C. Haselman Jr.
@@ -210,7 +87,7 @@ EOS:JWL!=PBX9404; units=hydro::std
     Cv    = 1.e-3        # (MJ/kg)/K
     Tcj   = 3500         # K
 }
-EOS:Hayes!=PBX9501; units=hydro::std
+EOS:Hayes=PBX9501; units=hydro::std
 {
     # Gibbs & Popolato, p 116
     rho0 = 1.843            # g/cm^3
@@ -224,67 +101,11 @@ EOS:Hayes!=PBX9501; units=hydro::std
     s = 1.507
     #
     rho0 = 1.833
-    /**
-    c0   = 2.501
-    s    = 2.261
-    **/
-}
-#
-#
-EOS:ArrheniusHE!=PBX9501.sam; units=hydro::std
-{
-    P_vac = 1.e-6
-    OneDFunc_abs_tol = 1e-5
-    OneDFunc_rel_tol = 1e-4
-    tol = 1.e-6
-    #
-    lambda = 0  # all reactants
-    reactants = "Hayes::PBX9501.sam"
-    products  = "Sesame::PBX9501"
-    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
-    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
-    #      LA-UR-01-3499    
-    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
-    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
-    k   = 0.1*k                     # correct rate for induction time
-    k   = 0.1*k                     # normalize to Criag's wedge experiment
-    #
-    #k  *= 3
-    #k  *= 4
-    k  *= 10
-}
-EOS:ArrheniusHE!=PBX9501.sam_0.7; units=hydro::std
-{
-    :use=PBX9501.sam
-    lambda = 0.7  # partly reacted
-}
-EOS:ArrheniusHE!=PBX9501.sam_0.5; units=hydro::std
-{
-    :use=PBX9501.sam
-    lambda = 0.5  # partly reacted
-}
-EOS:Hayes!=PBX9501.sam; units=hydro::std
-{
-    # Gibbs & Popolato, p 116
-    rho0 = 1.843            # g/cm^3
-    P0 = 1.0e-4             # GPa
-    T0 = 300                # degrees K
-    Cv = 1.6e-3             # (MJ/kg)/K
-    Gamma0 = 1.1
-    e0 = T0*Cv
-    # 0.1 < Up < 0.9
-    c0= 2.953
-    s = 1.507 + 0.179
-    #
-    rho0 = 1.833
-    e0 = 6.1021
-    #Cv = 2.1e-3             # (MJ/kg)/K    
-    Cv = 2.0e-3             # (MJ/kg)/K    
 }
 #
 #
 #
-EOS:StiffIdealHEav!=PBX9501; units=hydro::std
+EOS:StiffIdealHEav=PBX9501; units=hydro::std
 {
     lambda = 0  # all reactants
     HE = "PBX9501"
@@ -302,7 +123,7 @@ EOS:StiffIdealHEav!=PBX9501; units=hydro::std
     tau = 0.1e-3
     k *= 0.1
 }
-EOS:StiffIdealHE!=PBX9501; units=hydro::std
+EOS:StiffIdealHE=PBX9501; units=hydro::std
 {
     lambda = 0  # all reactants
     HE = "PBX9501"
@@ -316,7 +137,7 @@ EOS:StiffIdealHE!=PBX9501; units=hydro::std
     #
     k  *= 10
 }
-EOS:StiffIdeal!=PBX9501; units=hydro::std
+EOS:StiffIdeal=PBX9501; units=hydro::std
 {
     lambda1 = 1;        # reactants
     rho_ref = 1.843;

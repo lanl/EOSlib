@@ -135,6 +135,9 @@ Phi0=foam; units=hydro::std
 
 Phi0=estane; units=hydro::std
 {
+# ref: Equation of State and Hugoniot Locus for Porous Materials:
+#      P-alpha model revisited
+#      R. Menikoff and E. Kober
     phi0    = 0.985         # initial porosity
     Pc      = 0.1           # crushup pressure (GPa)
     V0      = 0.833333      # estane V0 (cm^3/g)
