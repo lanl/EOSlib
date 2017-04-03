@@ -138,6 +138,9 @@ Phi0=estane; units=hydro::std
 # ref: Equation of State and Hugoniot Locus for Porous Materials:
 #      P-alpha model revisited
 #      R. Menikoff and E. Kober
+#      Shock Compression in Condensed Matter -- 1999
+#      AIP Conference Proceedings 505, 129 (2000)
+#      http://dx.doi.org/10.1063/1.1303438
     phi0    = 0.985         # initial porosity
     Pc      = 0.1           # crushup pressure (GPa)
     V0      = 0.833333      # estane V0 (cm^3/g)
@@ -153,11 +156,15 @@ Phi0=HMX; units=hydro::std
     Pc      = 0.2           # crushup pressure (GPa)
     V0      = 0.526316      # HMX V0 (cm^3/g)
     P0      = 1.0e-4        # HMX P0 (GPa)
-    scale = 1              # P0 *= phi0, V0 /= phi0
+    scale = 1               # P0 *= phi0, V0 /= phi0
     abs_tol=1e-4
     rel_tol=1e-4
 }
 
+# Ref: 
+#    Quasi-static compaction study of coarse HMX explosive
+#    W. L. Elban & M. A. Chiarito
+#    Powder Technology 46 (1986) pp. 181--193
 
 EC=EC11; units=hydro::std
 {   # Elban-Chiarito data for HMX11
@@ -226,10 +233,10 @@ EOS:EqPorous=sylgard; units=hydro::std
 }
 Phi0=sylgard; units=hydro::std
 {
-    phi0    = 0.90         # initial porosity
+    phi0    = 0.90          # initial porosity
     Pc      = 0.15          # crushup pressure (GPa)
-    V0      = 1/1.014   # sylgard V0 (cm^3/g)
-    P0      = 1.0e-4       # HMX P0 (GPa)
+    V0      = 1/1.014       # sylgard V0 (cm^3/g)
+    P0      = 1.0e-4        # HMX P0 (GPa)
     abs_tol=1e-6
     rel_tol=1e-6
 }
