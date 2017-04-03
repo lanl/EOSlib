@@ -22,8 +22,8 @@ set_property(TARGET Applications PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
 set_property(TARGET Applications PROPERTY LINKER_LANGUAGE CXX)
 
-target_link_libraries( Applications ExtEOS HEburn EOStypes )
-#
+target_link_libraries( Applications HEburn ExtEOS EOStypes )
+
 # Utilities
 #
 list(APPEND utils EOSdata Wave Detonation Isotherm ImpedanceMatch)

@@ -21,4 +21,4 @@ export PATH=$BUILD/bin:$PATH
 export EOSdata=$EOSLIB_DATA_PATH/EOS.data
 export LD_LIBRARY_PATH=$EOSLIB_SHARED_LIBRARY_PATH:$LD_LIBRARY_PATH
 
-exec perl $BUILD/GUI/MaterialData.pl "DataFile=$EOSdata" "$@" &
+exec perl $BUILD/GUI/MaterialData.pl "DataFile=$EOSdata" "$@" "ppid=$PPID" &
