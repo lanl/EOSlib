@@ -5,6 +5,14 @@
 
 #define token input.current
 
+Calc::Calc(int nd, int na, int ndbl, double *def_dbl)
+           : var(nd), array(na), new_dbl(ndbl)
+{
+    default_dbl = new_dbl ? def_dbl : NULL;
+    new_str = 0;
+    default_str = NULL;
+    InitFunc();
+}
 
 int Calc::parse(const char *line, double &value)
 {

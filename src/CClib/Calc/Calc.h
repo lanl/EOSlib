@@ -66,7 +66,7 @@ ToDo : replace with non-recursive operator precedence based algorithm
 
 class Calc
 {
-public:
+private:
     class Function
     {
     public:
@@ -76,8 +76,8 @@ public:
         ~Function();
     };
     static int init_func;
-    void InitFunc();
     static Function **Functions;
+    void InitFunc();
 protected:
     Scanner input;
     CalcVars var;
@@ -109,14 +109,7 @@ public:
     int new_str;                // LHS
     double *default_dbl;        // RHS
     const char *default_str;    // RHS
-    Calc(int nd=16, int na = 4, int ndbl=1, double *def_dbl = NULL)
-        : var(nd), array(na), new_dbl(ndbl)
-        {
-            default_dbl = new_dbl ? def_dbl : NULL;
-            new_str = 0;
-            default_str = NULL;
-            InitFunc();
-        }
+    Calc(int nd=16, int na=4, int ndbl=1, double *def_dbl=NULL);
     ~Calc() {}
     
     int parse(const char *line, double &value);
