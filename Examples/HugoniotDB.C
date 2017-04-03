@@ -45,23 +45,60 @@ int main()
     
     // Compute point on Hugoniot locus with specified V
     WaveState wave;
-    if( hugoniot->V(0.5, RIGHT, wave) )
+    double V = 0.5*state.V;
+    if( hugoniot->V(V, RIGHT, wave) )       // shock with compression ratio of 2
     {
         // maximum compression ratio for ideal gas
         //      V0/V = (gamma+1)/(gamma-1) = 6 @ gamma = 1.4
         // so hugoniot will fail if V <= 1/6
-        std::cout << "Error, hugoniot failed\n";
+        std::cout << "Error, hugoniot->V failed\n";
         return 1;
     }
     // Print shock state
-    std::cout << "\nShock wave state\n";
+    std::cout << "\nShock wave state at V0/V=2\n";
+    WaveStateLabel(std::cout)   << "\n";
+    WaveStateLabel(std::cout,u) << "\n";
+    std::cout << wave << "\n";
+
+    // Compute point on Hugoniot locus with specified P
+    double P = 100.*eos->P(state);
+    if( hugoniot->P(P, RIGHT, wave) )       // shock with P = 100*P0
+    {
+        std::cout << "Error, hugoniot->P failed\n";
+        return 1;
+    }
+    // Print shock state
+    std::cout << "\nShock wave state at P/P0=100\n";
     WaveStateLabel(std::cout)   << "\n";
     WaveStateLabel(std::cout,u) << "\n";
     std::cout << wave << "\n";
 
     // Deallocate storage
     delete hugoniot;
-    deleteEOS(eos);
 
-    return 0;
+    // convert to hydro::std units
+    if( eos->ConvertUnits("hydro::std", db) )
+    {
+        std::cout << "\neos->ConvertUnits failed\n";
+        return 1;
+    }
+    state.V = eos->V_ref;
+    state.e = eos->e_ref;
+    hugoniot = eos->shock(state);
+    P = 100.*eos->P(state);
+    if( hugoniot->P(P, RIGHT, wave) )       // shock with P = 100*P0
+    {
+        std::cout << "Error, hugoniot->P failed\n";
+        return 1;
+    }
+    // Print shock state
+    std::cout << "\nShock wave state in 'hydro::std' units\n";
+    WaveStateLabel(std::cout)   << "\n";
+    const Units &u1 = *eos->UseUnits();
+    WaveStateLabel(std::cout,u1) << "\n";
+    std::cout << wave << "\n";
+
+    // Deallocate storage
+    delete hugoniot;
+    deleteEOS(eos);
 }
