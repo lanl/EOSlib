@@ -137,6 +137,12 @@ EOS:DavisProducts=PBX9502;  units=hydro::std
 }
 HErate:IgnitionGrowth=PBX9502; units=hydro::HiP
 {
+# ref: Reactive flow modeling of the interaction of TATB detonation waves
+#      with inert materials
+#      C. M. Tarver and E. M. McGuire
+#      12th Detonation Symposium (2002), pp 641--649, Table 1
+#
+# Table 1
     tol  = 1.e-5
     rho0 = 1.895         # g/cm^3
     lambda_igmax = 0.025
@@ -174,12 +180,17 @@ EOS:HEburn2=PBX9502.HotSpotCC.davis_SURFplus; units=hydro::std
 }
 HErate2:HotSpotRateCC=PBX9502.davis_SURFplus; units=hydro::std
 {
+# ref: Shock Detector for SURF model
+#      R. Menikoff, LA-UR-16-20116, Appendix D
+# 
+#
 # ds/dt = f(Ps)*(P/Ps)**n
 # new fitting form
 #        =  0,                              for Ps < P0
 #  f(Ps) = f0(Ps) - f0(P0)*(1+B*(Ps-P0)),   for P0 < Ps < P1
 #        = f1*(1+df1*[1-exp(-B2*(Ps-P1))],  for      P1 < Ps
 #  where
+#  f0(Ps) = exp(A+B*Ps)
 #     f1 = f(P1) = f0(P1) - f0(P0)*(1+B*(P1-P0))
 #     B2 = B/abs(df1) * (df/dPs)(P1) / f1
 #  f and df/dPs continuous at P0 and P1

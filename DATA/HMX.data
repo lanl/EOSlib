@@ -3,6 +3,8 @@
 
 UsUp=HMX-Mader; units=hydro::std
 {
+# C. L. Mader EOS parameters for PBX 9404 with rho0 of HMX crystal
+#
     rho0 = 1.9              # g/cm^3
     P0 = 1.0e-4             # GPa
     T0 = 300                # degrees K
@@ -16,14 +18,14 @@ UsUp=HMX-Mader; units=hydro::std
 
 Hayes=HMX; units=hydro::std
 {
+# K0 & N from  hydrostatic data
+# The linear and volume compression of beta-HMX and RDX
+# Proc. Int. Symp on High Dynamic Pressures (1978) pp 3-8
     rho0 = 1.9              # g/cm^3
     P0 = 1.0e-4             # GPa
     T0 = 300                # degrees K
-    K0 = 12.9               # GPa
-    K0 = 13.5               # Olingers hydrostatic data
+    K0 = 13.5               # GPa, Olingers hydrostatic data
     N  =  9.3
-    #K0 = 12.4              # Yoo-Cynn hydrostatic data
-    #Cv = 1.05e-3           # (MJ/kg)/K
     Cv = 1.5e-3             # (MJ/kg)/K
     Gamma0 = 1.1
     e0 = T0*Cv
@@ -47,6 +49,12 @@ HayesBM=HMX;  units=hydro::std
 
 EOS:BirchMurnaghan=HMX; units=hydro::std
 {
+# One of many fits K0, Kp0 to DAC data
+# see for example
+# Fitting forms for isothermal data
+# R. Menikoff and T. D. Sewell
+# High Pressure Research 21 (2001) pp 121-138
+# http://dx.doi.org/10.1080/08957950108201010
     P_ref = 1.e-4
     T_ref = 300.
     V0  = 0.515573          # cm^3/g (V0 at T=0)

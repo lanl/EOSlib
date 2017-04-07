@@ -61,6 +61,10 @@ EOS:ElasticPolyG=PMMA; units=hydro::std
 }
 EOS:PeSpline=PMMA-hydro; units=hydro::std
 {
+# Spline fit to data in
+# The dynamic mechanical behavior of polymethyl methacrylate
+# K. W. Schuler and J. W. Nunziato
+# Rheol. Acta. 13 (1974) pp. 265-273
     rho0 = 1.185    # g/cm^3
     P0 = 1.0e-4     # GPa
     e0 = 0

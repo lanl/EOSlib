@@ -72,6 +72,7 @@ local @DataFiles = ();
 local $nsteps = 100;	# number of points computed for wave locus
 local $plot = 0;	# index for plot
 local $tag = $program;  # name for temporary plot files
+local $ppid = 1;         # background process
 
 my %SetArgs = (
 		DataFile  => 'scalar',
@@ -79,7 +80,8 @@ my %SetArgs = (
 		Material  => 'scalar',
 		nsteps    => 'scalar',
 		tag       => 'scalar',
-		
+		ppid      => 'scalar',
+
 	);
 
 # process argument list
@@ -160,7 +162,15 @@ MainLoop;
 
 sub cleanup
 {
-    print "$program terminated\n";
+    print "$program terminated ";
+    if( $ppid>1 )
+    {
+	    kill 'INT', $ppid;	# signal bash to print prompt
+    }
+    else
+    {
+        print "\n";
+    }
     $Data->DESTROY;
 	$mw->destroy if Exists($mw);
 	#remove temporary files
@@ -200,6 +210,7 @@ sub RemoveDuplicates
 	
 	for $elem (@$array)
 	{
+        next unless $elem;
 		if( not $list{$elem} )
 		{
 			push @a, $elem;

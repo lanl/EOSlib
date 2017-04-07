@@ -45,8 +45,7 @@ fi
 # Follow symbolic links for absolute path to build (root) directory
 # on linux  (mac does not have -f option)
 #    prog=`readlink -nf $prog`
-#    BIN=`dirname $prog`
-# would replace next 27 lines (til BUILD=...)
+# would replace next 15 lines (til BIN=...)
 while [ -L $prog ] ; do
     link=`ls -l $prog | sed -e 's/.*->[ 	]*//'`
     case $link in
@@ -63,19 +62,7 @@ case $prog in
     prog=`pwd`/$prog;;
 esac
 #
-BIN=`(cd \`dirname $prog\` ; pwd)`
-while [ -L $BIN ] ; do
-    link=`ls -l $BIN | sed -e 's/.*->[ 	]*//'`
-    case $link in
-    /*)
-        BIN=$link;;
-     *)
-        BIN="`dirname $BIN`/$link";;
-    esac
-done
-BIN=`(cd $BIN ; pwd)`
-#
-#
+BIN=`(cd \`dirname $prog\` ; pwd -P)`
 BUILD=`(cd $BIN/..; pwd)`
 #
 # set shell variables and export environment variables

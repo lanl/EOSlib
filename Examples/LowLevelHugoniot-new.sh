@@ -6,16 +6,20 @@ source ../../build/SetEnv
 CXX=${CMAKE_CXX_COMPILER}
 
 # compile
-$CXX -I$EOSLIB_INCLUDE -c HugoniotDB.C  \
+$CXX -I$EOSLIB_INCLUDE -c LowLevelHugoniot-new.C \
     || { echo "compile failed"; exit 1; }
 
+
 # load
-$CXX -o HugoniotDB HugoniotDB.o \
+$CXX -o LowLevelHugoniot-new LowLevelHugoniot-new.o \
     -L$EOSLIB_SHARED_LIBRARY_PATH \
-    -lEOS \
+    -lEOS -lEOStypes \
     -Wl,-rpath,$EOSLIB_SHARED_LIBRARY_PATH
 #
-# Note: if environment variable is set
+# Notes:
+# -lIdealGas can be replaced by -lMaterials
+#
+# if environment variable is set
 #   export LD_LIBRARY_PATH=$EOSLIB_SHARED_LIBRARY_PATH:$LD_LIBRARY_PATH
 # then loader argument
 #   -Wl,-rpath,$EOSLIB_SHARED_LIBRARY_PATH
@@ -23,4 +27,4 @@ $CXX -o HugoniotDB HugoniotDB.o \
 #
 
 # Run
-./HugoniotDB
+./LowLevelHugoniot-new

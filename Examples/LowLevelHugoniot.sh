@@ -3,22 +3,11 @@
 # fetch environment variables
 source ../../build/SetEnv
 
-# with macports, default is to use g++ compiler
-# while cmake uses Xcode c++ compiler
-# different compilers can give load errors due to name mangling
-#
-# ToDo: cmake variable ${CMAKE_CXX_COMPILER}
-#       or in build/CMakeCache.txt pickout
-#          CMAKE_CXX_COMPILER:FILEPATH=
-#       or fill in with cmake configure_file command
-if [ `uname -s` = 'Linux' ]; then
-    CXX=g++
-else
-    CXX=/usr/bin/c++
-fi
+CXX=${CMAKE_CXX_COMPILER}
 
 # compile
-$CXX -I$EOSLIB_INCLUDE -c LowLevelHugoniot.C
+$CXX -I$EOSLIB_INCLUDE -c LowLevelHugoniot.C \
+    || { echo "compile failed"; exit 1; }
 
 # load
 $CXX -o LowLevelHugoniot LowLevelHugoniot.o \
