@@ -365,9 +365,16 @@ Could be deprecated and replaced.
 
 \subsection{DataBase}
 
+The purpose of an equation-of-state model is to represent the behavior and properties of some specific material, such as helium gas or a particular high explosive. Many different models have been proposed in the literature, and each of these can be used to model a wide variety of materials. Model parameters are chosen to best fit experimental data. 
+
+Depending on the model, there may be a large number of possible parameters that must be specified. Additionally, there may be competing parameter specifications for a given material, either based on different experiments or calibrated to different physical regimes. Keeping track of all of the possible combinations can be challenging. EOSlib handles this problem by providing a database framework that can be used to organize and maintain parameter sets for specific materials and models. 
 
 \subsubsection{Database files}
+
 \paragraph{Format}
+
+
+
 \paragraph{Loading EOS modules}
 
 \subsubsection{Library functions}
@@ -554,7 +561,7 @@ Because of the different equations of state, the initial state of the reactants 
 Ideal Gas\\
 Stiffened Gas\\
 JWL\cite{RN746}\\
-Hayes\cite{RN837}\\
+Hayes\cite{RN837}\\ 
 HayesBM\\
 GenHayes\\
 Davis\cite{RN743}\\
