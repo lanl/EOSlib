@@ -18,7 +18,7 @@ file(APPEND ${tmpfile}
   "  set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD_REQUIRED ON)\n"
   "  set_property(TARGET ExtEOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)\n"
   "  set_property(TARGET ExtEOStypes PROPERTY LINKER_LANGUAGE CXX)\n"
-  "  target_link_libraries(ExtEOStypes ExtEOS PTequilibrium)\n" )
+  )
 include(${tmpfile})
 
 add_library( ExtHE ${${projectName}_policy}
