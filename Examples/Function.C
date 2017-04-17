@@ -23,7 +23,7 @@ Calc::Function **Calc::Functions = NULL;
 
 void Calc::InitFunc()
 {
-//std::cout << "DEBUG: Calc::InitFunc, this " << this;
+std::cout << "DEBUG: Calc::InitFunc, this " << this << "\n";
     if( init_func )
         return;
     init_func = 1;
@@ -35,9 +35,9 @@ void Calc::InitFunc()
 	      NULL
 	   };
     Functions = Funcs;
-//std::cout << " init_func " << init_func
-//          << "  Functions " << Functions
-//          << " ( " << &Functions << ")\n";
+std::cout << " init_func " << init_func
+          << "  Functions " << Functions
+          << " ( " << &Functions << ")\n";
 }
 
 Calc::Function *Calc::ValidFunction(const char *name)
@@ -46,12 +46,12 @@ Calc::Function *Calc::ValidFunction(const char *name)
     /***/
     if( Functions == NULL )
     {
-//std::cout << "DEBUG: Calc::ValidFunction, this " << this
-//          << "  init_func " << init_func << "\n";
+std::cout << "DEBUG: Calc::ValidFunction, this " << this
+          << "  init_func " << init_func << "\n";
         // On Mac, with shared objects,
         // static variables init_func and Functions get reset
         // But not on linux with gcc
-        InitFunc();
+        //InitFunc();
     }
     /***/
 	for( func=Functions; *func; func++ )

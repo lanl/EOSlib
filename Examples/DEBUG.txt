@@ -1,0 +1,24 @@
+Loader issue with initializing Calc::init_func on Mac
+
+Starting in build/Examples
+
+1. Add diagnostic output to Calc
+cp Function.C ../../eoslib/src/CClib/Calc/Subs/Function.C
+
+# to revert
+( cd ../../eoslib; git checkout src/CClib/Calc/Subs/Function.C; )
+
+2. Rerun make
+( cd ..; make -j4; )
+
+3. Run
+./Test.sh   # successfully
+
+4. Test.C comment out /** Calc line **/
+./Test.sh   # fails on first FetchEOS
+
+5. Test.C comment out, in addition, first FetchEOS
+./Test.sh   # successful, last Fetch same as #4 that failed
+
+6. modify Test.sh -lEOS instead of -lEOStypes
+./Test.sh   # fails at last Fetch
