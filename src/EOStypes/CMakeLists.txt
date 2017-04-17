@@ -20,7 +20,8 @@ file(APPEND ${tmpfile}
   "  set_property(TARGET EOStypes PROPERTY CXX_STANDARD_REQUIRED ON)\n"
   "  set_property(TARGET EOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)\n"
   "  set_property(TARGET EOStypes PROPERTY LINKER_LANGUAGE CXX)\n"
-  "  target_link_libraries(EOStypes EOS)\n" )
+  #  "  target_link_libraries(EOStypes EOS)\n" )
+  )
 include(${tmpfile})
 
 #add_library( EOStypes ${${projectName}_policy}

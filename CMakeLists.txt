@@ -165,6 +165,9 @@ else(DEFINED ${projectName}_compiler_flags)
   #  "-std=c++11 -Wall -Wextra ${CMAKE_CXX_FLAGS} " )
     "-std=c++11 -w ${CMAKE_CXX_FLAGS} -g " )
   #  "-w ${CMAKE_CXX_FLAGS} ")
+  IF(${CMAKE_C_COMPILER_ID} MATCHES "Clang")
+	  set( ${projectName}_flags "${${projectName}_flags} -Wl,-undefined,dynamic_lookup")
+  endif(${CMAKE_C_COMPILER_ID} MATCHES "Clang")
   # debug variants
   if (${CMAKE_BUILD_TYPE} STREQUAL DEBUG)
     set( ${projectName}_flags
