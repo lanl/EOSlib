@@ -138,18 +138,13 @@ EOS:StiffIdealHE=PBX9501; units=hydro::std
     k  *= 10
 }
 EOS:StiffIdeal=PBX9501; units=hydro::std
-{
+{ 
+    # Compare Gibbs & Popolato, p 116.
     lambda1 = 1;        # reactants
     rho_ref = 1.843;
     P_ref   = 1.0e-4;
-    #c0 = 2.953
-    #s = 1.507
-    c0 = 2
-    s = 1.1
-    #
-    c0 = 2.8
-    s = 1.02
-    #    
+    c0 = 2.953
+    s = 1.507
     Cv1 = 4.5e-3
     G2 = 3-1            # Gamma2 = 3
     Cv2 = 2.4e-3
