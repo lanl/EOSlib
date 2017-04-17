@@ -11,6 +11,9 @@ Hayes=HMX-YC; units=hydro::std
     Gamma0 = 1.1
     e0 = T0*Cv
     # linear veloctiy fit to Yoo-Cynn data
+    # Equation of state, phase transition, decomposition of beta-HMX 
+    # at high pressures, Choong-Shik Yoo and Hyunchae Cynn, 
+    # The Journal of Chemical Physics, vol. 111, 10229.
     c0= 3.04
     s = 1.65
     #K0=16.52; N=5.94
@@ -26,6 +29,9 @@ Hayes!=HMX-YC; units=hydro::std
     Gamma0 = 1.1
     e0 = T0*Cv
     # linear veloctiy fit to Yoo-Cynn data
+    # Equation of state, phase transition, decomposition of beta-HMX 
+    # at high pressures, Choong-Shik Yoo and Hyunchae Cynn, 
+    # The Journal of Chemical Physics, vol. 111, 10229.
     c0= 3.04
     s = 1.65
     #K0=16.52; N=5.94
