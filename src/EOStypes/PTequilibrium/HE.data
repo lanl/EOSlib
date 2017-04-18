@@ -1,12 +1,8 @@
 .include ../../../DATA/EOS.data
-.include ../../../../Simulations/HE.new/HE.data
 
 :DataBase.=Environment
 {
-#  SharedLibDirEOS = $PWD/../../lib/Linux
-# circumvent kdbg messing up environment variables (mx:t14rm only)
   SharedLibDirEOS =$EOSLIB_SHARED_LIBRARY_PATH
-  #/home/ralph/AMRITA/CFD/EOSlib/src/lib/Linux
 }
 
 

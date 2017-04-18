@@ -15,15 +15,15 @@ endforeach( test_c )
 
 set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/Spline)
 
-add_test(NAME TestSpline
-  COMMAND ${CMAKE_COMMAND}
-  -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestSpline
-  -D test_args:string=${args}
-  -D out_blessed=${BLESSED_OUTPUT}/TestSplineOut.blessed
-  -D err_blessed=${BLESSED_OUTPUT}/TestSplineErr.blessed 
-  -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
-  )
-set_tests_properties(TestSpline PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
+# add_test(NAME TestSpline
+#   COMMAND ${CMAKE_COMMAND}
+#   -D test_cmd=${CMAKE_CURRENT_BINARY_DIR}/TestSpline
+#   -D test_args:string=${args}
+#   -D out_blessed=${BLESSED_OUTPUT}/TestSplineOut.blessed
+#   -D err_blessed=${BLESSED_OUTPUT}/TestSplineErr.blessed 
+#   -P ${CMAKE_BINARY_DIR}/TEST/compare_outputs.cmake
+#   )
+# set_tests_properties(TestSpline PROPERTIES ENVIRONMENT "${CTEST_ENVIRONMENT}")
 
 
 if(${verbose_traversal})
