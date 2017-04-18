@@ -1,7 +1,0 @@
-Initial state: V, e = 0.5, 0.9  lambda = 0
-                 P, T = 1.89506, 571.36
-rate = 1.32923e-09, time(lambda=0.99) =3.06849e+06
-status = 3, time step = 66.9064
- t         lambda  Rate      P     T  
-1.0000e+00 0.0000 1.33e-09   1.9  571.
-status=0, lambda = 0.0000

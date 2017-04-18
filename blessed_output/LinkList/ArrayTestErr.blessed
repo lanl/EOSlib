@@ -1,7 +1,0 @@
-pda(0) = 1  pda(1) = 2  pda(2) = 3
-pda(0) = 1  pda(1) = 2  pda(2) = 3
-dimension = 3
-get(3) -> 0
-get(3) -> ! 0
-Offset = 2
-pda(0) = 3  pda(-1) = 2  pda(-2) = 1
