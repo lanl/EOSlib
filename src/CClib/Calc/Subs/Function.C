@@ -43,7 +43,7 @@ void Calc::InitFunc()
 Calc::Function *Calc::ValidFunction(const char *name)
 {
 	Function **func;
-    /***
+    /***/
     if( Functions == NULL )
     {
 //std::cout << "DEBUG: Calc::ValidFunction, this " << this
@@ -53,7 +53,7 @@ Calc::Function *Calc::ValidFunction(const char *name)
         // But not on linux with gcc
         InitFunc();
     }
-    ***/
+    /***/
 	for( func=Functions; *func; func++ )
 	{
 		if( !strcmp(name,(*func)->name) )
