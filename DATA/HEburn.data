@@ -9,34 +9,34 @@
     DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
     BKW            = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
 
-    ArrheniusHE      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    IdealHE          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    StiffIdealHE     = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    StiffIdealHEav   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HEburn           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HEburn2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    ArrheniusHE      = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IdealHE          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHE     = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHEav   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HEburn           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HEburn2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
 
 }
 
 :SharedLibs=HErate
 {
-    HErate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    Arrhenius        = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    PnRate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    IgnitionGrowth   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HotSpotRate      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HotSpotRate2     = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HotSpotRateExp   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HotSpotCC_Rate   = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    ArrheniusRT      = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    IgnitionGrowthRT = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    FFrate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    FFQrate          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HErate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    Arrhenius        = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    PnRate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IgnitionGrowth   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRate      = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRate2     = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRateExp   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotCC_Rate   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    ArrheniusRT      = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IgnitionGrowthRT = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    FFrate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    FFQrate          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
 }
 :SharedLibs=HErate2
 {
-    HErate2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
-    HotSpotRateCC    = $EOSLIB_SHARED_LIBRARY_PATH/libExtHE
+    HErate2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRateCC    = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
 }
 
 .units = hydro::std

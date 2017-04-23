@@ -1,9 +1,9 @@
 :SharedLibs.=EOS
 {
-    ArrheniusHE    = $EOSLIB_SHARED_LIBRARY_PATH/libArrheniusHE
-    IdealHE        = $EOSLIB_SHARED_LIBRARY_PATH/libArrheniusHE
-    StiffIdealHE   = $EOSLIB_SHARED_LIBRARY_PATH/libArrheniusHE
-    StiffIdealHEav = $EOSLIB_SHARED_LIBRARY_PATH/libArrheniusHE
+    ArrheniusHE    = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IdealHE        = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHE   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHEav = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
 }
 
 .units = hydro::std

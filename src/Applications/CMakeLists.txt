@@ -14,16 +14,6 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink
 #
 file(COPY Examples.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 #
-# link libraries
-#
-add_library( Applications ${${projectName}_policy} "" )
-set_property(TARGET Applications PROPERTY CXX_STANDARD 11)
-set_property(TARGET Applications PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET Applications PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-set_property(TARGET Applications PROPERTY LINKER_LANGUAGE CXX)
-
-target_link_libraries( Applications HEburn ExtEOS EOStypes )
-
 # Utilities
 #
 list(APPEND utils EOSdata Wave Detonation Isotherm ImpedanceMatch)
@@ -33,7 +23,7 @@ list(APPEND utils ZNDprofile   ZNDprofile-alt
 
 foreach(util ${utils})
    add_executable(${util} ${util}.C)
-   target_link_libraries(${util} Applications)
+   target_link_libraries(${util} ExtEOS ExtEOStypes EOStypes)
 endforeach(util)
 #
 # tests in build/TEST using runEOS

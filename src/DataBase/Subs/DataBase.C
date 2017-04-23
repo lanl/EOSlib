@@ -23,6 +23,7 @@ void DataBase::Init()
     DataBase_cerr = new DataBase_Error(cerr);
     error_default  = DataBase_cerr;
     init = 1;
+    Calc calc;  // calls Calc::InitFunc()
 }
 extern "C" { // dynamic link for database
   void DataBase_Init()

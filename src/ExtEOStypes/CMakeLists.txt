@@ -18,17 +18,10 @@ file(APPEND ${tmpfile}
   "  set_property(TARGET ExtEOStypes PROPERTY CXX_STANDARD_REQUIRED ON)\n"
   "  set_property(TARGET ExtEOStypes PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)\n"
   "  set_property(TARGET ExtEOStypes PROPERTY LINKER_LANGUAGE CXX)\n"
+  "target_link_libraries( ExtEOStypes EOStypes )\n"
   )
 include(${tmpfile})
 
-add_library( ExtHE ${${projectName}_policy}
-                   $<TARGET_OBJECTS:ArrheniusHE-obj>
-                   $<TARGET_OBJECTS:HEburn-obj> )
-set_property(TARGET ExtHE PROPERTY CXX_STANDARD 11)
-set_property(TARGET ExtHE PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET ExtHE PROPERTY INTERPROCEDURAL_OPTIMIZATION ON)
-set_property(TARGET ExtHE PROPERTY LINKER_LANGUAGE CXX)
-target_link_libraries( ExtHE ExtEOS PTequilibrium )
 
 set(BLESSED_OUTPUT ${EOSLIB_BLESSED_OUTPUT}/ExtEOStypes)
 
