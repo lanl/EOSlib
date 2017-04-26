@@ -1,0 +1,191 @@
+#
+#  PBX 9404 (94 wt % HMX + nitrocellulos + plasticizer)
+#
+EOS:HEburn=PBX9404.HOM; units=hydro::std
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-5
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "UsUp::PBX9404"
+    products  = "BKW::PBX9404"
+    HErate    = "FFrate::PBX9404";
+}
+#
+EOS:UsUp=PBX9404; units=hydro::HiP
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-8
+    rho0 = 1.844            # g/cm^3
+    P0 = 1.0e-6             # Mb
+    T0 = 300                # degrees K
+    Cv = 0.4/23.89e3        # 0.4 cal/g -> (Mb*cc/g)/K
+    G0 = G1 = 0.675         # Gamma   
+    c0= 0.2423
+    s = 1.883
+}
+#
+EOS:BKW=PBX9404; units=hydro::HiP
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+    P_vac = 1.e-8
+    V0 = 1/1.844
+    e0 = 0
+    de = 0.1
+    Pn(1)=-3.53906259964,-2.57737590393,    2.60075423332e-1, 1.39083578508e-2,-1.13963024075e-2
+    en(1)=-1.61913041133, 5.21518534192e-1, 6.77506594107e-2, 4.26524264691e-3, 1.04679999902e-4 
+    Tn(1)= 7.36422919790,-4.93658222389e-1, 2.92353060961e-2, 3.30277402219e-2,-1.14532498206e-2
+    Cv = 0.5/23.89e3        # 0.5 cal/g -> (Mb*cc/g)/K
+}
+#
+HErate:FFrate=PBX9404; units=hydro::std
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9404.OUT
+#           see also   page 219- LA-2900
+#  ln(x/cm) = c1 + c2*ln(P/Mb)
+    c1 = -5.040996
+    c2 = -1.365368
+# Pop plot parameters: log_10(P/GPa) = a - b*log_10(x/mm)
+#    a = 2-1/c2-c1/c2/ln(10) = 1.12897
+#    b = -1/c2 = 0.732403
+# Gibbs & Popolato p 93, PBX 9404 @ rho0 = 1.84
+#    a = 1.11
+#    b = 0.65
+    a = 2-1/c2-c1/c2/log(10)    # = 1.12897, calc log is ln
+#   a = -c1/c2/log(10)          # = -1.60343, calc log is ln
+    b = -1/c2                   # = 0.732403
+    lambda_max = 0.95
+    dlambda    = 0.1
+    dlambda_dt = 0.1
+}
+#
+#  PBX 9501 (95 wt % HMX + estane)
+#
+EOS:HEburn=PBX9501.HOM; units=hydro::std
+{
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9501.OUT
+# Pcj = 36.3 GPa, Dcj = 8.85 km/s, gamma_cj = 2.97, Tcj = 2316 K
+# Pvn = 47.6 GPa, up  = 2.91 km/s
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-5
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =   "UsUp::PBX9501"
+    products  =    "BKW::PBX9501"
+    HErate    = "FFrate::PBX9501";  # fails due to limited domain
+                                    # of BKW::PBX9501
+    # place holder rate to use EOS
+    HErate    = "Arrhenius::HMX.BM";
+}
+#
+#
+HErate:FFrate=PBX9501; units=hydro::std
+{
+# Pop plot parameters: log_10(P/GPa) = a - b*log_10(x/mm)
+# Gibbs & Popolato p 115, PBX 9501 @ rho0 = 1.844
+     a = 1.10
+     b = 0.61
+    lambda_max = 0.95
+    dlambda    = 0.1
+    dlambda_dt = 0.1
+}
+#
+#
+EOS:UsUp=PBX9501; units=hydro::HiP
+{
+#    PBX-9501, HOM solid (matid 157000)
+# data from Numerical Modeling of Explosives, CD:run/fire.out/9501.OUT
+    P_vac = 1.e-8
+    rho0 = 1.844            # g/cm^3
+    #rho0 = 1.836            # g/cm^3 (density Sam used for de of products table)
+    P0 = 1.0e-6             # Mb
+    T0 = 300                # degrees K
+    Cv = 0.4/23.89e3        # 0.4 cal/g -> (Mb*cc/g)/K
+    G0 = G1 = 1.5           # Gamma   
+    c0= 0.25
+    s = 2.18
+}
+#
+#
+EOS:BKW=PBX9501; units=hydro::HiP
+{
+# ---- PBX-9501 - teos.in, matid 167000
+#      data from Numerical Modeling of Explosives, CD:run/fire.out/9501.OUT
+#      Pcj = 36.3 GPa, D = 8.826 km/s, Tcj = 2316 K (gamma = 2.98)
+#      Pvn = 47.6 GPa, u = 2.914 Km/s, Tvn = 2127 K
+#      Domain is limited in expansion P=0.0001, T > 1250
+#      outside domain FFrate::PBX9501 will fail
+    P_vac = 1.e-8
+    V0    = 1/1.844
+    e0    = 0.0
+    #de = 0.1
+    de = 0.097
+    # reference isentrope
+    # ln P = A + B*(ln V) + . . . + E*(ln V)^4
+    Pn(1) = -3.53307233637e+0, -2.60815397886e+0, 2.62508855224e-1,  3.08789375856e-2, -1.68057013449e-2
+    # ln e = K + L*(ln P) + . . . + O*(ln P)^4
+    en(1) = -1.61644645807e+0,  5.27457440384e-1, 6.99506443744e-2,  4.57668570398e-3, 1.19630340646e-4
+    # ln T = Q + R*(ln V) + . . . + U*(ln V)^4           
+    Tn(1) =  7.35506826013e+0, -5.11114883526e-1, 3.39624943548e-2,  4.06589832081e-2, -1.42113112718e-3
+    Cv = 0.5/23.89e3        # 0.5 cal/g -> (Mb*cc/g)/K
+}
+#
+# PBX 9502 (95 wt% TATB + KelF)
+#
+EOS:HEburn=PBX9502.HOM; units=hydro::std
+{
+# data from Numerical Modeling of Explosives
+# Pcj = 29.3 GPa, Dcj = 7.66 km/s, gamma_cj = 2.79, Tcj = 2071 K
+# Pvn = 37.2 GPa, up  = 2.56 km/s
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-5
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants =   "UsUp::PBX9502"
+    products  =    "BKW::PBX9502"
+
+    # place holder rate to use EOS
+    HErate    = "Arrhenius::HMX.BM"
+}
+#
+#
+EOS:UsUp=PBX9502; units=hydro::HiP
+{
+#    PBX-9502, HOM solid (matid 152000)
+# data from Numerical Modeling of Explosives
+    P_vac = 1.e-8
+    rho0 = 1.894            # g/cm^3
+    P0 = 1.0e-6             # Mb
+    T0 = 300                # degrees K
+    Cv = 0.3/23.89e3        # 0.3 cal/g -> (Mb*cc/g)/K
+    G0 = G1 = 1.5           # Gamma   
+    c0= 0.24
+    s = 2.05
+}
+EOS:BKW=PBX9502; units=hydro::HiP
+{
+# ---- PBX-9502 - HOM gas matid 162000
+#      data from Numerical Modeling of Explosives
+    P_vac = 1.e-8
+    V0  = 1/1.894
+    de = 0.1
+    # reference isentrope
+    # ln P = A + B*(ln V) + . . . + E*(ln V)^4
+    Pn(1) = -3.87828541159, -2.69032297231,    2.22074184951e-1, 7.42482128000e-2, -3.42819430727e-2
+    # ln e = K + L*(ln P) + . . . + O*(ln P)^4
+    en(1) = -1.58889615377,  5.34895448385e-1, 9.42824251124e-2, 8.25643459824e-3,  2.89357822582e-4
+    # ln T = Q + R*(ln V) + . . . + U*(ln V)^4           
+    Tn(1) = 7.06740292649,  -5.67003244430e-1, 5.17941586095e-2, 9.84863946395e-3, -1.09218419748e-2
+    Cv = 0.5/23.89e3        # 0.5 cal/g -> (Mb*cc/g)/K
+}
+

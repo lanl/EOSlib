@@ -1,0 +1,39 @@
+.include DataBaseUnits.data
+
+.base = EOS
+
+Hayes=HMX-YC; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.4e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # linear veloctiy fit to Yoo-Cynn data
+    # Equation of state, phase transition, decomposition of beta-HMX 
+    # at high pressures, Choong-Shik Yoo and Hyunchae Cynn, 
+    # The Journal of Chemical Physics, vol. 111, 10229.
+    c0= 3.04
+    s = 1.65
+    #K0=16.52; N=5.94
+}
+
+/***/
+Hayes!=HMX-YC; units=hydro::std
+{
+    rho0 = 1.9              # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # linear veloctiy fit to Yoo-Cynn data
+    # Equation of state, phase transition, decomposition of beta-HMX 
+    # at high pressures, Choong-Shik Yoo and Hyunchae Cynn, 
+    # The Journal of Chemical Physics, vol. 111, 10229.
+    c0= 3.04
+    s = 1.65
+    #K0=16.52; N=5.94
+}
+/***/

@@ -1,0 +1,39 @@
+Notes on thermo for EOS paper
+
+The physical setting for an equation of state (EOS) is thermodynamics.
+The EOSlib is aimed at single phase materials
+with specific volume and specific energy as independent variables.
+
+The EOS base class is a collection of functions that defines an interface
+so that all EOS models can be treated the same.
+Different EOS models are derived classes.
+The derived class also contain parameters for evaluating EOS functions.
+The interface allows for generic functions for evaluating important
+hydrodynamic properties such as the solution to a Riemann problem
+for any two materials.
+
+For an incomplete EOS, the only requires function is P(V,e) for pressure.
+Generic functions are provided for important derivatives;
+the sound speed, Gruneisen coefficient and fundamental derivative.
+Higher level functions are provided for shock (Hugoniot) locus and isentrope.
+
+For a complete EOS, the interface provides functions for other thermodynamic
+variables; temperature and entropy as well as derived variables
+sound speed, bulk modulus, specific heat, Gruneisen coefficient
+and coefficient of thermo expansion.
+
+Model EOS have domains outside which some functionality is lost.
+Important limitations on the EOS domain are from:
+1. Thermodynamic consistency, de = -P dV + T dS,
+   that is the EOS model can be derived from a thermodynamic potential.
+2. Thermodynamic stability
+   specific heat, C_P >= C_T >= 0
+   bulk modulus,  K_S >= K_T >= 0
+This allows for the use of thermodynamic identities that relate various
+thermodynamic quantities, such as isentropic and isothermal bulk modulus.
+
+The EOSlib also provides class EOS_VT with V and T as independent variables.
+
+The EOSlib also provides for an extended EOS with internal degrees of freedom
+that are useful for hydrodynamics with rate equations;
+such as reactive flow and 1-D elastic plastic flow.

@@ -1,0 +1,7 @@
+*~
+build
+include
+logs
+linux-build
+*#
+*.swp

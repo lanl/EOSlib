@@ -1,0 +1,97 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: Feb. 26, 2004
+
+/********************************
+*       Shear1D                 *
+********************************/
+
+:SharedLibs=Shear1D
+{
+   Shear1D    = $SharedLibDirEOS/ExtPlastic1D
+   ConstGV    = $SharedLibDirEOS/ExtPlastic1D
+   PolyG      = $SharedLibDirEOS/ExtPlastic1D
+}
+.base  = Shear1D
+.units = hydro::std
+
+
+Shear1D:ConstGV=HMX; units=hydro::std
+{
+    GV      = 12./1.9
+}
+
+Shear1D:PolyG=PMMA; units=hydro::std
+{
+     V0  = 1./1.185
+    G(1) = 2.31, 15, 80
+}
+
+
+/********************************
+*       Elastic1D               *
+********************************/
+
+:SharedLibs.=EOS
+{
+    Elastic1D      = $SharedLibDirEOS/ExtPlastic1D
+    ElasticConstGV = $SharedLibDirEOS/ExtPlastic1D
+    ElasticPolyG   = $SharedLibDirEOS/ExtPlastic1D
+}
+.base  = EOS
+.units = hydro::std
+
+
+EOS:Elastic1D=HMX; units=hydro::std
+{
+   EOS     =   "Hayes::HMX"
+   Shear1D = "ConstGV::HMX"
+}
+
+EOS:ElasticConstGV=HMX
+{
+   EOS  = "Hayes::HMX"
+   Gref = 12
+}
+
+EOS:ElasticPolyG=PMMA; units=hydro::std
+{
+   EOS   = "PeSpline::PMMA-hydro"
+   PolyG = "PMMA"
+}
+EOS:PeSpline=PMMA-hydro; units=hydro::std
+{
+# Spline fit to data in
+# The dynamic mechanical behavior of polymethyl methacrylate
+# K. W. Schuler and J. W. Nunziato
+# Rheol. Acta. 13 (1974) pp. 265-273
+    rho0 = 1.185    # g/cm^3
+    P0 = 1.0e-4     # GPa
+    e0 = 0
+    #T0 = 300        # degrees K
+    G0 = G1 = 0.7; G2 = 8
+   Vmin     = 0.573840      # eta = 0.32
+	  dPdV0 = -7.074665e+00
+	  dedV0 = 0.000000e+00
+	  dPdV1 = -1.254853e+02
+	  dedV1 = -2.530969e+01
+	Pref(1) = 0.000000e+00, 6.276448e-02, 1.316543e-01, 2.049110e-01, 2.812583e-01
+	eref(1) = 0.000000e+00, 2.709702e-04, 1.171126e-03, 2.823784e-03, 5.335810e-03
+	Pref(6) = 3.598644e-01, 4.403025e-01, 5.225139e-01, 6.067758e-01, 6.936748e-01
+	eref(6) = 8.794583e-03, 1.326976e-02, 1.881809e-02, 2.549005e-02, 3.333753e-02
+	Pref(11) = 7.840845e-01, 8.791476e-01, 9.802616e-01, 1.089068e+00, 1.207446e+00
+	eref(11) = 4.242228e-02, 5.282491e-02, 6.465452e-02, 7.805874e-02, 9.323428e-02
+	Pref(16) = 1.337508e+00, 1.481603e+00, 1.642321e+00, 1.822508e+00, 2.025284e+00
+	eref(16) = 1.104378e-01, 1.299971e-01, 1.523218e-01, 1.779147e-01, 2.073815e-01
+	Pref(21) = 2.254072e+00, 2.512635e+00, 2.805120e+00, 3.136119e+00, 3.510738e+00
+	eref(21) = 2.414413e-01, 2.809355e-01, 3.268369e-01, 3.802590e-01, 4.424651e-01
+	Pref(26) = 3.934673e+00, 4.414309e+00, 4.956821e+00, 5.570295e+00, 6.263859e+00
+	eref(26) = 5.148795e-01, 5.990995e-01, 6.969100e-01, 8.103019e-01, 9.414924e-01
+	Pref(31) = 7.047831e+00, 7.933877e+00, 8.935191e+00
+	eref(31) = 1.092950e+00, 1.267422e+00, 1.467969e+00
+    Cp     = 1.46e-3                # (MJ/kg)/K, specific heat at const P
+    Cp     = 1.7e-3                 # Cp @ Tg = 378
+    beta   = 3*63e-6                # 1/K, coef. of thermal expansion
+    T0     = 300                    # K
+    Cv     = Cp/(1+beta*T0*G0)      # (MJ/kg)/K    
+}

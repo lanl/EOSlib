@@ -1,0 +1,25 @@
+Modifications to ExtEOS.h
+1. Add
+    IDOF   *Z_ref;
+    IDOF   *z_ref() { return Zref;}
+2.  Replace
+        double *ztmp
+    with
+        IDOF *ztmp
+    Replace
+        virtual double P(double V, double e, const double *z);
+    with
+        virtual double P(double V, double e, const IDOF &z);
+    etc.
+3. Add 
+    int frozen;
+    IDOF   *z_f(double V, double e)
+    {
+      if(frozen)
+         ztmp = Z_ref
+      else if( Equilibrate(V,e, ztmp) )
+         EOSerror->Log();
+      return ztmp;
+    }
+4. Redo IDOF
+

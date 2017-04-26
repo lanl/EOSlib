@@ -1,0 +1,61 @@
+class PTequilibrium:
+-------------------
+    
+3. ExtEOS with variables V,e, Z={lambda, V1,e1,V2,e2,lambda0}
+   and PTinit based on V1,e1,V2,e2,lambda0
+   component values are updated by P(V,e,z), etc.
+
+4. Robust algorithm (inefficient, but if all else fails)
+    Precompute PT equilibrium for V1=V2=V
+    that is e1(V) and e2(V) such that P1=P2 and T1=T2.
+    For Gamma=Gamma(V) and Cv = constant, this is linear system.
+    Then, given (V,e), PTiter translates into ODEs
+         (V1)
+      d  (V2)
+      __ (e1) = source
+      de (e2)
+    with initial condition V1=V2=V and e1=e1(V), e2=e2(V),
+    and start of integration at e0 = lambda1*e1(V)+lambda2*e2(V).
+    Integration maintains P & T equilibrium
+    implies that trajectory stay within domain,
+    provided that (V,e) domain of mixture is convex, as physically required.
+    Can be thought of as Newton-Raphson with undersized step
+    and reasonable initial guess.
+    Initial curve with V1=V2 limited to compression.
+    For HE (solid reactants and gaseous products)
+    expansion may need to fix V_solid at V_solid_ref
+    and vary V_gas=V > V_gas_ref.
+    Same ODE with different perscription for initial condition.
+    *** Initial curve should go into virtual function PTinit ***
+    since it may depend on specific properties of eos1 and eos2
+
+5. Alternative algorithm
+    Suppose start with initial conditions (V1,e1) and (V2,e2)
+    such that V = lambda1*V1+lambda2*V2 and  e = lambda1*e1+lambda2*e2
+    but P1 != P2 and T1 != T2
+    Total entropy, S = lambda1*S1(V1,e1)+lambda2*S2(V2,e2)
+    Use constraint on V and e to reduce unknowns to (V1,e1)
+    dS/lambda1 = (P1/T1-P2/T2)dV1 + (1/T1-1/T2) de1
+    Hence P & T equilibrium corresponds to maximizing entropy
+    Thermodynamics requires S1(V1,e1) and S2(V2,e2) jointly concave.
+    hence S(V1,e1) subject to constraint on V and e is jointly concave.
+    Maximum either occurs in interior and is unique,
+    or is on boundary and no equilibrium solution.
+    Hessian of S(V,e)
+     d^2(S)/dV^2 = (2*Gamma -gamma -g)*P/(T*V)
+     d^2(S)/dVde = (Gamma-g)/(VT)
+     d^2(S)/de^2 = -1/(Cv*T^2)
+    is negative definite and can be used as metric.
+    Let H = (lambda2/lambda1)*second derivative with respect to V1,e1
+      (lambda2/lambda1)d^2(S)/dV1^2
+            = lambda2*(d/dV1)(P1/T1) + lambda1*(d/dV2)(P2/T2)
+      etc.
+    Construct ODE with P,T equilibrium as fixed point
+        dV1/dalpha ~ dS/dV1
+        de1/dalpha ~ dS/de1
+    such that S is monotonically increasing
+    and ||(dS/dV1,dS/de1)|| = 1 with respect to metric H.
+    Metric results in same convergence rate for both V1 & e1.
+    Can view ODE as relaxation algorithm or iteration scheme.
+    That is, one doesn't need accurate integration since
+    only fixed point is of interest.

@@ -1,0 +1,70 @@
+
+:SharedLibs.=EOS
+{
+    Keane          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    JWL            = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    HEfit          = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    HEprods        = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    DavisReactants = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    DavisProducts  = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+    BKW            = $EOSLIB_SHARED_LIBRARY_PATH/libEOStypes
+
+    ArrheniusHE      = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IdealHE          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHE     = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHEav   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HEburn           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HEburn2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+
+}
+
+:SharedLibs=HErate
+{
+    HErate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    Arrhenius        = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    PnRate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IgnitionGrowth   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRate      = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRate2     = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRateExp   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotCC_Rate   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    ArrheniusRT      = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IgnitionGrowthRT = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    FFrate           = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    FFQrate          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+}
+:SharedLibs=HErate2
+{
+    HErate2          = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    HotSpotRateCC    = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+}
+
+.units = hydro::std
+.base  = EOS
+#
+#
+#
+HErate:Arrhenius=HMX.BM; units=hydro::std
+{
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499
+    tol   = 1.e-6
+    n   =  1                        # reaction order
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+#   Rate adjusted to 25 micron reaction zone width at 90% burnt
+    k  *= 0.1
+    k  *= 0.5
+}
+#
+#
+#
+# HOM/ForestFire
+.include HOM.data
+
+# Davis
+.include Davis.data
+
+# JWL
+.include JWL.data

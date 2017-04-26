@@ -1,0 +1,21 @@
+.include ../../../DATA/EOS.data
+
+:DataBase.=Environment
+{
+  SharedLibDirEOS =$EOSLIB_SHARED_LIBRARY_PATH
+}
+
+
+EOS:PTequilibrium=LX-17; units=hydro::std
+{
+    eos1 = "JWL::LX-17.reactants"
+    eos2 = "JWL::LX-17.products"
+    lambda1 = 0.5
+}
+
+EOS:PTequilibrium=PBX9501; units=hydro::std
+{
+    eos1 = "BirchMurnaghan::PBX9501.reactant"
+    eos2 = "Sesame::PBX9501"
+    lambda1 = 1
+}

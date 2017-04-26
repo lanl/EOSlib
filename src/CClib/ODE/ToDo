@@ -1,0 +1,11 @@
+1. int ODE::F
+    change return status
+         0  OK
+        >0  error, try smaller time step
+        <0  error, abort
+
+2.  Improve error flags
+    ODE::ErrorStatus(int status) 
+
+3.  Integrate(ODEfunc) 
+    allow ODEfunc either increasing or decreasing

@@ -1,0 +1,11 @@
+EOS:Hayes=HMX-YC; 	units = hydro::std
+{
+	rho0                 = 1.9
+	P0                   = 1.0e-4
+	T0                   = 300
+	Cv                   = 1.6e-3
+	Gamma0               = 1.1
+	e0                   = T0*Cv
+	c0                   = 3.04
+	s                    = 1.65
+}

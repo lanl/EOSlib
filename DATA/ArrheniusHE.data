@@ -1,0 +1,139 @@
+:SharedLibs.=EOS
+{
+    ArrheniusHE    = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    IdealHE        = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHE   = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+    StiffIdealHEav = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes
+}
+
+.units = hydro::std
+.base  = EOS
+
+EOS:IdealHE=Ex1; units=hydro::std
+{
+# Ficket & Davis sec 2C1 p45
+    lambda = 0  # all reactants
+    gamma = 1.2
+    V_ref = 1
+    c0 = 1
+    T0 = 1
+    # 
+    P0 = c0^2/V_ref /gamma
+    e_ref = P0*V_ref/(gamma-1)
+    Cv = e_ref/T0
+    R  = (gamma-1)*Cv
+    #
+    Q   = 50*R*T0
+    T_a = 50*T0
+    k   =  0.354e3      # lambda = 0.5 at t = 1 for CJ profile
+}
+
+EOS:IdealHE=HMX; units=hydro::std
+{
+    lambda = 0  # all reactants
+    gamma = 3.1
+    Q = 4.5
+    Cv = 1.5e-3
+    Cv = 2e-3
+    V_ref = 1/1.9
+    e_ref = 1e-2*V_ref/(gamma-1)
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 1.e-2*k 
+}
+#
+#   HMX
+#
+#
+EOS:ArrheniusHE=PBX9501; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    tol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "Hayes::PBX9501"
+    products  = "JWL::PBX9404"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
+}
+#
+EOS:JWL=PBX9404; units=hydro::std
+{
+# Detonation EOS at LLNL, 1993
+# P. C. Souers and L. C. Haselman Jr.
+# page 5-19
+    V0    = 1/1.843         # cm^3/g
+    V0    = 1/1.833         # cm^3/g
+#
+    e0    = 300*1.6e-3      # Cv*T for reactant Hayes:PBX9501
+    A     = 740.349         # GPa
+    B     =  11.7009        # GPa
+    C     =   0.725292      # GPa
+    R1    =   4.317         # -
+    R2    =   1.05          # -
+    omega =   0.25          # -
+    Edet    = 10.5*V0       # MJ/kg
+#
+    Cv    = 1.e-3        # (MJ/kg)/K
+    Tcj   = 3500         # K
+}
+EOS:Hayes=PBX9501; units=hydro::std
+{
+    # Gibbs & Popolato, p 116
+    rho0 = 1.843            # g/cm^3
+    P0 = 1.0e-4             # GPa
+    T0 = 300                # degrees K
+    Cv = 1.6e-3             # (MJ/kg)/K
+    Gamma0 = 1.1
+    e0 = T0*Cv
+    # 0.1 < Up < 0.9
+    c0= 2.953
+    s = 1.507
+    #
+    rho0 = 1.833
+}
+#
+#
+#
+EOS:StiffIdealHEav=PBX9501; units=hydro::std
+{
+    lambda = 0  # all reactants
+    HE = "PBX9501"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    #
+    tau = 1e-3                      # 1 ns, time constant
+    n = 0.5
+    dlambda = 0.01
+    #
+    tau = 0.1e-3
+    k *= 0.1
+}
+EOS:StiffIdealHE=PBX9501; units=hydro::std
+{
+    lambda = 0  # all reactants
+    HE = "PBX9501"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
+    #
+    k  *= 10
+}

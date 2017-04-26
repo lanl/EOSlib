@@ -1,0 +1,302 @@
+EOS:JWL=HMX3500; units=hydro::std
+{
+# Detonation EOS at LLNL, 1993
+# P. C. Souers and L. C. Haselman Jr.
+# page 5-19
+    V0    =   0.525976      # cm^3/g
+    e0    =   0.174655      # MJ/kg
+    A     = 858.0805        # GPa
+    B     =   7.546531      # GPa
+    C     =   0.781274      # GPa
+    R1    =   4.306         # -
+    R2    =   0.80          # -
+    omega =   0.3           # -
+    Edet  =  11.0*V0        # MJ/kg
+#
+    Cv    = 1.5e-3          # (MJ/kg)/K
+    Tcj   = 3500            # K
+    Scj   = 0.00126474 + 0.00164566 # (MJ/kg)/K
+}
+#
+#
+#
+EOS:ArrheniusHE=HMX; units=hydro::std
+{
+    P_vac = 1.e-6
+    # tol used by RiemannSolver
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    tol = 1.e-6 # tolerance for PT iteration
+    #
+    lambda = 0  # all reactants
+    reactants = "Hayes::HMX"
+    products  = "JWL::HMX3500"
+    # Ref: Ignition Chemistry in HMX from Thermal Explosion to Detonation
+    #      B.F. Henson, B.W. Asay, L.B. Smilowitz and P.M. Dickson
+    #      LA-UR-01-3499    
+    T_a =  (149/4.184)/1.987e-3     # Ea(kJ/mole) / R = 17922 K
+    k   =  exp(29.35)*1e-6          # 5.58e6/(microsec)
+    k   = 0.1*k                     # correct rate for induction time
+    k   = 0.1*k                     # normalize to Criag's wedge experiment
+}
+#
+EOS:ArrheniusHE!=HMX.products; units=hydro::std
+{
+    :use=HMX
+    lambda = 1  # all products    
+}
+#
+#  LX-14 = 95 % HMX + 5 % Estane
+#
+EOS:HEburn=LX14.IG; units=hydro::std
+{
+# LX-14 = 95 % HMX + 5 % Estane
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::LX14.reactants"
+    products  = "JWL::LX14.products"
+    HErate    = "IgnitionGrowth::LX14";
+}
+
+EOS:HEburn=LX14.Arrhenius; units=hydro::std
+{
+# illustrative example of HE with Arrhenius rate
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-12
+    OneDFunc_rel_tol = 1e-12
+    ODE_epsilon      = 1e-12
+    PTtol = 1.e-12
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::LX14.reactants"
+    products  = "JWL::LX14.products"
+    HErate    = "Arrhenius::HMX.BM";
+}
+
+
+EOS:JWL=LX14.reactants; units=hydro::HiP
+{
+# LX-14 = 95 % HMX + 5 % Estane
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+#   Table 2
+    P_vac = 1.e-8
+    rho0  =    1.835     # g/cm^3
+    A     = 9522.        # Mb
+    B     =   -0.05944   # Mb
+    R1    =   14.1       # -
+    R2    =    1.41      # -
+    omega =    0.8867    # -
+    Edet  =   -0.001     # Mb*cc/g
+    # Ref isentrope thru (V0,P0) for T
+    P0   = 1.e-6         # Mb
+    #S0   = 0.0
+    Cv    = 2.7806e-5*V0 # (Mb*cc/g)/K
+    e0    = 0.0          # e_ref = 0 for ambient state
+    T0    = 298.
+    P_vac  = 1e-7
+}
+EOS:JWL=LX14.products; units=hydro::HiP
+{
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+# LX-14 = 95 % HMX + 5 % Estane
+#   Table 2
+    P_vac = 1.e-8
+    rho0  =    1.835     # g/cm^3
+    A     =   16.689     # Mb
+    B     =    0.5969    # Mb
+    R1    =    5.9       # -
+    R2    =    2.1       # -
+    omega =    0.45      # -
+    Edet  =    0.102*V0  # Mb*cc/g
+    Scj   =    0.01
+    Cv    =    1.0e-5*V0 # (Mb*cc/g)/K
+    #Tcj   = 3000         # K
+    P_vac  = 1e-7
+}
+HErate:IgnitionGrowth=LX14; units=hydro::std
+{
+# Ref. Sideways Plate Push Test for Detonating Solid Explosives
+#   C M Tarver, W. C. Tao and C. G. Lee
+#   Propellants, Explosives, Pyrotechnics 21 (1996) pp, 238--246
+# LX-14 = 95 % HMX + 5 % Estane
+#   Table 2
+    tol  = 1.e-5
+    rho0 = 1.835            # g/cm^3
+    lambda_igmax = 0.02
+    I =  7.43e11            # 1/microsec
+    a =  0
+    b =  0.667
+    x = 20.0
+    # published x and I are unreasonably large
+    x = 4.0
+    I = 1000
+    #
+    lambda_G1max = 0.80
+    y  =   2.0
+    G1 = 175./100^y         # 1/microsec for G1*P^y
+    c  =   0.667
+    d  =   0.111
+    lambda_G2min = 0.80
+    z  =  1.0
+    G2 = 10./100^z          # 1/microsec for G2*P^z
+    e  =  0.667
+    g  =  0.667
+}
+#
+#  LX-17 = 92.5 % TATB + 7.5 % KelF 800
+#
+EOS:HEburn=LX17.IG; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::LX17.reactants"
+    products  = "JWL::LX17.products"
+    HErate    = "IgnitionGrowth::LX17";
+}
+EOS:JWL=LX17.reactants; units=hydro::std
+{
+# LX-17 = 92.5 % TATB + 7.5 % KelF 800
+# Ref. Detonation waves in triaminotrinitrobenzene
+#   C M Tarver, J. W. Kury and R. D. Breithaupt
+#   J. Appl. Phys. 82 (1997) pp. 3771-3782
+    rho0  = 1.905        # g/cm^3
+    A     = 778.1e2      # GPa
+    B     =  -5.031      # GPa
+    R1    =  11.3        # -
+    R2    =   1.13       # -
+    omega =   0.8938     # -
+    Edet  =   0.0        # MJ/kg
+    # Ref isentrope thru (V0,P0) for T
+    P0   = 1.e-4        # GPa
+    #S0   = 0.0
+    Cv    = 2.487e-3*V0  # (MJ/kg)/K
+    e0    = 0.32112819517131481     # e_ref = 0 for ambient state
+}
+EOS:JWL=LX17.products; units=hydro::std
+{
+# LX-17 = 92.5 % TATB + 7.5 % KelF 800
+# Ref. Detonation waves in triaminotrinitrobenzene
+#   C M Tarver, J. W. Kury and R. D. Breithaupt
+#   J. Appl. Phys. 82 (1997) pp. 3771-3782
+    rho0  =    1.905     # g/cm^3
+    A     = 1345.4       # GPa
+    B     =   67.27      # GPa
+    R1    =    6.2       # -
+    R2    =    2.2       # -
+    omega =    0.5       # -
+    Edet  =    6.9*V0    # MJ/kg
+    Scj   = 0.01
+    Cv    = 1.0e-3*V0    # (MJ/kg)/K
+}
+HErate:IgnitionGrowth=LX17; units=hydro::std
+{
+# Ref. Detonation waves in triamino-trinitrobenzene
+#  C. M. Tarver, J. W. Kury, R. D. Breithaupt 
+#  J. Appl. Phys 82 (1997) pp 3771--3782, Table III
+    tol  = 1.e-5
+    rho0 = 1.905            # g/cm^3
+    lambda_igmax = 0.02
+    I = 4.0e6               # 1/microsec
+    a = 0.22
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.70
+    y  =   2.0
+    G1 = 550/100^y          # 1/microsec G1*P^y
+    c  =   0.667
+    d  =   1.0
+    lambda_G2min = 0.70
+    z  =  1.0
+    G2 = 15.0/100^z           # 1/microsec G2*P^z
+    e  =  0.667
+    g  =  0.667
+}
+#
+#  PBX9502 = 95 % TATB + 5 % KelF 800
+#  ref: C. M. Tarver and E. M. McGuire
+#       Reactive Flow Modeling of the Interaction of TATB Detonation Waves
+#          with Inert Materials
+#       Twelve Detonation Symposium, 2002, pp. 641-649
+#       Table 1, B. at 25C
+#
+EOS:HEburn=PBX9502.IG; units=hydro::std
+{
+    P_vac = 1.e-6
+    OneDFunc_abs_tol = 1e-5
+    OneDFunc_rel_tol = 1e-4
+    PTtol = 1.e-6
+    #
+    lambda = 0  # all reactants
+    reactants = "JWL::PBX9502.reactants"
+    products  = "JWL::PBX9502.products"
+    HErate    = "IgnitionGrowthRT::PBX9502";
+}
+EOS:JWL=PBX9502.reactants; units=hydro::HiP
+{
+    rho0  =   1.895      # g/cm^3
+    A     = 632.07       # Mb
+    B     =  -0.04472    # Mb
+    R1    =  11.3        # -
+    R2    =   1.13       # -
+    omega =   0.8938     # -
+    Edet  =   0.0        # Mb*cc/g
+    # Ref isentrope thru (V0,P0) for T
+    P0   = 1.e-6         # Mb
+    #S0   = 0.0
+    Cv    = 2.487e-5*V0  # (Mb*cc/g)/K
+    e0    = 0.0024687    # e_ref = 0 for ambient state
+    #
+    # test: enable PT at 1 bar and low T
+    #
+    P_vac = -0.2
+}
+EOS:JWL=PBX9502.products; units=hydro::HiP
+{
+    P_vac =  1.e-6       # 1 bar
+    #
+    rho0  =  1.895       # g/cm^3
+    A     = 13.6177      # Mb
+    B     =  0.7199      # Mb
+    R1    =  6.2         # -
+    R2    =  2.2         # -
+    omega =  0.5         # -
+    Edet  =  0.069*V0    # Mb*cc/g
+    Scj   =  0.01
+    Cv    =  1.0e-5*V0   # (Mb*cc/g)/K
+    Tcj   = 3000
+}
+HErate:IgnitionGrowthRT=PBX9502; units=hydro::HiP
+{
+    tol  = 1.e-5
+    rho0 = 1.895         # g/cm^3
+    lambda_igmax = 0.025
+    I = 4.0e6            # 1/microsec
+    a = 0.214
+    b = 0.667
+    x = 7.0
+    lambda_G1max = 0.80
+    y  =    2.0
+    G1 = 1100.           # 1/microsec G1*P^y
+    c  =    0.667
+    d  =    1.0
+    lambda_G2min = 0.80
+    z  =  1.0
+    G2 = 30.             # 1/microsec G2*P^z
+    e  =  0.667
+    g  =  0.667
+}

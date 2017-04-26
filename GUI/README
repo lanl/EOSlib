@@ -1,0 +1,15 @@
+GUI requires perl and Tk module Tk-804.033
+Tk module is available from www.cpan.org
+
+GUI uses xwindows and requires x-server, such as XQuartz
+Plotting feature of GUI uses xmgrace
+which is open source and available on Linux and Mac
+
+After eoslib is installed in build directory, run
+cd build
+source SetEnv
+then
+../eoslib/GUI/MaterialData.sh
+
+GUI may need to be tuned to screen resolution
+see file GUI/HiRes.txt

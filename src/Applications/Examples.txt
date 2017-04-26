@@ -1,0 +1,60 @@
+Illustrative examples of utilities
+
+# print EOS and parameters
+runEOS EOSdata    material HEburn::PBX9502.davis all
+
+# locus Hugoniot or isentope
+runEOS Wave help
+runEOS Wave       material HEburn::PBX9502.davis Ps 10
+
+# detonation locus
+runEOS Detonation material HEburn::PBX9502.davis P2 10
+
+# Deflagration locus from shock state
+runEOS Deflagration material HEburn::PBX9502.davis Ps 20 P2 12
+
+# isotherm locus
+runEOS Isotherm   material HEburn::PBX9502.davis Ps 10 P2 1
+
+# Riemann problem
+runEOS ImpedanceMatch  mat1 Hayes::Kel-F u1 2.7 mat2 HEburn::PBX9502.davis
+
+# ZND profile
+#    Note: HEburn::PBX9502.davis uses Ignition & Growth rate model
+#          rate has very large discontinuity at lambda=0.025
+#          (switch between ignition term and growth term
+#          requires very small ODE step or tolerance epsilon > 1e-7
+runEOS ZNDprofile     material HEburn::PBX9502.davis
+runEOS ZNDprofile-alt material HEburn::PBX9502.davis
+runEOS ZNDprofile material HEburn::LX14.Arrhenius
+runEOS ZNDprofile +file ArrheniusHE.data material IdealHE::HMX
+runEOS ZNDprofile +file ArrheniusHE.data material IdealHE::Ex1
+
+# ZND profile + Taylor Wave for HE with SURFplus rate
+runEOS ZND-SURFplus material HEburn2::PBX9502.HotSpotCC.davis_SURF
+runEOS ZND-SURFplus-dx material HEburn2::PBX9502.HotSpotCC.davis_SURF dx 0.01
+
+# Adibatic induction time for HE 
+runEOS HEburnReactionTime name LX14.Arrhenius
+runEOS HEburnReactionTime name LX14.IG V0 0.45
+
+# TestXmanager interface to EOSlib
+runEOS TestXmanager material BirchMurnaghan::HMX \
+       state "V=0.376695637; e=8.91044016; lambda=0.1570E-04"
+
+# TestXmanager interface for Riemann problem
+runEOS TestXRiemann   mat1 HayesBM::HMX \
+                    state1 "V=3.7245e-01; e=2.0656; u=1.7975" \
+                      mat2 UsUpSpline::PMMA \
+                    state2 "V=8.4388e-01 ; e=0 ; u=0"
+
+# TestXmanager interface for isentrope
+runEOS TestXisentrope mat BirchMurnaghan::HMX \
+                      state "V=0.3767; e=8.91" P 5
+
+# Shock polar
+runEOS Polar material BirchMurnaghan::HMX Ps 20
+runEOS Polar material BirchMurnaghan::HMX Ps 20 states
+
+# Shock polar for detonation wave
+runEOS DetPolar material HEburn::PBX9502.davis

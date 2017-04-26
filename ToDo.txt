@@ -1,0 +1,36 @@
+To Do (March, 2017)
+
+---------------------------------------------------------------------
+Near term
+
+N1. promote src/Applications/Xtra-Utilities/ZNDprofile.C
+
+N2. DATA/*.data
+    check all material parameter sets have references
+
+---------------------------------------------------------------------
+Intermediate term
+
+I1. unit tests
+   move DATA/test_data/* to approriate Tests subdirectory
+   move blessed_output/* to approriate Tests subdirectory
+   In Tests/CMakeLists.txt change to use TEST/NEWcompare_output.cmake
+   src/DataBase/Tests/ can be used as template
+
+I2. When done with all unit tests
+   remove DATA/test_data and eoslib/blessed_output
+
+I3. check make install works properly
+
+---------------------------------------------------------------------
+Longer term
+
+L1. src/ExtEOStypes/HEburn
+    add class for WSD model and modify ZNDprofile to set rho_s
+
+L2. Revise src/EOStypes/JWL/HEfit.h
+   to match Sam Shaw's fit for product Sesame tables
+
+L3. Plotting scripts using xmgrace
+   Reactants and detonation loci
+   ZND profile (any 2 variables)
