@@ -1,3 +1,7 @@
+# EOSlib Data Base
+#   Send bug reports to rtm@lanl.gov
+#   last modified: May 14, 2017
+
 :SharedLibs.=EOS
 {
     ArrheniusHE    = $EOSLIB_SHARED_LIBRARY_PATH/libExtEOStypes

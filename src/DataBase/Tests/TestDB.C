@@ -1,15 +1,11 @@
 #include <Arg.h>
 #include "DataBase.h"
-#include <sstream>
 
 using namespace std;
 int main(int, char **argv)
 {
     ProgName(*argv);
-    std::string files_;
-    files_ = getenv("EOSLIB_DATA_PATH");
-    files_ += "/test_data/DataBaseUnits.data";
-    const char *files = files_.c_str();
+    const char *files = "DATA/DataBaseUnits.data";    
     const char *type = "hydro";
     const char *name = "std";
         
@@ -33,22 +29,15 @@ int main(int, char **argv)
     
     units->Print(cout);
 
-    std::ostringstream test1;
-    std::ostringstream test2;
-    std::ostringstream test3;
-
-    test1 << units << "\n";
     Units *u2 = (Units *)db.FetchObj("Units",type,name);
-    test2 << u2 << "\n";
     Units *u3 = (Units *)db.FetchNewObj("Units",type,name);
-    test3 << u3 << "\n";
 
-    if(test1.str() != test2.str() || test1.str() == test3.str()){return 1;}
-    
+    if( u2 != units ) {return 1;}
+    if( u3 == u2 )    {return 1;}
+
+    deleteUnits(u3);
     deleteUnits(u2);
     deleteUnits(units);
-    deleteUnits(u3);
 
     return 0;
 }
-

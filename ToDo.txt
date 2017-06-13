@@ -3,17 +3,12 @@ To Do (March, 2017)
 ---------------------------------------------------------------------
 Near term
 
-N1. promote src/Applications/Xtra-Utilities/ZNDprofile.C
 
-N2. DATA/*.data
-    check all material parameter sets have references
 
 ---------------------------------------------------------------------
 Intermediate term
 
 I1. unit tests
-   move DATA/test_data/* to approriate Tests subdirectory
-   move blessed_output/* to approriate Tests subdirectory
    In Tests/CMakeLists.txt change to use TEST/NEWcompare_output.cmake
    src/DataBase/Tests/ can be used as template
 

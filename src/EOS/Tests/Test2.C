@@ -1,21 +1,24 @@
 #include <iostream>
 using namespace std;
-#include "EOS.h"
+#include "EOS_VT.h"
 
 
 int main(int, char **argv)
 {
-    cerr << "EOSlib_mismatch = " << EOSlib_mismatch() << "\n";
-    cerr << EOS_vers << " : " << EOSlib_vers << "\n";
-    cerr << EOS_date << " : " << EOSlib_date << "\n";
+    cout << "EOS_VTlib_mismatch = " << EOS_VTlib_mismatch() << "\n";
+    cout << EOS_VT_vers << " : " << EOS_VTlib_vers << "\n";
+    cout << EOS_VT_date << " : " << EOS_VTlib_date << "\n";
     
-    cerr << "EOS::init = " << EOS::init << "\n";
-    cerr << "EOS::ErrorDefault = " << EOS::ErrorDefault << "\n";
-    cerr << "Before init: " << EOS::NaN << "\n";
-    EOS::Init();
-    cerr << "After init: " << EOS::NaN << "\n";
+    cout << "EOS_VT::init = " << EOS_VT::init << "\n";
+    cerr << "EOS_VT::ErrorDefault = " << EOS_VT::ErrorDefault << "\n";
 
-    EOS::ErrorDefault->Log("main", __FILE__, __LINE__, NULL,
+    if( !std::isnan(EOS_VT::NaN) )
+        cout << "Before init: NaN = " << EOS_VT::NaN << "\n";
+    EOS_VT::Init();
+    if( !std::isnan(EOS_VT::NaN) )
+        cout << "After init: NaN = " << EOS_VT::NaN << "\n";
+
+    EOS_VT::ErrorDefault->Log("main", __FILE__, __LINE__, NULL,
                                 "ErrorDefault->Log\n");
     return 0;
 }

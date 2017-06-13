@@ -1,11 +1,11 @@
 #include <iostream>       // std::cout
 #include <string>         // std::string
-#include <stdlib.h>
+#include <cstdlib>
 
 int main(int, char **argv)
 {
 
-    const char *file = argv[1];
+    const char *file = argv[1] ? argv[1] : "EOSLIB_SHARED_LIBRARY_PATH/junk";
 
     std::string str(file);
     size_t n1 = str.find("/");

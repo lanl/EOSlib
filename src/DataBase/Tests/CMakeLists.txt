@@ -4,6 +4,19 @@ endif(${verbose_traversal})
 #
 # test of dynamic linking
 #
+file(COPY TestDB.C     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY Testdl.C     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY shared_obj.C DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+if( "${CMAKE_SYSTEM_NAME}" MATCHES "Linux" )
+    set( EXT "so" )
+else("${CMAKE_SYSTEM_NAME}" MATCHES "Linux") # apple
+    set( EXT "dylib" )
+endif("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
+
+configure_file( TestDB.sh TestDB.sh )
+configure_file( Testdl.sh Testdl.sh )
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 #
@@ -14,10 +27,11 @@ foreach( test_c ${Test_c} )
   add_executable(${test} ${test_c})
   target_link_libraries( ${test} DataBase )
 endforeach( test_c )
-#
-#
+
 add_library( shared_obj ${${projectName}_policy} shared_obj.C)
 target_link_libraries( shared_obj Math )
+
+target_link_libraries( Testdl shared_obj )
 #
 # sym link to blessed_output directory
 execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink

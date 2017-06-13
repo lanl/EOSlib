@@ -4,7 +4,7 @@ endif(${verbose_traversal})
 message(STATUS "Examples\n")
 
 file(GLOB ExampleFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.C")
-list(APPEND ExampleFiles Cleanup.sh README.txt DEBUG.txt)
+list(APPEND ExampleFiles Cleanup.sh README.txt)
 file(COPY  ${ExampleFiles} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 file(GLOB ExampleFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.sh")

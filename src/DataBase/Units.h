@@ -4,7 +4,12 @@
 #include <iosfwd>
 #include <Calc.h>
 using std::ostream;
-
+//
+#define UNITS_vers "EOSv2.0.1"
+#define UNITS_date "Mar. 13, 2016"
+#undef  BugReport
+#define BugReport "Please report bugs to rtm@lanl.gov"
+//
 int IsFundamental(const char *name);
 
 // units = "utype::uname",  ex: hydro::MKS

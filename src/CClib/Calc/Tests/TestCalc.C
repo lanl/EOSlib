@@ -10,7 +10,7 @@ int main(int, char **argv)
 {
 	Calc calc;
     // disallow new var on LHS
-        calc.new_dbl = 0;
+       // calc.new_dbl = 0;
     // default for undefined variable on RHS
         // generates parse error for undefined variable on RHS
            // calc.default_dbl = NULL;
