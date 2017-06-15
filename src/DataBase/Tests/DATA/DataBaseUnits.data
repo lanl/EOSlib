@@ -4,6 +4,9 @@
 
 :SharedLibs=Units
 {
+    #Units = $EOSLIB_SHARED_LIBRARY_PATH/libDataBase
+    #hydro = $EOSLIB_SHARED_LIBRARY_PATH/libDataBase
+
     Units = NULL
     hydro = NULL
 }

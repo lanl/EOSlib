@@ -1,0 +1,10 @@
+:SharedLibs=EOS
+{
+    EOS = $EOSLIB_SHARED_LIBRARY_PATH/libEOS
+}
+
+EOS:EOS=NULL
+{
+    # Generates error
+    # But loads dll for base class
+}

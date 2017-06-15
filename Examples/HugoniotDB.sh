@@ -3,7 +3,7 @@
 # fetch environment variables
 source ../../build/SetEnv
 
-CXX=${CMAKE_CXX_COMPILER}
+CXX="${CMAKE_CXX_COMPILER} -std=c++11"
 
 # compile
 $CXX -I$EOSLIB_INCLUDE -c HugoniotDB.C  \

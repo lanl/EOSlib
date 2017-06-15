@@ -7,4 +7,9 @@ extern "C" {
       //return PI;     // from LocalMath
       return NaN;     // from LocalMath
   }
+
+  double TestFunc1()
+  {
+      return 1.0;
+  }  
 }

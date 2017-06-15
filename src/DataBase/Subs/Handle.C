@@ -21,7 +21,7 @@ void Handle::copy(const Handle &h)
 
 int Handle::dlopen(const char *shared_obj)
 {
-    if( shared_obj == 0) return 1;  // empty string
+    // shared_obj==NULL for main program
 
     handle = ::dlopen(shared_obj, RTLD_NOW | RTLD_GLOBAL);
     if( handle )

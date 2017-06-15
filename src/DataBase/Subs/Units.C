@@ -41,30 +41,6 @@ int deleteUnits(Units *&units)
     units = NULL;
     return status;
 }
-
-extern "C" {
-  int  Units_Initialize(void *ptr, Parameters &p, DataBase &db)
-  {
-      return ((Units *)ptr)->Initialize(p,db);
-  }
-  
-  void *Units_Duplicate(void *ptr)
-  {
-      return (void *)((Units *)ptr)->Duplicate();
-  }
-      
-  void Units_Destructor(void *ptr)
-  {
-      Units *uptr  = (Units *)ptr;
-      deleteUnits(uptr);
-  }
-  
-  void *Units_Units_Constructor()
-  {
-      return new Units;
-  }
-}
-
 //
 //
 Units::Units(const char *type, const char *name,

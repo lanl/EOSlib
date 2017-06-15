@@ -1,16 +1,11 @@
 #include <LocalIo.h>
 #include "EOS.h"
 #include <iostream>
-//#include <stdlib.h>
-#include <string>
 
 using namespace std;
 int main(int, char **argv)
 {
-	std::string file_;
-        file_ = (getenv("EOSLIB_DATA_PATH") != NULL) ? getenv("EOSLIB_DATA_PATH") : "DATA ENV NOT SET!";
-	file_ += "/test_data/EOSTest.data";
-        const char * file = file_.c_str();
+    const char *file = "Test.data";
 	DataBase db;
 	if( db.Read(file) )
 		cerr << Error("Read failed" ) << Exit;
